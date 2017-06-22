@@ -11,6 +11,7 @@ namespace Common
 {
     public class Connection
     {
+        // DuyTN4 Comment
         public static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SysXanhLa"].ConnectionString);
         public static SqlConnection SqlConnect(){
             return conn;
