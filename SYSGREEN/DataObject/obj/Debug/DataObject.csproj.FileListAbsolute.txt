@@ -1,0 +1,5 @@
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\DataObject\bin\Debug\DataObject.dll
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\DataObject\bin\Debug\DataObject.pdb
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\DataObject\obj\Debug\DataObject.csprojResolveAssemblyReference.cache
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\DataObject\obj\Debug\DataObject.dll
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\DataObject\obj\Debug\DataObject.pdb

@@ -1,0 +1,5 @@
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\Common\bin\Debug\Common.dll
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\Common\bin\Debug\Common.pdb
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\Common\obj\Debug\Common.dll
+C:\Users\THUCDC\Source\Repos\SysGreen2\SysGreen-DevSysGreen\SYSGREEN\Common\obj\Debug\Common.pdb
