@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeBehind="C001_ListUser.aspx.cs" Inherits="SYSGREEN.C001_ListUser" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeBehind="C002_Right.aspx.cs" Inherits="SYSGREEN.C002_Right" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
     <script>
@@ -7,14 +6,7 @@
             $('#table').bootstrapTable({
                 columns: [{
                     field: 'id',
-                    title: 'Id',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-                }, {
-                    field: 'email',
-                    title: 'Email',
+                    title: 'ID',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
@@ -27,13 +19,6 @@
                     sortable: true,
                     editable: true,
 
-                }, {
-                    field: 'local',
-                    title: 'Cơ sở',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
                 }, {
                     field: 'dateCreate',
                     title: 'Ngày tạo',
@@ -73,108 +58,80 @@
                     events: operateEvents,
                     formatter: operateFormatter
                 }],
-                
+
 
 
                 data: [{
                     id: 1,
-                    email: 'Duytn.tb@gmil.com',
                     department: 'sele',
-                    local: 'Hà nội',
                     dateCreate: '20/5/2017',
                     user: 'Duytn4'
                 }, {
                     id: 2,
-                    email: 'Duytn.tb@gmil.com',
                     department: 'sele',
-                    local: 'HCM',
                     dateCreate: '20/5/2017',
                     user: 'Duytn4'
                 }, {
                     id: 3,
-                    email: 'Duytn.tb@gmil.com',
                     department: 'sele',
-                    local: 'Hà nội',
                     dateCreate: '20/5/2017',
                     user: 'Duytn4'
                 }, {
                     id: 4,
-                    email: 'Duytn.tb@gmil.com',
                     department: 'sele',
-                    local: 'Hà nội',
                     dateCreate: '20/5/2017',
                     user: 'Duytn4'
                 }, {
                     id: 5,
-                    email: 'Duytn.tb@gmil.com',
                     department: 'sele',
-                    local: 'Hà nội',
                     dateCreate: '20/5/2017',
                     user: 'Duytn4'
-                },{
-                     id: 6,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 7,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 8,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 9,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 10,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 11,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 12,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 13,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 14,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }]
+                }, {
+                    id: 6,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 7,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 8,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 9,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 10,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 11,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 12,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 13,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }, {
+                    id: 14,
+                    department: 'sele',
+                    dateCreate: '20/5/2017',
+                    user: 'Duytn4'
+                }]
             });
         });
         // function
@@ -183,16 +140,23 @@
         }
         function operateFormatter(value, row, index) {
             return [
+                '<a class="right" href="javascript:void(0)" title="Phân quyền">',
+                'Phân quyền',
+                '</a>', '|',
                 '<a class="edit" href="javascript:void(0)" title="Sửa">',
                 'Sửa',
                 '</a>  ', '|',
                 '<a class="remove" href="javascript:void(0)" title="Xoá">',
                 'Xóa',
                 '</a>',
+                
             ].join('');
         }
 
         window.operateEvents = {
+            'click .right': function (e, value, row, index) {
+                alert('You click like action, row: ' + JSON.stringify(row));
+            },
             'click .edit': function (e, value, row, index) {
                 alert('You click like action, row: ' + JSON.stringify(row));
             },
@@ -215,3 +179,4 @@
         data-show-footer="false" 
         ></table>
     </asp:Content>
+

@@ -1,6 +1,6 @@
-﻿<%@ Page Title="Demo Page" Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="C005_CompanyInformation.aspx.cs" Inherits="SYSGREEN.Demo" %>
+﻿<%@ Page Title="Demo Page" Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master"  CodeBehind="C005_CompanyInformation.aspx.cs" Inherits="SYSGREEN.Demo" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
     <div >
         <div style ="height:50px"></div>
             <div class="row">
