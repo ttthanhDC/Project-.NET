@@ -49,7 +49,7 @@ namespace Servies
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
-            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@ID", Id);
             cmd.ExecuteNonQuery();
         }
 

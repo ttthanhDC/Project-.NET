@@ -8,47 +8,40 @@ using System.Threading.Tasks;
 
 namespace Servies
 {
-    public class SysUserServies
+    public class SysRoleServices
     {
-        public static void InsertData(DataObject.SysUser obj)
+        public static void InsertData(DataObject.SysRole obj)
         {
-            String Insert = "INSERT INTO SYS_USER (UserName,Password,Email,DeptId,OrgId,Create_User,Create_Date) VALUES ";
-            Insert += "(@UserName,@Password,@Email,@DeptId,@OrgId,@Create_User,@Create_Date)";
+            String Insert = "INSERT INTO SYS_ROLE (RoleName,Create_User,Create_Date) VALUES ";
+            Insert += "(@RoleName,@Create_User,@Create_Date)";
             Common.Connection.Close();
             Common.Connection.Open();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
-            cmd.Parameters.AddWithValue("@UserName", obj.UserName);
-            cmd.Parameters.AddWithValue("@Password", obj.Password);
-            cmd.Parameters.AddWithValue("@Email", obj.Email);
-            cmd.Parameters.AddWithValue("@DeptId", obj.DeptId);
-            cmd.Parameters.AddWithValue("@OrgId", obj.OrgId);
+            cmd.Parameters.AddWithValue("@RoleName", obj.RoleName);
             cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
             cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
             cmd.ExecuteNonQuery();
             Common.Connection.Close();
         }
 
-        public static void UpdateData(DataObject.SysUser obj)
+        public static void UpdateData(DataObject.SysRole obj)
         {
             Common.Connection.Close();
             Common.Connection.Open();
-            String Update = "UPDATE SYS_USER SET Password = @Password, Email = @Email, DeptId = @DeptId, OrgId = @OrgId Where ID = @ID";
+            String Update = "UPDATE SYS_ROLE SET RoleName = @RoleName Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
-            cmd.Parameters.AddWithValue("@Password", obj.Password);
-            cmd.Parameters.AddWithValue("@Email", obj.Email);
-            cmd.Parameters.AddWithValue("@DeptId", obj.DeptId);
-            cmd.Parameters.AddWithValue("@OrgId", obj.OrgId);
+            cmd.Parameters.AddWithValue("@RoleName", obj.RoleName);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
             cmd.ExecuteNonQuery();
         }
 
         public static void DeleteData(Int32 Id)
         {
-            String Delete = "Delete from  SYS_USER Where ID = @ID";
+            String Delete = "Delete from  SYS_ROLE Where ID = @ID";
             Common.Connection.Close();
             Common.Connection.Open();
             SqlCommand cmd = new SqlCommand(Delete);
@@ -58,16 +51,16 @@ namespace Servies
             cmd.ExecuteNonQuery();
         }
 
-        public static List<DataObject.SysUser> GetData(Int32 Id)
+        public static List<DataObject.SysRole> GetData(Int32 Id)
         {
-            List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
+            List<DataObject.SysRole> lstSysRole = new List<DataObject.SysRole>();
             String Select = "";
             SqlCommand cmd = null;
             Common.Connection.Close();
             Common.Connection.Open();
             if (Id > 0)
             {
-                Select = "Select * from SYS_USER Where ID = @ID";
+                Select = "Select * from SYS_ROLE Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
@@ -76,7 +69,7 @@ namespace Servies
             }
             else
             {
-                Select = "Select * from SYS_USER";
+                Select = "Select * from SYS_ROLE";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = Common.Connection.SqlConnect();
@@ -85,23 +78,19 @@ namespace Servies
             {
                 while (oReader.Read())
                 {
-                    DataObject.SysUser obj = new DataObject.SysUser();
+                    DataObject.SysRole obj = new DataObject.SysRole();
                     obj.ID = Int32.Parse(oReader["ID"].ToString());
-                    obj.UserName = oReader["UserName"].ToString();
-                    obj.Password = oReader["Password"].ToString();
-                    obj.Email = oReader["Email"].ToString();
-                    obj.DeptId = Int32.Parse(oReader["DeptId"].ToString());
-                    obj.OrgId = Int32.Parse(oReader["OrgId"].ToString());
+                    obj.RoleName = oReader["RoleName"].ToString();
                     obj.Create_User = oReader["Create_User"].ToString();
                     if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
                     {
                         String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
                         obj.Create_Date = DateTime.Parse(createDate);
                     }
-                    lstSysUser.Add(obj);
+                    lstSysRole.Add(obj);
                 }
             }
-            return lstSysUser;
+            return lstSysRole;
         }
     }
 }

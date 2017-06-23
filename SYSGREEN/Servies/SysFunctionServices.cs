@@ -8,42 +8,40 @@ using System.Threading.Tasks;
 
 namespace Servies
 {
-    public class SysOrgServies
+    public class SysFunctionServices
     {
-        public static void InsertData(DataObject.SysOrg obj)
+        public static void InsertData(DataObject.SysFunction obj)
         {
-            String Insert = "INSERT INTO SYS_ORG (Name,Description,Create_User,Create_Date) VALUES ";
-            Insert += "(@Name,@Description,@Create_User,@Create_Date)";
+            String Insert = "INSERT INTO SYS_FUNCTION (Func_Name,Func_Description) VALUES ";
+            Insert += "(@Func_Name,@Func_Description)";
             Common.Connection.Close();
             Common.Connection.Open();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
-            cmd.Parameters.AddWithValue("@Name", obj.Name);
-            cmd.Parameters.AddWithValue("@Description", obj.Description);
-            cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
-            cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
+            cmd.Parameters.AddWithValue("@Func_Name", obj.Func_Name);
+            cmd.Parameters.AddWithValue("@Func_Description", obj.Func_Description);
             cmd.ExecuteNonQuery();
             Common.Connection.Close();
         }
 
-        public static void UpdateData(DataObject.SysOrg obj)
+        public static void UpdateData(DataObject.SysFunction obj)
         {
             Common.Connection.Close();
             Common.Connection.Open();
-            String Update = "UPDATE SYS_ORG SET Name = @Name, Description = @Description Where ID = @ID";
+            String Update = "UPDATE SYS_FUNCTION SET Func_Name = @Func_Name, Func_Description = @Func_Description Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
-            cmd.Parameters.AddWithValue("@Name", obj.Name);
-            cmd.Parameters.AddWithValue("@Description", obj.Description);
+            cmd.Parameters.AddWithValue("@Func_Name", obj.Func_Name);
+            cmd.Parameters.AddWithValue("@Func_Description", obj.Func_Description);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
             cmd.ExecuteNonQuery();
         }
 
         public static void DeleteData(Int32 Id)
         {
-            String Delete = "Delete from  SYS_ORG Where ID = @ID";
+            String Delete = "Delete from  SYS_FUNCTION Where ID = @ID";
             Common.Connection.Close();
             Common.Connection.Open();
             SqlCommand cmd = new SqlCommand(Delete);
@@ -53,16 +51,17 @@ namespace Servies
             cmd.ExecuteNonQuery();
         }
 
-        public static List<DataObject.SysOrg> GetData(Int32 Id)
+        public static List<DataObject.SysFunction> GetData(Int32 Id)
         {
-            List<DataObject.SysOrg> lstSysOrg = new List<DataObject.SysOrg>();
+            List<DataObject.SysFunction> lstSysFunction = new List<DataObject.SysFunction>();
             String Select = "";
             SqlCommand cmd = null;
             Common.Connection.Close();
             Common.Connection.Open();
             if (Id > 0)
             {
-                Select = "Select * from SYS_ORG Where ID = @ID";
+                Select = "Select * from SYS_FUNCTION Where ID = @ID";
+
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = Common.Connection.SqlConnect();
@@ -70,7 +69,7 @@ namespace Servies
             }
             else
             {
-                Select = "Select * from SYS_ORG";
+                Select = "Select * from SYS_FUNCTION";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = Common.Connection.SqlConnect();
@@ -79,20 +78,14 @@ namespace Servies
             {
                 while (oReader.Read())
                 {
-                    DataObject.SysOrg obj = new DataObject.SysOrg();
+                    DataObject.SysFunction obj = new DataObject.SysFunction();
                     obj.ID = Int32.Parse(oReader["ID"].ToString());
-                    obj.Name = oReader["Name"].ToString();
-                    obj.Description = oReader["Description"].ToString();
-                    obj.Create_User = oReader["Create_User"].ToString();
-                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
-                    {
-                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
-                        obj.Create_Date = DateTime.Parse(createDate);
-                    }
-                    lstSysOrg.Add(obj);
+                    obj.Func_Name = oReader["Func_Name"].ToString();
+                    obj.Func_Description = oReader["Func_Description"].ToString();
+                    lstSysFunction.Add(obj);
                 }
             }
-            return lstSysOrg;
+            return lstSysFunction;
         }
     }
 }
