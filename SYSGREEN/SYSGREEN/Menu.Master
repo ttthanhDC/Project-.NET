@@ -93,6 +93,7 @@
             <script src="Scripts/bootstrap-table.js"></script>
             <script src="Scripts/bootstrap-table-vi-VN.js"></script>
             <script src="Scripts/Validator/bootstrapValidator.min.js"></script>
+            <script src="Scripts/Validator/bootbox.min.js"></script>
             <link href="Content/Validator/bootstrapValidator.min.css" rel="stylesheet" />
         </div>
     </form>
