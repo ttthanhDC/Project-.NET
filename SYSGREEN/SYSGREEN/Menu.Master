@@ -64,11 +64,13 @@
 					<ul class="dropdown-menu forAnimate" role="menu">
                         <li><a runat="server" href="~/LogInPage">LogIn</a></li>
                         <li><a runat="server" href="~/C001_ListUser">C001 Danh sách tài khoản</a></li>
-                        <li><a runat="server" href="~/C005_CompanyInformation">C005 Thông tin cty</a></li>
-                        <li><a runat="server" href="~/C003_Depasment">C003 Bộ phận</a></li>
                         <li><a runat="server" href="~/C002_Right">C002 Nhóm quyền</a></li>
+                        <li><a runat="server" href="~/C003_Depasment">C003 Bộ phận</a></li>
+                        <li><a runat="server" href="~/C005_CompanyInformation">C005 Thông tin cty</a></li>
                         <li><a runat="server" href="~/C007_ConfigurationSource">C007 Cấu hình nguồn</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/C008_Product">008 Sản phẩm</a></li>
+                        <li><a runat="server" href="~/C009_TotalBill">C009 Khuyến mại tổng bill</a></li>
+                        <li><a runat="server" href="~/C010_ConfigMenu">C010 Cấu hình menu</a></li>
 					</ul>
 				</li>
 			</ul>
