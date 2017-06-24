@@ -68,6 +68,7 @@
                         <li><a runat="server" href="~/C003_Depasment">C003 Bộ phận</a></li>
                         <li><a runat="server" href="~/C002_Right">C002 Nhóm quyền</a></li>
                         <li><a runat="server" href="~/C007_ConfigurationSource">C007 Cấu hình nguồn</a></li>
+                        <li><a runat="server" href="~/Contact">Contact</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -91,7 +92,8 @@
             <script src="Scripts/bootstrap.min.js"></script>
             <script src="Scripts/bootstrap-table.js"></script>
             <script src="Scripts/bootstrap-table-vi-VN.js"></script>
-
+            <script src="Scripts/Validator/bootstrapValidator.min.js"></script>
+            <link href="Content/Validator/bootstrapValidator.min.css" rel="stylesheet" />
         </div>
     </form>
     
