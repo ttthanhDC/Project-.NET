@@ -5,48 +5,7 @@
         // test popup
         $(document).ready(function () {
             $('#userForm')
-                .formValidation({
-                    framework: 'bootstrap',
-                    icon: {
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    },
-                    fields: {
-                        name: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The full name is required'
-                                },
-                                regexp: {
-                                    regexp: /^[a-zA-Z\s]+$/,
-                                    message: 'The full name can only consist of alphabetical characters'
-                                }
-                            }
-                        },
-                        email: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The email address is required'
-                                },
-                                emailAddress: {
-                                    message: 'The email address is not valid'
-                                }
-                            }
-                        },
-                        website: {
-                            validators: {
-                                notEmpty: {
-                                    message: 'The website address is required'
-                                },
-                                uri: {
-                                    allowEmptyProtocol: true,
-                                    message: 'The website address is not valid'
-                                }
-                            }
-                        }
-                    }
-                })
+                
                 .on('success.form.fv', function (e) {
                     // Save the form data via an Ajax request
                     e.preventDefault();
@@ -271,6 +230,40 @@
         window.operateEvents = {
             'click .right': function (e, value, row, index) {
                 alert('You click like action, row: ' + JSON.stringify(row));
+                // Get the record's ID via attribute
+                var id = $(this).attr('data-id');
+
+                $.ajax({
+                    url: 'http://jsonplaceholder.typicode.com/users/' + id,
+                    method: 'GET'
+                }).success(function (response) {
+                    // Populate the form fields with the data returned from server
+                    $('#userForm')
+                        .find('[name="id"]').val(response.id).end()
+                        .find('[name="department"]').val(response.name).end()
+                        .find('[name="dateCreate"]').val(response.email).end()
+                        .find('[name="user"]').val(response.website).end();
+
+                    // Show the dialog
+                    bootbox
+                        .dialog({
+                            title: 'Edit the user profile',
+                            message: $('#userForm'),
+                            show: false // We will show it manually later
+                        })
+                        .on('shown.bs.modal', function () {
+                            $('#userForm')
+                                .show()                             // Show the login form
+                                .formValidation('resetForm'); // Reset form
+                        })
+                        .on('hide.bs.modal', function (e) {
+                            // Bootbox will remove the modal (including the body which contains the login form)
+                            // after hiding the modal
+                            // Therefor, we need to backup the form
+                            $('#userForm').hide().appendTo('body');
+                        })
+                        .modal('show');
+                });
             },
             'click .edit': function (e, value, row, index) {
                 alert('You click like action, row: ' + JSON.stringify(row));
@@ -295,7 +288,7 @@
         ></table>
 
     <!-- The form which is used to populate the item data -->
-        <div id="userForm"  class="form-horizontal" >
+        <div id="userForm"  class="form-horizontal"  style="display: none;">
             <div class="form-group">
                 <label class="col-xs-3 control-label">ID</label>
                 <div class="col-xs-3">
