@@ -18,5 +18,7 @@ namespace DataObject
         public float TotalAmountRemain { get; set; }
         public float Discount { get; set; }
         public String Status { get; set; }
+        public String CreateUser { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }
