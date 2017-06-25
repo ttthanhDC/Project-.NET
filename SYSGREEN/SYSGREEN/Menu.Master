@@ -71,6 +71,7 @@
                         <li><a runat="server" href="~/C008_Product">008 Sản phẩm</a></li>
                         <li><a runat="server" href="~/C009_TotalBill">C009 Khuyến mại tổng bill</a></li>
                         <li><a runat="server" href="~/C010_ConfigMenu">C010 Cấu hình menu</a></li>
+                        <li><a runat="server" href="~/WebForm1">WebForm1</a></li>
 					</ul>
 				</li>
 			</ul>

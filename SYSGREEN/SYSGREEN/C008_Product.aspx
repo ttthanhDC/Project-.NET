@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeBehind="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
 <table id="table" 
@@ -10,7 +10,10 @@
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
 ></table>
-
+    <div style ="height:40px"></div>
+    <div style ="text-align:center;display: table;margin: 0 auto;">
+        <input type="submit" class="btn btn-info" value="Thêm">
+    </div>
 <script>
     // Bootstrap Table
     $(function () {
@@ -57,85 +60,85 @@
 
 
             data: [{
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P001',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P002',
                 nameProduct: 'Sữa hạt điều cốt đậu đen',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P003',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P004',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P005',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P006',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P007',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P008',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P009',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P010',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P011',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P012',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P013',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
             }, {
-                branchd: 'HO',
+                branch: 'HO',
                 codeProduct: 'P014',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
