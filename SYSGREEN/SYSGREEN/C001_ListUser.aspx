@@ -1,7 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeBehind="C001_ListUser.aspx.cs" Inherits="SYSGREEN.C001_ListUser" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="C001_ListUser.aspx.cs" Inherits="SYSGREEN.C001_ListUser" %>
 
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
         $(function () {
             $('#table').bootstrapTable({

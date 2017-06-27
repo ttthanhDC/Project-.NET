@@ -533,7 +533,10 @@
 
 			<div class="main-content">
 				<div class="main-content-inner">
-                    main content
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolderMenu2" runat="server">
+                            main content
+                    </asp:ContentPlaceHolder>
+                   
 
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
