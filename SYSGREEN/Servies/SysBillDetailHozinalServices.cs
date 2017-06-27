@@ -25,7 +25,7 @@ namespace Servies
             Common.Connection.Close();
         }
 
-        public static int InsertData(DataObject.SysBillDetailHozinal obj)
+        public static int InsertDataReturnId(DataObject.SysBillDetailHozinal obj)
         {
             String Insert = "INSERT INTO SYS_BILL_DETAIL_HOZINAL (HozinalMasterBillId,CustomerId) VALUES ";
             Insert += " (@HozinalMasterBillId,@CustomerId)";

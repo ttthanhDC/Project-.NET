@@ -32,7 +32,7 @@ namespace Servies
             Common.Connection.Close();
         }
 
-        public static int InsertData(DataObject.SysBillDetailVertical obj)
+        public static int InsertDataReturnId(DataObject.SysBillDetailVertical obj)
         {
             String Insert = "INSERT INTO SYS_BILL_DETAIL_VERTICAL (VerticalMasterBill_ID,ProductCode,Quantity,ProductId,ProductPrice,IsSugar,TotalAmount,PromotionCode,Total,Comment) VALUES ";
             Insert += " (@VerticalMasterBill_ID,@ProductCode,@Quantity,@ProductId,@ProductPrice,@IsSugar,@TotalAmount,@PromotionCode,@Total,@Comment)";

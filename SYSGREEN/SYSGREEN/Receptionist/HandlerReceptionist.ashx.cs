@@ -147,7 +147,7 @@ namespace SYSGREEN.Receptionist
             Servies.SysCustomerServices.DeleteData(Id);
         }
 
-        public List<DataObject.SysCustomer> GetDataCustomer(Int32 Id)
+        public List<DataObject.SysCustomer> GetDataCustomer1(Int32 Id)
         {
             List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetData(Id);
             return lst;
