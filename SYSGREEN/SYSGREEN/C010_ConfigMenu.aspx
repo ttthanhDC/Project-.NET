@@ -170,22 +170,22 @@
                 table = $('#tbl_add1');
             }
 
-            table.append('<tr> <td style ="width:100%"><div class="form-group" style ="width:100%"><select class="form-control" id="sel1" style ="width:100%"><option>1</option><option>2</option><option>3</option><option>4</option></select> </div></td></tr>');
-             
+           // table.append('<tr> <td style ="width:100%"><div class="form-group" style ="width:100%"><select class="form-control" id="sel1" style ="width:100%"><option>1</option><option>2</option><option>3</option><option>4</option></select> </div></td></tr>');
 
 
-           // var table = this.tbl_add;
-           // var rowCount = table.rows.length;
-           // var row = table.insertRow(rowCount);
-            //var newId = this.count3++;
-            //row.id = newId;
-            //row.setAttribute('class', 'Tr');
-            //var value = "";
-            //for (var i = 0; i < 1; i++) {
-                //if(i === 0){
-                   // alert('click input 2' + i);
-                //}
-            //}
+
+            // var table = this.tbl_add;
+             var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+            var newId = count3++;
+            row.id = newId;
+            row.setAttribute('class', 'Tr');
+            var value = "";
+            for (var i = 0; i < 1; i++) {
+            if(i === 0){
+             alert('click input 2' + i);
+            }
+            }
         });
      </script>
 </asp:Content>
