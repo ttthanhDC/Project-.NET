@@ -1,13 +1,95 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="UserManger.aspx.cs" Inherits="SYSGREEN.UserManger" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <script>
+      
        $(document).ready(function () {
+           // Load Data Bộ phận
+           var data1 = {
+               menu: [{
+                   name: 'Lễ tân',
+                   link: '1',
+                   sub: null
+               }, {
+                   name: 'Shipper',
+                   link: '2',
+                   sub: null
+               }
+               ]
+           };
+           var data2 = {
+               menu: [{
+                   name: 'Thanh Xuân',
+                   link: '1',
+                   sub: null
+               }, {
+                   name: 'Cầu giấy',
+                   link: '2',
+                   sub: null
+               }
+               ]
+           };
+           // select box phòng ban
+           var getDept = function (itemData) {
+               var item = $("<option value='"+itemData.link+"'>")
+                   .append(itemData.name);
+               return item;
+           };
+
+           var $menu = $("#deptID");
+           $.each(data1.menu, function () {
+               $menu.append(
+                   getDept(this)
+               );
+           });
+           // select box cơ sở   
+           var getOrg = function (itemData) {
+               var item = $("<option value='" + itemData.link + "'>")
+                   .append(itemData.name);
+               return item;
+           };
+
+           var $menu = $("#orgID");
+           $.each(data2.menu, function () {
+               $menu.append(
+                   getOrg(this)
+               );
+           });
+           //$menu.menu();
            var formData = new FormData();
            function testFunction(data) {
                return data.valid;
            }
-           jQuery.ajaxSetup({ async: true });
-           formData.append('type', 'insert');
+          
+           // Event Thêm mới
+           $('#btnSave').on('click', function (e) {
+               var formData = new FormData();
+               var user = $('#txtUserName').val();
+               var pass = $('#txtPassword').val();
+               var email = $('#txtEmail').val();
+               var deptId = $('#deptID').val();
+               deptId = parseInt(deptId);
+               var orgId = $('#orgID').val();
+               orgId = parseInt(orgId);
+               //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+               var json = { 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
+               jQuery.ajaxSetup({ async: true });
+               formData.append('type', 'insert');
+               formData.append('data', JSON.stringify(json));
+               $.ajax({
+                   url: "Configuation/HandlerSysUser.ashx",
+                   type: "POST",
+                   data: formData,
+                   contentType: false,
+                   processData: false,
+                   success: function (result) {
+                       alert(result);
+                   },
+                   error: function (err) {
+
+                   }
+               });
+           });
+          
            $('#contactForm').bootstrapValidator({
                container: '#messages',
                feedbackIcons: {
@@ -63,43 +145,34 @@
     <div class="form-group">
         <label class="col-md-3 control-label">UserName</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="userName" />
+            <input type="text" class="form-control" name="userName" id="txtUserName" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Password</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="passWord" />
+            <input type="password" class="form-control" name="passWord" id="txtPassword" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Email</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="email" />
+            <input type="email" class="form-control" name="email" id="txtEmail" />
         </div>
     </div>
    <div class="form-group">
-        <label class="col-md-3 control-label">Phòng ban</label>
-        <div class="col-md-9">
-                <select class="form-control" id="depID">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                </select>
-        </div>
+        <label class="col-md-3 control-label">Bộ phân</label>
+         <div class="col-md-9">
+             <select class="form-control" id="deptID"></select>
+           </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Cơ sở</label>
-        <div class="col-md-9">
-                <select class="form-control" id="orgID">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                </select>
-        </div>
-    </div>
+         <div class="col-md-9">
+             <select class="form-control" id="orgID"></select>
+           </div>
+    </div>    
+    
     <!-- #messages is where the messages are placed inside -->
     <div class="form-group">
         <div class="col-md-12 col-md-offset-3">
@@ -108,7 +181,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-12 col-md-offset-3">
-            <button type="submit" class="btn btn-default">Lưu</button>
+            <button type="submit" class="btn btn-default" id="btnSave">Lưu</button>
         </div>
     </div>
 </div>
