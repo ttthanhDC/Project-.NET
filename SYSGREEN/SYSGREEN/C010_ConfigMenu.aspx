@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Menu.Master" CodeFile="C010_ConfigMenu.aspx.cs" Inherits="SYSGREEN.C010_ConfigMenu" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C010_ConfigMenu.aspx.cs" Inherits="SYSGREEN.C010_ConfigMenu" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <div class="table-responsive" >
        <table class="table table-bordered table-striped">
             <thead>

@@ -209,8 +209,7 @@
         data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
-        data-show-toggle="true" data-show-columns="true" 
-        data-show-pagination-switch="true"
+        data-show-toggle="true" 
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
         ></table>

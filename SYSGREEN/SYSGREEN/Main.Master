@@ -4,6 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="Content/menu.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+
     <title></title>
     <meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -117,7 +122,7 @@
 
 				<ul class="nav nav-list">
 					<li class="">
-						<a href="#" class="dropdown-toggle">
+						<a runat="server" href="~/C001_ListUser" class="dropdown-toggle">
 							<i class="menu-icon fa fa fa-cog"></i>
 							<span class="menu-text"> Cấu hình </span>
 
@@ -130,84 +135,84 @@
 							<li class="active open">
 								<a runat="server" href="~/C001_ListUser">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C001
+									C001 Danh sách tài khoản
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C002_Right">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C002
+									C002 Nhóm quyền
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/C003_Depasment">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C003
+									C003 Bộ phận
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C001_ListUser">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C004
+									C004 Phân quyền
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/C005_CompanyInformation">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C005
+									C005 Thông tin công ty
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C001_ListUser">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C006
+									C006 Cấu hình
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/C007_ConfigurationSource">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C007
+									C007 Cấu hình nguồn
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C008_Product">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C008
+									C008 Cấu hình sản phẩm
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/C009_TotalBill">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C009
+									C009 Cấu hình khuyến mại sản phẩm
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C010_ConfigMenu">
 									<i class="menu-icon fa fa-caret-right"></i>
-									C010
+									C010 Cấu hình menu
 								</a>
 
 								<b class="arrow"></b>
@@ -217,7 +222,7 @@
 					</li>
 
 					<li class="">
-						<a href="#" class="dropdown-toggle">
+						<a runat="server" href="~/C001_ListUser" class="dropdown-toggle">
 							<i class="menu-icon fa fa-tag"></i>
 							<span class="menu-text"> Lễ tân </span>
 
@@ -228,26 +233,26 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/LT001_createContract">
 									<i class="menu-icon fa fa-caret-right"></i>
-									LT001a
+									LT001a Nhập reservation
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/C001_ListUser">
 									<i class="menu-icon fa fa-caret-right"></i>
-									LT001b
+									LT001b Nhập reservation
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/LT002_ListReservation">
 									<i class="menu-icon fa fa-caret-right"></i>
-									LT002
+									LT002 DS reservation
 								</a>
 
 								<b class="arrow"></b>
@@ -268,7 +273,7 @@
 							<li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									BC001
+									BC001 Báo cáo doanh thu
 								</a>
 
 								<b class="arrow"></b>
@@ -277,7 +282,7 @@
 							<li class="">
 								<a href="form-elements-2.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									BC002
+									BC002 Danh sách hóa dơn bị hủy
 								</a>
 
 								<b class="arrow"></b>
@@ -285,7 +290,7 @@
                             <li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									BC003
+									BC003 Công nợ
 								</a>
 
 								<b class="arrow"></b>
@@ -294,7 +299,7 @@
 							<li class="">
 								<a href="form-elements-2.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									BC004
+									BC004 Thống kê doanh thu theo nguồn
 								</a>
 
 								<b class="arrow"></b>
@@ -302,7 +307,7 @@
                             <li class="">
 								<a href="form-elements.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									BC005
+									BC005 Thống kê shiper
 								</a>
 
 								<b class="arrow"></b>
@@ -325,7 +330,7 @@
 							<li class="">
 								<a href="profile.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S001
+									S001 Danh sách ship
 								</a>
 
 								<b class="arrow"></b>
@@ -334,7 +339,7 @@
 							<li class="">
 								<a href="inbox.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S002
+									S002 Ship theo đơn
 								</a>
 
 								<b class="arrow"></b>
@@ -343,7 +348,7 @@
 							<li class="">
 								<a href="pricing.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S003
+									S003 Ship đi
 								</a>
 
 								<b class="arrow"></b>
@@ -352,7 +357,7 @@
 							<li class="">
 								<a href="invoice.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S004
+									S004 Nhập liệu bill
 								</a>
 
 								<b class="arrow"></b>
@@ -361,7 +366,7 @@
 							<li class="">
 								<a href="timeline.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S005
+									S005 Báo cáo hết ca
 								</a>
 
 								<b class="arrow"></b>
@@ -385,7 +390,7 @@
 							<li class="">
 								<a href="profile.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD001
+									KD001 Danh sách Khách hàng
 								</a>
 
 								<b class="arrow"></b>
@@ -394,7 +399,7 @@
 							<li class="">
 								<a href="inbox.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD002
+									KD002 Danh sách gói
 								</a>
 
 								<b class="arrow"></b>
@@ -403,7 +408,7 @@
 							<li class="">
 								<a href="pricing.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD003
+									KD003 Danh sách lẻ
 								</a>
 
 								<b class="arrow"></b>
@@ -412,7 +417,7 @@
 							<li class="">
 								<a href="invoice.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD004
+									KD004 Lịch sử mua hàng
 								</a>
 
 								<b class="arrow"></b>
@@ -421,7 +426,7 @@
 							<li class="">
 								<a href="timeline.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD005
+									KD005 Danh sách sắp sinh nhật
 								</a>
 
 								<b class="arrow"></b>
@@ -430,7 +435,7 @@
 							<li class="">
 								<a href="search.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD006
+									KD006 Danh sách bill giảm giá
 								</a>
 
 								<b class="arrow"></b>
@@ -439,7 +444,7 @@
 							<li class="">
 								<a href="email.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD007
+									KD007 Sản xuất
 								</a>
 
 								<b class="arrow"></b>
@@ -465,7 +470,7 @@
 							<li class="">
 								<a href="faq.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K001
+									K001 Xuất kho
 								</a>
 
 								<b class="arrow"></b>
@@ -474,7 +479,7 @@
 							<li class="">
 								<a href="error-404.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K002
+									K002 Nhập kho
 								</a>
 
 								<b class="arrow"></b>
@@ -483,7 +488,7 @@
 							<li class="">
 								<a href="error-500.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K003
+									K003 Dự kiến mua
 								</a>
 
 								<b class="arrow"></b>
@@ -492,7 +497,7 @@
 							<li class="">
 								<a href="grid.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K004
+									K004 Danh sách nhà cung cấp
 								</a>
 
 								<b class="arrow"></b>
@@ -501,7 +506,15 @@
 							<li class="">
 								<a href="blank.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K005
+									K005 Sản phẩm kho
+								</a> 
+
+								<b class="arrow"></b>
+							</li>
+                            <li class="">
+								<a href="blank.html">
+									<i class="menu-icon fa fa-caret-right"></i>
+									K006 Sản phẩm hỏng
 								</a>
 
 								<b class="arrow"></b>
@@ -509,15 +522,7 @@
                             <li class="">
 								<a href="blank.html">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K006
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-                            <li class="">
-								<a href="blank.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									K007
+									K007 Định lượng sản phẩm
 								</a>
 
 								<b class="arrow"></b>
@@ -534,7 +539,7 @@
 			<div class="main-content">
 				<div class="main-content-inner">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolderMenu2" runat="server">
-                            main content
+                            
                     </asp:ContentPlaceHolder>
                    
 
@@ -659,6 +664,17 @@
 		<script src="assets/js/ace.min.js"></script>
 
 		<!-- inline scripts related to this page -->
+         <div class="container body-content">
+           <link href="Content/bootstrap.min.css" rel="stylesheet" />
+            <link href="Content/bootstrap-table.css" rel="stylesheet" />
+            <script src="Scripts/jquery-1.10.2.min.js"></script>
+            <script src="Scripts/bootstrap.min.js"></script>
+            <script src="Scripts/bootstrap-table.js"></script>
+            <script src="Scripts/bootstrap-table-vi-VN.js"></script>
+            <script src="Scripts/Validator/bootstrapValidator.min.js"></script>
+            <script src="Scripts/Validator/bootbox.min.js"></script>
+            <link href="Content/Validator/bootstrapValidator.min.css" rel="stylesheet" />
+        </div>
     </form>
 </body>
 </html>

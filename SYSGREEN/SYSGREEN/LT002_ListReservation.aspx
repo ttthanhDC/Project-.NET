@@ -1,12 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="LT002_ListReservation.aspx.cs" Inherits="SYSGREEN.LT002_ListReservation" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 <table id="table" 
         data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
-        data-show-toggle="true" data-show-columns="true" 
-        data-show-pagination-switch="true"
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
 ></table>
@@ -149,4 +147,5 @@
     });
 </script>
     </asp:Content>
+
 

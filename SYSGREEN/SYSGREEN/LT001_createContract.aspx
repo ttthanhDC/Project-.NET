@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"  MasterPageFile="~/Menu.Master" CodeFile="LT001_createContract.aspx.cs" Inherits="SYSGREEN.LT001_createContract" %>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu" runat="server">
+﻿<%@ Page Language="C#" AutoEventWireup="true"  MasterPageFile="~/Main.Master" CodeFile="LT001_createContract.aspx.cs" Inherits="SYSGREEN.LT001_createContract" %>
+<asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <script>
        $(document).ready(function () {
            var formData = new FormData();
