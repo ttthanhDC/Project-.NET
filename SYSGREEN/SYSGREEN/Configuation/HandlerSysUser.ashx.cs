@@ -23,9 +23,25 @@ namespace SYSGREEN
                 try
                 {
                     obj.Create_Date = DateTime.Now;
-                    Insert(obj);
-                    context.Response.ContentType = "text/plain";
-                    context.Response.Write("insert data success");
+                    List<DataObject.SysUser> lst = Servies.SysUserServies.GetDataByUserName(obj.UserName);
+                    if (lst.Count > 0)
+                    {
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("Thêm mới không thành công! Tên người dùng đã tồn tại trong hệ thống");
+                    }
+                    List<DataObject.SysUser> lstEmail = Servies.SysUserServies.GetDataEmail(obj.Email);
+                    if (lstEmail.Count > 0)
+                    {
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("Thêm mới không thành công! Địa chỉ Email đã tồn tại trong hệ thống");
+                    }
+                    else
+                    {
+                        Insert(obj);
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("insert data success");
+                    }
+                    
                 }
                 catch (Exception e)
                 {
@@ -38,9 +54,18 @@ namespace SYSGREEN
             {
                 try
                 {
-                    Update(obj);
-                    context.Response.ContentType = "text/plain";
-                    context.Response.Write("insert data success");
+                    List<DataObject.SysUser> lstEmail = Servies.SysUserServies.GetDataEmail(obj.Email);
+                    if (lstEmail.Count > 0)
+                    {
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("Cập nhật thông tin không thành công! Địa chỉ Email đã tồn tại trong hệ thống");
+                    }
+                    else
+                    {
+                        Update(obj);
+                        context.Response.ContentType = "text/plain";
+                        context.Response.Write("Cập nhật thông tin người dùng thành công");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -54,7 +79,7 @@ namespace SYSGREEN
                 {
                     DeleteData(obj.ID);
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write("insert data success");
+                    context.Response.Write("Xóa người dùng thành công");
                 }
                 catch (Exception e)
                 {
