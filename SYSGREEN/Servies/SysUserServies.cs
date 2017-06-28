@@ -57,7 +57,85 @@ namespace Servies
             cmd.Parameters.AddWithValue("@ID", Id);
             cmd.ExecuteNonQuery();
         }
+        public static List<DataObject.SysUser> GetDataEmail(string email)
+        {
+            List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
+            String Select = "";
+            SqlCommand cmd = null;
+            Common.Connection.Close();
+            Common.Connection.Open();
+            if (email != "")
+            {
+                Select = "Select * from SYS_USER Where Email = @Email";
 
+                cmd = new SqlCommand(Select);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Parameters.AddWithValue("@Email", email);
+            }
+            
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.SysUser obj = new DataObject.SysUser();
+                    obj.ID = Int32.Parse(oReader["ID"].ToString());
+                    obj.UserName = oReader["UserName"].ToString();
+                    obj.Password = oReader["Password"].ToString();
+                    obj.Email = oReader["Email"].ToString();
+                    obj.DeptId = Int32.Parse(oReader["DeptId"].ToString());
+                    obj.OrgId = Int32.Parse(oReader["OrgId"].ToString());
+                    obj.Create_User = oReader["Create_User"].ToString();
+                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
+                        obj.Create_Date = DateTime.Parse(createDate);
+                    }
+                    lstSysUser.Add(obj);
+                }
+            }
+            return lstSysUser;
+        }
+
+        public static List<DataObject.SysUser> GetDataByUserName(string userName)
+        {
+            List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
+            String Select = "";
+            SqlCommand cmd = null;
+            Common.Connection.Close();
+            Common.Connection.Open();
+            if (userName != "")
+            {
+                Select = "Select * from SYS_USER Where UserName = @UserName";
+
+                cmd = new SqlCommand(Select);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Parameters.AddWithValue("@UserName", userName);
+            }
+
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.SysUser obj = new DataObject.SysUser();
+                    obj.ID = Int32.Parse(oReader["ID"].ToString());
+                    obj.UserName = oReader["UserName"].ToString();
+                    obj.Password = oReader["Password"].ToString();
+                    obj.Email = oReader["Email"].ToString();
+                    obj.DeptId = Int32.Parse(oReader["DeptId"].ToString());
+                    obj.OrgId = Int32.Parse(oReader["OrgId"].ToString());
+                    obj.Create_User = oReader["Create_User"].ToString();
+                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
+                        obj.Create_Date = DateTime.Parse(createDate);
+                    }
+                    lstSysUser.Add(obj);
+                }
+            }
+            return lstSysUser;
+        }
         public static List<DataObject.SysUser> GetData(Int32 Id)
         {
             List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
