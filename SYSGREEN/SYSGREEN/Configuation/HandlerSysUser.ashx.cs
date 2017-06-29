@@ -16,10 +16,11 @@ namespace SYSGREEN
         public void ProcessRequest(HttpContext context)
         {
             String type = context.Request.Form["type"].ToString();
-            String jsonData = context.Request.Form["data"].ToString();
-            DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(jsonData);
+           
             if (type == "insert")
             {
+                String jsonData = context.Request.Form["data"].ToString();
+                DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(jsonData);
                 try
                 {
                     obj.Create_Date = DateTime.Now;
@@ -52,6 +53,8 @@ namespace SYSGREEN
             }
             else if (type == "update")
             {
+                String jsonData = context.Request.Form["data"].ToString();
+                DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(jsonData);
                 try
                 {
                     List<DataObject.SysUser> lstEmail = Servies.SysUserServies.GetDataEmail(obj.Email);
@@ -75,6 +78,8 @@ namespace SYSGREEN
             }
             else if (type == "delete")
             {
+                String jsonData = context.Request.Form["data"].ToString();
+                DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(jsonData);
                 try
                 {
                     DeleteData(obj.ID);
@@ -89,6 +94,8 @@ namespace SYSGREEN
             }
             else if (type == "getData")
             {
+                String jsonData = context.Request.Form["data"].ToString();
+                DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(jsonData);
                 try
                 {
                     // Case ID > 0 -> Result = 1 record

@@ -4,30 +4,77 @@
       
        $(document).ready(function () {
            // Load Data Bộ phận
-           var data1 = {
-               menu: [{
-                   name: 'Lễ tân',
-                   link: '1',
-                   sub: null
-               }, {
-                   name: 'Shipper',
-                   link: '2',
-                   sub: null
+           var formData = new FormData();
+           var formDataDept = new FormData();
+           var formDataOrg = new FormData();
+           formDataDept.append('type', 'getDataDept');
+           formDataDept.append('data', '1');
+           formDataOrg.append('type', 'getDataOrg');
+           formDataOrg.append('data', '1');
+           $.ajax({
+               url: "Configuation/HandlerSysUser.ashx",
+               type: "POST",
+               data: formDataDept,
+               contentType: false,
+               processData: false,
+               success: function (result) {
+                   var jsonData = result;
+                   var arr = [];
+                   if (jsonData && jsonData.length > 0) {
+                       for (var i = 0; i < jsonData.length ; i++) {
+                           var objectData = jsonData[i];
+                           var obj = {};
+                           obj.name = objectData.Dept_Name;
+                           obj.link = objectData.ID;
+                           obj.sub = null;
+                           arr.push(obj);
+                       }
+                   }
+                   var data1 = { menu: arr };
+                   var $menu = $("#deptID");
+                   $.each(data1.menu, function () {
+                       $menu.append(
+                           getDept(this)
+                       );
+                   });
+               },
+               error: function (err) {
+
                }
-               ]
-           };
-           var data2 = {
-               menu: [{
-                   name: 'Thanh Xuân',
-                   link: '1',
-                   sub: null
-               }, {
-                   name: 'Cầu giấy',
-                   link: '2',
-                   sub: null
+           });
+
+           $.ajax({
+               url: "Configuation/HandlerSysUser.ashx",
+               type: "POST",
+               data: formDataOrg,
+               contentType: false,
+               processData: false,
+               success: function (result) {
+                   var jsonData = result;
+                   var arr = [];
+                   if (jsonData && jsonData.length > 0) {
+                       for (var i = 0; i < jsonData.length ; i++) {
+                           var objectData = jsonData[i];
+                           var obj = {};
+                           obj.name = objectData.Name;
+                           obj.link = objectData.ID;
+                           obj.sub = null;
+                           arr.push(obj);
+                       }
+                   }
+                   var data2 = { menu: arr };
+                   var $menu = $("#orgID");
+                   $.each(data2.menu, function () {
+                       $menu.append(
+                           getOrg(this)
+                       );
+                   });
+               },
+               error: function (err) {
+
                }
-               ]
-           };
+           });
+           
            // select box phòng ban
            var getDept = function (itemData) {
                var item = $("<option value='"+itemData.link+"'>")
@@ -35,12 +82,6 @@
                return item;
            };
 
-           var $menu = $("#deptID");
-           $.each(data1.menu, function () {
-               $menu.append(
-                   getDept(this)
-               );
-           });
            // select box cơ sở   
            var getOrg = function (itemData) {
                var item = $("<option value='" + itemData.link + "'>")
@@ -48,14 +89,9 @@
                return item;
            };
 
-           var $menu = $("#orgID");
-           $.each(data2.menu, function () {
-               $menu.append(
-                   getOrg(this)
-               );
-           });
+          
            //$menu.menu();
-           var formData = new FormData();
+          
            function testFunction(data) {
                return data.valid;
            }

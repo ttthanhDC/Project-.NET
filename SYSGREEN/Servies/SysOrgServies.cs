@@ -58,14 +58,13 @@ namespace Servies
             List<DataObject.SysOrg> lstSysOrg = new List<DataObject.SysOrg>();
             String Select = "";
             SqlCommand cmd = null;
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
                 Select = "Select * from SYS_ORG Where ID = @ID";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@ID", Id);
             }
             else
@@ -73,8 +72,9 @@ namespace Servies
                 Select = "Select * from SYS_ORG";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
             }
+            conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
@@ -92,6 +92,7 @@ namespace Servies
                     lstSysOrg.Add(obj);
                 }
             }
+            conn.Close();
             return lstSysOrg;
         }
     }

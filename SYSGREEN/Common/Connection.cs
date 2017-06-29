@@ -14,7 +14,7 @@ namespace Common
         // DuyTN4 Comment
         public static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SysXanhLa"].ConnectionString);
         public static SqlConnection SqlConnect(){
-            return conn;
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["SysXanhLa"].ConnectionString);
         }
         public static void Open()
         {
