@@ -14,11 +14,10 @@ namespace Servies
         {
             String Insert = "INSERT INTO SYS_PRODUCT (ORG_ID,Product_Code,Product_Name,Product_Unit,Product_Amount,Create_User,Create_Date) VALUES ";
             Insert += "(@ORG_ID,@Product_Code,@Product_Name,@Product_Unit,@Product_Amount,@Create_User,@Create_Date)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@ORG_ID", obj.ORG_ID);
             cmd.Parameters.AddWithValue("@Product_Code", obj.Product_Code);
             cmd.Parameters.AddWithValue("@Product_Name", obj.Product_Name);
@@ -26,38 +25,41 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Product_Amount", obj.Product_Amount);
             cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
             cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
         }
 
         public static void UpdateData(DataObject.SysProduct obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_PRODUCT SET ORG_ID = @ORG_ID, Product_Code = @Product_Code, ";
             Update += "Product_Name = @Product_Name, Product_Unit = @Product_Unit, Product_Amount = @Product_Amount  Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@ORG_ID", obj.ORG_ID);
             cmd.Parameters.AddWithValue("@Product_Code", obj.Product_Code);
             cmd.Parameters.AddWithValue("@Product_Name", obj.Product_Name);
             cmd.Parameters.AddWithValue("@Product_Unit", obj.Product_Unit);
             cmd.Parameters.AddWithValue("@Product_Amount", obj.Product_Amount);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_PRODUCT Where ID = @ID";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@ID", Id);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static List<DataObject.SysProduct> GetData(Int32 Id)
@@ -65,15 +67,14 @@ namespace Servies
             List<DataObject.SysProduct> lstSysProduct = new List<DataObject.SysProduct>();
             String Select = "";
             SqlCommand cmd = null;
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
                 Select = "Select * from SYS_PRODUCT Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@ID", Id);
             }
             else
@@ -83,6 +84,7 @@ namespace Servies
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = Common.Connection.SqlConnect();
             }
+            conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
@@ -103,6 +105,7 @@ namespace Servies
                     lstSysProduct.Add(obj);
                 }
             }
+            conn.Close();
             return lstSysProduct;
         }
     }
