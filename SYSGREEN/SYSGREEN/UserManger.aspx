@@ -3,6 +3,52 @@
    <script>
       
        $(document).ready(function () {
+           // load data khi edit
+           var idParam = getQueryVariable("paramId");
+           // funtion get
+           if (idParam) {
+               var formDataListUser = new FormData();
+               formDataListUser.append('type', 'getData');
+               var json = { 'ID': parseInt(idParam) };
+               formDataListUser.append('data', JSON.stringify(json));
+               $.ajax({
+                   url: "Configuation/HandlerSysUser.ashx",
+                   type: "POST",
+                   data: formDataListUser,
+                   contentType: false,
+                   processData: false,
+                   success: function (result) {
+                       var jsonData = result;
+                       if (jsonData && jsonData.length > 0) {
+                           for (var i = 0; i < jsonData.length ; i++) {
+                               var objectData = jsonData[i];
+                               var obj = {};
+                               obj.id = objectData.ID;
+                               obj.email = objectData.Email;
+                               obj.department = objectData.DeptId;
+                               obj.local = objectData.OrgId;
+                               obj.dateCreate = objectData.Create_Date;
+                               obj.user = objectData.UserName;
+                           }
+                       }
+                   },
+                   error: function (err) {
+
+                   }
+               });
+           }
+           
+           function getQueryVariable(variable) {
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i = 0; i < vars.length; i++) {
+                   var pair = vars[i].split("=");
+                   if (pair[0] == variable) {
+                       return pair[1];
+                   }
+               }
+               //alert('Query Variable ' + variable + ' not found');
+           }
            // Load Data Bộ phận
            var formData = new FormData();
            var formDataDept = new FormData();
@@ -95,6 +141,8 @@
            function testFunction(data) {
                return data.valid;
            }
+
+          
           
            // Event Thêm mới
            $('#btnSave').on('click', function (e) {
