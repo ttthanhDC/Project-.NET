@@ -104,6 +104,39 @@ namespace SYSGREEN
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "getDataDept")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    List<DataObject.DeptObject> lst = Servies.DeptObjectServices.GetData(0);
+
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getDataOrg")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    List<DataObject.SysOrg> lst = Servies.SysOrgServies.GetData(0);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
