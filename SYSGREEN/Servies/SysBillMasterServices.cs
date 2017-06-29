@@ -14,11 +14,10 @@ namespace Servies
         {
             String Insert = "INSERT INTO SYS_BILL_MASTER (BillCode,CustomerId,SourceId,TotalAmount,TotalAmountCollected,TotalAmountRemain,Discount,Status,CreateUser,CreateDate) VALUES ";
             Insert += " (@BillCode,@CustomerId,@SourceId,@TotalAmount,@TotalAmountCollected,@TotalAmountRemain,@Discount,@Status,@CreateUser,@CreateDate)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@BillCode", obj.BillCode);
             cmd.Parameters.AddWithValue("@CustomerId", obj.CustomerId);
             cmd.Parameters.AddWithValue("@SourceId", obj.SourceId);
@@ -28,19 +27,19 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Status", obj.Status);
             cmd.Parameters.AddWithValue("@CreateUser", obj.CreateUser);
             cmd.Parameters.AddWithValue("@CreateDate", obj.CreateDate);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
         }
 
         public static int InsertDataReturnId(DataObject.SysBillMaster obj)
         {
             String Insert = "INSERT INTO SYS_BILL_MASTER (BillCode,CustomerId,SourceId,TotalAmount,TotalAmountCollected,TotalAmountRemain,Discount,Status,CreateUser,CreateDate) VALUES ";
             Insert += " (@BillCode,@CustomerId,@SourceId,@TotalAmount,@TotalAmountCollected,@TotalAmountRemain,@Discount,@Status,@CreateUser,@CreateDate)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@BillCode", obj.BillCode);
             cmd.Parameters.AddWithValue("@CustomerId", obj.CustomerId);
             cmd.Parameters.AddWithValue("@SourceId", obj.SourceId);
@@ -52,21 +51,21 @@ namespace Servies
             cmd.Parameters.AddWithValue("@CreateDate", obj.CreateDate);
             cmd.ExecuteNonQuery();
             cmd.CommandText = "SELECT scope_identity()";
+            conn.Open();
             int identity = Convert.ToInt32(cmd.ExecuteScalar());
-            Common.Connection.Close();
+            conn.Close();
             return identity;
         }
 
         public static void UpdateData(DataObject.SysBillMaster obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_BILL_MASTER SET BillCode = @BillCode, CustomerId = @CustomerId, SourceId = @SourceId, ";
             Update += "TotalAmount = @TotalAmount, TotalAmountCollected = @TotalAmountCollected, Discount = @Discount, ";
             Update += "Status = @Status Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@BillCode", obj.BillCode);
             cmd.Parameters.AddWithValue("@CustomerId", obj.CustomerId);
             cmd.Parameters.AddWithValue("@SourceId", obj.SourceId);
@@ -75,19 +74,22 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Discount", obj.Discount);
             cmd.Parameters.AddWithValue("@Status", obj.Status);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_BILL_MASTER Where ID = @ID";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
             cmd.Parameters.AddWithValue("@ID", Id);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static List<DataObject.SysBillMaster> GetData(Int32 Id)
@@ -95,15 +97,14 @@ namespace Servies
             List<DataObject.SysBillMaster> lstSysBillMaster = new List<DataObject.SysBillMaster>();
             String Select = "";
             SqlCommand cmd = null;
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
                 Select = "Select * from SYS_BILL_MASTER Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@ID", Id);
             }
             else
@@ -111,8 +112,9 @@ namespace Servies
                 Select = "Select * from SYS_BILL_MASTER";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
             }
+            conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
@@ -136,6 +138,7 @@ namespace Servies
                     lstSysBillMaster.Add(obj);
                 }
             }
+            conn.Close();
             return lstSysBillMaster;
         }
     }

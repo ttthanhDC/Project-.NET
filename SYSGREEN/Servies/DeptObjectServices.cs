@@ -14,43 +14,45 @@ namespace Servies
         public static void InsertData(DataObject.DeptObject obj)
         {
             String Insert = "INSERT INTO SYS_DEPT (Dept_Name,Dept_Description,Create_User,Create_Date) VALUES (@Dept_Name,@Dept_Description,@Create_User,@Create_Date)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Dept_Name", obj.Dept_Name);
             cmd.Parameters.AddWithValue("@Dept_Description", obj.Dept_Description);
             cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
             cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
         }
 
         public static void UpdateData(DataObject.DeptObject obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_DEPT SET noidung = @Dept_Name, Dept_Description = @Dept_Description Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Dept_Name", obj.Dept_Name);
             cmd.Parameters.AddWithValue("@Dept_Description", obj.Dept_Description);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_DEPT Where ID = @ID";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@ID", Id);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static List<DataObject.DeptObject> GetData(Int32 Id)

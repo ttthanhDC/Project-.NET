@@ -14,21 +14,20 @@ namespace Servies
         {
             String Insert = "INSERT INTO SYS_GROUP_USER_ROLE (ROLE_ID,USER_ID) VALUES ";
             Insert += "(@ROLE_ID,@USER_ID)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@RoleName", obj.ROLE_ID);
             cmd.Parameters.AddWithValue("@Create_User", obj.USER_ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
         }
 
         public static void UpdateData(DataObject.SysGroupUserRole obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_GROUP_USER_ROLE SET ROLE_ID = @ROLE_ID, @USER_ID = USER_ID Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
@@ -36,19 +35,22 @@ namespace Servies
             cmd.Parameters.AddWithValue("@ROLE_ID", obj.ROLE_ID);
             cmd.Parameters.AddWithValue("@USER_ID", obj.USER_ID);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_GROUP_USER_ROLE Where ID = @ID";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = Common.Connection.SqlConnect();
             cmd.Parameters.AddWithValue("@ID", Id);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static List<DataObject.SysGroupUserRole> GetData(Int32 Id)
@@ -56,15 +58,14 @@ namespace Servies
             List<DataObject.SysGroupUserRole> lstSysGroupUserRole = new List<DataObject.SysGroupUserRole>();
             String Select = "";
             SqlCommand cmd = null;
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
                 Select = "Select * from SYS_GROUP_USER_ROLE Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@ID", Id);
             }
             else
@@ -72,8 +73,9 @@ namespace Servies
                 Select = "Select * from SYS_GROUP_USER_ROLE";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
             }
+            conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
@@ -85,6 +87,7 @@ namespace Servies
                     lstSysGroupUserRole.Add(obj);
                 }
             }
+            conn.Close();
             return lstSysGroupUserRole;
         }
     }

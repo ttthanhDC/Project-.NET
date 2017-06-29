@@ -14,11 +14,10 @@ namespace Servies
         {
             String Insert = "INSERT INTO SYS_COMPANY (Company_Name_EN,Company_Name_Short,Company_Name_Vi,Tax_Code,Bank_Account,Amount_Freeship,Logo,Email,Phone_Number) ";
             Insert += " VALUES (@Company_Name_EN,@Company_Name_Short,@Company_Name_Vi,@Tax_Code,@Bank_Account,@Amount_Freeship,@Logo,@Email,@Phone_Number)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Company_Name_EN", obj.Company_Name_EN);
             cmd.Parameters.AddWithValue("@Company_Name_Short", obj.Company_Name_Short);
             cmd.Parameters.AddWithValue("@Company_Name_Vi", obj.Company_Name_Vi);
@@ -28,19 +27,19 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Logo", obj.Logo);
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@Phone_Number", obj.Phone_Number);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
         }
 
         public static void UpdateData(DataObject.SysCompany obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_COMPANY SET Company_Name_EN = @Company_Name_EN, Company_Name_Short = @Company_Name_Short, Company_Name_Vi =@Company_Name_Vi ";
             Update += "Tax_Code = @Tax_Code, Bank_Account = @Bank_Account ,Amount_Freeship = @Amount_Freeship,Logo = @Logo, Email =@Email, Phone_Number = @Phone_Number Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Company_Name_EN", obj.Company_Name_EN);
             cmd.Parameters.AddWithValue("@Company_Name_Short", obj.Company_Name_Short);
             cmd.Parameters.AddWithValue("@Company_Name_Vi", obj.Company_Name_Vi);
@@ -51,19 +50,22 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@Phone_Number", obj.Phone_Number);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_COMPANY Where ID = @ID";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn  = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@ID", Id);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static List<DataObject.SysCompany> GetData(Int32 Id)
@@ -71,15 +73,14 @@ namespace Servies
             List<DataObject.SysCompany> lstSysCompany = new List<DataObject.SysCompany>();
             String Select = "";
             SqlCommand cmd = null;
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
                 Select = "Select * from SYS_COMPANY Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@ID", Id);
             }
             else
@@ -87,8 +88,9 @@ namespace Servies
                 Select = "Select * from SYS_COMPANY";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
             }
+            conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
             {
                 while (oReader.Read())
@@ -107,6 +109,7 @@ namespace Servies
                     lstSysCompany.Add(obj);
                 }
             }
+            conn.Close();
             return lstSysCompany;
         }
     }
