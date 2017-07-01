@@ -260,7 +260,7 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/C001_ListUser">
+								<a runat="server" href="~/LT001b_createReservation">
 									<i class="menu-icon fa fa-caret-right"></i>
 									LT001b Nhập reservation
 								</a>

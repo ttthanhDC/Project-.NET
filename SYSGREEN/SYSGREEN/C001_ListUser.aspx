@@ -4,178 +4,95 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
         $(function () {
-            $('#table').bootstrapTable({
-                columns: [{
-                    field: 'id',
-                    title: 'Id',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-                }, {
-                    field: 'email',
-                    title: 'Email',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-                }, {
-                    field: 'department',
-                    title: 'Bộ phận',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-
-                }, {
-                    field: 'local',
-                    title: 'Cơ sở',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-                }, {
-                    field: 'dateCreate',
-                    title: 'Ngày tạo',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: true,
-                }, {
-                    field: 'user',
-                    title: 'User',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    editable: {
-                        type: 'text',
-                        title: 'User',
-                        validate: function (value) {
-                            value = $.trim(value);
-                            if (!value) {
-                                return 'This field is required';
-                            }
-                            if (!/^\$/.test(value)) {
-                                return 'This field needs to start width $.'
-                            }
-                            var data = $table.bootstrapTable('getData'),
-                                index = $(this).parents('tr').data('index');
-                            console.log(data[index]);
-                            return '';
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getData');
+            var json = { 'ID': 0};
+            formDataListUser.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysUser.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.id = objectData.ID;
+                            obj.email = objectData.Email;
+                            obj.department = objectData.DeptId;
+                            obj.local = objectData.OrgId;
+                            obj.dateCreate = objectData.Create_Date;
+                            obj.user = objectData.UserName;
+                            arr.push(obj);
                         }
-                    },
-                    footerFormatter: userFormatter
-                }, {
-                    field: 'operate',
-                    title: 'Thao tác',
-                    align: 'center',
-                    valign: 'middle',
-                    events: operateEvents,
-                    formatter: operateFormatter
-                }],
-                
+                    }
+                    data = arr;
+                    $('#table').bootstrapTable({
+                        columns: [{
+                            field: 'id',
+                            title: 'Id',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: true,
+                        }, {
+                            field: 'email',
+                            title: 'Email',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: true,
+                        }, {
+                            field: 'department',
+                            title: 'Bộ phận',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: true,
 
+                        }, {
+                            field: 'local',
+                            title: 'Cơ sở',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: true,
+                        }, {
+                            field: 'dateCreate',
+                            title: 'Ngày tạo',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: true,
+                        }, {
+                            field: 'user',
+                            title: 'User',
+                            align: 'center',
+                            valign: 'middle',
+                            sortable: true,
+                            editable: false
+                        }, {
+                            field: 'operate',
+                            title: 'Thao tác',
+                            align: 'center',
+                            valign: 'middle',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }],
+                        data: data
+                    });
+                },
+                error: function (err) {
 
-                data: [{
-                    id: 1,
-                    email: 'Duytn.tb@gmil.com',
-                    department: 'sele',
-                    local: 'Hà nội',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 2,
-                    email: 'Duytn.tb@gmil.com',
-                    department: 'sele',
-                    local: 'HCM',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 3,
-                    email: 'Duytn.tb@gmil.com',
-                    department: 'sele',
-                    local: 'Hà nội',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 4,
-                    email: 'Duytn.tb@gmil.com',
-                    department: 'sele',
-                    local: 'Hà nội',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 5,
-                    email: 'Duytn.tb@gmil.com',
-                    department: 'sele',
-                    local: 'Hà nội',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                },{
-                     id: 6,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 7,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 8,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 9,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 10,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 11,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 12,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'HCM',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 13,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }, {
-                     id: 14,
-                     email: 'Duytn.tb@gmil.com',
-                     department: 'sele',
-                     local: 'Hà nội',
-                     dateCreate: '20/5/2017',
-                     user: 'Duytn4'
-                 }]
+                }
             });
+           // format table
+            
         });
         // function
         function userFormatter(data) {
@@ -194,6 +111,7 @@
 
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
+                window.location = '/UserManger.aspx?paramId=1';
                 alert('You click like action, row: ' + JSON.stringify(row));
             },
             'click .remove': function (e, value, row, index) {
@@ -203,6 +121,8 @@
                 });
             }
         };
+      
+
 
     </script>
     <table id="table" 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="LT002_ListReservation.aspx.cs" Inherits="SYSGREEN.LT002_ListReservation" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="LT001b_createReservation.aspx.cs" Inherits="SYSGREEN.LT001b_createReservation" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
  <div style ="text-align:center">
@@ -75,7 +75,7 @@
                 valign: 'middle',
                 style: 'font-weight: bold',
                 fontWeight: 'bold'
-                
+
             }, {
                 field: 'OrderType',
                 title: 'Loại đơn hàng',
@@ -89,7 +89,7 @@
                 valign: 'middle',
                 events: productEvents,
                 formatter: productFormatter
-                
+
             }, {
                 field: 'dateShip',
                 title: 'Ngày giao hàng',
@@ -120,7 +120,7 @@
 
 
             data: [{
-                stt : '1',
+                stt: '1',
                 billType: 'Master',
                 OrderType: 'G-1',
                 dateShip: '20/07/2017',
@@ -252,5 +252,6 @@
     };
 </script>
     </asp:Content>
+
 
 

@@ -14,31 +14,33 @@ namespace Servies
         {
             String Insert = "INSERT INTO SYS_ORG (Name,Description,Create_User,Create_Date) VALUES ";
             Insert += "(@Name,@Description,@Create_User,@Create_Date)";
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Name", obj.Name);
             cmd.Parameters.AddWithValue("@Description", obj.Description);
             cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
             cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
+            conn.Open();
             cmd.ExecuteNonQuery();
-            Common.Connection.Close();
+            conn.Close();
+            
         }
 
         public static void UpdateData(DataObject.SysOrg obj)
         {
-            Common.Connection.Close();
-            Common.Connection.Open();
+            SqlConnection conn = Common.Connection.SqlConnect();
             String Update = "UPDATE SYS_ORG SET Name = @Name, Description = @Description Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Name", obj.Name);
             cmd.Parameters.AddWithValue("@Description", obj.Description);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static void DeleteData(Int32 Id)
