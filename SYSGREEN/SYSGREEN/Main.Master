@@ -150,6 +150,15 @@
 								<b class="arrow"></b>
 							</li>
 
+                            <li class="active open">
+								<a runat="server" href="~/AddRole">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Thêm Nhóm quyền
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
 							<li class="">
 								<a runat="server" href="~/C002_Right">
 									<i class="menu-icon fa fa-caret-right"></i>
