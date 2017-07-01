@@ -136,16 +136,16 @@ namespace Servies
             }
             return lstSysUser;
         }
-        public static List<DataObject.SysUser> GetData(Int32 Id)
+        public static List<DataObject.ViewSysUser> GetData(Int32 Id)
         {
-            List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
+            List<DataObject.ViewSysUser> lstSysUser = new List<DataObject.ViewSysUser>();
             String Select = "";
             SqlCommand cmd = null;
             Common.Connection.Close();
             Common.Connection.Open();
             if (Id > 0)
             {
-                Select = "Select * from SYS_USER Where ID = @ID";
+                Select = "Select * from vSysUser Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
@@ -154,7 +154,7 @@ namespace Servies
             }
             else
             {
-                Select = "Select * from SYS_USER";
+                Select = "Select * from vSysUser";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = Common.Connection.SqlConnect();
@@ -163,11 +163,13 @@ namespace Servies
             {
                 while (oReader.Read())
                 {
-                    DataObject.SysUser obj = new DataObject.SysUser();
+                    DataObject.ViewSysUser obj = new DataObject.ViewSysUser();
                     obj.ID = Int32.Parse(oReader["ID"].ToString());
                     obj.UserName = oReader["UserName"].ToString();
                     obj.Password = oReader["Password"].ToString();
                     obj.Email = oReader["Email"].ToString();
+                    obj.DeptName = oReader["NAME_DEPT"].ToString();
+                    obj.OrgName = oReader["NAME_ORG"].ToString();
                     obj.DeptId = Int32.Parse(oReader["DeptId"].ToString());
                     obj.OrgId = Int32.Parse(oReader["OrgId"].ToString());
                     obj.Create_User = oReader["Create_User"].ToString();
