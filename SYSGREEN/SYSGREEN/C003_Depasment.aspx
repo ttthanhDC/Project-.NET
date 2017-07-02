@@ -10,14 +10,14 @@
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                    //editable: true,
                 }, {
                     field: 'department',
                     title: 'Bộ phận',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                    //editable: true,
 
                 }, {
                     field: 'dateCreate',
@@ -25,31 +25,15 @@
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                    //editable: true,
                 }, {
                     field: 'user',
                     title: 'User',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: {
-                        type: 'text',
-                        title: 'User',
-                        validate: function (value) {
-                            value = $.trim(value);
-                            if (!value) {
-                                return 'This field is required';
-                            }
-                            if (!/^\$/.test(value)) {
-                                return 'This field needs to start width $.'
-                            }
-                            var data = $table.bootstrapTable('getData'),
-                                index = $(this).parents('tr').data('index');
-                            console.log(data[index]);
-                            return '';
-                        }
-                    },
-                    footerFormatter: userFormatter
+                    
+                    //footerFormatter: userFormatter
                 }, {
                     field: 'operate',
                     title: 'Thao tác',

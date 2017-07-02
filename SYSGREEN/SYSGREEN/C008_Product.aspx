@@ -25,14 +25,14 @@
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                editable: true,
+                //editable: true,
             }, {
                 field: 'codeProduct',
                 title: 'Code',
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                editable: true,
+               // editable: true,
 
             }, {
                 field: 'nameProduct',
@@ -40,21 +40,21 @@
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                editable: true,
+                //editable: true,
             }, {
                 field: 'unitProduct',
                 title: 'Đơn vị',
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                editable: true
+                //editable: true
             }, {
                 field: 'priceProduct',
                 title: 'Giá',
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-                editable: true
+               // editable: true
             }],
 
 

@@ -39,21 +39,21 @@
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: true,
+                            //editable: true,
                         }, {
                             field: 'email',
                             title: 'Email',
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: true,
+                            //editable: true,
                         }, {
                             field: 'department',
                             title: 'Bộ phận',
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: true,
+                            //editable: true,
 
                         }, {
                             field: 'local',
@@ -61,21 +61,21 @@
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: true,
+                           // editable: true,
                         }, {
                             field: 'dateCreate',
                             title: 'Ngày tạo',
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: true,
+                           // editable: true,
                         }, {
                             field: 'user',
                             title: 'User',
                             align: 'center',
                             valign: 'middle',
                             sortable: true,
-                            editable: false
+                            //editable: false
                         }, {
                             field: 'operate',
                             title: 'Thao tác',
@@ -111,8 +111,8 @@
 
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
-                window.location = '/UserManger.aspx?paramId=1';
-                alert('You click like action, row: ' + JSON.stringify(row));
+                window.location = '/UserManger.aspx?paramId='+ row.id;
+                //alert('You click like action, row: ' + JSON.stringify(row));
             },
             'click .remove': function (e, value, row, index) {
                 $('#table').bootstrapTable('remove', {
