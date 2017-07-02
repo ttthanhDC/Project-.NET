@@ -10,6 +10,6 @@
 namespace SYSGREEN {
     
     
-    public partial class TheRightForUser {
+    public partial class AddFunction {
     }
 }

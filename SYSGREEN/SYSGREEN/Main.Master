@@ -158,6 +158,14 @@
 
 								<b class="arrow"></b>
 							</li>
+                            <li class="active open">
+								<a runat="server" href="~/AddFunction">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Thêm function
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 
 							<li class="">
 								<a runat="server" href="~/C002_Right">
@@ -177,7 +185,7 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/C001_ListUser">
+								<a runat="server" href="~/TheRightForUser">
 									<i class="menu-icon fa fa-caret-right"></i>
 									C004 Phân quyền
 								</a>
@@ -235,7 +243,22 @@
 
 								<b class="arrow"></b>
 							</li>
-							
+							<li class="">
+								<a runat="server" href="~/TheRightForUser">
+									<i class="menu-icon fa fa-caret-right"></i>
+									phân quyền
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+                            <li class="">
+								<a runat="server" href="~/AddUserToGorup">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Add user vào group role
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
 
