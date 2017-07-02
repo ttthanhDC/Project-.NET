@@ -17,7 +17,7 @@
             </div>
             <label for="sel1" class="col-md-2">Mã Reservation</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txtMaHD" />
+                <input type="text" class="form-control" name="title" id="txtMaHD" disabled />
             </div>
         </div> 
     </div>  
@@ -33,7 +33,7 @@
             </div>
             <label for="sel1" class="col-md-2">Số ngày còn lại</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txtSoNgayConLai" />
+                <input type="text" class="form-control" name="title" id="txtSoNgayConLai" disabled />
             </div>
         </div> 
     </div>
@@ -49,7 +49,7 @@
             </div>
             <label for="sel1" class="col-md-2">Tổng</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txtTong" />
+                <input type="text" class="form-control" name="title" id="txtTong" disabled />
             </div>
         </div> 
     </div>
@@ -65,7 +65,7 @@
             </div>
             <label for="sel1" class="col-md-2">Số tiền thu được</label>
             <div class="col-md-2">
-                 <input type="text" class="form-control" name="title" id="txtSoTienThuDuoc" />
+                 <input type="text" class="form-control" name="title" id="txtSoTienThuDuoc" value='0' disabled />
             </div>
         </div> 
     </div>
@@ -81,7 +81,7 @@
             </div>
             <label for="sel1" class="col-md-2">Chiết khấu</label>
             <div class="col-md-2">
-                 <input type="text" class="form-control" name="title" id="txtChietKhau" />
+                 <input type="text" class="form-control" name="title" id="txtChietKhau" disabled/>
             </div>
         </div> 
     </div>
@@ -97,7 +97,7 @@
             </div>
             <label for="sel1" class="col-md-2">Còn Nợ</label>
             <div class="col-md-2">
-                 <input type="text" class="form-control" name="title" id="txtNo" />
+                 <input type="text" class="form-control" name="title" id="txtNo" value='0' disabled/>
             </div>
         </div> 
     </div>
@@ -176,7 +176,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnPopup">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -185,32 +185,123 @@
 <script>
     // Bootstrap Table
     $(function () {
-        var dataGlobal = [];
+        window.dataGlobal = [];
         //Onclick add Table Master
+        $('#btnPopup').on('click', function () {
+            var $tablePopup = $('#tablePopup');
+            var $table = $('#table');
+            var dataPopup = $('#tablePopup').bootstrapTable('getData');
+            if (dataPopup.length > 0) {
+                var totalMoneyPopup = 0;
+                for (var i = 0; i < dataPopup.length ; i++) {
+                    var thanhtien = dataPopup[i].total.split('.').join('');
+                    totalMoneyPopup += Number(thanhtien);
+                }
+                var total = 0;
+                for (var i = 0; i < window.dataGlobal.length ; i++) {
+                    if (window.dataGlobal[i].billId == dataPopup[0].parentBillId) {
+                        window.dataGlobal[i].monny = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                        window.dataGlobal[i].detalMaster = dataPopup;
+                    }
+                    total += Number(window.dataGlobal[i].monny.split('.').join(''));
+                }
+                $('#txtTong').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                $table.bootstrapTable('removeAll');
+                $table.bootstrapTable('load', window.dataGlobal);
+            }
+        });
         $('#btnAdd').on('click', function () {
             var $table = $('#table');
             //$table.bootstrapTable('insertRow', { index: 1, row: row });
             var obj = {};
-            obj.billType = $('#cb_billType :selected').text();
-            if ($('#cb_OrderType :selected').text() == 'Gói') {
-                obj.OrderType = $('#cb_OrderType2 :selected').text();
-            } else {
-                obj.OrderType = 'Đơn lẻ'
+            var check = true;
+            if ($('#cb_billType').val() == -1) {
+                alert('Vui lòng chọn loại đơn !');
+                check = false;
             }
-            obj.dateShip = '';
-            obj.discount = '';
-            obj.monny = '0 VNĐ';
-            obj.payType = $('#cb_PayType :selected').text();
-            var data = $table.bootstrapTable('getData');
-            obj.stt = data.length + 1;
-            /*
-            var data = $table.bootstrapTable('getData');
-            data.unshift(obj);
-            for (var i = 0; i < data.length ; i++) {
-                data[i].stt = i + 1;
+            if ($('#cb_OrderType').val() == -1) {
+                alert('Vui lòng chọn loại hình đơn !');
+                check = false;
             }
-            dataGlobal = data; */
-            $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
+            if ($('#cb_PayType').val() == -1) {
+                alert('Vui lòng chọn hình thức thanh toán !');
+                check = false;
+            }
+            if ($('#cb_billType').val() != -1) {
+                if ($('#cb_OrderType').val() == 1) {
+                    if ($('#cb_OrderType2').val() == -1) {
+                        alert('Vui lòng chọn loại gói !');
+                        check = false;
+                    }
+                }
+            }
+            if (check) {
+                var data = $table.bootstrapTable('getData');
+                var checkMaster = false;
+                if (data.length > 0) {
+                    for (var i = 0; i < data.length ; i++) {
+                        if (data[i].billType == "Master") {
+                            checkMaster = true;
+                            break;
+                        }
+                    }
+                }
+                if (!checkMaster) {
+                    if ($('#cb_billType').val() == 1) {
+                        obj.Master = true;
+                        obj.billType = $('#cb_billType :selected').text();
+                    } 
+                }else {
+                    if ($('#cb_billType').val() == 1) {
+                        obj.Master = true;
+                        obj.billType = '';
+                    }
+                }
+                if ($('#cb_billType').val() == 2) {
+                    obj.billType = $('#cb_billType :selected').text();
+                }
+                obj.billTypeId = $('#cb_billType').val();
+                if ($('#cb_OrderType :selected').text() == 'Gói') {
+                    obj.OrderType = $('#cb_OrderType2 :selected').text();
+                } else {
+                    obj.OrderType = 'Đơn lẻ'
+                }
+                obj.OrderTypeId = $('#cb_OrderType').val();
+                obj.OrderType2Id = $('#cb_OrderType2').val();
+                obj.dateShip = '';
+                obj.discount = '';
+                obj.monny = '0';
+                //Harcode
+                if ($('#cb_OrderType :selected').text() == 'Gói') {
+                    if ($('#cb_OrderType2').val() == 1) {
+                        var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0'
+                        songayconlai = Number(songayconlai) + 2;
+                        $('#txtSoNgayConLai').val(songayconlai);
+                    } else if ($('#cb_OrderType2').val() == 2) {
+                        var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0'
+                        songayconlai = Number(songayconlai) + 3;
+                        $('#txtSoNgayConLai').val(songayconlai);
+                    }
+                } else {
+                    var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0';
+                    songayconlai = Number(songayconlai) + 1;
+                    $('#txtSoNgayConLai').val(songayconlai);
+                }
+                
+                obj.payType = $('#cb_PayType :selected').text();
+                obj.payTypeId = $('#cb_PayType').val();
+                obj.stt = data.length + 1;
+                if (window.dataGlobal.length > 0) {
+                    var n = window.dataGlobal.length - 1;
+                    obj.billId = window.dataGlobal[n] + 1;
+                } else {
+                    obj.billId = 1;
+                }
+                
+                obj.detalMaster = [];
+                window.dataGlobal.push(obj);
+                $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
+            }
         });
         // onchage select box 
         $('#cb_OrderType').on('change', function () {
@@ -287,7 +378,11 @@
             '</a>',
             ].join('');
         } else {
-            return '';
+            return [
+              '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
+             'Xóa',
+             '</a>',
+            ].join('');
         }
 
     }
@@ -315,18 +410,21 @@
                 var dataTemp = [];
                 var position = -1;
                 var parendId = -1;
+                var parentBillId = -1;
                 for (var i = 0; i < data.length ; i++) {
                     dataTemp.push(data[i]);
                     if (data[i].id == row.id) {
                         position = i;
                         parendId = i;
+                        parentBillId = row.parentBillId;
                         break;
                     }
                 }
                 var obj = {};
-                obj.id = ''; obj.parent = true; obj.deliveryDate = ''; obj.product = '';
+                obj.id = null; obj.parent = false; obj.deliveryDate = ''; obj.product = '';
                 obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
+                obj.parentBillId = parentBillId; obj.parentId = parendId;
                 dataTemp.push(obj);
                 var k = position + 1;
                 for (k ; k < data.length ; k++) {
@@ -365,6 +463,40 @@
                 field: 'stt',
                 values: [row.stt]
             });
+
+
+            for (var i = 0; i < window.dataGlobal.length ; i++) {
+                if (window.dataGlobal[i].billId == row.billId) {
+                    window.dataGlobal.splice(i, 1);
+                    break;
+                }
+            }
+            if ($('#table').bootstrapTable('getData').length < 1) {
+                $('#txtSoNgayConLai').val('0');
+            } else {
+                //Master goi
+                var soNgayConLai = $('#txtSoNgayConLai').val();
+                if (row.billTypeId == 1 && row.OrderTypeId == 1) {
+                    if (row.OrderType2Id == 2) {
+                        soNgayConLai = (Number(soNgayConLai) - 2) < 0 ? '0' : (Number(soNgayConLai) - 2);
+                    }
+                    if (row.OrderType2Id == 3) {
+                        soNgayConLai = (Number(soNgayConLai) - 3) < 0 ? '0' : (Number(soNgayConLai) - 3);
+                    }
+                } else if (row.OrderTypeId == 2) {
+                    soNgayConLai = (Number(soNgayConLai) - 1) < 0 ? '0' : (Number(soNgayConLai) - 1);
+                }
+                $('#txtSoNgayConLai').val(soNgayConLai);
+                $('#txtSoNgayConLai')
+                var tong = $('#txtTong').val();
+                if (tong == "") {
+                    tong = "0";
+                }
+                tong = Number(tong.split('.').join('')) - Number(row.split('.').join(''));
+                if (tong < 0) tong = 0;
+                tong = tong.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                $('#txtTong').val(tong);
+            }
         }
     };
     window.productEvents = {
@@ -465,20 +597,20 @@
                     row.price = "200000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.money = (1 * 200000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (1 * 200000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                    $table.bootstrapTable('updateRow', { index: row.id, row: row });
+                    $table.bootstrapTable('updateRow', { index: row.id -1 , row: row });
                 } else if (row[field] == "SP002") {
                     row.quantity = 1;
                     row.price = "300000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.money = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                    $table.bootstrapTable('updateRow', { index: row.id, row: row });
+                    $table.bootstrapTable('updateRow', { index: row.id -1, row: row });
                 }
             }
             if (field == "quantity") {
                 var price = row.price.split('.').join('');
                 row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                $table.bootstrapTable('updateRow', { index: row.stt, row: row });
+                $table.bootstrapTable('updateRow', { index: row.id -1, row: row });
             }
         });
     };
@@ -489,38 +621,89 @@
     window.typeBillEvents = {
         'click .product': function (e, value, row, index) {
             //alert('You click like action, row: ' + JSON.stringify(row));
-            var $table = $('#tablePopup');
-            initTablePopup();
-            $table.bootstrapTable('removeAll');
-            var obj = {};
-            obj.id = 0;
-            obj.deliveryDate = '01/07/2017';
-            obj.product = '';
-            obj.sugar = 1;
-            obj.quantity = '';
-            obj.price = '';
-            obj.money = '';
-            obj.promotionCode = '';
-            obj.total = '';
-            obj.test = '';
-            obj.operate = '1';
-            $table.bootstrapTable('append', [obj]);
-            // $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
-            var obj1 = {};
-            obj1.id = 1;
-            obj1.deliveryDate = '02/07/2017';
-            obj1.product = '';
-            obj1.sugar = 1;
-            obj1.quantity = '';
-            obj1.price = '';
-            obj1.money = '';
-            obj1.promotionCode = '';
-            obj1.total = '';
-            obj1.test = '';
-            obj1.operate = '1';
-            // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
-            $table.bootstrapTable('append', [obj1]);
-            $('#modalTable').modal('show');
+            // Master , gói
+            if (row.billTypeId == 1 && row.OrderTypeId == 1) {
+                var $table = $('#tablePopup');
+                initTablePopup();
+                $table.bootstrapTable('removeAll');
+                
+                var dataTemp = [];
+                for (var i = 0; i < window.dataGlobal.length ; i++) {
+                    if (window.dataGlobal[i].billId == row.billId) {
+                        dataTemp = window.dataGlobal[i].detalMaster;
+                        break;
+                    }
+                }
+                if (dataTemp.length > 0) {
+                    for (var i = 0; i < dataTemp.length; i++) {
+                        $table.bootstrapTable('append', [dataTemp[i]]);
+                    }
+                } else {
+                    var obj = {};
+                    obj.parent = true;
+                    obj.parentBillId = row.billId;
+                    obj.parentId = null;
+                    obj.id = 1;
+                    obj.deliveryDate = '01/07/2017';
+                    obj.product = '';
+                    obj.sugar = 1;
+                    obj.quantity = '';
+                    obj.price = '';
+                    obj.money = '';
+                    obj.promotionCode = '';
+                    obj.total = '';
+                    obj.test = '';
+                    obj.operate = '1';
+                    $table.bootstrapTable('append', [obj]);
+                    // $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
+                    if (row.OrderType2Id == 1) {
+                        var obj1 = {};
+                        obj1.id = 2;
+                        obj1.parent = true;
+                        obj1.parentBillId = row.billId;
+                        obj1.parentId = null;
+                        obj1.deliveryDate = '02/07/2017';
+                        obj1.product = '';
+                        obj1.sugar = 1;
+                        obj1.quantity = '';
+                        obj1.price = '';
+                        obj1.money = '';
+                        obj1.promotionCode = '';
+                        obj1.total = '';
+                        obj1.test = '';
+                        obj1.operate = '1';
+                        // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
+                        $table.bootstrapTable('append', [obj1]);
+                    } else if (row.OrderType2Id == 2) {
+                        var obj2 = {};
+                        obj2.id = 3;
+                        obj2.parent = true;
+                        obj2.parentBillId = row.billId;
+                        obj2.parentId = null;
+                        obj2.deliveryDate = '03/07/2017';
+                        obj2.product = '';
+                        obj2.sugar = 1;
+                        obj2.quantity = '';
+                        obj2.price = '';
+                        obj2.money = '';
+                        obj2.promotionCode = '';
+                        obj2.total = '';
+                        obj2.test = '';
+                        obj2.operate = '1';
+                        // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
+                        $table.bootstrapTable('append', [obj2]);
+                    }
+                }
+                $('#modalTable').modal('show');
+            } else if (row.billTypeId == 1 && row.OrderTypeId == 2) { // Master  , Đơn Lẻ
+
+            } else if (row.billTypeId == 2 && row.OrderTypeId == 1) { // Not Master , Gói
+
+            } else if (row.billTypeId == 2 && row.OrderTypeId == 2) { // Not Master , Đơn lẻ
+
+            }
+           
+            
         }
     };
 </script>
