@@ -73,7 +73,7 @@ namespace Servies
                 Select = "Select * from SYS_ROLE";
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
-                cmd.Connection = Common.Connection.SqlConnect();
+                cmd.Connection = conn;
             }
             conn.Open();
             using (SqlDataReader oReader = cmd.ExecuteReader())
