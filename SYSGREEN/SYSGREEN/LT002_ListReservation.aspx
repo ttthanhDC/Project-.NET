@@ -2,7 +2,101 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
  <div style ="text-align:center">
-    <div style ="height:50px"></div>
+    <div style ="height:10px"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Nguồn</label>
+                    <select class="form-control" id="cb_SourceType">
+                        <option value ="1">Facebook</option>
+                        <option value ="2">Zalo</option>
+                  </select>
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Mã khách hàng</label>
+                     <input type="text" class="form-control" name="title" id="txtMaKH" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Mã Reservation</label>
+                     <input type="text" class="form-control" name="title" id="txtMaHD" />
+                </div>
+            </div>
+        </div>
+      <div class="row">
+          <div class="col-md-8">
+                <div class="form-group">
+                     <label for="sel1">Họ và tên</label>
+                     <input type="text" class="form-control" name="title" id="txtHoTen" />
+                </div>
+            </div>
+          <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Số ngày còn lại</label>
+                     <input type="text" class="form-control" name="title" id="txtSoNgayConLai" />
+                </div>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col-md-8">
+                <div class="form-group">
+                     <label for="sel1">Ngày sinh</label>
+                     <input type="date" class="form-control" name="title" id="txtNgaySinh" />
+                </div>
+            </div>
+          <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Tổng</label>
+                     <input type="text" class="form-control" name="title" id="txtTong" />
+                </div>
+            </div>
+       </div>
+      <div class="row">
+          <div class="col-md-8">
+                <div class="form-group">
+                     <label for="sel1">Số điện thoại</label>
+                     <input type="text" class="form-control" name="title" id="txtSoDienThoai" />
+                </div>
+            </div>
+          <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Số tiền thu được</label>
+                     <input type="text" class="form-control" name="title" id="txtSoTienThuDuoc" />
+                </div>
+           </div>
+       </div>
+     <div class="row">
+          <div class="col-md-8">
+                <div class="form-group">
+                     <label for="sel1">Email</label>
+                     <input type="email" class="form-control" name="title" id="txtEmail" />
+                </div>
+            </div>
+          <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Chiết khấu</label>
+                     <input type="text" class="form-control" name="title" id="txtChietKhau" />
+                </div>
+           </div>
+       </div>
+     <div class="row">
+          <div class="col-md-8">
+                <div class="form-group">
+                     <label for="sel1">Địa chỉ</label>
+                     <input type="email" class="form-control" name="title" id="txtDiaChi" />
+                </div>
+            </div>
+          <div class="col-md-4">
+                <div class="form-group">
+                     <label for="sel1">Còn Nợ</label>
+                     <input type="text" class="form-control" name="title" id="txtNo" />
+                </div>
+           </div>
+       </div>
+     
         <div class="row" style="margin-left : 30px; margin-right : 30px">
             <div class="col-md-4">
                 <div class="form-group">

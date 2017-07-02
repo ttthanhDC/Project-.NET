@@ -5,7 +5,7 @@
            // Load Data Bộ phận
            var data = {
                menu: [{
-                   name: 'Facebooc',
+                   name: 'Facebook',
                    link: '1',
                    sub: null
                }, {

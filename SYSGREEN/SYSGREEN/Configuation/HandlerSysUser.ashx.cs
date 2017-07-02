@@ -101,7 +101,6 @@ namespace SYSGREEN
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
                     List<DataObject.ViewSysUser> lst = Servies.SysUserServies.GetData(obj.ID);
-
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
