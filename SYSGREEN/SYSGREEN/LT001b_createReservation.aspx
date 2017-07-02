@@ -166,7 +166,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal table</h4>
+                        <h4 class="modal-title">Thông tin gói đơn hàng</h4>
                     </div>
                     <div class="modal-body">
                         <table id="tablePopup" 
@@ -176,7 +176,56 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="btnPopup">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnPopup">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+
+    <div class="modal fade" id="modalTableSingle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 1200px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Thông tin gói đơn hàng lẻ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dvHidden">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                        <label for="sel1" class="col-md-2">Họ tên</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="title" id="txtHoTenPopUp" />
+                                        </div>
+                                        <label for="sel1" class="col-md-2">Số điện thoại</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="title" id="txtSoDienThoaiPopUp" />
+                                        </div>
+                                </div> 
+                            </div>
+                            <div class="form-horizontal">
+                                     <div class="form-group">
+                                        <label for="sel1" class="col-md-2">Địa chỉ</label>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="title" id="txtDiaChiPopUp" />
+                                        </div>
+                                        <label for="sel1" class="col-md-2">Ngày giao hàng</label>
+                                        <div class="col-md-4">
+                                            <input type="date" class="form-control" name="title" id="txtDeliveryPopup" />
+                                        </div>
+                                    </div> 
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary"  id="btnAddSingle">Thêm mới </button>
+                        <table id="tablePopupSingle" 
+                            data-id-field="undefined"
+                            data-unique-id="undefined"
+                            data-show-refresh="true">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnPopupSingle">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -187,6 +236,65 @@
     $(function () {
         window.dataGlobal = [];
         //Onclick add Table Master
+        $('#btnAddSingle').on('click', function () {
+            var $table = $('#tablePopupSingle');
+            var data = $('#tablePopupSingle').bootstrapTable('getData');
+            var obj = {};
+            obj.id = data.length + 1;;
+            obj.parent = false;
+            obj.parentBillId = window.rowTemp.billId;
+            obj.parentId = null;
+            obj.deliveryDate = '';
+            obj.product = '';
+            obj.sugar = 1;
+            obj.quantity = '';
+            obj.price = '';
+            obj.money = '';
+            obj.promotionCode = '';
+            obj.total = '';
+            obj.test = '';
+            obj.operate = '1';
+            $table.bootstrapTable('append', [obj]);
+        });
+        $('#btnPopupSingle').on('click', function () {
+            var $tablePopup = $('#tablePopupSingle');
+            var $table = $('#table');
+            var dataPopup = $('#tablePopupSingle').bootstrapTable('getData');
+            var objCustomer = {};
+            objCustomer.name = $('#txtHoTenPopUp').val();
+            objCustomer.phone = $('#txtSoDienThoaiPopUp').val();
+            objCustomer.address = $('#txtDiaChiPopUp').val();
+            objCustomer.delivery = $('#txtDeliveryPopup').val();
+            if (dataPopup.length > 0) {
+                var totalMoneyPopup = 0;
+                for (var i = 0; i < dataPopup.length ; i++) {
+                    var thanhtien = dataPopup[i].total.split('.').join('');
+                    totalMoneyPopup += Number(thanhtien);
+                }
+                var total = 0;
+                for (var k = 0; k < window.dataGlobal.length ; k++) {
+                    if (window.dataGlobal[k].billId == dataPopup[0].parentBillId) {
+                        window.dataGlobal[k].monny = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                        window.dataGlobal[k].detalMaster = dataPopup;
+                        window.dataGlobal[k].detailCustomer = objCustomer;
+                        $table.bootstrapTable('updateRow', { index: window.dataGlobal[k].id - 1, row: window.dataGlobal[k] });
+                    }
+                    total += Number(window.dataGlobal[k].monny.split('.').join(''));
+                }
+                $('#txtTong').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                //$table.bootstrapTable('removeAll');
+                /*
+                var data = $('#table').bootstrapTable('getData');
+                for (var m = 0; m < data.length ; m++) {
+                    $('#table').bootstrapTable('remove', {
+                        field: 'stt',
+                        values: [data[m].stt]
+                    });
+                }
+                */
+                // $table.bootstrapTable('load', window.dataGlobal);
+            }
+        });
         $('#btnPopup').on('click', function () {
             var $tablePopup = $('#tablePopup');
             var $table = $('#table');
@@ -198,16 +306,26 @@
                     totalMoneyPopup += Number(thanhtien);
                 }
                 var total = 0;
-                for (var i = 0; i < window.dataGlobal.length ; i++) {
-                    if (window.dataGlobal[i].billId == dataPopup[0].parentBillId) {
-                        window.dataGlobal[i].monny = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                        window.dataGlobal[i].detalMaster = dataPopup;
+                for (var k = 0; k < window.dataGlobal.length ; k++) {
+                    if (window.dataGlobal[k].billId == dataPopup[0].parentBillId) {
+                        window.dataGlobal[k].monny = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                        window.dataGlobal[k].detalMaster = dataPopup;
+                        $table.bootstrapTable('updateRow', { index: window.dataGlobal[k].id - 1, row: window.dataGlobal[k] });
                     }
-                    total += Number(window.dataGlobal[i].monny.split('.').join(''));
+                    total += Number(window.dataGlobal[k].monny.split('.').join(''));
                 }
                 $('#txtTong').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
-                $table.bootstrapTable('removeAll');
-                $table.bootstrapTable('load', window.dataGlobal);
+                //$table.bootstrapTable('removeAll');
+                /*
+                var data = $('#table').bootstrapTable('getData');
+                for (var m = 0; m < data.length ; m++) {
+                    $('#table').bootstrapTable('remove', {
+                        field: 'stt',
+                        values: [data[m].stt]
+                    });
+                }
+                */
+               // $table.bootstrapTable('load', window.dataGlobal);
             }
         });
         $('#btnAdd').on('click', function () {
@@ -293,14 +411,15 @@
                 obj.stt = data.length + 1;
                 if (window.dataGlobal.length > 0) {
                     var n = window.dataGlobal.length - 1;
-                    obj.billId = window.dataGlobal[n] + 1;
+                    obj.billId = window.dataGlobal[n].billId + 1;
                 } else {
                     obj.billId = 1;
                 }
                 
                 obj.detalMaster = [];
                 window.dataGlobal.push(obj);
-                $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
+                //$table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
+                $table.bootstrapTable('append', [obj]);
             }
         });
         // onchage select box 
@@ -386,6 +505,13 @@
         }
 
     }
+    function operateFormatterPopupSingle(value, row, index) {
+        return [
+            '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
+           'Xóa',
+           '</a>',
+        ].join('');
+    }
     function productFormatter(value, row, index) {
         return [
             '<a class="product" href="javascript:void(0)" title="Sản phẩm">',
@@ -424,7 +550,7 @@
                 obj.id = null; obj.parent = false; obj.deliveryDate = ''; obj.product = '';
                 obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
-                obj.parentBillId = parentBillId; obj.parentId = parendId;
+                obj.parentBillId = parentBillId; obj.parentId = parendId+1;
                 dataTemp.push(obj);
                 var k = position + 1;
                 for (k ; k < data.length ; k++) {
@@ -457,6 +583,18 @@
 
         }
     };
+
+    window.operateEventsPopupSingle = {
+        'click .remove': function (e, value, row, index) {
+            var $table = $('#tablePopupSingle');
+            $('#tablePopupSingle').bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            });
+        }
+    };
+
+
     window.operateEvents = {
         'click .remove': function (e, value, row, index) {
             $('#table').bootstrapTable('remove', {
@@ -492,7 +630,7 @@
                 if (tong == "") {
                     tong = "0";
                 }
-                tong = Number(tong.split('.').join('')) - Number(row.split('.').join(''));
+                tong = Number(tong.split('.').join('')) - Number(row.monny.toString().split('.').join(''));
                 if (tong < 0) tong = 0;
                 tong = tong.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 $('#txtTong').val(tong);
@@ -503,6 +641,115 @@
         'click .product': function (e, value, row, index) {
             alert('You click like action, row: ' + JSON.stringify(row));
         }
+    };
+
+    function initTableSinglePopup() {
+        var $table = $('#tablePopupSingle');
+        $('#tablePopupSingle').bootstrapTable({
+            columns: [{
+                field: 'id',
+                title: 'STT',
+                align: 'center',
+                valign: 'middle',
+            },
+            {
+                field: 'product',
+                title: 'Sản phẩm',
+                align: 'center',
+                valign: 'middle',
+                editable: true
+            },
+            {
+                field: 'quantity',
+                title: 'Số lượng',
+                align: 'center',
+                valign: 'middle',
+                editable: true
+            },
+            {
+                field: 'price',
+                title: 'Giá sản phẩm',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'sugar',
+                title: 'Sugar',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return '<input type="checkbox" value="" checked></label>';
+                    } else {
+                        return '<input type="checkbox" value=""></label>';
+                    }
+                   
+                }
+            },
+            {
+                field: 'money',
+                title: 'Thành tiền',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'promotionCode',
+                title: 'Promotion Code',
+                align: 'center',
+                valign: 'middle',
+                editable: true
+            },
+            {
+                field: 'total',
+                title: 'Total',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'note',
+                title: 'Ghi chú',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'operate',
+                title: 'Thao tác',
+                align: 'center',
+                valign: 'middle',
+                events: operateEventsPopupSingle,
+                formatter: operateFormatterPopupSingle
+
+            }],
+            data: []
+        });
+
+
+
+        $table.on('editable-save.bs.table', function (e, field, row, old, $el) {
+            var $els = $table.find('.editable');
+            next = $els.index($el) + 1;
+            if (field == "product") {
+                if (row[field] == "SP001") {
+                    row.quantity = 1;
+                    row.price = "200000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    row.money = (1 * 200000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    row.total = (1 * 200000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                } else if (row[field] == "SP002") {
+                    row.quantity = 1;
+                    row.price = "300000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    row.money = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    row.total = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                }
+            }
+            if (field == "quantity") {
+                var price = row.price.split('.').join('');
+                row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+            }
+        });
     };
 
     function initTablePopup() {
@@ -625,8 +872,6 @@
             if (row.billTypeId == 1 && row.OrderTypeId == 1) {
                 var $table = $('#tablePopup');
                 initTablePopup();
-                $table.bootstrapTable('removeAll');
-                
                 var dataTemp = [];
                 for (var i = 0; i < window.dataGlobal.length ; i++) {
                     if (window.dataGlobal[i].billId == row.billId) {
@@ -634,11 +879,16 @@
                         break;
                     }
                 }
+                
                 if (dataTemp.length > 0) {
+                    /*
                     for (var i = 0; i < dataTemp.length; i++) {
                         $table.bootstrapTable('append', [dataTemp[i]]);
-                    }
+                    }*/
+                    $table.bootstrapTable('load', dataTemp);
                 } else {
+                    //$table.bootstrapTable('removeAll');
+                    var dataTemp = [];
                     var obj = {};
                     obj.parent = true;
                     obj.parentBillId = row.billId;
@@ -654,7 +904,8 @@
                     obj.total = '';
                     obj.test = '';
                     obj.operate = '1';
-                    $table.bootstrapTable('append', [obj]);
+                    dataTemp.push(obj);
+                   // $table.bootstrapTable('append', [obj]);
                     // $table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
                     if (row.OrderType2Id == 1) {
                         var obj1 = {};
@@ -672,8 +923,9 @@
                         obj1.total = '';
                         obj1.test = '';
                         obj1.operate = '1';
+                        dataTemp.push(obj1);
                         // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
-                        $table.bootstrapTable('append', [obj1]);
+                        //$table.bootstrapTable('append', [obj1]);
                     } else if (row.OrderType2Id == 2) {
                         var obj2 = {};
                         obj2.id = 3;
@@ -691,16 +943,73 @@
                         obj2.test = '';
                         obj2.operate = '1';
                         // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
-                        $table.bootstrapTable('append', [obj2]);
+                        //$table.bootstrapTable('append', [obj2]);
+                        dataTemp.push(obj2);
                     }
+                    $table.bootstrapTable('load', dataTemp);
                 }
                 $('#modalTable').modal('show');
             } else if (row.billTypeId == 1 && row.OrderTypeId == 2) { // Master  , Đơn Lẻ
+                var $table = $('#tablePopupSingle');
+                $('#dvHidden').css({ 'display': 'none' });
+                initTableSinglePopup();
+                var dataTemp = [];
+                for (var i = 0; i < window.dataGlobal.length ; i++) {
+                    if (window.dataGlobal[i].billId == row.billId) {
+                        dataTemp = window.dataGlobal[i].detalMaster;
+                        break;
+                    }
+                }
 
+                if (dataTemp.length > 0) {
+                    /*
+                    for (var i = 0; i < dataTemp.length; i++) {
+                        $table.bootstrapTable('append', [dataTemp[i]]);
+                    }*/
+                    window.rowTemp = row;
+                    $table.bootstrapTable('load', dataTemp);
+                } else {
+                    //$table.bootstrapTable('removeAll');
+                    window.rowTemp = row;
+                    var dataTemp = [];
+                    $table.bootstrapTable('load', dataTemp);
+                }
+                $('#modalTableSingle').modal('show');
             } else if (row.billTypeId == 2 && row.OrderTypeId == 1) { // Not Master , Gói
 
             } else if (row.billTypeId == 2 && row.OrderTypeId == 2) { // Not Master , Đơn lẻ
-
+                var $table = $('#tablePopupSingle');
+                $('#dvHidden').css({ 'display': 'block' });
+                initTableSinglePopup();
+                var dataTemp = [];
+                var objCustomer = null;
+                for (var i = 0; i < window.dataGlobal.length ; i++) {
+                    if (window.dataGlobal[i].billId == row.billId) {
+                        dataTemp = window.dataGlobal[i].detalMaster;
+                        objCustomer = window.dataGlobal[i].detalCustomer;
+                        break;
+                    }
+                }
+                if (objCustomer) {
+                    $('#txtHoTenPopUp').val(objCustomer.name);
+                    $('#txtSoDienThoaiPopUp').val(objCustomer.phone);
+                    $('#txtDiaChiPopUp').val(objCustomer.address);
+                    $('#txtDeliveryPopup').val(objCustomer.delivery);
+                }
+                if (dataTemp.length > 0) {
+                    /*
+                    for (var i = 0; i < dataTemp.length; i++) {
+                        $table.bootstrapTable('append', [dataTemp[i]]);
+                    }*/
+                    window.rowTemp = row;
+                    $table.bootstrapTable('load', dataTemp);
+                } else {
+                    //$table.bootstrapTable('removeAll');
+                    window.rowTemp = row;
+                    var dataTemp = [];
+                    $table.bootstrapTable('load', dataTemp);
+                }
+                $('#modalTableSingle').modal('show');
             }
            
             
