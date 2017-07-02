@@ -47,143 +47,103 @@
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
         ></table>
-
+    <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="width: 1200px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal table</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="tablePopup" 
+                            data-id-field="undefined"
+                            data-unique-id="undefined"
+                            data-show-refresh="true">
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
 <script>
     // Bootstrap Table
     $(function () {
-
-        $('#table').bootstrapTable({
-            columns: [{
-                field: 'id',
-                title: 'ID',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                editable: true,
-            }, {
-                field: 'department',
-                title: 'Bộ phận',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                editable: true,
-
-            }, {
-                field: 'dateCreate',
-                title: 'Ngày tạo',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                editable: true,
-            }, {
-                field: 'user',
-                title: 'User',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    title: 'User',
-                    validate: function (value) {
-                        value = $.trim(value);
-                        if (!value) {
-                            return 'This field is required';
-                        }
-                        if (!/^\$/.test(value)) {
-                            return 'This field needs to start width $.'
-                        }
-                        var data = $table.bootstrapTable('getData'),
-                            index = $(this).parents('tr').data('index');
-                        console.log(data[index]);
-                        return '';
+        var data = [];
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getData');
+        var json = { 'ID': 0};
+        formDataListUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysRole.ashx",
+            type: "POST",
+            data: formDataListUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID;
+                        obj.department = objectData.RoleName;
+                        obj.dateCreate = objectData.Create_Date;
+                        obj.user = objectData.Create_User;
+                        arr.push(obj);
                     }
-                },
-                footerFormatter: userFormatter
-            }, {
-                field: 'operate',
-                title: 'Thao tác',
-                align: 'center',
-                valign: 'middle',
-                events: operateEvents,
-                formatter: operateFormatter
-            }],
+                }
+                data = arr;
+                
+                $('#table').bootstrapTable({
+                    columns: [{
+                        field: 'id',
+                        title: 'ID',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        ///editable: true,
+                    }, {
+                        field: 'department',
+                        title: 'Bộ phận',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        // editable: true,
 
+                    }, {
+                        field: 'dateCreate',
+                        title: 'Ngày tạo',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        //  editable: true,
+                    }, {
+                        field: 'user',
+                        title: 'User',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                    
+                    }, {
+                        field: 'operate',
+                        title: 'Thao tác',
+                        align: 'center',
+                        valign: 'middle',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    }],
+                   data : data
+                });
+            },
+            error: function (err) {
 
-
-            data: [{
-                id: 1,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 2,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 3,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 4,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 5,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 6,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 7,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 8,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 9,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 10,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 11,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 12,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 13,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }, {
-                id: 14,
-                department: 'sele',
-                dateCreate: '20/5/2017',
-                user: 'Duytn4'
-            }]
+            }
         });
-
-
+        // format table
     });
     // function
     function userFormatter(data) {
@@ -206,43 +166,12 @@
 
     window.operateEvents = {
         'click .right': function (e, value, row, index) {
-            alert('You click like action, row: ' + JSON.stringify(row));
-            // Get the record's ID via attribute
-            var id = $(this).attr('data-id');
-
-            $.ajax({
-                url: 'http://jsonplaceholder.typicode.com/users/' + id,
-                method: 'GET'
-            }).success(function (response) {
-                // Populate the form fields with the data returned from server
-                $('#userForm')
-                    .find('[name="id"]').val(response.id).end()
-                    .find('[name="name"]').val(response.name).end()
-                    .find('[name="email"]').val(response.email).end()
-                    .find('[name="website"]').val(response.website).end();
-
-                // Show the dialog
-                bootbox.dialog({
-                    title: 'Edit the user profile',
-                    message: $('#userForm'),
-                    show: false // We will show it manually later
-                })
-                    .on('shown.bs.modal', function () {
-                        $('#userForm')
-                            .show()                             // Show the login form
-                            .bootstrapValidator('resetForm'); // Reset form
-                    })
-                    .on('hide.bs.modal', function (e) {
-                        // Bootbox will remove the modal (including the body which contains the login form)
-                        // after hiding the modal
-                        // Therefor, we need to backup the form
-                        $('#userForm').hide().appendTo('body');
-                    })
-                    .modal('show');
-            });
+            var $table = $('#tablePopup');
+            initTablePopup();
         },
         'click .edit': function (e, value, row, index) {
-            alert('You click like action, row: ' + JSON.stringify(row));
+            // alert('You click like action, row: ' + JSON.stringify(row));
+            window.location = '/UserManger.aspx?paramId=' + row.id;
         },
         'click .remove': function (e, value, row, index) {
             $('#table').bootstrapTable('remove', {
@@ -251,117 +180,83 @@
             });
         }
     };
+    function initTablePopup() {
+        var $table = $('#tablePopup');
+        $('#tablePopup').bootstrapTable({
+            columns: [{
+                field: 'stt',
+                title: 'Stt',
+                align: 'center',
+                valign: 'middle',
+                sortable: true,
+                //editable: true,
+            }, {
+                field: '_function',
+                title: 'Function',
+                align: 'center',
+                valign: 'middle',
+                sortable: true,
+                // editable: true,
 
-    // Popup grid
-    $(document).ready(function () {
-        $('#userForm')
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The full name is required'
-                            },
-                            regexp: {
-                                regexp: /^[a-zA-Z\s]+$/,
-                                message: 'The full name can only consist of alphabetical characters'
-                            }
-                        }
-                    },
-                    email: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The email address is required'
-                            },
-                            emailAddress: {
-                                message: 'The email address is not valid'
-                            }
-                        }
-                    },
-                    website: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The website address is required'
-                            },
-                            uri: {
-                                allowEmptyProtocol: true,
-                                message: 'The website address is not valid'
-                            }
-                        }
-                    }
+            }, {
+                field: '_view',
+                title: 'View ',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
                 }
-            })
-            .on('success.form.fv', function (e) {
-                // Save the form data via an Ajax request
-                e.preventDefault();
-
-                var $form = $(e.target),
-                    id = $form.find('[name="id"]').val();
-
-                // The url and method might be different in your application
-                $.ajax({
-                    url: 'http://jsonplaceholder.typicode.com/users/' + id,
-                    method: 'PUT',
-                    data: $form.serialize()
-                }).success(function (response) {
-                    // Get the cells
-                    var $button = $('button[data-id="' + response.id + '"]'),
-                        $tr = $button.closest('tr'),
-                        $cells = $tr.find('td');
-
-                    // Update the cell data
-                    $cells
-                        .eq(1).html(response.name).end()
-                        .eq(2).html(response.email).end()
-                        .eq(3).html(response.website).end();
-
-                    // Hide the dialog
-                    $form.parents('.bootbox').modal('hide');
-
-                    // You can inform the user that the data is updated successfully
-                    // by highlighting the row or showing a message box
-                    bootbox.alert('The user profile is updated');
-                });
-            });
-
-        $('.editButton').on('click', function () {
-            // Get the record's ID via attribute
-            var id = $(this).attr(row);
-
-            $.ajax({
-               
-            }).success(function () {
-                // Populate the form fields with the data returned from server
-                $('#userForm')
-                   
-
-                // Show the dialog
-                bootbox.dialog({
-                        title: 'Edit the user profile',
-                        message: $('#userForm'),
-                        show: false // We will show it manually later
-                    })
-                    .on('shown.bs.modal', function () {
-                        $('#userForm')
-                            .show()                             // Show the login form
-                            .bootstrapValidator('resetForm'); // Reset form
-                    })
-                    .on('hide.bs.modal', function (e) {
-                        // Bootbox will remove the modal (including the body which contains the login form)
-                        // after hiding the modal
-                        // Therefor, we need to backup the form
-                        $('#userForm').hide().appendTo('body');
-                    })
-                    .modal('show');
-            });
+            }, {
+                field: '_add',
+                title: 'add',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
+            }, {
+                field: '_edit',
+                title: 'Edit',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
+            }, {
+                field: '_delete',
+                title: 'Delete',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
+            }],
+            data: [{
+                stt: '1',
+                _function: 'function 1',
+                _view: true,
+                _add: false,
+                _edit: true,
+                _delete: false
+            }, {
+                stt: '2',
+                _function: 'function 2',
+                _view: true,
+                _add: false,
+                _edit: true,
+                _delete: false
+            }]
         });
-    });
+    };
+    function updateCell(caller) {
+        var $table = $('#tablePopup');
+    }
+    window.typeBillEvents = {
+        'click .product': function (e, value, row, index) {
+            var $table = $('#tablePopup');
+            initTablePopup();
+        }
+    };
 </script>
     </asp:Content>
 

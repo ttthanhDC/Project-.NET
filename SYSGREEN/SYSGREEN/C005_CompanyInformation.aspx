@@ -5,7 +5,7 @@
         <div style ="height:50px"></div>
             <div class="row">
                 <div class="col-md-3">
-                    Tên cty vi
+                    Tên cty
                 </div>
                 <div class="col-md-3">
                     <textarea class="form-control" rows="1" id="txt_CompanyName"></textarea>
@@ -96,23 +96,24 @@
                  //orgId = parseInt(orgId);
                  //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
                  var json = {
-                     'txt_CompanyName': $('#txt_CompanyName').val(),
-                     'txt_CompanyAcount': $('#txt_CompanyAcount').val(),
-                     'txt_CompanyEmail': $('#txt_CompanyEmail').val(),
-                     'txt_CompanyEnglish': $('#txt_CompanyEnglish').val(),
-                     'txt_CompanyAdress': $('#txt_CompanyAdress').val(),
-                     'txt_CompanyTax': $('#txt_CompanyTax').val(),
-                     'txt_CompanyPhone': $('#txt_CompanyPhone').val(),
-                     'txt_BankAcount': $('#txt_BankAcount').val(),
-                     'txt_PriceFreeship': $('#txt_PriceFreeship').val(),
-                                 'Create_User': 'admin'
+                     'Company_Name_Vi': $('#txt_CompanyName').val(),
+                     'Company_Name_Short': $('#txt_CompanyAcount').val(),
+                     'Email': $('#txt_CompanyEmail').val(),
+                     'Company_Name_EN': $('#txt_CompanyEnglish').val(),
+                    // 'txt_CompanyAdress': "chưa có",//$('#txt_CompanyAdress').val(),TODO
+                     'Tax_Code': $('#txt_CompanyTax').val(),
+                     'Phone_Number': $('#txt_CompanyPhone').val(),
+                     'Bank_Account': $('#txt_BankAcount').val(),
+                     'Amount_Freeship': $('#txt_PriceFreeship').val(),
+                     'Logo': 'none'
                  };
+                 
                  alert(json);
                  jQuery.ajaxSetup({ async: true });
                  formData.append('type', 'insert');
                  formData.append('data', JSON.stringify(json));
                  $.ajax({
-                     url: "Configuation/HandlerSysUser.ashx",
+                     url: "Configuation/HandlerSysCompany.ashx",
                      type: "POST",
                      data: formData,
                      contentType: false,

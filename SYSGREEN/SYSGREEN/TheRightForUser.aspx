@@ -1,4 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TheRightForUser.aspx.cs" Inherits="SYSGREEN.TheRightForUser" %>
+
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 <table id="table" 
@@ -12,7 +14,7 @@
 ></table>
     <div style ="height:40px"></div>
     <div style ="text-align:center;display: table;margin: 0 auto;">
-        <input type="submit" class="btn btn-info" value="Thêm">
+        <input type="submit" class="btn btn-info" value="Phân quyền">
     </div>
 <script>
     // Bootstrap Table
@@ -20,48 +22,59 @@
 
         $('#table').bootstrapTable({
             columns: [{
-                field: 'branch',
-                title: 'Cơ sở',
+                field: 'stt',
+                title: 'Stt',
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
                 //editable: true,
             }, {
-                field: 'codeProduct',
-                title: 'Code',
+                field: '_function',
+                title: 'Function',
                 align: 'center',
                 valign: 'middle',
                 sortable: true,
-               // editable: true,
+                // editable: true,
 
             }, {
-                field: 'nameProduct',
-                title: 'Tên ',
+                field: 'view',
+                title: 'View ',
                 align: 'center',
                 valign: 'middle',
-                sortable: true,
-                //editable: true,
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
             }, {
-                field: 'unitProduct',
-                title: 'Đơn vị',
+                field: 'add',
+                title: 'add',
                 align: 'center',
                 valign: 'middle',
-                sortable: true,
-                //editable: true
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
             }, {
-                field: 'priceProduct',
-                title: 'Giá',
+                field: 'edit',
+                title: 'Edit',
                 align: 'center',
                 valign: 'middle',
-                sortable: true,
-               // editable: true
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
+            }, {
+                field: 'delete',
+                title: 'Delete',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<input type="checkbox" value=""></label>';
+                }
             }],
 
 
 
             data: [{
-                branch: 'HO',
-                codeProduct: 'P001',
+                stt: 'HO',
+                _function: 'P001',
                 nameProduct: 'Sữa hạt điều cốt dừa',
                 unitProduct: '325 ml',
                 priceProduct: '30,000'
@@ -149,4 +162,5 @@
     });
 </script>
     </asp:Content>
+
 

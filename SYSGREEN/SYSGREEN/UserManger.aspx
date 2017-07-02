@@ -22,13 +22,20 @@
                        if (jsonData && jsonData.length > 0) {
                            for (var i = 0; i < jsonData.length ; i++) {
                                var objectData = jsonData[i];
-                               var obj = {};
-                               obj.id = objectData.ID;
-                               obj.email = objectData.Email;
-                               obj.department = objectData.DeptId;
-                               obj.local = objectData.OrgId;
-                               obj.dateCreate = objectData.Create_Date;
-                               obj.user = objectData.UserName;
+                               //var obj = {};
+                               //obj.id = objectData.ID;
+                               //obj.email = objectData.Email;
+                               //obj.department = objectData.DeptId;
+                               //obj.local = objectData.OrgId;
+                               //obj.dateCreate = objectData.Create_Date;
+                               //obj.user = objectData.UserName;
+
+
+                               $('#txtUserName').val(objectData.UserName);
+                               //$('#txtPassword').val(objectData.DeptId);
+                               $('#txtEmail').val(objectData.Email);
+                               $('#deptID').val(objectData.DeptId);
+                               $('#orgID').val(objectData.OrgId);
                            }
                        }
                    },
@@ -146,33 +153,67 @@
           
            // Event Thêm mới
            $('#btnSave').on('click', function (e) {
-               var formData = new FormData();
-               var user = $('#txtUserName').val();
-               var pass = $('#txtPassword').val();
-               var email = $('#txtEmail').val();
-               var deptId = $('#deptID').val();
-               deptId = parseInt(deptId);
-               var orgId = $('#orgID').val();
-               orgId = parseInt(orgId);
-               //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
-               var json = { 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
-               jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'insert');
-               formData.append('data', JSON.stringify(json));
-               $.ajax({
-                   url: "Configuation/HandlerSysUser.ashx",
-                   type: "POST",
-                   data: formData,
-                   contentType: false,
-                   processData: false,
-                   success: function (result) {
-                       alert(result);
-                   },
-                   error: function (err) {
+               var idParam = getQueryVariable("paramId");
+               // funtion get
+               if (idParam) {
+                   // update
+                   var formData = new FormData();
+                   var user = $('#txtUserName').val();
+                   var pass = $('#txtPassword').val();
+                   var email = $('#txtEmail').val();
+                   var deptId = $('#deptID').val();
+                   deptId = parseInt(deptId);
+                   var orgId = $('#orgID').val();
+                   orgId = parseInt(orgId);
+                   //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+                   var json = { 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
+                   jQuery.ajaxSetup({ async: true });
+                   formData.append('type', 'update');
+                   formData.append('data', JSON.stringify(json));
+                   $.ajax({
+                       url: "Configuation/HandlerSysUser.ashx",
+                       type: "POST",
+                       data: formData,
+                       contentType: false,
+                       processData: false,
+                       success: function (result) {
+                           alert(result);
+                       },
+                       error: function (err) {
 
-                   }
-               });
+                       }
+                   });
+               } else {
+                   // insert
+                   var formData = new FormData();
+                   var user = $('#txtUserName').val();
+                   var pass = $('#txtPassword').val();
+                   var email = $('#txtEmail').val();
+                   var deptId = $('#deptID').val();
+                   deptId = parseInt(deptId);
+                   var orgId = $('#orgID').val();
+                   orgId = parseInt(orgId);
+                   //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+                   var json = { 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
+                   jQuery.ajaxSetup({ async: true });
+                   formData.append('type', 'insert');
+                   formData.append('data', JSON.stringify(json));
+                   $.ajax({
+                       url: "Configuation/HandlerSysUser.ashx",
+                       type: "POST",
+                       data: formData,
+                       contentType: false,
+                       processData: false,
+                       success: function (result) {
+                           alert(result);
+                       },
+                       error: function (err) {
+
+                       }
+                   });
+               }
            });
+          
           
            $('#contactForm').bootstrapValidator({
                container: '#messages',

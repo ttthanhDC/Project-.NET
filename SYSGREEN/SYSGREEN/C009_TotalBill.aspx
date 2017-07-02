@@ -10,21 +10,21 @@
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                  //  editable: true,
                 }, {
                     field: 'billMin',
                     title: 'Min',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'billMax',
                     title: 'Max',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                    //editable: true,
 
                 }, {
                     field: 'beginDate',
@@ -32,66 +32,50 @@
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'endDate',
                     title: 'Ngày tạo',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'code',
                     title: 'Mã',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
-                    editable: {
-                        type: 'text',
-                        title: 'User',
-                        validate: function (value) {
-                            value = $.trim(value);
-                            if (!value) {
-                                return 'This field is required';
-                            }
-                            if (!/^\$/.test(value)) {
-                                return 'This field needs to start width $.'
-                            }
-                            var data = $table.bootstrapTable('getData'),
-                                index = $(this).parents('tr').data('index');
-                            console.log(data[index]);
-                            return '';
-                        }
-                    },
-                    footerFormatter: userFormatter
+                  //  sortable: true,
+                  
+                  //  footerFormatter: userFormatter
                 }, {
                     field: 'nameBill',
                     title: 'Tên',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'percent',
                     title: '%',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'money',
                     title: 'Vnđ',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'freeShip',
                     title: 'Free ship',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
-                    editable: true,
+                   // editable: true,
                 }, {
                     field: 'operate',
                     title: 'Thao tác',
