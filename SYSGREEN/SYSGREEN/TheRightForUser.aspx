@@ -1,17 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TheRightForUser.aspx.cs" Inherits="SYSGREEN.TheRightForUser" %>
-
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master"  CodeBehind="TheRightForUser.aspx.cs" Inherits="SYSGREEN.TheRightForUser" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+<div style ="margin-left:30px;margin-right:30px">
 <table id="table" 
-        data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
-        data-show-toggle="true" data-show-columns="true" 
-        data-show-pagination-switch="true"
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        data-show-footer="false" 
 ></table>
+</div>
     <div style ="height:40px"></div>
     <div style ="text-align:center;display: table;margin: 0 auto;">
         <input type="submit" class="btn btn-info" value="Phân quyền">
@@ -26,136 +21,76 @@
                 title: 'Stt',
                 align: 'center',
                 valign: 'middle',
-                sortable: true,
+               // sortable: true,
                 //editable: true,
             }, {
                 field: '_function',
                 title: 'Function',
                 align: 'center',
                 valign: 'middle',
-                sortable: true,
+                //sortable: true,
                 // editable: true,
 
             }, {
-                field: 'view',
+                field: '_view',
                 title: 'View ',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
+                    if (value) {
+                        return '<input type="checkbox" value="" checked></label>';
+                    } else {
+                        return '<input type="checkbox" value=""></label>';
+                    }
                 }
             }, {
-                field: 'add',
+                field: '_add',
                 title: 'add',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
+                    if (value) {
+                        return '<input type="checkbox" value="" checked></label>';
+                    } else {
+                        return '<input type="checkbox" value=""></label>';
+                    }
                 }
             }, {
-                field: 'edit',
+                field: '_edit',
                 title: 'Edit',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
+                    if (value) {
+                        return '<input type="checkbox" value="" checked></label>';
+                    } else {
+                        return '<input type="checkbox" value=""></label>';
+                    }
                 }
             }, {
-                field: 'delete',
+                field: '_delete',
                 title: 'Delete',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
+                    if(value){
+                        return '<input type="checkbox" value="" checked></label>';
+                    } else {
+                        return '<input type="checkbox" value=""></label>';
+                    }
+                    
                 }
             }],
 
 
 
             data: [{
-                stt: 'HO',
-                _function: 'P001',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P002',
-                nameProduct: 'Sữa hạt điều cốt đậu đen',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P003',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P004',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P005',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P006',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P007',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P008',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P009',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P010',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P011',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P012',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P013',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
-            }, {
-                branch: 'HO',
-                codeProduct: 'P014',
-                nameProduct: 'Sữa hạt điều cốt dừa',
-                unitProduct: '325 ml',
-                priceProduct: '30,000'
+                stt: '1',
+                _function: 'funtion 1',
+                _view: true,
+                _add: false,
+                _edit: true,
+                _delete: false
             }]
         });
 
