@@ -312,7 +312,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/BC001_revenueReport">
 									<i class="menu-icon fa fa-caret-right"></i>
 									BC001 Báo cáo doanh thu
 								</a>
@@ -321,7 +321,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/BC002_ListBillCancel">
 									<i class="menu-icon fa fa-caret-right"></i>
 									BC002 Danh sách hóa dơn bị hủy
 								</a>
@@ -329,7 +329,7 @@
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/BC003_Debt">
 									<i class="menu-icon fa fa-caret-right"></i>
 									BC003 Công nợ
 								</a>
@@ -338,7 +338,7 @@
 							</li>
 
 							<li class="">
-								<a href="form-elements-2.html">
+								<a runat="server" href="~/BC004_RevenueFormSource">
 									<i class="menu-icon fa fa-caret-right"></i>
 									BC004 Thống kê doanh thu theo nguồn
 								</a>
@@ -346,7 +346,7 @@
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="form-elements.html">
+								<a runat="server" href="~/BC005_StatisticalFormShiper">
 									<i class="menu-icon fa fa-caret-right"></i>
 									BC005 Thống kê shiper
 								</a>
