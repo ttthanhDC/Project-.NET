@@ -34,7 +34,7 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID;
-                        obj.department = objectData.RoleName;
+                        obj.name = objectData.RoleName;
                         obj.dateCreate = objectData.Create_Date;
                         obj.user = objectData.Create_User;
                         arr.push(obj);
@@ -51,8 +51,8 @@
                         sortable: true,
                         ///editable: true,
                     }, {
-                        field: 'department',
-                        title: 'Bộ phận',
+                        field: 'name',
+                        title: 'Tên',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
@@ -123,74 +123,7 @@
             });
         }
     };
-    function initTablePopup() {
-        var $table = $('#tablePopup');
-        $('#tablePopup').bootstrapTable({
-            columns: [{
-                field: 'stt',
-                title: 'Stt',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //editable: true,
-            }, {
-                field: '_function',
-                title: 'Function',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                // editable: true,
-
-            }, {
-                field: '_view',
-                title: 'View ',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
-                }
-            }, {
-                field: '_add',
-                title: 'add',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
-                }
-            }, {
-                field: '_edit',
-                title: 'Edit',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
-                }
-            }, {
-                field: '_delete',
-                title: 'Delete',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<input type="checkbox" value=""></label>';
-                }
-            }],
-            data: [{
-                stt: '1',
-                _function: 'function 1',
-                _view: true,
-                _add: false,
-                _edit: true,
-                _delete: false
-            }, {
-                stt: '2',
-                _function: 'function 2',
-                _view: true,
-                _add: false,
-                _edit: true,
-                _delete: false
-            }]
-        });
-    };
+    
     function updateCell(caller) {
         var $table = $('#tablePopup');
     }
