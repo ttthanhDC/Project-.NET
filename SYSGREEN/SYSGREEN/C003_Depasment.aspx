@@ -3,45 +3,81 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
         $(function () {
-            $('#table').bootstrapTable({
-                columns: [{
-                    field: 'id',
-                    title: 'ID',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
-                }, {
-                    field: 'department',
-                    title: 'Bộ phận',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
+            var data = [];
+            var formDataDeparment = new FormData();
+            formDataDeparment.append('type', 'getData');
+            var json = { 'ID': 0 };
+            formDataDeparment.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysRole.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.id = objectData.ID;
+                            obj.department = objectData.RoleName;
+                            obj.dateCreate = objectData.Create_Date;
+                            obj.user = objectData.Create_User;
+                            arr.push(obj);
+                        }
+                    }
+                    data = arr;
 
-                }, {
-                    field: 'dateCreate',
-                    title: 'Ngày tạo',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
-                }, {
-                    field: 'user',
-                    title: 'User',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
+                    // format table
+                    $('#table').bootstrapTable({
+                        columns: [{
+                            field: 'id',
+                            title: 'ID',
+                            align: 'center',
+                            valign: 'middle',
+                            //sortable: true,
+                            //editable: true,
+                        }, {
+                            field: 'department',
+                            title: 'Bộ phận',
+                            align: 'center',
+                            valign: 'middle',
+                            //sortable: true,
+                            //editable: true,
+
+                        }, {
+                            field: 'dateCreate',
+                            title: 'Ngày tạo',
+                            align: 'center',
+                            valign: 'middle',
+                            // sortable: true,
+                            //editable: true,
+                        }, {
+                            field: 'user',
+                            title: 'User',
+                            align: 'center',
+                            valign: 'middle',
+                            // sortable: true,
                     
-                    //footerFormatter: userFormatter
-                }, {
-                    field: 'operate',
-                    title: 'Thao tác',
-                    align: 'center',
-                    valign: 'middle',
-                    events: operateEvents,
-                    formatter: operateFormatter
-                }],
+                            //footerFormatter: userFormatter
+                        }, {
+                            field: 'operate',
+                            title: 'Thao tác',
+                            align: 'center',
+                            valign: 'middle',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }],
+                        data: data
+                    });
+                },
+                error: function (err) {
+
+                }
+            });
+            
 
 
 

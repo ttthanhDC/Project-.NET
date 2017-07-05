@@ -17,48 +17,67 @@
 <script>
     // Bootstrap Table
     $(function () {
+        var data = [];
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataListUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysRole.ashx",
+            type: "POST",
+            data: formDataListUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID;
+                        obj.department = objectData.RoleName;
+                        obj.dateCreate = objectData.Create_Date;
+                        obj.user = objectData.Create_User;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
 
-        $('#table').bootstrapTable({
-            columns: [{
-                field: 'branch',
-                title: 'Cơ sở',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //editable: true,
-            }, {
-                field: 'codeProduct',
-                title: 'Code',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-               // editable: true,
+                $('#table').bootstrapTable({
+                    columns: [{
+                        field: 'branch',
+                        title: 'Cơ sở',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'codeProduct',
+                        title: 'Code',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'nameProduct',
+                        title: 'Tên ',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'unitProduct',
+                        title: 'Đơn vị',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'priceProduct',
+                        title: 'Giá',
+                        align: 'center',
+                        valign: 'middle',
+                    }],
+                    data: data
+                });
+            },
+            error: function (err) {
 
-            }, {
-                field: 'nameProduct',
-                title: 'Tên ',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //editable: true,
-            }, {
-                field: 'unitProduct',
-                title: 'Đơn vị',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-                //editable: true
-            }, {
-                field: 'priceProduct',
-                title: 'Giá',
-                align: 'center',
-                valign: 'middle',
-                sortable: true,
-               // editable: true
-            }],
-
-
-
+            }
+        });
             data: [{
                 branch: 'HO',
                 codeProduct: 'P001',

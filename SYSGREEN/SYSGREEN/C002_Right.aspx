@@ -1,42 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="C002_Right.aspx.cs" Inherits="SYSGREEN.C002_Right" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-<!-- The form which is used to populate the item data -->
-<div id="userForm"  class="form-horizontal" style="display: none;">
-    <div class="form-group">
-        <label class="col-xs-3 control-label">ID</label>
-        <div class="col-xs-3">
-            <input type="text" class="form-control" name="id" disabled="disabled" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Full name</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="name" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Email</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="email" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Website</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="website" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-5 col-xs-offset-3">
-            <button type="submit" class="btn btn-default">Save</button>
-        </div>
-    </div>
-</div>
 
     <table id="table" 
         data-pagination="true"
@@ -47,27 +11,7 @@
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
         ></table>
-    <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="width: 1200px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal table</h4>
-                    </div>
-                    <div class="modal-body">
-                        <table id="tablePopup" 
-                            data-id-field="undefined"
-                            data-unique-id="undefined"
-                            data-show-refresh="true">
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-   </div><!-- /.modal -->
+   
 <script>
     // Bootstrap Table
     $(function () {
@@ -166,8 +110,7 @@
 
     window.operateEvents = {
         'click .right': function (e, value, row, index) {
-            var $table = $('#tablePopup');
-            initTablePopup();
+            window.location = '/TheRightForUser.aspx?paramId=' + row.id;
         },
         'click .edit': function (e, value, row, index) {
             // alert('You click like action, row: ' + JSON.stringify(row));
