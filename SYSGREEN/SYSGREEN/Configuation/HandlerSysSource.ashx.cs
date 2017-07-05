@@ -17,9 +17,10 @@ namespace SYSGREEN.Configuation
         {
             String type = context.Request.Form["type"].ToString();
             String jsonData = context.Request.Form["data"].ToString();
-            DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(jsonData);
+            
             if (type == "insert")
             {
+                DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(jsonData);
                 try
                 {
                     obj.Create_Date = DateTime.Now;
@@ -36,6 +37,7 @@ namespace SYSGREEN.Configuation
             }
             else if (type == "update")
             {
+                DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(jsonData);
                 try
                 {
                     Update(obj);
@@ -50,6 +52,7 @@ namespace SYSGREEN.Configuation
             }
             else if (type == "delete")
             {
+                DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(jsonData);
                 try
                 {
                     DeleteData(obj.ID);
@@ -64,6 +67,7 @@ namespace SYSGREEN.Configuation
             }
             else if (type == "getData")
             {
+                DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(jsonData);
                 try
                 {
                     // Case ID > 0 -> Result = 1 record

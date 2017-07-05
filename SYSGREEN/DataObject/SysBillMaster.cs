@@ -10,6 +10,7 @@ namespace DataObject
     {
         public string Table = "SYS_BILL_MASTER";
         public int ID { get; set; }
+        public int DateTotal { get; set; }
         public String BillCode { get; set; }
         public int CustomerId { get; set; }
         public int SourceId { get; set; }

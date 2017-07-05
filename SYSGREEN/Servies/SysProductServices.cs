@@ -61,7 +61,45 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+        public static List<DataObject.SysProduct> GetDataByProduct(string productCode)
+        {
+            List<DataObject.SysProduct> lstSysProduct = new List<DataObject.SysProduct>();
+            String Select = "";
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            if (productCode != null && productCode != "")
+            {
+                Select = "Select * from SYS_PRODUCT Where Product_Code = @Product_Code";
 
+                cmd = new SqlCommand(Select);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Product_Code", productCode);
+            }
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.SysProduct obj = new DataObject.SysProduct();
+                    obj.ID = Int32.Parse(oReader["ID"].ToString());
+                    obj.ORG_ID = Int32.Parse(oReader["ORG_ID"].ToString());
+                    obj.Product_Code = oReader["Product_Code"].ToString();
+                    obj.Product_Name = oReader["Product_Name"].ToString();
+                    obj.Product_Unit = oReader["Product_Unit"].ToString();
+                    obj.Product_Amount = float.Parse(oReader["Product_Amount"].ToString());
+                    obj.Create_User = oReader["Create_User"].ToString();
+                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
+                        obj.Create_Date = DateTime.Parse(createDate);
+                    }
+                    lstSysProduct.Add(obj);
+                }
+            }
+            conn.Close();
+            return lstSysProduct;
+        }
         public static List<DataObject.SysProduct> GetData(Int32 Id)
         {
             List<DataObject.SysProduct> lstSysProduct = new List<DataObject.SysProduct>();

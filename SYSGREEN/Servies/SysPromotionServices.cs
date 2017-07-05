@@ -76,7 +76,58 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+        public static List<DataObject.SysPromotion> GetDataByPromotionCode(string code)
+        {
+            List<DataObject.SysPromotion> lstSysPromotion = new List<DataObject.SysPromotion>();
+            String Select = "";
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            if (code != null && code != "")
+            {
+                Select = "Select * from SYS_PROMOTION Where Code = @Code";
 
+                cmd = new SqlCommand(Select);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Code", code);
+            }
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.SysPromotion obj = new DataObject.SysPromotion();
+                    obj.ID = Int32.Parse(oReader["ID"].ToString());
+                    obj.ORG_ID = Int32.Parse(oReader["ORG_ID"].ToString());
+                    obj.Min = float.Parse(oReader["Min"].ToString());
+                    obj.Max = float.Parse(oReader["Max"].ToString());
+                    if (oReader["Date_Start"].ToString() != "" && oReader["Date_Start"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Date_Start"].ToString());
+                        obj.Date_Start = DateTime.Parse(createDate);
+                    }
+                    if (oReader["Date_End"].ToString() != "" && oReader["Date_End"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Date_End"].ToString());
+                        obj.Date_End = DateTime.Parse(createDate);
+                    }
+                    obj.Code = oReader["Code"].ToString();
+                    obj.Name = oReader["Name"].ToString();
+                    obj.Promotion_Percent = float.Parse(oReader["Promotion_Percent"].ToString());
+                    obj.Amount_VND = float.Parse(oReader["Amount_VND"].ToString());
+                    obj.Amount_FreeShip = float.Parse(oReader["Amount_FreeShip"].ToString());
+                    obj.Create_User = oReader["Create_User"].ToString();
+                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
+                        obj.Create_Date = DateTime.Parse(createDate);
+                    }
+                    lstSysPromotion.Add(obj);
+                }
+            }
+            conn.Close();
+            return lstSysPromotion;
+        }
         public static List<DataObject.SysPromotion> GetData(Int32 Id)
         {
             List<DataObject.SysPromotion> lstSysPromotion = new List<DataObject.SysPromotion>();

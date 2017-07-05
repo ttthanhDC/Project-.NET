@@ -5,24 +5,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 
-namespace SYSGREEN
+namespace SYSGREEN.Configuation
 {
     /// <summary>
-    /// Summary description for HandlerSysProduct
+    /// Summary description for HandlerSysCustomer
     /// </summary>
-    public class HandlerSysProduct : IHttpHandler
+    public class HandlerSysCustomer : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
         {
             String type = context.Request.Form["type"].ToString();
             String jsonData = context.Request.Form["data"].ToString();
-            DataObject.SysProduct obj = new JavaScriptSerializer().Deserialize<DataObject.SysProduct>(jsonData);
+            DataObject.SysCustomer obj = new JavaScriptSerializer().Deserialize<DataObject.SysCustomer>(jsonData);
             if (type == "insert")
             {
                 try
                 {
-                    obj.Create_Date = DateTime.Now;
+                    
                     Insert(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
@@ -68,7 +68,7 @@ namespace SYSGREEN
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    List<DataObject.SysProduct> lst = GetData(obj.ID);
+                    List<DataObject.SysCustomer> lst = GetData(obj.ID);
 
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
@@ -79,14 +79,30 @@ namespace SYSGREEN
                     context.Response.Write("Error");
                 }
             }
-            else if (type == "getDataByProductCode")
+            else if (type == "getDataByPhoneNumber")
             {
                 try
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    List<DataObject.SysProduct> lst = Servies.SysProductServices.GetDataByProduct(obj.Product_Code);
+                    List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetDataByPhoneNumber(obj.PhoneNumber);
 
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getDataByEmail")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetDataByEmail(obj.Email);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
@@ -111,22 +127,22 @@ namespace SYSGREEN
             }
         }
 
-        public void Insert(DataObject.SysProduct obj)
+        public void Insert(DataObject.SysCustomer obj)
         {
-            Servies.SysProductServices.InsertData(obj);
+            Servies.SysCustomerServices.InsertData(obj);
         }
-        public void Update(DataObject.SysProduct obj)
+        public void Update(DataObject.SysCustomer obj)
         {
-            Servies.SysProductServices.InsertData(obj);
+            Servies.SysCustomerServices.InsertData(obj);
         }
         public static void DeleteData(Int32 Id)
         {
-            Servies.SysProductServices.DeleteData(Id);
+            Servies.SysCustomerServices.DeleteData(Id);
         }
 
-        public List<DataObject.SysProduct> GetData(Int32 Id)
+        public List<DataObject.SysCustomer> GetData(Int32 Id)
         {
-            List<DataObject.SysProduct> lst = Servies.SysProductServices.GetData(Id);
+            List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetData(Id);
             return lst;
         }
     }

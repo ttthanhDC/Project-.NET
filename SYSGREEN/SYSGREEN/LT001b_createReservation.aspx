@@ -2,18 +2,21 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <div class="main-content-inner">
+        <div id="contactForm">
       <div class="form-horizontal">
         <div class="form-group">
            <label for="sel1" class="col-md-1">Nguồn</label>
             <div class="col-md-2">
+                <select class="form-control" id="cb_SourceType"></select>
+                <!--
                 <select class="form-control" id="cb_SourceType">
                             <option value ="1">Facebook</option>
                             <option value ="2">Zalo</option>
-                 </select>
+                 </select> -->
             </div>
             <label for="sel1" class="col-md-2">Mã khách hàng</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" name="title" id="txtMaKH" />
+                <input type="text" class="form-control" name="title" id="txtMaKH" disabled/>
             </div>
             <label for="sel1" class="col-md-2">Mã Reservation</label>
             <div class="col-md-2">
@@ -45,7 +48,7 @@
             </div>
             <label for="sel1" class="col-md-2">Ngày sinh</label>
             <div class="col-md-3">
-                <input type="date" data-date-format="dd/mm/yyyy" class="form-control" name="title" id="txtNgaySinh" />
+                <input type="text" placeholder="DD/MM/YYYY"  class="form-control" name="title" id="txtNgaySinh" />
             </div>
             <label for="sel1" class="col-md-2">Tổng</label>
             <div class="col-md-2">
@@ -61,7 +64,7 @@
             </div>
             <label for="sel1" class="col-md-2">Số điện thoại</label>
             <div class="col-md-3">
-               <input type="text" class="form-control" name="title" id="txtSoDienThoai" />
+                <input type="text" class="form-control" name="title" id="txtSoDienThoai" />
             </div>
             <label for="sel1" class="col-md-2">Số tiền thu được</label>
             <div class="col-md-2">
@@ -77,7 +80,7 @@
             </div>
             <label for="sel1" class="col-md-2">Email</label>
             <div class="col-md-3">
-               <input type="email" class="form-control" name="title" id="txtEmail1" />
+               <input type="text" class="form-control" name="title" id="txtEmailCustomer" />
             </div>
             <label for="sel1" class="col-md-2">Chiết khấu</label>
             <div class="col-md-2">
@@ -93,15 +96,21 @@
             </div>
             <label for="sel1" class="col-md-2">Địa chỉ</label>
             <div class="col-md-3">
-               <input type="email" class="form-control" name="title" id="txtDiaChi" />
+               <input type="text" class="form-control" name="title" id="txtDiaChiCustomer" />
             </div>
             <label for="sel1" class="col-md-2">Còn Nợ</label>
             <div class="col-md-2">
                  <input type="text" class="form-control" name="title" id="txtNo" value='0' disabled/>
             </div>
         </div> 
+       <div class="form-group">
+            <div class="col-md-12 col-md-offset-3">
+            <div id="messages"></div>
+       </div>
     </div>
-     <hr style="color:blue;width:80%;text-align:center"/>
+    </div>
+        </div>
+        <hr style="color:blue;width:80%;text-align:center"/>
      <div style ="height:50px"></div>   
         <div class="row" style="margin-left : 30px; margin-right : 30px">
             <div class="col-md-3">
@@ -140,9 +149,9 @@
                  <div class="form-group" id ="div_cb_PayType" >
                   <label for="sel1">Thanh toán </label>
                   <select class="form-control" id="cb_PayType">
-                    <option value ="-1"></option>
-                    <option value ="1">Tiền mặt</option>
-                    <option value ="2">Chuyển khoản</option>
+                    <option value = "-1"></option>
+                    <option value = "1">Tiền mặt</option>
+                    <option value = "2">Chuyển khoản</option>
                   </select>
                 </div>
             </div>
@@ -159,6 +168,9 @@
         data-search="true" 
         data-show-refresh="true" 
     ></table>
+</div>
+<div style="text-align:center;display: table;margin: 0 auto;">
+    <button type="button" class="btn btn-primary" id="btnSave">Lưu đơn hàng</button>
 </div>
 <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 1200px;">
@@ -234,6 +246,278 @@
 <script>
     // Bootstrap Table
     $(function () {
+        //Save Bill
+        
+        $('#btnSave').on('click', function () {
+            var obj = {};
+            obj.maKH = $('#txtMaKH').val();
+            obj.hoTen = $('#txtHoTen').val();
+            obj.ngaySinh = $('#txtNgaySinh').val();
+            obj.soDienThoai = $('#txtSoDienThoai').val();
+            obj.soDienThoai = document.getElementById('txtSoDienThoai').value;
+            obj.email = document.getElementById('txtEmailCustomer').value;
+            obj.diaChi = document.getElementById('txtDiaChiCustomer').value;
+            var bill = {};
+            bill.sourceName = $('#cb_SourceType :selected').text();
+            bill.sourceId = $('#cb_SourceType').val();
+            bill.songayconlai = $('#txtSoNgayConLai').val();
+            bill.tong = $('#txtTong').val().split('.').join('');
+            bill.sotienthuduoc = $('#txtSoTienThuDuoc').val() != "" ? $('#txtSoTienThuDuoc').val().split('.').join('') : '0'
+            bill.chietkhau = $('#txtChietKhau').val() != "" ? $('#txtChietKhau').val().split('.').join('') : '0'
+            bill.conNo = $('#txtNo').val() != "" ? $('#txtNo').val().split('.').join('') : '0'
+            bill.inFoCustomer = obj;
+            bill.infoBill = window.dataGlobal;
+            var formBill = new FormData();
+            formBill.append('type', 'insert');
+            formBill.append('data', JSON.stringify(bill));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formBill,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('#txtMaHD').val("HD" + result);
+                },
+                error: function (err) {
+
+                }
+            });
+        });
+        $('#contactForm').bootstrapValidator({
+            container: '#messages',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                txtHoTen: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Họ tên là thông tin bắt buộc không được để trống'
+                        }
+                    }
+                },
+                txtNgaySinh: {
+                    validators: {
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'Format ngày sinh không đúng!'
+                        },
+                    }
+                },
+                txtSoDienThoai: {
+
+                    validators: {
+                        notEmpty: {
+                            message: 'Số điện thoại là thông tin bắt buộc không được để trống'
+                        },
+                        stringLength: {
+                            max: 15,
+                            message: 'The title must be less than 15 characters long'
+                        }
+                    }
+                },
+
+                txtSoDienThoai: {
+
+                    validators: {
+                        notEmpty: {
+                            message: 'Số điện thoại là thông tin bắt buộc không được để trống'
+                        },
+                        stringLength: {
+                            max: 15,
+                            message: 'The title must be less than 15 characters long'
+                        }
+                    }
+                },
+                txtEmailCustomer : {
+
+                    validators: {
+                        emailAddress: {
+                            message: 'Địa chỉ Email không đúng định dạng'
+                        },
+                        regexp: {
+                            regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                            message: 'Địa chỉ Email không đúng định dạng'
+                        }
+                    }
+                },
+               
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The content is required and cannot be empty'
+                        },
+                        stringLength: {
+                            max: 500,
+                            message: 'The content must be less than 500 characters long'
+                        }
+                    }
+                }
+            }
+        });
+        // Load Data Source
+        var getSource = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+        var formSource = new FormData();
+        var json = { 'ID': 0 };
+        formSource.append('type', 'getData');
+        formSource.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysSource.ashx",
+            type: "POST",
+            data: formSource,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.Source_Name;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data1 = { menu: arr };
+                var $menu = $("#cb_SourceType");
+                $.each(data1.menu, function () {
+                    $menu.append(
+                        getSource(this)
+                    );
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+        var formatDateTime = function (value) {
+            if (value && value != "") {
+                var date = new Date(value);
+                var d = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
+                var m = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
+                var y = date.getFullYear();
+                return d + '/' + m + '/' + y;
+            } else {
+                return ''
+            }
+        };
+        // Onchange Customer
+        $('#txtSoDienThoai').on('change', function () {
+            var formCustomer = new FormData();
+            var json = { 'PhoneNumber': this.value };
+            formCustomer.append('type', 'getDataByPhoneNumber');
+            formCustomer.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysCustomer.ashx",
+                type: "POST",
+                data: formCustomer,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        var objectData = jsonData[0];
+                        $('#txtMaKH').val("KH" + (objectData.ID < 10 ? ('0' + objectData.ID.toString()) : objectData.ID.toString()));
+                        $('#txtHoTen').val(objectData.CustomerName);
+                        $('#txtNgaySinh').val(formatDateTime(objectData.BirthDay));
+                        document.getElementById('txtEmailCustomer').value = objectData.Email;
+                        document.getElementById('txtDiaChiCustomer').value = objectData.Address;
+                    } else {
+                        $('#txtMaKH').val('');
+                        $('#txtHoTen').val('');
+                        $('#txtNgaySinh').val('');
+                        document.getElementById('txtEmailCustomer').value = '';
+                        document.getElementById('txtDiaChiCustomer').value = '';
+                    }
+                },
+                error: function (err) {
+
+                }
+            });
+        });
+
+        $('#txtSoDienThoaiPopUp').on('change', function () {
+            var formCustomer = new FormData();
+            var json = { 'PhoneNumber': this.value };
+            formCustomer.append('type', 'getDataByPhoneNumber');
+            formCustomer.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysCustomer.ashx",
+                type: "POST",
+                data: formCustomer,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        var objectData = jsonData[0];
+                        //$('#txtMaKH').val("KH" + (objectData.ID < 10 ? ('0' + objectData.ID.toString()) : objectData.ID.toString()));
+                        $('#txtHoTenPopUp').val(objectData.CustomerName);
+                        $('#txtDiaChiPopUp').val(objectData.Address);
+                        //document.getElementById('txtEmailCustomer').value = objectData.Email;
+                        document.getElementById('txtDiaChiPopUp').value = objectData.Address;
+                    } else {
+                        $('#txtHoTenPopUp').val('');
+                        $('#txtDiaChiPopUp').val('');
+                       // $('#txtNgaySinh').val('');
+                        document.getElementById('txtDiaChiPopUp').value = '';
+                       // document.getElementById('txtDiaChiCustomer').value = '';
+                    }
+                },
+                error: function (err) {
+
+                }
+            });
+        });
+
+        
+
+       
+        $('#txtEmailCustomer').on('change', function () {
+            var formCustomer = new FormData();
+            var json = { 'Email': this.value };
+            formCustomer.append('type', 'getDataByEmail');
+            formCustomer.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysCustomer.ashx",
+                type: "POST",
+                data: formCustomer,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        var objectData = jsonData[0];
+                        $('#txtMaKH').val("KH" + (objectData.ID < 10 ? ('0' + objectData.ID.toString()) : objectData.ID.toString()));
+                        $('#txtHoTen').val(objectData.CustomerName);
+                        $('#txtNgaySinh').val(formatDateTime(objectData.BirthDay));
+                        document.getElementById('txtSoDienThoai').value = objectData.PhoneNumber;
+                        document.getElementById('txtDiaChiCustomer').value = objectData.Address;
+                    } else {
+                        $('#txtMaKH').val('');
+                        $('#txtHoTen').val('');
+                        $('#txtNgaySinh').val('');
+                        document.getElementById('txtSoDienThoai').value = '';
+                        document.getElementById('txtDiaChiCustomer').value = '';
+                    }
+                },
+                error: function (err) {
+
+                }
+            });
+        })
         window.dataGlobal = [];
         //Onclick add Table Master
         $('#btnAddSingle').on('click', function () {
@@ -243,7 +527,7 @@
             obj.id = data.length + 1;;
             obj.parent = false;
             obj.parentBillId = window.rowTemp.billId;
-            obj.parentId = null;
+            obj.parentId = -1;
             obj.deliveryDate = '';
             obj.product = '';
             obj.sugar = 1;
@@ -547,7 +831,7 @@
                     }
                 }
                 var obj = {};
-                obj.id = null; obj.parent = false; obj.deliveryDate = ''; obj.product = '';
+                obj.id = -1; obj.parent = false; obj.deliveryDate = ''; obj.product = '';
                 obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
                 obj.parentBillId = parentBillId; obj.parentId = parendId+1;
@@ -729,6 +1013,7 @@
             var $els = $table.find('.editable');
             next = $els.index($el) + 1;
             if (field == "product") {
+                /*
                 if (row[field] == "SP001") {
                     row.quantity = 1;
                     row.price = "200000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -741,13 +1026,76 @@
                     row.money = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
-                }
+                }*/
+                var formProduct = new FormData();
+                var json = { 'Product_Code': row[field] };
+                formProduct.append('type', 'getDataByProductCode');
+                formProduct.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerSysProduct.ashx",
+                    type: "POST",
+                    data: formProduct,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var jsonData = result;
+                        var arr = [];
+                        if (jsonData && jsonData.length > 0) {
+                            var objectData = jsonData[0];
+                            var quantity  =  Number(objectData.Product_Unit); 
+                            row.quantity = quantity;
+                            var price = objectData.Product_Amount.toString().split('.').join('');
+                            row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            row.money = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            row.total = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        } else {
+                            row.quantity = "";
+                            row.price = "";
+                            row.money = "";
+                            row.total = "";
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
             }
             if (field == "quantity") {
                 var price = row.price.split('.').join('');
                 row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+            }
+            if (field == "promotionCode") {
+                var formpromotionCode = new FormData();
+                var json = { 'Code': row[field] };
+                formpromotionCode.append('type', 'getDataByPromotionCode');
+                formpromotionCode.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerSysPromotion.ashx",
+                    type: "POST",
+                    data: formpromotionCode,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var jsonData = result;
+                        var arr = [];
+                        if (jsonData && jsonData.length > 0) {
+                            var objectData = jsonData[0];
+                            var percent = Number(objectData.Promotion_Percent)/100;
+                            var total = row.total.toString().split('.').join('');
+                            total = total == "" ? Number('0') : Number(total);
+                            row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
             }
         });
     };
@@ -807,7 +1155,8 @@
                 field: 'promotionCode',
                 title: 'Promotion Code',
                 align: 'center',
-                valign: 'middle'
+                valign: 'middle',
+                editable: true,
             },
             {
                 field: 'total',
@@ -839,6 +1188,7 @@
             var $els = $table.find('.editable');
             next = $els.index($el) + 1;
             if (field == "product") {
+                /*
                 if (row[field] == "SP001") {
                     row.quantity = 1;
                     row.price = "200000".replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -851,13 +1201,75 @@
                     row.money = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (1 * 300000).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     $table.bootstrapTable('updateRow', { index: row.id -1, row: row });
-                }
+                }*/
+                var formProduct = new FormData();
+                var json = { 'Product_Code': row[field] };
+                formProduct.append('type', 'getDataByProductCode');
+                formProduct.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerSysProduct.ashx",
+                    type: "POST",
+                    data: formProduct,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var jsonData = result;
+                        var arr = [];
+                        if (jsonData && jsonData.length > 0) {
+                            var objectData = jsonData[0];
+                            var quantity = Number(objectData.Product_Unit);
+                            row.quantity = quantity;
+                            var price = objectData.Product_Amount.toString().split('.').join('');
+                            row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            row.money = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            row.total = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        } else {
+                            row.quantity = "";
+                            row.price = "";
+                            row.money = "";
+                            row.total = "";
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
             }
             if (field == "quantity") {
                 var price = row.price.split('.').join('');
                 row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-                $table.bootstrapTable('updateRow', { index: row.id -1, row: row });
+                $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+            }
+            if (field == "promotionCode") {
+                var formpromotionCode = new FormData();
+                var json = { 'Code': row[field] };
+                formpromotionCode.append('type', 'getDataByPromotionCode');
+                formpromotionCode.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerSysPromotion.ashx",
+                    type: "POST",
+                    data: formpromotionCode,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var jsonData = result;
+                        var arr = [];
+                        if (jsonData && jsonData.length > 0) {
+                            var objectData = jsonData[0];
+                            var percent = Number(objectData.Promotion_Percent) / 100;
+                            var total = row.total.toString().split('.').join('');
+                            total = total == "" ? Number('0') : Number(total);
+                            row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                        }
+                    },
+                    error: function (err) {
+
+                    }
+                });
             }
         });
     };
@@ -892,7 +1304,7 @@
                     var obj = {};
                     obj.parent = true;
                     obj.parentBillId = row.billId;
-                    obj.parentId = null;
+                    obj.parentId = -1;
                     obj.id = 1;
                     obj.deliveryDate = '01/07/2017';
                     obj.product = '';
@@ -912,7 +1324,7 @@
                         obj1.id = 2;
                         obj1.parent = true;
                         obj1.parentBillId = row.billId;
-                        obj1.parentId = null;
+                        obj1.parentId = -1;
                         obj1.deliveryDate = '02/07/2017';
                         obj1.product = '';
                         obj1.sugar = 1;
@@ -927,11 +1339,27 @@
                         // $table.bootstrapTable('insertRow', { index: obj1.stt, row: obj1 });
                         //$table.bootstrapTable('append', [obj1]);
                     } else if (row.OrderType2Id == 2) {
+                        var obj1 = {};
+                        obj1.id = 2;
+                        obj1.parent = true;
+                        obj1.parentBillId = row.billId;
+                        obj1.parentId = -1;
+                        obj1.deliveryDate = '02/07/2017';
+                        obj1.product = '';
+                        obj1.sugar = 1;
+                        obj1.quantity = '';
+                        obj1.price = '';
+                        obj1.money = '';
+                        obj1.promotionCode = '';
+                        obj1.total = '';
+                        obj1.test = '';
+                        obj1.operate = '1';
+                        dataTemp.push(obj1);
                         var obj2 = {};
                         obj2.id = 3;
                         obj2.parent = true;
                         obj2.parentBillId = row.billId;
-                        obj2.parentId = null;
+                        obj2.parentId = -1;
                         obj2.deliveryDate = '03/07/2017';
                         obj2.product = '';
                         obj2.sugar = 1;
@@ -982,7 +1410,7 @@
                 $('#dvHidden').css({ 'display': 'block' });
                 initTableSinglePopup();
                 var dataTemp = [];
-                var objCustomer = null;
+                var objCustomer = {};
                 for (var i = 0; i < window.dataGlobal.length ; i++) {
                     if (window.dataGlobal[i].billId == row.billId) {
                         dataTemp = window.dataGlobal[i].detalMaster;

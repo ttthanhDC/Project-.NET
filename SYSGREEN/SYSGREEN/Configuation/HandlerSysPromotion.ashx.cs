@@ -79,6 +79,22 @@ namespace SYSGREEN
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "getDataByPromotionCode")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    List<DataObject.SysPromotion> lst = Servies.SysPromotionServices.GetDataByPromotionCode(obj.Code);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
