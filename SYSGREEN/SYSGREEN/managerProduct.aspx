@@ -1,7 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="UserManger.aspx.cs" Inherits="SYSGREEN.UserManger" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="managerProduct.aspx.cs" Inherits="SYSGREEN.managerProduct" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <script>
-      
+
        $(document).ready(function () {
            // load data khi edit
            var idParam = getQueryVariable("paramId");
@@ -12,7 +13,7 @@
                var json = { 'ID': parseInt(idParam) };
                formDataListUser.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysUser.ashx",
+                   url: "Configuation/HandlerSysProduct.ashx",
                    type: "POST",
                    data: formDataListUser,
                    contentType: false,
@@ -22,20 +23,12 @@
                        if (jsonData && jsonData.length > 0) {
                            for (var i = 0; i < jsonData.length ; i++) {
                                var objectData = jsonData[i];
-                               //var obj = {};
-                               //obj.id = objectData.ID;
-                               //obj.email = objectData.Email;
-                               //obj.department = objectData.DeptId;
-                               //obj.local = objectData.OrgId;
-                               //obj.dateCreate = objectData.Create_Date;
-                               //obj.user = objectData.UserName;
-
-
-                               $('#txtUserName').val(objectData.UserName);
-                               //$('#txtPassword').val(objectData.DeptId);
-                               $('#txtEmail').val(objectData.Email);
-                               $('#deptID').val(objectData.DeptId);
-                               $('#orgID').val(objectData.OrgId);
+                               $('#txt_gia').val(objectData.Product_Amount);
+                               $('#txt_donVi').val(objectData.Product_Unit);
+                               $('#txt_productName').val(objectData.Product_Name);
+                               $('#txt_productCode').val(objectData.Product_Code);
+                               $('#orgId').val(objectData.ORG_ID);
+                       //'Create_User': 'admin'
                            }
                        }
                    },
@@ -44,7 +37,7 @@
                    }
                });
            }
-           
+
            function getQueryVariable(variable) {
                var query = window.location.search.substring(1);
                var vars = query.split("&");
@@ -58,44 +51,9 @@
            }
            // Load Data Bộ phận
            var formData = new FormData();
-           var formDataDept = new FormData();
            var formDataOrg = new FormData();
-           formDataDept.append('type', 'getDataDept');
-           formDataDept.append('data', '1');
            formDataOrg.append('type', 'getDataOrg');
            formDataOrg.append('data', '1');
-           $.ajax({
-               url: "Configuation/HandlerSysUser.ashx",
-               type: "POST",
-               data: formDataDept,
-               contentType: false,
-               processData: false,
-               success: function (result) {
-                   var jsonData = result;
-                   var arr = [];
-                   if (jsonData && jsonData.length > 0) {
-                       for (var i = 0; i < jsonData.length ; i++) {
-                           var objectData = jsonData[i];
-                           var obj = {};
-                           obj.name = objectData.Dept_Name;
-                           obj.link = objectData.ID;
-                           obj.sub = null;
-                           arr.push(obj);
-                       }
-                   }
-                   var data1 = { menu: arr };
-                   var $menu = $("#deptID");
-                   $.each(data1.menu, function () {
-                       $menu.append(
-                           getDept(this)
-                       );
-                   });
-               },
-               error: function (err) {
-
-               }
-           });
-
            $.ajax({
                url: "Configuation/HandlerSysUser.ashx",
                type: "POST",
@@ -116,7 +74,7 @@
                        }
                    }
                    var data2 = { menu: arr };
-                   var $menu = $("#orgID");
+                   var $menu = $("#orgId");
                    $.each(data2.menu, function () {
                        $menu.append(
                            getOrg(this)
@@ -127,13 +85,6 @@
 
                }
            });
-           
-           // select box phòng ban
-           var getDept = function (itemData) {
-               var item = $("<option value='"+itemData.link+"'>")
-                   .append(itemData.name);
-               return item;
-           };
 
            // select box cơ sở   
            var getOrg = function (itemData) {
@@ -142,15 +93,15 @@
                return item;
            };
 
-          
+
            //$menu.menu();
-          
+
            function testFunction(data) {
                return data.valid;
            }
 
-          
-          
+
+
            // Event Thêm mới
            $('#btnSave').on('click', function (e) {
                var idParam = getQueryVariable("paramId");
@@ -158,21 +109,21 @@
                if (idParam) {
                    // update
                    var formData = new FormData();
-                   var id = parseInt(idParam + "");
-                   var user = $('#txtUserName').val();
-                   var pass = $('#txtPassword').val();
-                   var email = $('#txtEmail').val();
-                   var deptId = $('#deptID').val();
-                   deptId = parseInt(deptId);
-                   var orgId = $('#orgID').val();
-                   orgId = parseInt(orgId);
-                   //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
-                   var json = { 'ID': id, 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
+                   var json = {
+                       'ID': parseInt(idParam + ""),
+                       'Product_Amount': $('#txt_gia').val(),
+                       'Product_Unit': $('#txt_donVi').val(),
+                       'Product_Name': $('#txt_productName').val(),
+                       'Product_Code': $('#txt_productCode').val(),
+                       'ORG_ID': parseInt($('#orgId').val() + ""),
+                       'Create_User': 'admin'
+                       //userid
+                   };
                    jQuery.ajaxSetup({ async: true });
                    formData.append('type', 'update');
                    formData.append('data', JSON.stringify(json));
                    $.ajax({
-                       url: "Configuation/HandlerSysUser.ashx",
+                       url: "Configuation/HandlerSysProduct.ashx",
                        type: "POST",
                        data: formData,
                        contentType: false,
@@ -187,20 +138,20 @@
                } else {
                    // insert
                    var formData = new FormData();
-                   var user = $('#txtUserName').val();
-                   var pass = $('#txtPassword').val();
-                   var email = $('#txtEmail').val();
-                   var deptId = $('#deptID').val();
-                   deptId = parseInt(deptId);
-                   var orgId = $('#orgID').val();
-                   orgId = parseInt(orgId);
-                   //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
-                   var json = { 'UserName': user, 'Password': pass, 'Email': email, 'DeptId': deptId, 'OrgId': orgId, 'Create_User': 'admin' };
+                   var json = {
+                       'Product_Amount': $('#txt_gia').val(),
+                       'Product_Unit': $('#txt_donVi').val(),
+                       'Product_Name': $('#txt_productName').val(),
+                       'Product_Code': $('#txt_productCode').val(),
+                       'ORG_ID': parseInt($('#orgId').val() + ""),
+                       'Create_User': 'admin'
+                       //userid
+                   };
                    jQuery.ajaxSetup({ async: true });
                    formData.append('type', 'insert');
                    formData.append('data', JSON.stringify(json));
                    $.ajax({
-                       url: "Configuation/HandlerSysUser.ashx",
+                       url: "Configuation/HandlerSysProduct.ashx",
                        type: "POST",
                        data: formData,
                        contentType: false,
@@ -214,8 +165,8 @@
                    });
                }
            });
-          
-          
+
+
            $('#contactForm').bootstrapValidator({
                container: '#messages',
                feedbackIcons: {
@@ -269,42 +220,42 @@
    </script>
     <div id="contactForm"  class="form-horizontal">
     <div class="form-group">
-        <label class="col-md-3 control-label">UserName</label>
+        <label class="col-md-3 control-label">Cơ sở</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="userName" id="txtUserName" />
+             <select class="form-control" id="orgId"></select>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 control-label">Password</label>
+        <label class="col-md-3 control-label">Product code</label>
         <div class="col-md-9">
-            <input type="password" class="form-control" name="passWord" id="txtPassword" />
+            <input type="text" class="form-control" name="product code" id="txt_productCode" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 control-label">Email</label>
+        <label class="col-md-3 control-label">Product name</label>
         <div class="col-md-9">
-            <input type="email" class="form-control" name="email" id="txtEmail" />
+            <input type="text" class="form-control" name="Product Name" id="txt_productName" />
         </div>
     </div>
    <div class="form-group">
-        <label class="col-md-3 control-label">Bộ phân</label>
+        <label class="col-md-3 control-label">Đơn vị</label>
          <div class="col-md-9">
-             <select class="form-control" id="deptID"></select>
+             <input type="text" class="form-control" name="Don vi" id="txt_donVi" />
            </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 control-label">Cơ sở</label>
+        <label class="col-md-3 control-label">Giá</label>
          <div class="col-md-9">
-             <select class="form-control" id="orgID"></select>
+         <input type="text" class="form-control" name="gia" id="txt_gia" />
+             </div>
+    </div> 
+    <div class="form-group">
+        <label class="col-md-3 control-label">User tạo</label>
+         <div class="col-md-9">
+             <select class="form-control" id="userid"></select>
            </div>
-    </div>    
+    </div>     
     
-    <!-- #messages is where the messages are placed inside -->
-    <div class="form-group">
-        <div class="col-md-12 col-md-offset-3">
-            <div id="messages"></div>
-        </div>
-    </div>
     <div class="form-group">
         <div class="col-md-12 col-md-offset-3">
             <button type="button" class="btn btn-primary" id="btnSave">Lưu</button>
