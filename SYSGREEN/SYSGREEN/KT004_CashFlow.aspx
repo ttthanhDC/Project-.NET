@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="C002_Right.aspx.cs" Inherits="SYSGREEN.C002_Right" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KT004_CashFlow.aspx.cs" Inherits="SYSGREEN.KT004_CashFlow" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 
@@ -15,7 +15,7 @@
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
-        var json = { 'ID': 0};
+        var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
             url: "Configuation/HandlerSysRole.ashx",
@@ -38,46 +38,46 @@
                     }
                 }
                 data = arr;
-                
+
                 $('#table').bootstrapTable({
                     columns: [{
-                        field: 'id',
-                        title: 'ID',
+                        field: 'date',
+                        title: 'Ngày',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         ///editable: true,
                     }, {
-                        field: 'name',
-                        title: 'Tên',
+                        field: 'money',
+                        title: 'Số tiền',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         // editable: true,
 
                     }, {
-                        field: 'dateCreate',
-                        title: 'Ngày tạo',
+                        field: 'accountFor',
+                        title: 'Tài khoản chi',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         //  editable: true,
                     }, {
-                        field: 'user',
-                        title: 'User',
+                        field: 'accountTo',
+                        title: 'Tài khoản nhận',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
-                    
+
                     }, {
-                        field: 'operate',
-                        title: 'Thao tác',
+                        field: 'note',
+                        title: 'ghi chú',
                         align: 'center',
                         valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
+                       // events: operateEvents,
+                       // formatter: operateFormatter
                     }],
-                   data : data
+                    data: data
                 });
             },
             error: function (err) {
@@ -120,7 +120,7 @@
             });
         }
     };
-    
+
     function updateCell(caller) {
         var $table = $('#tablePopup');
     }
@@ -132,4 +132,5 @@
     };
 </script>
     </asp:Content>
+
 

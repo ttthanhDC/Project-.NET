@@ -105,7 +105,7 @@
             });
         });
         // function
-        $('#btnAdd').on('click', function (e) {
+        $('#btadd').on('click', function (e) {
             window.location = '/managerPoromotion.aspx?';
         });
         function userFormatter(data) {
@@ -121,7 +121,6 @@
                 '</a>',
             ].join('');
         }
-
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
                 window.location = '/managerPoromotion.aspx?paramId=' + row.id;
@@ -153,7 +152,6 @@
                 });
             }
         };
-
     </script>
     <table id="table" 
         data-pagination="true"
@@ -163,6 +161,6 @@
         ></table>
     <div style ="height:40px"></div>
     <div style ="text-align:center;display: table;margin: 0 auto;">
-         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+         <button type="button" class="btn btn-primary" id="btadd">Thêm</button>
     </div>
     </asp:Content>

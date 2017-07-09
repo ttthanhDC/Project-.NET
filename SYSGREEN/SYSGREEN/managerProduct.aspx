@@ -28,7 +28,6 @@
                                $('#txt_productName').val(objectData.Product_Name);
                                $('#txt_productCode').val(objectData.Product_Code);
                                $('#orgId').val(objectData.ORG_ID);
-                       //'Create_User': 'admin'
                            }
                        }
                    },
@@ -93,14 +92,55 @@
                return item;
            };
 
+           // Load Data user
+           var formDataUser = new FormData();
+           formDataUser.append('type', 'getData');
+           var json = { 'ID': 0 };
+           formDataUser.append('data', JSON.stringify(json));
+           $.ajax({
+               url: "Configuation/HandlerSysUser.ashx",
+               type: "POST",
+               data: formDataUser,
+               contentType: false,
+               processData: false,
+               success: function (result) {
+                   var jsonData = result;
+                   var arr = [];
+                   if (jsonData && jsonData.length > 0) {
+                       for (var i = 0; i < jsonData.length ; i++) {
+                           var objectData = jsonData[i];
+                           var obj = {};
+                           obj.name = objectData.UserName;
+                           obj.link = objectData.ID;
+                           obj.sub = null;
+                           arr.push(obj);
+                       }
+                   }
+                   var data = { menu: arr };
+                   var $menu = $("#userid");
+                   $.each(data.menu, function () {
+                       $menu.append(
+                           getUser(this)
+                       );
+                   });
+               },
+               error: function (err) {
+
+               }
+           });
+
+           // select box user  
+           var getUser = function (itemData) {
+               var item = $("<option value='" + itemData.link + "'>")
+                   .append(itemData.name);
+               return item;
+           };
 
            //$menu.menu();
 
            function testFunction(data) {
                return data.valid;
            }
-
-
 
            // Event Thêm mới
            $('#btnSave').on('click', function (e) {
@@ -116,8 +156,6 @@
                        'Product_Name': $('#txt_productName').val(),
                        'Product_Code': $('#txt_productCode').val(),
                        'ORG_ID': parseInt($('#orgId').val() + ""),
-                       'Create_User': 'admin'
-                       //userid
                    };
                    jQuery.ajaxSetup({ async: true });
                    formData.append('type', 'update');
@@ -144,8 +182,7 @@
                        'Product_Name': $('#txt_productName').val(),
                        'Product_Code': $('#txt_productCode').val(),
                        'ORG_ID': parseInt($('#orgId').val() + ""),
-                       'Create_User': 'admin'
-                       //userid
+                       'Create_User': parseInt($('#userid').val() + ""),
                    };
                    jQuery.ajaxSetup({ async: true });
                    formData.append('type', 'insert');

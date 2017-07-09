@@ -1,13 +1,15 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="C002_Right.aspx.cs" Inherits="SYSGREEN.C002_Right" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KT005_General Accounting.aspx.cs" Inherits="SYSGREEN.KT005_General_Accounting" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-
-    <table id="table" 
+<div>
+      <table id="table" 
         data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
         data-page-list="[10, 25, 50, 100, ALL]" 
         ></table>
+</div>
+  
    
 <script>
     // Bootstrap Table
@@ -15,7 +17,7 @@
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
-        var json = { 'ID': 0};
+        var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
             url: "Configuation/HandlerSysRole.ashx",
@@ -38,46 +40,53 @@
                     }
                 }
                 data = arr;
-                
+
                 $('#table').bootstrapTable({
                     columns: [{
-                        field: 'id',
-                        title: 'ID',
+                        field: 'account',
+                        title: 'Tài khoản',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         ///editable: true,
                     }, {
-                        field: 'name',
-                        title: 'Tên',
+                        field: 'moneyTo',
+                        title: 'Thu',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         // editable: true,
 
                     }, {
-                        field: 'dateCreate',
-                        title: 'Ngày tạo',
+                        field: 'moneyFor',
+                        title: 'Chi',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
                         //  editable: true,
                     }, {
-                        field: 'user',
-                        title: 'User',
+                        field: 'LCTo',
+                        title: 'Lưu chuyển thu',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
-                    
+
                     }, {
-                        field: 'operate',
-                        title: 'Thao tác',
+                        field: 'LCFor',
+                        title: 'Lưu chuyển chi',
                         align: 'center',
                         valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
+                       // events: operateEvents,
+                       // formatter: operateFormatter
+                    }, {
+                        field: 'surplus',
+                        title: 'Số dư',
+                        align: 'center',
+                        valign: 'middle',
+                        //events: operateEvents,
+                        //formatter: operateFormatter
                     }],
-                   data : data
+                    data: data
                 });
             },
             error: function (err) {
@@ -120,7 +129,7 @@
             });
         }
     };
-    
+
     function updateCell(caller) {
         var $table = $('#tablePopup');
     }
@@ -132,4 +141,5 @@
     };
 </script>
     </asp:Content>
+
 

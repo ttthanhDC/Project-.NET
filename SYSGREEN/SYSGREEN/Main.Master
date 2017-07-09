@@ -570,6 +570,68 @@
 							</li>
 						</ul>
 					</li>
+
+                    <li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-tag"></i>
+
+							<span class="menu-text">
+								Kế toán 
+							</span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li class="">
+								<a runat="server" href="~/KT001_ReceiveMoneyBank">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Kế toán nhận tiền từ các tài khoản ngân hàng
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a runat="server" href="~/KT002_ReceiveMoneyCash">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Kế toán nhận tiền là tiền mặt
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<<a runat="server" href="~/KT003_TotalExpenditure">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Hiển thị tất cả các khoản chi
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a runat="server" href="~/KT004_CashFlow">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Lưu chuyển dòng tiền
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="">
+								<a runat="server" href="~/KT005_General Accounting">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Kế toán tổng hợp
+								</a> 
+
+								<b class="arrow"></b>
+							</li>
+                           
+						</ul>
+					</li>
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

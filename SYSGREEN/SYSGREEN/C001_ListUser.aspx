@@ -146,7 +146,9 @@
                 
             }
         };
-      
+        $('#btnAdd').on('click', function (e) {
+            window.location = '/UserManger.aspx?';
+        });
 
 
     </script>
@@ -158,4 +160,10 @@
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
         ></table>
+   
+
+    <div style ="height:40px"></div>
+    <div style ="text-align:center;display: table;margin: 0 auto;">
+         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+    </div>
     </asp:Content>
