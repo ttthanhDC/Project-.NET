@@ -298,6 +298,14 @@
 
 								<b class="arrow"></b>
 							</li>
+                             <li class="">
+								<a runat="server" href="~/LT003_booking">
+									<i class="menu-icon fa fa-caret-right"></i>
+									LT002 DS reservation
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
                     <li class="">
@@ -369,7 +377,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="profile.html">
+								<a runat="server" href="~/S001_ListShiper">
 									<i class="menu-icon fa fa-caret-right"></i>
 									S001 Danh sách ship
 								</a>
@@ -378,34 +386,34 @@
 							</li>
 
 							<li class="">
-								<a href="inbox.html">
+								<a runat="server" href="~/S002_Route">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S002 Ship theo đơn
+									S002 Lộ trình ship
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="pricing.html">
+								<a runat="server" href="~/S003_InputBill">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S003 Ship đi
+									S003 Nhập liệu bill
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="invoice.html">
+								<a runat="server" href="~/BC005_StatisticalFormShiper">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S004 Nhập liệu bill
+									S004 ship theo đơn
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="timeline.html">
+								<a runat="server" href="~/S005_ReportedOver">
 									<i class="menu-icon fa fa-caret-right"></i>
 									S005 Báo cáo hết ca
 								</a>
