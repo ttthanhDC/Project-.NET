@@ -10,6 +10,6 @@
 namespace SYSGREEN {
     
     
-    public partial class S002_Route {
+    public partial class S005_ReportedRoute {
     }
 }

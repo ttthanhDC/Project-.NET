@@ -404,18 +404,18 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/BC005_StatisticalFormShiper">
+								<a runat="server" href="~/S004_ReportedOver">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S004 ship theo đơn
+									S004 Báo cáo hết ca
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/S005_ReportedOver">
+								<a runat="server" href="~/S005_ReportedRoute">
 									<i class="menu-icon fa fa-caret-right"></i>
-									S005 Báo cáo hết ca
+									S005 lộ trình ship
 								</a>
 
 								<b class="arrow"></b>

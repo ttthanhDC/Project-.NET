@@ -2,17 +2,19 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 
-    <table id="table" 
+   <div style ="margin-left:20px;margin-right:20px">
+        <table id="table" 
         data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
         data-page-list="[10, 25, 50, 100, ALL]" 
         ></table>
+   </div>
    
 <script>
     // Bootstrap Table
     $(function () {
-        var data = [];
+       /* var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
         var json = { 'ID': 0 };
@@ -97,8 +99,171 @@
             error: function (err) {
 
             }
-        });
+        }); */
         // format table
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'date',
+                title: 'Ngày',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return '<label style = "color: blue;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'name',
+                title: 'Tên khách hàng',
+                align: 'center',
+                valign: 'middle',
+                //sortable: true,
+                // editable: true,
+
+            }, {
+                field: 'money',
+                title: 'Số tiền',
+                align: 'center',
+                valign: 'middle',
+                //sortable: true,
+                //  editable: true,
+            }, {
+                field: 'bank',
+                title: 'Ngân hàng',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 1 selected = "true">TPB</option><option value = 2>VPB</option><option value = 3>SHBC</option><option value = 4>BIDV</option></select>'
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'code',
+                title: 'Mã giao dịch',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'staus',
+                title: 'Tình trạng',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        var sle1 = false;
+                        var sle2 = false;
+                        var sle3 = false;
+                        if (value===1) {
+                            sle2 = true;
+                        }
+                        if (value === 2) {
+                            sle3 = true;
+                        }
+                    return '<select class="form-control" id=TT"' + index + '"> <option value = 0 selected = '+sle1+'></option><option value = 1 selected = '+sle2+'>Đã nhận tiền</option><option value = 2 selected = '+sle3+'>Chưa nhận tiền</option></select>'
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'note',
+                title: 'Ghi chú',
+                align: 'center',
+                valign: 'middle',
+                //sortable: true,
+            }],
+            data: [{
+                date: '01/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 1,
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '03/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 2,
+                code: '123456789',
+                staus: 2,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '04/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 3,
+                code: '123456789',
+                staus: 'a',
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '06/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 4,
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '09/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '11/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '13/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '23/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '24/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 2,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '25/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 1,
+                note: 'Gấm nhận chuyển tiền'
+            }, {
+                date: '30/07/2017',
+                name: 'Trần ngọc duy',
+                money: '1,000,000',
+                bank: 'TPB',
+                code: '123456789',
+                staus: 2,
+                note: 'Gấm nhận chuyển tiền'
+            }],
+        });
     });
     // function
     function userFormatter(data) {

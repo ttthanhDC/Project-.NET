@@ -194,8 +194,13 @@
                 formatter: function (value, row, index) {
                     if (row.parent && row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
+                        
                     } else {
-                        return value;
+                        if (row.endRow) {
+                            return '<label style = "color: green;">' + value + '</label>';
+                        } else {
+                            return value;
+                        }
                     }
                 }
             }, {
@@ -207,14 +212,19 @@
                     if (row.parent && row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
-                        return value;
+                        if (row.endRow) {
+                            return '<label style = "color: green;">' + value + '</label>';
+                        } else {
+                            return value;
+                        }
                     }
                 }
             }],
             data: [{
                 check: true,
                 parent: true,
-                detb : true,
+                detb: true,
+                endRow: false,
                 code: '002-001-123456',
                 date: '20/07/2017',
                 district: 'Hà đông',
@@ -227,6 +237,7 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: false,
                 code: 'SP1',
                 date: 'Sản phẩm 1',
                 district: '1',
@@ -239,6 +250,7 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: false,
                 code: 'SP2',
                 date: 'sản phẩm 2',
                 district: '1',
@@ -251,18 +263,20 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: true,
                 code: 'SP3',
                 date: 'Sản phẩm 3',
                 district: '1',
                 status: '',
-                name: '123456',
-                sdt: 'Hoàng hiếu',
-                addres: '',
-                money: ''
+                name: '',
+                sdt: '',
+                addres: '123456',
+                money: 'Hoàng hiếu'
             }, {
                 check: true,
                 parent: true,
                 detb: false,
+                endRow: false,
                 code: '002-002-4567890',
                 date: '20/07/2017',
                 district: 'Hà đông',
@@ -275,6 +289,7 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: false,
                 code: 'SP1',
                 date: 'Sản phẩm 1',
                 district: '1',
@@ -287,6 +302,7 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: false,
                 code: 'SP2',
                 date: 'sản phẩm 2',
                 district: '1',
@@ -299,14 +315,15 @@
                 check: false,
                 parent: false,
                 detb: false,
+                endRow: true,
                 code: 'SP3',
                 date: 'Sản phẩm 3',
                 district: '1',
                 status: '',
-                name: '123456',
-                sdt: 'Hoàng hiếu',
-                addres: '',
-                money: ''
+                name: '',
+                sdt: '',
+                addres: '123456',
+                money: 'Hoàng hiếu'
 
             }]
         });
