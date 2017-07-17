@@ -1,20 +1,22 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KT005_General Accounting.aspx.cs" Inherits="SYSGREEN.KT005_General_Accounting" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-<div>
-      <table id="table" 
-        data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-page-list="[10, 25, 50, 100, ALL]" 
+
+<div style ="margin-left:20px;margin-right:20px">
+        <table id="table" 
         ></table>
-</div>
+    </div>
+    <div style ="height : 30px"></div>
+    <div style ="margin-left:20px;margin-right:20px">
+        <table id="table2" 
+        ></table>
+    </div>
   
    
 <script>
     // Bootstrap Table
     $(function () {
-        var data = [];
+        /*var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
         var json = { 'ID': 0 };
@@ -92,53 +94,190 @@
             error: function (err) {
 
             }
-        });
+        });*/
         // format table
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'account',
+                title: 'Tài khoản',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'moneyTo',
+                title: 'Thu',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'moneyFor',
+                title: 'Chi',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'LCTo',
+                title: 'Lưu chuyển thu',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'LCFor',
+                title: 'Lưu chuyển chi',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'surplus',
+                title: 'Số dư',
+                align: 'center',
+                valign: 'middle',
+            }],
+            data: [{
+                account: 'Két',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000',
+            }, {
+                account: 'Tiền mặt',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'CPDN',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'VP',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'TCB',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'VCB',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'BIDV',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'Tổng',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }],
+        });
+        $('#table2').bootstrapTable({
+            columns: [{
+                field: 'account',
+                title: 'Tài khoản',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'moneyTo',
+                title: 'Thu',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'moneyFor',
+                title: 'Chi',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'LCTo',
+                title: 'Lưu chuyển thu',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'LCFor',
+                title: 'Lưu chuyển chi',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'surplus',
+                title: 'Số dư',
+                align: 'center',
+                valign: 'middle',
+            }],
+            data: [{
+                account: 'Két',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000',
+            }, {
+                account: 'Tiền mặt',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'CPDN',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'VP',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'TCB',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'VCB',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'BIDV',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }, {
+                account: 'Tổng',
+                moneyTo: '1,000,000',
+                moneyFor: '2,000,000',
+                LCTo: '20,000,000',
+                LCFor: '12,000,000',
+                surplus: '8,000,000'
+            }],
+        });
     });
     // function
-    function userFormatter(data) {
-        return data.length;
-    }
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
-            'Phân quyền',
-            '</a>', '|',
-            '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
-            '</a>  ', '|',
-            '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
-            '</a>',
-
-        ].join('');
-    }
-
-    window.operateEvents = {
-        'click .right': function (e, value, row, index) {
-            window.location = '/TheRightForUser.aspx?paramId=' + row.id;
-        },
-        'click .edit': function (e, value, row, index) {
-            // alert('You click like action, row: ' + JSON.stringify(row));
-            window.location = '/UserManger.aspx?paramId=' + row.id;
-        },
-        'click .remove': function (e, value, row, index) {
-            $('#table').bootstrapTable('remove', {
-                field: 'id',
-                values: [row.id]
-            });
-        }
-    };
-
-    function updateCell(caller) {
-        var $table = $('#tablePopup');
-    }
-    window.typeBillEvents = {
-        'click .product': function (e, value, row, index) {
-            var $table = $('#tablePopup');
-            initTablePopup();
-        }
-    };
 </script>
     </asp:Content>
 

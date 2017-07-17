@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 
-   <div style ="margin-left:20px;margin-right:20px">
+   <div style ="margin-left:10%;margin-right:10%">
         <table id="table" 
         data-pagination="true"
         data-search="true" 
@@ -127,25 +127,22 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    var select1 = false;
-                    var select2 = false;
-                    var select = false;
-                       
-                    if (value === 1) {
-                        select1 = true;
+                    if(value === 1){
+                        return '<select class="form-control" id=TT' + index + '> ' +
+                        '<option value = 0 > </option>' +
+                        '<option value = 1 selected = true >Đã nhận tiền</option>' +
+                        '<option value = 2 >Chưa nhận tiền</option></select>'
+                    } else if (value === 2){
+                        return '<select class="form-control" id=TT' + index + '> ' +
+                         '<option value = 0 > </option>' +
+                         '<option value = 1 >Đã nhận tiền</option>' +
+                         '<option value = 2 selected = true>Chưa nhận tiền</option></select>'
+                    }else{
+                        return '<select class="form-control" id=TT' + index + '> ' +
+                        '<option value = 0 selected = true> </option>' +
+                        '<option value = 1 >Đã nhận tiền</option>' +
+                        '<option value = 2 >Chưa nhận tiền</option></select>'
                     }
-                    if (value === 2) {
-                        select2 = true;
-                    }
-                    if(value){
-                        return '<select class="form-control" id=TT"' + index + '"> ' +
-                        '<option value = 0 selected = ' + select + '> </option>' +
-                        '<option value = 1 selected = ' + select1 + '>Đã nhận tiền</option>' +
-                        '<option value = 2 selected = ' + select2 + '>Chưa nhận tiền</option></select>'
-                    } else {
-                        return value;
-                    }
-                    
                 }
             }, {
                 field: 'note',
@@ -212,50 +209,6 @@
             }],
         });
     });
-    // function
-    function userFormatter(data) {
-        return data.length;
-    }
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
-            'Phân quyền',
-            '</a>', '|',
-            '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
-            '</a>  ', '|',
-            '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
-            '</a>',
-
-        ].join('');
-    }
-
-    window.operateEvents = {
-        'click .right': function (e, value, row, index) {
-            window.location = '/TheRightForUser.aspx?paramId=' + row.id;
-        },
-        'click .edit': function (e, value, row, index) {
-            // alert('You click like action, row: ' + JSON.stringify(row));
-            window.location = '/UserManger.aspx?paramId=' + row.id;
-        },
-        'click .remove': function (e, value, row, index) {
-            $('#table').bootstrapTable('remove', {
-                field: 'id',
-                values: [row.id]
-            });
-        }
-    };
-
-    function updateCell(caller) {
-        var $table = $('#tablePopup');
-    }
-    window.typeBillEvents = {
-        'click .product': function (e, value, row, index) {
-            var $table = $('#tablePopup');
-            initTablePopup();
-        }
-    };
 </script>
     </asp:Content>
 

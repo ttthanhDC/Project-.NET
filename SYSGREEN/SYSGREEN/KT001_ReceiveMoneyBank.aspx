@@ -135,10 +135,18 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (value) {
-                        return '<select class="form-control" id="NH' + index + '"> <option value = 1 selected = "true">TPB</option><option value = 2>VPB</option><option value = 3>SHBC</option><option value = 4>BIDV</option></select>'
+                    if (value === 1) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0></option><option value = 1 selected = true>VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
+                    } else if (value === 2) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2 selected = true>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
+                    } else if (value === 3) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3 selected = true>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
+                    } else if (value === 4) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4 selected = true>VP</option><option value = 5>VPDN</option></select>'
+                    } else if (value === 5) {
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4 >VP</option><option value = 5 selected = true>VPDN</option></select>'
                     } else {
-                        return value;
+                        return '<select class="form-control" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VP</option></select>'
                     }
                 }
             }, {
@@ -152,20 +160,27 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (value) {
-                        var sle1 = false;
-                        var sle2 = false;
-                        var sle3 = false;
-                        if (value===1) {
-                            sle2 = true;
+                    if (row.permission) {
+                        if (value === 1) {
+                            return '<select class="form-control" id=TT' + index + '> ' +
+                            '<option value = 0 > </option>' +
+                            '<option value = 1 selected = true >Đã nhận tiền</option>' +
+                            '<option value = 2 >Chưa nhận tiền</option></select>'
+                        } else if (value === 2) {
+                            return '<select class="form-control" id=TT' + index + '> ' +
+                             '<option value = 0 > </option>' +
+                             '<option value = 1 >Đã nhận tiền</option>' +
+                             '<option value = 2 selected = true>Chưa nhận tiền</option></select>'
+                        } else {
+                            return '<select class="form-control" id=TT' + index + '> ' +
+                            '<option value = 0 selected = true> </option>' +
+                            '<option value = 1 >Đã nhận tiền</option>' +
+                            '<option value = 2 >Chưa nhận tiền</option></select>'
                         }
-                        if (value === 2) {
-                            sle3 = true;
-                        }
-                    return '<select class="form-control" id=TT"' + index + '"> <option value = 0 selected = '+sle1+'></option><option value = 1 selected = '+sle2+'>Đã nhận tiền</option><option value = 2 selected = '+sle3+'>Chưa nhận tiền</option></select>'
                     } else {
-                        return value;
+                        return "";
                     }
+                    
                 }
             }, {
                 field: 'note',
@@ -175,6 +190,7 @@
                 //sortable: true,
             }],
             data: [{
+                permission : false,
                 date: '01/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -183,6 +199,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '03/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -191,6 +208,7 @@
                 staus: 2,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '04/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -199,6 +217,7 @@
                 staus: 'a',
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: true,
                 date: '06/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -207,6 +226,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '09/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -215,100 +235,62 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: true,
                 date: '11/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 3,
                 code: '123456789',
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '13/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 4,
                 code: '123456789',
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '23/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 0,
                 code: '123456789',
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '24/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 3,
                 code: '123456789',
                 staus: 2,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '25/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 2,
                 code: '123456789',
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
+                permission: false,
                 date: '30/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
-                bank: 'TPB',
+                bank: 1,
                 code: '123456789',
                 staus: 2,
                 note: 'Gấm nhận chuyển tiền'
             }],
         });
     });
-    // function
-    function userFormatter(data) {
-        return data.length;
-    }
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
-            'Phân quyền',
-            '</a>', '|',
-            '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
-            '</a>  ', '|',
-            '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
-            '</a>',
-
-        ].join('');
-    }
-
-    window.operateEvents = {
-        'click .right': function (e, value, row, index) {
-            window.location = '/TheRightForUser.aspx?paramId=' + row.id;
-        },
-        'click .edit': function (e, value, row, index) {
-            // alert('You click like action, row: ' + JSON.stringify(row));
-            window.location = '/UserManger.aspx?paramId=' + row.id;
-        },
-        'click .remove': function (e, value, row, index) {
-            $('#table').bootstrapTable('remove', {
-                field: 'id',
-                values: [row.id]
-            });
-        }
-    };
-
-    function updateCell(caller) {
-        var $table = $('#tablePopup');
-    }
-    window.typeBillEvents = {
-        'click .product': function (e, value, row, index) {
-            var $table = $('#tablePopup');
-            initTablePopup();
-        }
-    };
 </script>
     </asp:Content>
 
