@@ -207,16 +207,16 @@
                     <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Cơ sở" />
                 </div>
                 <div class="col-md-2">
-                    <input type="date" class="form-control" name="title" id="txt_beginDate" placeholder="Ngày bắt đầu"  />
+                    <input type="date" class="form-control" name="title" id="txt_beginDate" placeholder ="Ngày bắt đầu"  />
                 </div>
                 <div class="col-md-2">
-                    <input type="date" class="form-control" name="title" id="txt_EndDate" placeholder="Ngày kết thúc" />
+                    <input type="date" class="form-control" name="title" id="txt_EndDate" placeholder= "Ngày kết thúc" />
                 </div>
                 <div class="col-md-1">
                     <input type="text" class="form-control" name="title" id="txt_shiperCode" placeholder="Mã shiper" />
                   
                 </div>
-                  <div class="col-md-2">
+                  <div class="col-md-2"> 
                     <input type="text" class="form-control" name="title" id="txt_NameShiper" placeholder="Tên Shiper"  />
                 </div>
                 <div class="col-md-1">

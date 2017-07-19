@@ -180,10 +180,10 @@
             <div class="form-group">
                <label for="sel1" class="col-md-5"></label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_dept" />
+                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_date" />
+                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày"/>
                 </div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>

@@ -1,12 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KT005_General Accounting.aspx.cs" Inherits="SYSGREEN.KT005_General_Accounting" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-
+<div style="width:100%;margin-left:20px;margin-right:20px;font-size: large;">Số dư kỳ trước</div>
 <div style ="margin-left:20px;margin-right:20px">
         <table id="table" 
         ></table>
     </div>
     <div style ="height : 30px"></div>
+    <div style="width:100%;margin-left:20px;margin-right:20px;font-size: large;">Số dư kỳ này</div>
     <div style ="margin-left:20px;margin-right:20px">
         <table id="table2" 
         ></table>
@@ -127,6 +128,20 @@
                 title: 'Số dư',
                 align: 'center',
                 valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.LCTo && row.LCFor) {
+                        var x = parseInt(row.LCTo.replace(/,/g, '') + "");
+                        var y = parseInt(row.LCFor.replace(/,/g, '') + "");
+                        var z = x - y;
+                        return z;
+                    } else if (row.LCTo && !row.LCFor) {
+                        return row.LCTo;
+                    } else if (!row.LCTo && row.LCFor) {
+                        return row.LCFor;
+                    } else if (!row.LCTo && !row.LCFor) {
+                        return "";
+                    }
+                }
             }],
             data: [{
                 account: 'Két',
@@ -140,21 +155,21 @@
                 moneyTo: '1,000,000',
                 moneyFor: '2,000,000',
                 LCTo: '20,000,000',
-                LCFor: '12,000,000',
+                LCFor: '',
                 surplus: '8,000,000'
             }, {
                 account: 'CPDN',
                 moneyTo: '1,000,000',
                 moneyFor: '2,000,000',
-                LCTo: '20,000,000',
+                LCTo: '',
                 LCFor: '12,000,000',
                 surplus: '8,000,000'
             }, {
                 account: 'VP',
                 moneyTo: '1,000,000',
                 moneyFor: '2,000,000',
-                LCTo: '20,000,000',
-                LCFor: '12,000,000',
+                LCTo: '',
+                LCFor: '',
                 surplus: '8,000,000'
             }, {
                 account: 'TCB',
