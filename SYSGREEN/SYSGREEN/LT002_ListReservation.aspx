@@ -1,30 +1,45 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="LT002_ListReservation.aspx.cs" Inherits="SYSGREEN.LT002_ListReservation" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
- <div style ="text-align:center">
-    <div class="form-horizontal">
-        <div class="form-group">
-           <label for="sel1" class="col-md-1">Tìm kiếm</label>
-            <div class="col-md-2">
-                
-            </div>
-            <label for="sel1" class="col-md-1"></label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" name="title" id="txtSearch" />
-            </div>
-            <label for="sel1" class="col-md-1"></label>
-            <div class="col-md-2">
-                 <button type="button" class="btn btn-primary" id="btnAdd">Tìm kiếm</button>
-            </div>
+   <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+          <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã reservation"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_fromDate" placeholder="Từ ngày" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_toDate" placeholder="Đến ngày"/>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                </div>
+            </div> 
         </div> 
-    </div>  
- 
-</div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                 <label for="sel1" class="col-md-3"></label>
+                 <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái bill" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_name"placeholder="Họ tên khách" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_phone"placeholder="SĐT" />
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-default" id="btPrint">Export</button>
+                </div>
+            </div> 
+        </div> 
+    </div>
 <div style ="height:40px"></div>
 <div style="margin-left : 30px; margin-right : 30px">
     <table id="table" 
-        data-search="true" 
-        data-show-refresh="true" 
     ></table>
 </div>
 
