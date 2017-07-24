@@ -163,7 +163,7 @@ namespace SYSGREEN
         }
         public void Update(DataObject.SysUser obj)
         {
-            Servies.SysUserServies.InsertData(obj);
+            Servies.SysUserServies.UpdateData(obj);
         }
         public static void DeleteData(Int32 Id)
         {

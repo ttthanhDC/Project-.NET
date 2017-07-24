@@ -116,7 +116,7 @@ namespace SYSGREEN
         }
         public void Update(DataObject.SysPromotion obj)
         {
-            Servies.SysPromotionServices.InsertData(obj);
+            Servies.SysPromotionServices.UpdateData(obj);
         }
         public static void DeleteData(Int32 Id)
         {

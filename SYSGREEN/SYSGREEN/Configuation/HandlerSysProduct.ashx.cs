@@ -117,7 +117,7 @@ namespace SYSGREEN
         }
         public void Update(DataObject.SysProduct obj)
         {
-            Servies.SysProductServices.InsertData(obj);
+            Servies.SysProductServices.UpdateData(obj);
         }
         public static void DeleteData(Int32 Id)
         {

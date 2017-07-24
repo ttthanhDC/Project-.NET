@@ -36,7 +36,7 @@ namespace Servies
             String Update = "UPDATE SYS_USER SET Password = @Password, Email = @Email, DeptId = @DeptId, OrgId = @OrgId Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
-            cmd.Connection = Common.Connection.SqlConnect();
+            cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@Password", obj.Password);
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@DeptId", obj.DeptId);
