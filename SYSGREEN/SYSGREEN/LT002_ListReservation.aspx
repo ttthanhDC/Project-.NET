@@ -47,245 +47,338 @@
 <script>
     // Bootstrap Table
     $(function () {
-        var data = [];
-        var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getData');
-        var json = { 'ID': 0};
-        formDataListUser.append('data', JSON.stringify(json));
+        // onchage select box
+       /* var formBill = new FormData();
+        var bill = {'ID':0};
+        formBill.append('type', 'getData');
+        formBill.append('data', JSON.stringify(bill));
         $.ajax({
-            url: "Configuation/HandlerSysUser.ashx",
+            url: "Configuation/HandlerInsertBill.ashx",
             type: "POST",
-            data: formDataListUser,
+            data: formBill,
             contentType: false,
             processData: false,
             success: function (result) {
-                var jsonData = result;
-                var arr = [];
-                if (jsonData && jsonData.length > 0) {
-                    for (var i = 0; i < jsonData.length ; i++) {
-                        var objectData = jsonData[i];
-                        var obj = {};
-                        obj.id = objectData.ID;
-                        obj.email = objectData.Email;
-                        obj.department = objectData.DeptId;
-                        obj.local = objectData.OrgId;
-                        obj.dateCreate = objectData.Create_Date;
-                        obj.user = objectData.UserName;
-                        arr.push(obj);
-                    }
-                }
-                data = arr;
                 $('#table').bootstrapTable({
                     columns: [{
-                        field: 'codeReser',
-                        title: 'Số reservation',
+                        field: 'stt',
+                        title: 'STT',
                         align: 'center',
                         valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.isParent) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else if (row.childent) {
-                                return '<label style = "color: blue;">' + value + '</label>';
-                            } else {
-                                return '<label style = "color: green;">' + value + '</label>';
-                            }
-                        }
                     }, {
-                        field: 'date',
-                        title: 'Ngày',
+                        field: 'BillCode',
+                        title: 'Mã hóa đơn',
                         align: 'center',
                         valign: 'middle',
                         style: 'font-weight: bold',
                         fontWeight: 'bold'
 
                     }, {
-                        field: 'user',
-                        title: 'User tạo',
+                        field: 'CustomerId',
+                        title: 'Khách hàng',
                         align: 'center',
                         valign: 'middle',
 
                     }, {
-                        field: 'money',
+                        field: 'SourceId',
+                        title: 'Nguồn',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'DateTotal',
+                        title: 'Số ngày còn lại',
+                        align: 'center',
+                        valign: 'middle',
+                    },
+                    {
+                        field: 'TotalAmount',
                         title: 'Tổng tiền',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.isParent) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'status',
-                        title: 'Trạng thái',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.isParent) {
-                                if (value === 1) {
-                                    return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
-                                } else if (value === 2) {
-                                    return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 >Chưa sử lý</option><option value = 2 selected = true>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
-                                } else if (value === 3) {
-                                    return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 >Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3 selected = true>Hoàn thành</option></select>'
-                                } else {
-                                    return '<select class="form-control" id="KH' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
-                                }
-                            } else {
-                                return value;
-                            }
-                        }
-                    },{
-                        field: 'statusBill',
-                        title: 'Trạng thái đơn con',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.childent) {
-                                if (value === 1) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                } else if (value === 2) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2 selected = true>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                } else if (value === 3) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                } else if (value === 4) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                } else if (value === 5) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                } else if (value === 6) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
-                                } else {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                                }
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'link',
-                        title: 'Loại đơn',
-                        align: 'center',
-                        valign: 'middle',
-                        events: linkEvents,
-                        formatter: linkFormatter
-                    }, {
-                        field: 'dateBill',
-                        title: 'Ngày giao',
                         align: 'center',
                         valign: 'middle'
                     }, {
-                        field: 'operate',
-                        title: 'In hóa đơn',
+                        field: 'TotalAmountCollected',
+                        title: 'Tiền thu được',
+                        align: 'center',
+                        valign: 'middle'
+                    }, {
+                        field: 'TotalAmountRemain',
+                        title: 'Tiền còn lại',
                         align: 'center',
                         valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
-                    }],
-                    data: [{
-                        isParent: true,
-                        nextParent: false,
-                        childent: false,
-                        codeReser: '002',
-                        user: 'Duytn4',
-                        date: '01/01/2017',
-                        money: '1,000,000',
-                        status: 1,
-                        statusBill: '',
-                        link: '',
-                        dateBill: '',
                     }, {
-                        isParent: false,
-                        nextParent: true,
-                        childent: false,
-                        codeReser: 'Trần ngọc duy',
-                        date: '17/109 hoàng ngân',
-                        user: '0989485398',
-                        money: '',
-                        status: '',
-                        statusBill:'' ,
-                        link: '',
-                        dateBill: '',
-                    }, {
-                        isParent: false,
-                        nextParent: false,
-                        childent : true,
-                        codeReser: '002-001-070416',
-                        date: 'Trần ngọc duy',
-                        user: '0989485398',
-                        money: 'thanh xuân',
-                        status: '17/9 hoàng ngân',
-                        statusBill: 2,
-                        link: 'đơn gói',
-                        dateBill: '20/07/2017',
-                    }, {
-                        isParent: false,
-                        nextParent: false,
-                        childent: true,
-                        codeReser: '002-001-070416',
-                        date: 'Đặng công thành',
-                        user: '0989485398',
-                        money: 'thanh xuân',
-                        status: '17/9 hoàng ngân',
-                        statusBill: 2,
-                        link: 'đơn gói',
-                        dateBill: '20/07/2017',
-                    }, {
-                        isParent: true,
-                        nextParent: false,
-                        childent: false,
-                        codeReser: '002',
-                        user: 'thành DC7',
-                        date: '01/01/2017',
-                        money: '1,000,000',
-                        status: 1,
-                        statusBill: '',
-                        link: '',
-                        dateBill: '',
-                    }, {
-                        isParent: false,
-                        nextParent: true,
-                        childent: false,
-                        codeReser: 'Đặng công thành',
-                        date: '17/109 hoàng ngân',
-                        user: '0989485398',
-                        money: '',
-                        status: '',
-                        statusBill: '',
-                        link: '',
-                        dateBill: '',
-                    }, {
-                        isParent: false,
-                        nextParent: false,
-                        childent: true,
-                        codeReser: '002-001-070416',
-                        date: 'Đặng công thành',
-                        user: '0989485398',
-                        money: 'thanh xuân',
-                        status: '17/9 hoàng ngân',
-                        statusBill: 2,
-                        link: 'đơn gói',
-                        dateBill: '20/07/2017',
-                    }, {
-                        isParent: false,
-                        nextParent: false,
-                        childent: true,
-                        codeReser: '002-001-070416',
-                        date: 'Trần ngọc duy',
-                        user: '0989485398',
-                        money: 'thanh xuân',
-                        status: '17/9 hoàng ngân',
-                        statusBill: 2,
-                        link: 'đơn gói',
-                        dateBill: '20/07/2017',
-                    }],
+                        field: 'Status',
+                        title: 'Trạng thái đơn',
+                        align: 'center',
+                        valign: 'middle'
+                    }]
                 });
+                var jsonData = result;
+                $('#table').bootstrapTable('load', jsonData);
             },
             error: function (err) {
+                $('#table').bootstrapTable({
+                    columns: [{
+                        field: 'stt',
+                        title: 'STT',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'BillCode',
+                        title: 'Mã hóa đơn',
+                        align: 'center',
+                        valign: 'middle',
+                        style: 'font-weight: bold',
+                        fontWeight: 'bold'
 
+                    }, {
+                        field: 'CustomerId',
+                        title: 'Khách hàng',
+                        align: 'center',
+                        valign: 'middle',
+
+                    }, {
+                        field: 'SourceId',
+                        title: 'Nguồn',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'DateTotal',
+                        title: 'Số ngày còn lại',
+                        align: 'center',
+                        valign: 'middle',
+                    },
+                    {
+                        field: 'TotalAmount',
+                        title: 'Tổng tiền',
+                        align: 'center',
+                        valign: 'middle'
+                    }, {
+                        field: 'TotalAmountCollected',
+                        title: 'Tiền thu được',
+                        align: 'center',
+                        valign: 'middle'
+                    }, {
+                        field: 'TotalAmountRemain',
+                        title: 'Tiền còn lại',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'Status',
+                        title: 'Trạng thái đơn',
+                        align: 'center',
+                        valign: 'middle'
+                    }]
+                });
             }
+        });*/
+        // table
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'codeReser',
+                title: 'Số reservation',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.isParent) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else if (row.childent) {
+                        return '<label style = "color: blue;">' + value + '</label>';
+                    } else {
+                        return '<label style = "color: green;">' + value + '</label>';
+                    }
+                }
+            }, {
+                field: 'date',
+                title: 'Ngày',
+                align: 'center',
+                valign: 'middle',
+                style: 'font-weight: bold',
+                fontWeight: 'bold'
+
+            }, {
+                field: 'user',
+                title: 'User tạo',
+                align: 'center',
+                valign: 'middle',
+
+            }, {
+                field: 'money',
+                title: 'Tổng tiền',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.isParent) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'status',
+                title: 'Trạng thái',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.isParent) {
+                        if (value === 1) {
+                            return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
+                        } else if (value === 2) {
+                            return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 >Chưa sử lý</option><option value = 2 selected = true>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
+                        } else if (value === 3) {
+                            return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 >Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3 selected = true>Hoàn thành</option></select>'
+                        } else {
+                            return '<select class="form-control" id="KH' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chưa sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option></select>'
+                        }
+                    } else {
+                        return value;
+                    }
+                }
+            },
+            {
+                field: 'statusBill',
+                title: 'Trạng thái đơn con',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.childent) {
+                        if (value === 1) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        } else if (value === 2) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2 selected = true>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        } else if (value === 3) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        } else if (value === 4) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        } else if (value === 5) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        } else if (value === 6) {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
+                        } else {
+                            return '<select class="form-control" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        }
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'link',
+                title: 'Loại đơn',
+                align: 'center',
+                valign: 'middle',
+                events: linkEvents,
+                formatter: linkFormatter
+            }, {
+                field: 'dateBill',
+                title: 'Ngày giao',
+                align: 'center',
+                valign: 'middle'
+            }, {
+                field: 'operate',
+                title: 'In hóa đơn',
+                align: 'center',
+                valign: 'middle',
+                events: operateEvents,
+                formatter: operateFormatter
+            }],
+            data: [{
+                isParent: true,
+                nextParent: false,
+                childent: false,
+                codeReser: '002',
+                user: 'Duytn4',
+                date: '01/01/2017',
+                money: '1,000,000',
+                status: 1,
+                statusBill: '',
+                link: '',
+                dateBill: '',
+            }, {
+                isParent: false,
+                nextParent: true,
+                childent: false,
+                codeReser: 'Trần ngọc duy',
+                date: '17/109 hoàng ngân',
+                user: '0989485398',
+                money: '',
+                status: '',
+                statusBill:'' ,
+                link: '',
+                dateBill: '',
+            }, {
+                isParent: false,
+                nextParent: false,
+                childent : true,
+                codeReser: '002-001-070416',
+                date: 'Trần ngọc duy',
+                user: '0989485398',
+                money: 'thanh xuân',
+                status: '17/9 hoàng ngân',
+                statusBill: 2,
+                link: 'đơn gói',
+                dateBill: '20/07/2017',
+            }, {
+                isParent: false,
+                nextParent: false,
+                childent: true,
+                codeReser: '002-001-070416',
+                date: 'Đặng công thành',
+                user: '0989485398',
+                money: 'thanh xuân',
+                status: '17/9 hoàng ngân',
+                statusBill: 2,
+                link: 'đơn gói',
+                dateBill: '20/07/2017',
+            }, {
+                isParent: true,
+                nextParent: false,
+                childent: false,
+                codeReser: '002',
+                user: 'thành DC7',
+                date: '01/01/2017',
+                money: '1,000,000',
+                status: 1,
+                statusBill: '',
+                link: '',
+                dateBill: '',
+            }, {
+                isParent: false,
+                nextParent: true,
+                childent: false,
+                codeReser: 'Đặng công thành',
+                date: '17/109 hoàng ngân',
+                user: '0989485398',
+                money: '',
+                status: '',
+                statusBill: '',
+                link: '',
+                dateBill: '',
+            }, {
+                isParent: false,
+                nextParent: false,
+                childent: true,
+                codeReser: '002-001-070416',
+                date: 'Đặng công thành',
+                user: '0989485398',
+                money: 'thanh xuân',
+                status: '17/9 hoàng ngân',
+                statusBill: 2,
+                link: 'đơn gói',
+                dateBill: '20/07/2017',
+            }, {
+                isParent: false,
+                nextParent: false,
+                childent: true,
+                codeReser: '002-001-070416',
+                date: 'Trần ngọc duy',
+                user: '0989485398',
+                money: 'thanh xuân',
+                status: '17/9 hoàng ngân',
+                statusBill: 2,
+                link: 'đơn gói',
+                dateBill: '20/07/2017',
+            }],
         });
-        // format table
+        
     });
 
     function operateFormatter(value, row, index) {
