@@ -1,11 +1,42 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S001_ListShiper.aspx.cs" Inherits="SYSGREEN.S001_ListShiper" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+          <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã reservation"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_Date" placeholder="Ngày" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_Distric" placeholder="Quận"/>
+                </div>
+            </div> 
+        </div> 
+        <div class="form-horizontal">
+            <div class="form-group">
+                 <label for="sel1" class="col-md-3"></label>
+                 <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ShipNumber"placeholder="Shiper namber" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ShipName"placeholder="Shiper name" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái" />
+                </div>
+               <div class="col-md-1">
+                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                </div>
+            </div> 
+        </div> 
+    </div>
    <div style ="margin-left:20px;margin-right:20px">
        <table id="table" 
-        data-search="true" 
-        data-show-refresh="true" 
+       
         ></table>
    </div> 
    
