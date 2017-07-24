@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="BC002_ListBillCancel.aspx.cs" Inherits="SYSGREEN.BC002_ListBillCancel" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S004_ReportedOver.aspx.cs" Inherits="SYSGREEN.S004_ReportedOver" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
@@ -25,7 +25,8 @@
             //                obj.id = objectData.ID;
             //                obj.customer = objectData.ID;
             //                obj.bill = objectData.ID;
-            //                obj.reason = objectData.ID;
+            //                obj.address = objectData.ID;
+            //                obj.typePay = objectData.ID;
             //                obj.user = objectData.ID;
             //                obj.time = objectData.ID;
             //                obj.total = objectData.ID;
@@ -63,26 +64,19 @@
                     //editable: true,
 
                 }, {
-                    field: 'reason',
-                    title: 'Lý do',
+                    field: 'address',
+                    title: 'Quận',
                     align: 'center',
                     valign: 'middle',
                     //sortable: true,
                     // editable: true,
                 }, {
-                    field: 'user',
-                    title: 'User',
+                    field: 'typePay',
+                    title: 'Hình thức thanh toán',
                     align: 'center',
                     valign: 'middle',
                     //sortable: true,
-                    //editable: false
-                }, {
-                    field: 'time',
-                    title: 'Time',
-                    align: 'center',
-                    valign: 'middle',
-                    //sortable: true,
-                    //editable: false
+                    // editable: true,
                 }, {
                     field: 'total',
                     title: 'Tổng',
@@ -95,41 +89,36 @@
                     id: '1',
                     customer: 'Trần ngọc duy',
                     bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
+                    address: 'Hà đông',
+                    typePay: 'Tiền mặt',
                     total: '3,000,000'
                 }, {
                     id: '2',
                     customer: 'Trần ngọc duy',
                     bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
+                    address: 'Hà đông',
+                    typePay: 'Tiền mặt',
                     total: '3,000,000'
                 }, {
                     id: '3',
                     customer: 'Trần ngọc duy',
                     bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
+                    address: 'Hà đông',
+                    typePay: 'Tiền mặt',
                     total: '3,000,000'
                 }, {
                     id: '4',
                     customer: 'Trần ngọc duy',
                     bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
+                    address: 'Hà đông',
+                    typePay: 'Tiền mặt',
                     total: '3,000,000'
                 }, {
                     id: '5',
                     customer: 'Trần ngọc duy',
                     bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 2',
-                    time: '14:00',
+                    address: 'Hà đông',
+                    typePay: 'Tiền mặt',
                     total: '3,000,000'
                 }],
             });
@@ -165,12 +154,9 @@
     <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
           <div class="form-horizontal">
             <div class="form-group">
-               <label for="sel1" class="col-md-5"></label>
+               <label for="sel1" class="col-md-7"></label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày" />
+                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày bắt đầu" />
                 </div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
@@ -180,7 +166,12 @@
                 </div>
             </div> 
         </div> 
-        </div>
+         <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"> Báo cáo theo ca</label>
+            </div> 
+        </div> 
+   </div>
     <div style ="margin-left:10px;margin-right:10px">
          <table id="table" 
        data-pagination="true"
@@ -203,6 +194,24 @@
                 <label for="sel1" class="col-md-2">Tiền mặt</label>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Chuyển khoản</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_chuyenKhoan" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Nợ</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_no" readOnly = 'true' />
                 </div>
             </div> 
         </div> 

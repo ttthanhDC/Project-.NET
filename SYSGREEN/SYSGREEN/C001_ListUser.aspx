@@ -115,13 +115,40 @@
                 //alert('You click like action, row: ' + JSON.stringify(row));
             },
             'click .remove': function (e, value, row, index) {
-                $('#table').bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
+                var formData = new FormData();
+                var id = parseInt(row.id + "");
+                //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+                var json = { 'ID': id};
+                jQuery.ajaxSetup({ async: true });
+                formData.append('type', 'delete');
+                formData.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerSysUser.ashx",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        $('#table').bootstrapTable('remove', {
+                             field: 'id',
+                            values: [row.id]
+                        });
+                    },
+                    error: function (err) {
+                        $('#table').bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        });
+                    }
                 });
+
+
+                
             }
         };
-      
+        $('#btnAdd').on('click', function (e) {
+            window.location = '/UserManger.aspx?';
+        });
 
 
     </script>
@@ -133,4 +160,10 @@
         data-page-list="[10, 25, 50, 100, ALL]" 
         data-show-footer="false" 
         ></table>
+   
+
+    <div style ="height:40px"></div>
+    <div style ="text-align:center;display: table;margin: 0 auto;">
+         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+    </div>
     </asp:Content>

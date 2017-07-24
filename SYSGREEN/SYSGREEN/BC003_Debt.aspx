@@ -220,17 +220,16 @@
             <div class="form-group">
                <label for="sel1" class="col-md-1"></label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_beginDate" />
+                    <input type="text" class="form-control" name="title" id="txt_beginDate" placeholder="Ngày bắt đầu"/>
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_EndDate" />
+                    <input type="text" class="form-control" name="title" id="txt_EndDate" placeholder="Ngày kết thúc" />
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_TypeCustomer" />
-                  
+                    <input type="text" class="form-control" name="title" id="txt_TypeCustomer" placeholder="Loại khách"/>
                 </div>
                   <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_TypeBill" />
+                    <input type="text" class="form-control" name="title" id="txt_TypeBill"placeholder="Loại đơn" />
                 </div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>

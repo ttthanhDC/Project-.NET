@@ -3,120 +3,81 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
         $(function () {
-            $('#table').bootstrapTable({
-                columns: [{
-                    field: 'id',
-                    title: 'ID',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
-                }, {
-                    field: 'department',
-                    title: 'Bộ phận',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
+            var data = [];
+            var formDataDeparment = new FormData();
+            formDataDeparment.append('type', 'getData');
+            var json = { 'ID': 0 };
+            formDataDeparment.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerDeptObject.ashx",
+                type: "POST",
+                data: formDataDeparment,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.id = objectData.ID;
+                            obj.department = objectData.Dept_Name;
+                            obj.dateCreate = objectData.Create_Date;
+                            obj.user = objectData.Create_User;
+                            arr.push(obj);
+                        }
+                    }
+                    data = arr;
 
-                }, {
-                    field: 'dateCreate',
-                    title: 'Ngày tạo',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
-                }, {
-                    field: 'user',
-                    title: 'User',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
+                    // format table
+                    $('#table').bootstrapTable({
+                        columns: [{
+                            field: 'id',
+                            title: 'ID',
+                            align: 'center',
+                            valign: 'middle',
+                            //sortable: true,
+                            //editable: true,
+                        }, {
+                            field: 'department',
+                            title: 'Bộ phận',
+                            align: 'center',
+                            valign: 'middle',
+                            //sortable: true,
+                            //editable: true,
+
+                        }, {
+                            field: 'dateCreate',
+                            title: 'Ngày tạo',
+                            align: 'center',
+                            valign: 'middle',
+                            // sortable: true,
+                            //editable: true,
+                        }, {
+                            field: 'user',
+                            title: 'User',
+                            align: 'center',
+                            valign: 'middle',
+                            // sortable: true,
                     
-                    //footerFormatter: userFormatter
-                }, {
-                    field: 'operate',
-                    title: 'Thao tác',
-                    align: 'center',
-                    valign: 'middle',
-                    events: operateEvents,
-                    formatter: operateFormatter
-                }],
+                            //footerFormatter: userFormatter
+                        }, {
+                            field: 'operate',
+                            title: 'Thao tác',
+                            align: 'center',
+                            valign: 'middle',
+                            events: operateEvents,
+                            formatter: operateFormatter
+                        }],
+                        data: data
+                    });
+                },
+                error: function (err) {
 
-
-
-                data: [{
-                    id: 1,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 2,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 3,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 4,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 5,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 6,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 7,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 8,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 9,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 10,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 11,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 12,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 13,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 14,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }]
+                }
             });
+           
         });
         // function
         function userFormatter(data) {
@@ -138,9 +99,31 @@
                 alert('You click like action, row: ' + JSON.stringify(row));
             },
             'click .remove': function (e, value, row, index) {
-                $('#table').bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
+                var formData = new FormData();
+                var id = parseInt(row.id + "");
+                //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+                var json = { 'ID': id };
+                jQuery.ajaxSetup({ async: true });
+                formData.append('type', 'delete');
+                formData.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerDeptObject.ashx",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        $('#table').bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        });
+                    },
+                    error: function (err) {
+                        $('#table').bootstrapTable('remove', {
+                            field: 'id',
+                            values: [row.id]
+                        });
+                    }
                 });
             }
         };

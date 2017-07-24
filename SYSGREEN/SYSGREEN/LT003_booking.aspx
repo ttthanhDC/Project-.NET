@@ -1,19 +1,15 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C008_Product.aspx.cs" Inherits="SYSGREEN.C008_Product" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="LT003_booking.aspx.cs" Inherits="SYSGREEN.LT003_booking" %>
+
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-<div style ="margin-left:30px;margin-right:30px">
+
     <table id="table" 
         data-pagination="true"
         data-search="true" 
         data-show-refresh="true" 
         data-page-list="[10, 25, 50, 100, ALL]" 
-></table>
-</div>
-
-    <div style ="height:40px"></div>
-    <div style ="text-align:center;display: table;margin: 0 auto;">
-         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
-    </div>
+        ></table>
+   
 <script>
     // Bootstrap Table
     $(function () {
@@ -23,7 +19,7 @@
         var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/HandlerSysProduct.ashx",
+            url: "Configuation/HandlerSysRole.ashx",
             type: "POST",
             data: formDataListUser,
             contentType: false,
@@ -36,11 +32,9 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID;
-                        obj.branch = objectData.ORG_ID;
-                        obj.codeProduct = objectData.Product_Code;
-                        obj.nameProduct = objectData.Product_Name;
-                        obj.unitProduct = objectData.Product_Unit;
-                        obj.priceProduct = objectData.Product_Amount;
+                        obj.name = objectData.RoleName;
+                        obj.dateCreate = objectData.Create_Date;
+                        obj.user = objectData.Create_User;
                         arr.push(obj);
                     }
                 }
@@ -48,37 +42,57 @@
 
                 $('#table').bootstrapTable({
                     columns: [{
-                        field: 'branch',
-                        title: 'Cơ sở',
+                        field: 'date',
+                        title: 'Ngày',
                         align: 'center',
                         valign: 'middle',
+                        sortable: true,
+                        ///editable: true,
                     }, {
-                        field: 'codeProduct',
-                        title: 'Code',
+                        field: 'code',
+                        title: 'Mã đơn',
                         align: 'center',
                         valign: 'middle',
-                    }, {
-                        field: 'nameProduct',
-                        title: 'Tên ',
-                        align: 'center',
-                        valign: 'middle',
-                    }, {
-                        field: 'unitProduct',
-                        title: 'Đơn vị',
-                        align: 'center',
-                        valign: 'middle',
-                    }, {
-                        field: 'priceProduct',
-                        title: 'Giá',
-                        align: 'center',
-                        valign: 'middle',
-                    }, {
-                        field: 'operate',
-                        title: 'Thao tác',
-                        align: 'center',
-                        valign: 'middle',
+                        sortable: true,
+                        // editable: true,
                         events: operateEvents,
                         formatter: operateFormatter
+
+                    }, {
+                        field: 'name',
+                        title: 'Tên khách hàng',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        //  editable: true,
+                    }, {
+                        field: 'phone',
+                        title: 'SĐT',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+
+                    }, {
+                        field: 'address',
+                        title: 'Địa chỉ',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'district',
+                        title: 'Quận',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'statusBill',
+                        title: 'tình trạng đơn',
+                        align: 'center',
+                        valign: 'middle',
+
+                    }, {
+                        field: 'statusPay',
+                        title: 'Địa chỉ',
+                        align: 'center',
+                        valign: 'middle',
                     }],
                     data: data
                 });
@@ -87,52 +101,50 @@
 
             }
         });
+        // format table
     });
-    $('#btnAdd').on('click', function (e) {
-        window.location = '/managerProduct.aspx?';
-    });
+    // function
     function userFormatter(data) {
         return data.length;
     }
     function operateFormatter(value, row, index) {
         return [
+            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
+            'Phân quyền',
+            '</a>', '|',
             '<a class="edit" href="javascript:void(0)" title="Sửa">',
             'Sửa',
             '</a>  ', '|',
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
             'Xóa',
             '</a>',
+
         ].join('');
     }
+
     window.operateEvents = {
+        'click .right': function (e, value, row, index) {
+            window.location = '/TheRightForUser.aspx?paramId=' + row.id;
+        },
         'click .edit': function (e, value, row, index) {
-            window.location = '/managerProduct.aspx?paramId=' + row.id;
-            //alert('You click like action, row: ' + JSON.stringify(row));
+            // alert('You click like action, row: ' + JSON.stringify(row));
+            window.location = '/UserManger.aspx?paramId=' + row.id;
         },
         'click .remove': function (e, value, row, index) {
-            var formData = new FormData();
-            var id = parseInt(row.id + "");
-            //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
-            var json = { 'ID': id };
-            jQuery.ajaxSetup({ async: true });
-            formData.append('type', 'delete');
-            formData.append('data', JSON.stringify(json));
-            $.ajax({
-                url: "Configuation/HandlerSysProduct.ashx",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    $('#table').bootstrapTable('remove', {
-                        field: 'id',
-                        values: [row.id]
-                    });
-                },
-                error: function (err) {
-                    alert('Xóa thất bại');
-                }
+            $('#table').bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
             });
+        }
+    };
+
+    function updateCell(caller) {
+        var $table = $('#tablePopup');
+    }
+    window.typeBillEvents = {
+        'click .product': function (e, value, row, index) {
+            var $table = $('#tablePopup');
+            initTablePopup();
         }
     };
 </script>
