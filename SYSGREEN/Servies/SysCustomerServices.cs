@@ -12,7 +12,7 @@ namespace Servies
     {
         public static void InsertData(DataObject.SysCustomer obj)
         {
-            String Insert = "INSERT INTO SYS_CUSTOMER (CustomerName,PhoneNumber,Email,BirthDay,Address) VALUES (@CustomerName,@PhoneNumber,@Email,@BirthDay,@Address)";
+            String Insert = "INSERT INTO SYS_CUSTOMER (CustomerName,PhoneNumber,Email,BirthDay,Address,MaQuan) VALUES (@CustomerName,@PhoneNumber,@Email,@BirthDay,@Address,@MaQuan)";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -22,6 +22,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
             cmd.Parameters.AddWithValue("@Address", obj.Address);
+            cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -29,7 +30,7 @@ namespace Servies
 
         public static int InsertDataReturnId(DataObject.SysCustomer obj)
         {
-            String Insert = "INSERT INTO SYS_CUSTOMER (CustomerName,PhoneNumber,Email,BirthDay,Address) VALUES (@CustomerName,@PhoneNumber,@Email,@BirthDay,@Address)";
+            String Insert = "INSERT INTO SYS_CUSTOMER (CustomerName,PhoneNumber,Email,BirthDay,Address,MaQuan) VALUES (@CustomerName,@PhoneNumber,@Email,@BirthDay,@Address,@MaQuan);SELECT SCOPE_IDENTITY();";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -39,19 +40,25 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
             cmd.Parameters.AddWithValue("@Address", obj.Address);
+            cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
             conn.Open();
-            cmd.ExecuteNonQuery();
+            int modified = cmd.ExecuteNonQuery();
             cmd.Parameters.Clear();
-            //cmd.CommandText = "SELECT scope_identity()";
-           // int identity = Convert.ToInt32(cmd.ExecuteScalar());
             conn.Close();
-            return 1;
+            int IdKhachHang = -1;
+            List<DataObject.SysCustomer> lstCustomer = Servies.SysCustomerServices.GetDataByPhoneNumber(obj.PhoneNumber);
+            if (lstCustomer.Count > 0)
+            {
+                DataObject.SysCustomer sysCustomer = lstCustomer[0];
+                IdKhachHang = sysCustomer.ID;
+            }
+            return IdKhachHang;
         }
 
         public static void UpdateData(DataObject.SysCustomer obj)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Update = "UPDATE SYS_CUSTOMER SET CustomerName = @CustomerName, PhoneNumber = @PhoneNumber, Email = @Email, BirthDay = @BirthDay, Address = @Address Where ID = @ID";
+            String Update = "UPDATE SYS_CUSTOMER SET CustomerName = @CustomerName, PhoneNumber = @PhoneNumber, Email = @Email, BirthDay = @BirthDay, Address = @Address,MaQuan = @MaQuan Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
@@ -60,6 +67,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@Email", obj.Email);
             cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
             cmd.Parameters.AddWithValue("@Address", obj.Address);
+            cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -104,6 +112,7 @@ namespace Servies
                     obj.PhoneNumber = oReader["PhoneNumber"].ToString();
                     obj.Email = oReader["Email"].ToString();
                     obj.Address = oReader["Address"].ToString();
+                    obj.MaQuan = oReader["MaQuan"].ToString();
                     if (oReader["BirthDay"].ToString() != "" && oReader["BirthDay"].ToString() != null)
                     {
                         String createDate = String.Format("{0:dd/MM/yyyy}", oReader["BirthDay"].ToString());
@@ -142,6 +151,7 @@ namespace Servies
                     obj.PhoneNumber = oReader["PhoneNumber"].ToString();
                     obj.Email = oReader["Email"].ToString();
                     obj.Address = oReader["Address"].ToString();
+                    obj.MaQuan = oReader["MaQuan"].ToString();
                     if (oReader["BirthDay"].ToString() != "" && oReader["BirthDay"].ToString() != null)
                     {
                         String createDate = String.Format("{0:dd/MM/yyyy}", oReader["BirthDay"].ToString());
@@ -187,11 +197,37 @@ namespace Servies
                     obj.PhoneNumber = oReader["PhoneNumber"].ToString();
                     obj.Email = oReader["Email"].ToString();
                     obj.Address = oReader["Address"].ToString();
+                    obj.MaQuan = oReader["MaQuan"].ToString();
                     if (oReader["BirthDay"].ToString() != "" && oReader["BirthDay"].ToString() != null)
                     {
                         String createDate = String.Format("{0:dd/MM/yyyy}", oReader["BirthDay"].ToString());
                         obj.BirthDay = DateTime.Parse(createDate);
                     }
+                    lstSysCustomer.Add(obj);
+                }
+            }
+            conn.Close();
+            return lstSysCustomer;
+        }
+        public static List<DataObject.QuanHuyen> getAllDataQH()
+        {
+            List<DataObject.QuanHuyen> lstSysCustomer = new List<DataObject.QuanHuyen>();
+            String Select = "";
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            Select = "Select * from QuanHuyen";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.QuanHuyen obj = new DataObject.QuanHuyen();
+                    obj.ID = Int32.Parse(oReader["ID"].ToString());
+                    obj.MaQuan = oReader["MaQuan"].ToString();
+                    obj.TenQuan = oReader["TenQuan"].ToString();
                     lstSysCustomer.Add(obj);
                 }
             }

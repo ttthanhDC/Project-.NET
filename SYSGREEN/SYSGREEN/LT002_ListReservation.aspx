@@ -47,11 +47,49 @@
 <script>
     // Bootstrap Table
     $(function () {
+<<<<<<< HEAD
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
         var json = { 'ID': 0};
         formDataListUser.append('data', JSON.stringify(json));
+=======
+        loadContent();
+        function loadContent() {
+            loadDataHoaDon();
+        };
+        function loadDataHoaDon() {
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            var makh = "";
+            var mahd = "HD13";
+            var tensp = "";
+            formSource.append('type', 'getData');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('MaHD', mahd);
+            formSource.append('TenKH', makh);
+            formSource.append('TenSP', tensp);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+
+                },
+                error: function (err) {
+
+                }
+            });
+        };
+        // onchage select box
+       /* var formBill = new FormData();
+        var bill = {'ID':0};
+        formBill.append('type', 'getData');
+        formBill.append('data', JSON.stringify(bill));
+>>>>>>> c48c4dbd31a1732d47409e1c6dc48396ca1a8bc5
         $.ajax({
             url: "Configuation/HandlerSysUser.ashx",
             type: "POST",

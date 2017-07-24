@@ -7,8 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace SYSGREEN
 {
-    public partial class UserManger : System.Web.UI.Page
+    public partial class LT001V2Demo : System.Web.UI.Page
     {
-       
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

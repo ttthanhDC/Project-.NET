@@ -283,8 +283,9 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/LT001b_createReservation">
+								<a runat="server" href="~/LT001V2Demo">
 									<i class="menu-icon fa fa-caret-right"></i>
+                                    <!-- ~/LT001b_createReservation -->
 									LT001b Nhập reservation
 								</a>
 
@@ -785,6 +786,8 @@
             <script src="Scripts/bootstrap-editable.js"></script>
             <script src="Scripts/Validator/bootstrap-table-editable.js"></script>
             <link href="Content/bootstrap-editable.css" rel="stylesheet" />
+             <script src="Scripts/jquery.tmpl.js"></script>
+             <script src="Scripts/jquery.tmpl.min.js"></script>
         </div>
     </form>
 </body>
