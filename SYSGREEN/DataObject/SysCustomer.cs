@@ -14,6 +14,7 @@ namespace DataObject
         public String PhoneNumber { get; set; }
         public String Email { get; set; }
         public String Address { get; set; }
+        public String MaQuan { get; set; }
         public DateTime BirthDay { get; set; }
     }
 }

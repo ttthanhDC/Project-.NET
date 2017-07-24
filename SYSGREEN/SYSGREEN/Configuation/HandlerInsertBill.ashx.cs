@@ -17,70 +17,113 @@ namespace SYSGREEN.Configuation
         {
             String type = context.Request.Form["type"].ToString();
             String jsonData = context.Request.Form["data"].ToString();
-            DataObject.viewBillTemp obj = new JavaScriptSerializer().Deserialize<DataObject.viewBillTemp>(jsonData);
+            //DataObject.viewBillTemp obj = new JavaScriptSerializer().Deserialize<DataObject.viewBillTemp>(jsonData);
             if (type == "insert")
             {
                 try
                 {
-                    DataObject.SysBillMaster sysBillMaster = new DataObject.SysBillMaster();
-                    DataObject.viewCustomerTemp customerTemp = obj.inFoCustomer;
-                    List<DataObject.SysCustomer> lstCustomer = Servies.SysCustomerServices.GetDataByPhoneNumber(customerTemp.soDienThoai);
-                    sysBillMaster.CreateDate = DateTime.Now;
-                    if (lstCustomer.Count > 0)
+                    String hoten = "";
+                    String maKH = "";
+                    String ngaySinh = "";
+                    String soDienThoai = "";
+                    String email = "";
+                    String diaChi = "";
+                    String maquan = "";
+                    String sourceName = "";
+                    String sourceId = "";
+                    String songayconlai = "";
+                    String tong = "";
+                    String sotienthuduoc = "";
+                    String chietkhau = "";
+                    String conNo = "";           
+                    
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    dynamic inFoCustomer = data.inFoCustomer;
+                    dynamic infoBill = data.infoBill;
+                    hoten = inFoCustomer.hoTen;
+                    maKH = inFoCustomer.maKH;
+                    ngaySinh = inFoCustomer.ngaySinh;
+                    soDienThoai = inFoCustomer.soDienThoai;
+                    email = inFoCustomer.email;
+                    diaChi = inFoCustomer.diaChi;
+                    maquan = inFoCustomer.maquan;
+                    sourceName = data.sourceName;
+                    sourceId = data.sourceId;
+                    songayconlai = data.songayconlai;
+                    tong = data.tong;
+                    sotienthuduoc = data.sotienthuduoc;
+                    chietkhau = data.chietkhau;
+                    conNo = data.conNo;
+                    /********************************* 
+                     * Check and Insert Khách hàng nếu không tồn tại
+                     * Nếu tồn tại getId Khách hàng
+                     * 
+                     * *******************************/
+                    int IdKhachHang = returnIdKH(soDienThoai,hoten,email,diaChi,maquan,ngaySinh);
+                    /********************************* 
+                    * Insert Hóa đơn
+                    * 
+                    * *******************************/
+                    DataObject.HoaDon hoadon = new DataObject.HoaDon();
+                    hoadon.IDKhachHang = IdKhachHang;
+                    hoadon.IDNguon = Convert.ToInt32(sourceId);
+                    hoadon.NgayTao =  DateTime.Now;
+                    hoadon.NguoiTao = "";
+                    hoadon.TongSoNgay = Convert.ToInt32(songayconlai);
+                    hoadon.TongTien = Convert.ToDecimal(tong != "" ? tong : "0");
+                    hoadon.TongTienConNo = Convert.ToDecimal(conNo != "" ? conNo : "0");
+                    hoadon.TongTienThuDuoc = Convert.ToDecimal(sotienthuduoc != "" ? sotienthuduoc : "0");
+                    hoadon.TrangThai = "Chưa xử lý";
+                    hoadon.ChietKhau = Convert.ToDecimal(sotienthuduoc != "" ? chietkhau : "0");
+                    int hoadonId = Servies.HoaDonServices.InsertDataReturnId(hoadon);
+                    /********************************* 
+                    * Insert Chi tiết hóa đơn , hoa đơn package , hóa đơn ngày , sản phẩm
+                    * 
+                    * *******************************/
+                    for (int i = 0; i < infoBill.Count; i++)
                     {
-                        DataObject.SysCustomer sysCustomer = lstCustomer[0];
-                        sysBillMaster.CustomerId = sysCustomer.ID;
-                    }
-                    else
-                    {
-                        DataObject.SysCustomer sysCustomer = new DataObject.SysCustomer();
-                        sysCustomer.PhoneNumber = customerTemp.soDienThoai;
-                        sysCustomer.CustomerName = customerTemp.hoTen;
-                        sysCustomer.Email = customerTemp.email;
-                        sysCustomer.Address = customerTemp.diaChi;
-                        if (customerTemp.ngaySinh != "")
+                        int IdChiTietHoaHD = InsertChiTietHoaDonReturnId(infoBill[i],hoadonId,IdKhachHang);
+                        dynamic dataHD = infoBill[i].data;
+                        for (int k = 0; k < dataHD.Count; k++)
                         {
-                            sysCustomer.BirthDay = DateTime.Parse(customerTemp.ngaySinh);
+                            int idPackageHD = InsertPackageChiTietHoaDonReturnId(dataHD[k], IdChiTietHoaHD);
+
+                            dynamic detailMaster = dataHD[k].detalMaster;
+                            int idNgayHDLe = -1;
+                            for (int j = 0; j < detailMaster.Count; j++)
+                            {
+                                if (dataHD[k].fLoaiHinhDonId == 1) {
+                                    int idNgayHD = 0;
+                                    if (detailMaster[j].deliveryDate != "")
+                                    {
+                                        idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
+                                    }
+                                    else
+                                    {
+                                        InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHD);
+                                    }
+
+                                    
+                                }
+                                else
+                                {
+                                    if (j == 0)
+                                    {
+                                        idNgayHDLe = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
+                                        InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
+                                    }
+                                    else
+                                    {
+                                        InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
+                                    }
+                                }
+                                
+                               
+                            }
                         }
-                        int customerId = Servies.SysCustomerServices.InsertDataReturnId(sysCustomer);
-                        sysBillMaster.CustomerId = customerId;
                     }
-                    if (obj.chietkhau != "")
-                    {
-                        sysBillMaster.Discount = float.Parse(obj.chietkhau);
-                    }
-                    sysBillMaster.SourceId = obj.sourceId;
-                    if (obj.tong != "") {
-                        sysBillMaster.TotalAmount = float.Parse(obj.tong);
-                    }
-                    if (obj.sotienthuduoc != "")
-                    {
-                        sysBillMaster.TotalAmountCollected = float.Parse(obj.sotienthuduoc);
-                    }
-                    if (obj.conNo != "")
-                    {
-                        sysBillMaster.TotalAmountRemain = float.Parse(obj.conNo);
-                    }
-                    sysBillMaster.DateTotal = obj.songayconlai;
-                    sysBillMaster.Status = "Chưa xử lý";
-                    List<DataObject.SysBillMaster> lstCount = Servies.SysBillMasterServices.GetData(0);
-                    string idHoaDon = "";
-                    if (lstCount.Count + 1 < 10)
-                    {
-                        idHoaDon = "0" + (lstCount.Count + 1).ToString();
-                    }
-                    else
-                    {
-                        idHoaDon = (lstCount.Count + 1).ToString();
-                    }
-                    sysBillMaster.BillCode = "HD" + idHoaDon;
-                    sysBillMaster.CreateUser = "admin";
-                    int BillMasterId = Servies.SysBillMasterServices.InsertDataReturnId(sysBillMaster);
-                    List<DataObject.BillGridMaster> lstMaster = obj.infoBill;
-                    //obj.Create_Date = DateTime.Now;
-                    //Insert(obj);
-                    context.Response.ContentType = "text/plain";
-                    context.Response.Write(idHoaDon);
+                        context.Response.ContentType = "text/plain";
+                    context.Response.Write(hoten);
                 }
                 catch (Exception e)
                 {
@@ -166,6 +209,101 @@ namespace SYSGREEN.Configuation
         {
             List<DataObject.DeptObject> lst = Servies.DeptObjectServices.GetData(Id);
             return lst;
+        }
+
+        public int returnIdKH(string soDienThoai, string hoten, string email, string diaChi, string maquan, string ngaySinh)
+        {
+            List<DataObject.SysCustomer> lstCustomer = Servies.SysCustomerServices.GetDataByPhoneNumber(soDienThoai);
+            int IdKhachHang = -1;
+            if (lstCustomer.Count > 0)
+            {
+                DataObject.SysCustomer sysCustomer = lstCustomer[0];
+                IdKhachHang = sysCustomer.ID;
+            }
+            else
+            {
+                DataObject.SysCustomer sysCustomer = new DataObject.SysCustomer();
+                sysCustomer.PhoneNumber = soDienThoai;
+                sysCustomer.CustomerName = hoten;
+                sysCustomer.Email = email;
+                sysCustomer.Address = diaChi;
+                sysCustomer.MaQuan = maquan;
+                if (ngaySinh != "")
+                {
+                    sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
+                }
+                IdKhachHang = Servies.SysCustomerServices.InsertDataReturnId(sysCustomer);
+            }
+            return IdKhachHang;
+        }
+
+        public int InsertChiTietHoaDonReturnId(dynamic infoBill, int hoadonId, int IdKhachHang)
+        {
+            DataObject.ChiTietHoaDon chitietHD = new DataObject.ChiTietHoaDon();
+            chitietHD.IDHoaDon = hoadonId;
+            chitietHD.IsMaster = infoBill.isMaster;
+            if (infoBill.isMaster == 1)
+            {
+                chitietHD.IdKhachHang = IdKhachHang;
+            }
+            else
+            {
+                String hoten1 = infoBill.infoKH.hoTen;
+                String maKH1 = infoBill.infoKH.maKH;
+                String ngaySinh1 = infoBill.infoKH.ngaySinh;
+                String soDienThoai1 = infoBill.infoKH.soDienThoai;
+                String email1 = infoBill.infoKH.email;
+                String diaChi1 = infoBill.infoKH.diaChi;
+                String maquan1 = infoBill.infoKH.maquan;
+                chitietHD.IdKhachHang = returnIdKH(soDienThoai1, hoten1, email1, diaChi1, maquan1, ngaySinh1);
+            }
+            chitietHD.TrangThai = "Chưa xử lý";
+            int IdChiTietHoaHD = Servies.HoaDonServices.InsertChiTietHoaDonReturnId(chitietHD);
+            return IdChiTietHoaHD;
+        }
+
+        public int InsertPackageChiTietHoaDonReturnId(dynamic data,int hoaDonChiTietId)
+        {
+            DataObject.PackageChiTietHoaDon packageChiTietHD = new DataObject.PackageChiTietHoaDon();
+            packageChiTietHD.IDChiTietHD = hoaDonChiTietId;
+            packageChiTietHD.Loai = data.fLoaiHinhDonId;
+            packageChiTietHD.Ship = data.fPhiShip;
+            packageChiTietHD.SoNgay = data.fLoaiGoiId;
+            packageChiTietHD.HinhThucThanhToan = data.fLoaiThanhToanId;
+            packageChiTietHD.HinhThucGiaoHang = "";
+            packageChiTietHD.ThanhTien = Convert.ToDecimal(data.fThanhTien != "" ? data.fThanhTien : "0");
+            packageChiTietHD.TrangThai = "Chưa xử lý";
+            int IdChiTietHoaHD = Servies.HoaDonServices.InsertPackageChiTietHoaDonReturnId(packageChiTietHD);
+            return IdChiTietHoaHD;
+        }
+
+        public int InsertNgayHoaDonReturnId(dynamic data, int idPackageHD)
+        {
+            DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
+            ngayHoaDon.IDPackageChitietHD = idPackageHD;
+            ngayHoaDon.Ngay = Convert.ToDateTime(data.deliveryDate != "" ? data.deliveryDate : DateTime.Now);
+            ngayHoaDon.TrangThai = "Chưa xử lý";
+            int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
+            return IdChiTietHoaHD;
+        }
+
+        public int InsertHoaDonSanPhamReturnId(dynamic data, int idNgayHoaDon){
+            DataObject.HoaDonSanPham ngayHoaDon = new DataObject.HoaDonSanPham();
+            ngayHoaDon.IDNgayHoaDon = idNgayHoaDon;
+            ngayHoaDon.money = data.money;
+            ngayHoaDon.product = data.product;
+            ngayHoaDon.sugar = data.sugar;
+            ngayHoaDon.quantity = data.quantity;
+            ngayHoaDon.price = data.price;
+            ngayHoaDon.promotionCode = data.promotionCode;
+            ngayHoaDon.total = data.total;
+            if(data.GhiChu != null && data.GhiChu != ""){
+                ngayHoaDon.GhiChu = data.GhiChu;
+            }else{
+                ngayHoaDon.GhiChu = "";
+            }
+            int IdChiTietHoaHD = Servies.HoaDonSanPhamServices.InsertDataReturnId(ngayHoaDon);
+            return IdChiTietHoaHD;
         }
     }
 }
