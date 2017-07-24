@@ -165,7 +165,7 @@ namespace Servies
             conn.Close();
             return lstDeptObject;
         }
-        public DataTable getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+        public static DataTable getDataViewHoaDon(String MaHD, String TenKH, String TenSP)
         {
             DataTable table = new DataTable();
             SqlCommand cmd = null;
@@ -173,13 +173,16 @@ namespace Servies
             String Select = "Select * from vHoaDon where ";
             if (MaHD != null && MaHD != "")
             {
-                Select += "MaReservation =@MaReservation AND ";
-                cmd.Parameters.AddWithValue("@MaReservation", MaHD);
+                Select += "MaReservation LIKE N'%" + MaHD + "%' AND "; 
             }
             if(TenKH != null && TenKH != ""){
-                Select += "TenKH_HD =@TenKH_HD AND ";
-                cmd.Parameters.AddWithValue("@TenKH_HD", TenKH);
+                Select += "TenKH_HD LIKE N'%" + TenKH + "%' AND "; 
             }
+            if (TenSP != null && TenSP != "")
+            {
+                Select += "product LIKE N'%" + TenSP + "%' AND "; 
+            }
+            Select += "1=1 ORDER BY ID_CTHD";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;

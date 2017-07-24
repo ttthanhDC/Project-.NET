@@ -47,6 +47,36 @@
 <script>
     // Bootstrap Table
     $(function () {
+        loadContent();
+        function loadContent() {
+            loadDataHoaDon();
+        };
+        function loadDataHoaDon() {
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            var makh = "";
+            var mahd = "HD13";
+            var tensp = "";
+            formSource.append('type', 'getData');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('MaHD', mahd);
+            formSource.append('TenKH', makh);
+            formSource.append('TenSP', tensp);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+
+                },
+                error: function (err) {
+
+                }
+            });
+        };
         // onchage select box
        /* var formBill = new FormData();
         var bill = {'ID':0};

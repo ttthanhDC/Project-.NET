@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -165,9 +166,11 @@ namespace SYSGREEN.Configuation
                 try
                 {
                     // Case ID > 0 -> Result = 1 record
-                    // Case ID = 0; -> Result = All Record
-                    List<DataObject.SysBillMaster> lst = Servies.SysBillMasterServices.GetData(0);
-
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String MaHD = context.Request.Form["MaHD"].ToString();
+                    String TenKH = context.Request.Form["TenKH"].ToString();
+                    String TenSP = context.Request.Form["TenSP"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getDataViewHoaDon(MaHD, TenKH, TenSP); 
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
