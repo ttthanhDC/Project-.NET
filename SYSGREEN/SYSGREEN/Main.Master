@@ -299,10 +299,18 @@
 
 								<b class="arrow"></b>
 							</li>
+                            <li class="">
+								<a runat="server" href="~/LT002_demo">
+									<i class="menu-icon fa fa-caret-right"></i>
+									LT002 demo
+								</a>
+
+								<b class="arrow"></b>
+							</li>
                              <li class="">
 								<a runat="server" href="~/LT003_booking">
 									<i class="menu-icon fa fa-caret-right"></i>
-									LT002 DS reservation
+									LT003
 								</a>
 
 								<b class="arrow"></b>

@@ -1,6 +1,18 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C009_TotalBill.aspx.cs" Inherits="SYSGREEN.C009_TotalBill" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+
+     <table id="table" 
+        data-pagination="true"
+        data-search="true" 
+        data-show-refresh="true" 
+        data-page-list="[10, 25, 50, 100, ALL]" 
+        ></table>
+    <div style ="height:40px"></div>
+    <div style ="text-align:center;display: table;margin: 0 auto;">
+         <button type="button" class="btn btn-primary" id="btadd">Thêm</button>
+    </div>
+
     <script>
         $(function () {
             var data = [];
@@ -153,14 +165,5 @@
             }
         };
     </script>
-    <table id="table" 
-        data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        ></table>
-    <div style ="height:40px"></div>
-    <div style ="text-align:center;display: table;margin: 0 auto;">
-         <button type="button" class="btn btn-primary" id="btadd">Thêm</button>
-    </div>
+   
     </asp:Content>
