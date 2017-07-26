@@ -2,6 +2,21 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+    <table id="table" 
+        data-pagination="true"
+        data-search="true" 
+        data-show-refresh="true" 
+        data-show-toggle="true" 
+        data-page-list="[10, 25, 50, 100, ALL]" 
+        data-show-footer="false" 
+        ></table>
+   
+
+    <div style ="height:40px"></div>
+    <div style ="text-align:center;display: table;margin: 0 auto;">
+         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+    </div>
+
     <script>
         $(function () {
             var data = [];
@@ -152,18 +167,5 @@
 
 
     </script>
-    <table id="table" 
-        data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-show-toggle="true" 
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        data-show-footer="false" 
-        ></table>
-   
-
-    <div style ="height:40px"></div>
-    <div style ="text-align:center;display: table;margin: 0 auto;">
-         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
-    </div>
+    
     </asp:Content>

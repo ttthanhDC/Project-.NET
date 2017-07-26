@@ -93,11 +93,13 @@
                 title: 'Ngày',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
             }, {
                 field: 'money',
                 title: 'Số tiền',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
 
             }, {
                 field: 'accountFor',
@@ -148,6 +150,7 @@
                 title: 'ghi chú',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
                 // events: operateEvents,
                 // formatter: operateFormatter
             }],

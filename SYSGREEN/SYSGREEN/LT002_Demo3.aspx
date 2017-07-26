@@ -47,12 +47,14 @@
                             field: 'product',
                             title: 'Sản phẩm',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'soLuong',
                             title: 'Số lượng',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'Price',
                             title: 'Giá sản phẩm',
@@ -79,7 +81,8 @@
                             field: 'promotion',
                             title: 'Promotion code',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'total',
                             title: 'Total',
@@ -89,7 +92,8 @@
                             field: 'note',
                             title: 'Ghi chú',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'operate',
                             title: 'Thao tác',

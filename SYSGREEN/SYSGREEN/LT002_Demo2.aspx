@@ -82,22 +82,27 @@
                             field: 'name',
                             title: 'Họ tên',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'sdt',
                             title: 'Số điện thoại',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
+
                         }, {
                             field: 'district',
                             title: 'Quận',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'address',
                             title: 'Địa chỉ',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'status',
                             title: 'Trạng thái',
@@ -129,7 +134,8 @@
                             field: 'date',
                             title: 'Ngày',
                             align: 'center',
-                            valign: 'middle'
+                            valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'money',
                             title: 'Tiền',

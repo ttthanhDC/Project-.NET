@@ -98,11 +98,13 @@
                 title: 'Nọi dung chi',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
             }, {
                 field: 'money',
                 title: 'Số tiền',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
             }, {
                 field: 'accountFor',
                 title: 'Tài khoản chi',
@@ -130,6 +132,7 @@
                 title: 'Ghi chúc',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
                 // events: operateEvents,
                 //formatter: operateFormatter
             }],

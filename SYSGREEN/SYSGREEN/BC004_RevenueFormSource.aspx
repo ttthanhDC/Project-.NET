@@ -146,7 +146,7 @@
     </div>
       <div class="form-horizontal">
             <div class="form-group">
-               <label for="sel1" class="col-md-4"></label>
+               <label for="sel1" class="col-md-3"></label>
                 <label for="sel1" class="col-md-1">Nguồn</label>
                 <label for="sel1" class="col-md-2">Số lượng đơn</label>
                 <label for="sel1" class="col-md-2">Số lượng ship</label>

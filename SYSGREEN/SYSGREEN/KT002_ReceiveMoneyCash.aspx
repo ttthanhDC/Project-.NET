@@ -119,8 +119,7 @@
                 title: 'Số tiền',
                 align: 'center',
                 valign: 'middle',
-                //sortable: true,
-                //  editable: true,
+                editable: true,
             }, {
                 field: 'staus',
                 title: 'Tình trạng',
@@ -149,6 +148,7 @@
                 title: 'Ghi chú',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
                 //sortable: true,
             }],
             data: [{

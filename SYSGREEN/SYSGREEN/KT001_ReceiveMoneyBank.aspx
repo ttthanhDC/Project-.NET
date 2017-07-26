@@ -154,6 +154,7 @@
                 title: 'Mã giao dịch',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
             }, {
                 field: 'staus',
                 title: 'Tình trạng',
@@ -187,10 +188,11 @@
                 title: 'Ghi chú',
                 align: 'center',
                 valign: 'middle',
+                editable: true,
                 //sortable: true,
             }],
             data: [{
-                permission : false,
+                permission: true,
                 date: '01/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -199,7 +201,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '03/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -208,7 +210,7 @@
                 staus: 2,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '04/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -226,7 +228,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '09/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -244,7 +246,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '13/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -253,7 +255,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '23/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -262,7 +264,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '24/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -271,7 +273,7 @@
                 staus: 2,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '25/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
@@ -280,7 +282,7 @@
                 staus: 1,
                 note: 'Gấm nhận chuyển tiền'
             }, {
-                permission: false,
+                permission: true,
                 date: '30/07/2017',
                 name: 'Trần ngọc duy',
                 money: '1,000,000',
