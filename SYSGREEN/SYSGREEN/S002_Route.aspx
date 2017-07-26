@@ -16,13 +16,13 @@
                     <input type="text" class="form-control" name="title" id="txt_ShipName" placeholder="Shiper name"/>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btLoTrinh">In lộ trình</button>
+                    <button type="button" class="btn btn-primary" id="btLoTrinh">In lộ trình</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btHoaDon">In hóa đơn</button>
+                    <button type="button" class="btn btn-primary" id="btHoaDon">In hóa đơn</button>
                 </div>
             </div> 
         </div> 

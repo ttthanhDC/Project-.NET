@@ -4,8 +4,7 @@
     <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
           <div class="form-horizontal">
             <div class="form-group">
-                <label for="sel1" class="col-md-3"></label>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã reservation"/>
                 </div>
                 <div class="col-md-2">
@@ -14,13 +13,8 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_Distric" placeholder="Quận"/>
                 </div>
-            </div> 
-        </div> 
-        <div class="form-horizontal">
-            <div class="form-group">
-                 <label for="sel1" class="col-md-3"></label>
-                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumber"placeholder="Shiper namber" />
+                 <div class="col-md-1">
+                    <input type="text" class="form-control" name="title" id="txt_ShipNumber"placeholder="Shiper number" />
                 </div>
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_ShipName"placeholder="Shiper name" />
@@ -28,8 +22,33 @@
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái" />
                 </div>
-               <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+            </div> 
+        </div> 
+        <div class="form-horizontal">
+            <div class="form-group">
+                 <label for="sel1" class="col-md-3"></label>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btIn">In hóa đơn vận chuyển</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btBeark">Tách bill</button>
+                </div>
+                <div class="col-md-2">
+                   
+                    <div class="form-group">
+                          <select class="form-control" id="cbShip">
+                            <option value ="1">Shiper 1</option>
+                            <option value ="2">Shiper 2</option>
+                            <option value ="3">Shiper 3</option>
+                            <option value ="4">Shiper 4</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btAssign ">Assign </button>
                 </div>
             </div> 
         </div> 

@@ -205,7 +205,43 @@
                 }
             }, {
                 field: 'status',
-                title: 'Trạng thái đơn hàng',
+                title: 'Trạng thái',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.parent && row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shiper',
+                title: 'Shiper',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.parent && row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'tienThanhToan',
+                title: 'Số TĐTT',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.parent && row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'assign',
+                title: 'Assign',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
@@ -237,6 +273,9 @@
                 address: '39 Hoàng mai, hà nội',
                 money : '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                tienThanhToan: "20000",
+                assign : "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -247,6 +286,9 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                tienThanhToan: "20000",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -257,6 +299,8 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -267,6 +311,9 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                tienThanhToan: "20000",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -277,6 +324,9 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                tienThanhToan: "20000",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -287,6 +337,8 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -297,6 +349,8 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -307,6 +361,8 @@
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
                 status: 'Đang chuyển',
+                shiper: "Duytn4",
+                assign: "ThanhDC",
                 note: 'note'
 
             }]
