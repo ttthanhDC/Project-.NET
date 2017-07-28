@@ -128,11 +128,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent) {
-                        return '<label style = "color: blue;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
+                    return '<label style = "color: blue;">' + value + '</label>';
                 }
             }, {
                 field: 'date',
@@ -140,7 +136,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
                         return value;
@@ -152,7 +148,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
                         return value;
@@ -164,7 +160,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
                         return value;
@@ -176,7 +172,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
                         return value;
@@ -188,7 +184,7 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
                         return value;
@@ -200,15 +196,34 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
-
                     } else {
-                        if (row.endRow) {
-                            return '<label style = "color: green;">' + value + '</label>';
-                        } else {
-                            return value;
-                        }
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipName',
+                title: 'Ship Name',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipNumber',
+                title: 'ShipNo',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
                     }
                 }
             }, {
@@ -217,22 +232,14 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
+                    if (row.detb) {
                         return '<label style = "color: red;">' + value + '</label>';
                     } else {
-                        if (row.endRow) {
-                            return '<label style = "color: green;">' + value + '</label>';
-                        } else {
-                            return value;
-                        }
+                        return value;
                     }
                 }
             }],
             data: [{
-                check: true,
-                parent: true,
-                detb: true,
-                endRow: false,
                 code: '002-001-123456',
                 date: '20/07/2017',
                 district: 'Hà đông',
@@ -240,99 +247,154 @@
                 name: 'Trần ngọc duy',
                 sdt: '0989485398',
                 addres: '39 Hoàng mai, hà nội',
-                money: '300,000'
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
             }, {
-                check: false,
-                parent: false,
-                detb: false,
-                endRow: false,
-                code: 'SP1',
-                date: 'Sản phẩm 1',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '',
-                money: ''
-            }, {
-                check: false,
-                parent: false,
-                detb: false,
-                endRow: false,
-                code: 'SP2',
-                date: 'sản phẩm 2',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '',
-                money: ''
-            }, {
-                check: false,
-                parent: false,
-                detb: false,
-                endRow: true,
-                code: 'SP3',
-                date: 'Sản phẩm 3',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '123456',
-                money: 'Hoàng hiếu'
-            }, {
-                check: true,
-                parent: true,
-                detb: false,
-                endRow: false,
-                code: '002-002-4567890',
+                code: '002-001-123456',
                 date: '20/07/2017',
                 district: 'Hà đông',
                 status: 'Đang chuyển',
                 name: 'Trần ngọc duy',
                 sdt: '0989485398',
-                addres: '109 hoàng ngân thanh xuân',
-                money: '1,000,000'
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
             }, {
-                check: false,
-                parent: false,
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
                 detb: false,
-                endRow: false,
-                code: 'SP1',
-                date: 'Sản phẩm 1',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '',
-                money: ''
             }, {
-                check: false,
-                parent: false,
-                detb: false,
-                endRow: false,
-                code: 'SP2',
-                date: 'sản phẩm 2',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '',
-                money: ''
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
             }, {
-                check: false,
-                parent: false,
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
                 detb: false,
-                endRow: true,
-                code: 'SP3',
-                date: 'Sản phẩm 3',
-                district: '1',
-                status: '',
-                name: '',
-                sdt: '',
-                addres: '123456',
-                money: 'Hoàng hiếu'
-
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: true,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'ThanhDC',
+                shipNumber: '0012',
+                detb: false,
+            }, {
+                code: '002-001-123456',
+                date: '20/07/2017',
+                district: 'Hà đông',
+                status: 'Đang chuyển',
+                name: 'Trần ngọc duy',
+                sdt: '0989485398',
+                addres: '39 Hoàng mai, hà nội',
+                money: '300,000',
+                shipName: 'Duytn4',
+                shipNumber: '0012',
+                detb: true,
             }]
         });
     });
