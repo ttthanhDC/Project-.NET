@@ -1,7 +1,7 @@
 USE [DB_SYS_GREEN]
 GO
 
-/****** Object:  Table [dbo].[SHIPER]    Script Date: 7/29/2017 3:30:37 PM ******/
+/****** Object:  Table [dbo].[SHIPER]    Script Date: 7/29/2017 6:21:10 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,6 @@ CREATE TABLE [dbo].[SHIPER](
 	[SHIPER_ID] [int] IDENTITY(1,1) NOT NULL,
 	[NUMBER] [nvarchar](64) NULL,
 	[NAME] [nvarchar](64) NULL,
-	[NGAYHOADON_ID] [int] NULL,
 	[DESCRIPTION] [nvarchar](max) NULL,
  CONSTRAINT [PK_SHIPER] PRIMARY KEY CLUSTERED 
 (
@@ -22,14 +21,4 @@ CREATE TABLE [dbo].[SHIPER](
 
 GO
 
-ALTER TABLE [dbo].[SHIPER]  WITH CHECK ADD  CONSTRAINT [FK_SHIPER_NgayHoaDon] FOREIGN KEY([NGAYHOADON_ID])
-REFERENCES [dbo].[NgayHoaDon] ([ID])
-GO
-
-ALTER TABLE [dbo].[SHIPER] CHECK CONSTRAINT [FK_SHIPER_NgayHoaDon]
-GO
-
-ALTER TABLE dbo.NgayHoaDon ADD
-	USER_ID int NULL
-GO
 

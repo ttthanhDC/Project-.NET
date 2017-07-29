@@ -1,12 +1,13 @@
 USE [DB_SYS_GREEN]
 GO
 
-/****** Object:  View [dbo].[vHoaDonShiper]    Script Date: 7/29/2017 3:34:35 PM ******/
+/****** Object:  View [dbo].[vHoaDonShiper]    Script Date: 7/29/2017 6:17:19 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 ALTER VIEW [dbo].[vHoaDonShiper] AS
  select HD.ID as ID_HD, ('HD' + CAST(HD.ID AS varchar(100)) + '-' + CAST(CTHD.ID AS varchar(100))) as MaReservation,
@@ -31,10 +32,13 @@ ALTER VIEW [dbo].[vHoaDonShiper] AS
  left join PackageChiTietHoaDon PCTHD ON PCTHD.IDChiTietHD = CTHD.ID
  left join NgayHoaDon NHD ON NHD.IDPackageChitietHD = PCTHD.ID
  left join HoaDonSanPham HDSP ON HDSP.IDNgayHoaDon = NHD.ID
- left join SHIPER shiper ON shiper.NGAYHOADON_ID = NHD.ID
+ left join SHIPER_NgayHoaDon shiperNgayHoaDon ON shiperNgayHoaDon.NgayHoaDon_ID = NHD.ID
+ left join SHIPER shiper ON shiper.SHIPER_ID = shiperNgayHoaDon.SHIPER_ID
  left join SYS_USER sysUser ON sysUSer.ID = NHD.USER_ID
  left join QuanHuyen quanHuyen ON quanHuyen.MaQuan = KH.MaQuan
 
 
+
 GO
+
 
