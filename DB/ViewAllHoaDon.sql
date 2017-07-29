@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-ALTER VIEW [dbo].[vHoaDonShiper] AS
+--ALTER VIEW [dbo].[vHoaDonShiper] AS
  select HD.ID as ID_HD, ('HD' + CAST(HD.ID AS varchar(100)) + '-' + CAST(CTHD.ID AS varchar(100))) as MaReservation,
  HD.IDKhachHang,KH.TenKH AS TenKH_HD,KH.DiaChi DiaChi,KH.SoDienThoai SoDienThoai,quanHuyen.TenQuan,
  HD.IDNguon, SS.Source_Name,
@@ -32,8 +32,7 @@ ALTER VIEW [dbo].[vHoaDonShiper] AS
  left join PackageChiTietHoaDon PCTHD ON PCTHD.IDChiTietHD = CTHD.ID
  left join NgayHoaDon NHD ON NHD.IDPackageChitietHD = PCTHD.ID
  left join HoaDonSanPham HDSP ON HDSP.IDNgayHoaDon = NHD.ID
- left join SHIPER_NgayHoaDon shiperNgayHoaDon ON shiperNgayHoaDon.NgayHoaDon_ID = NHD.ID
- left join SHIPER shiper ON shiper.SHIPER_ID = shiperNgayHoaDon.SHIPER_ID
+ left join SHIPER shiper ON shiper.SHIPER_ID = NHD.SHIPER_ID
  left join SYS_USER sysUser ON sysUSer.ID = NHD.USER_ID
  left join QuanHuyen quanHuyen ON quanHuyen.MaQuan = KH.MaQuan
 

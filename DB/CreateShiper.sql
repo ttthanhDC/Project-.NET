@@ -21,4 +21,8 @@ CREATE TABLE [dbo].[SHIPER](
 
 GO
 
+ALTER TABLE dbo.NgayHoaDon ADD
+	SHIPER_ID int NULL
+GO
+
 
