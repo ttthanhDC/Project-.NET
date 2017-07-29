@@ -79,23 +79,34 @@ namespace SYSGREEN.Configuation
 
                     String shiper = "";
                     String user = "";
-                                       
+                    int? shiperId = null;
+                    int? userId = null;                  
                     dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
                     dynamic listNgayHoaDonJson = data.listNgayHoaDon;
 
                     shiper = data.shiper;
                     user = data.user;
-                    
+
+                    if (shiper != null && shiper != "")
+                    {
+                        shiperId = Int32.Parse(shiper);
+                    }
+
+                    if (user != null && user != "")
+                    {
+                        userId = Int32.Parse(user);
+                    }
+
                     if (listNgayHoaDonJson != null && listNgayHoaDonJson.count)
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                         {
-
+                            Servies.HoaDonServices.updateNgayHoaDonToShiper(listNgayHoaDonJson[i], shiperId, userId);
                         }
                     }
-                    DataTable lst = Servies.HoaDonServices.getAllShiper();
+                    
                     context.Response.ContentType = "application/json";
-                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                    context.Response.Write(JsonConvert.SerializeObject("update successful"));
                 }
                 catch (Exception e)
                 {
