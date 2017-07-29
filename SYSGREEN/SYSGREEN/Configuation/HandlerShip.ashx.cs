@@ -168,15 +168,15 @@ namespace SYSGREEN.Configuation
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
-                    String MaHD = context.Request.Form["MaHD"].ToString();
-                    String TenKH = context.Request.Form["TenKH"].ToString();
-                    String TenSP = context.Request.Form["TenSP"].ToString();
-                    //String TenSP = context.Request.Form["TenSP"].ToString();
-                   // String TenSP = context.Request.Form["TenSP"].ToString();
-                    //String TenSP = context.Request.Form["TenSP"].ToString();
-                    //String TenSP = context.Request.Form["TenSP"].ToString();
+                    String maReservation = context.Request.Form["MaReservation"].ToString();
+                    String ngayHoaDon = context.Request.Form["ngayHoaDon"].ToString();
+                    String quan = context.Request.Form["quan"].ToString();
+                    String soShiper = context.Request.Form["soShiper"].ToString();
+                    String tenShiper = context.Request.Form["tenShiper"].ToString();
+                    String trangThai = context.Request.Form["trangThai"].ToString();
 
-                    DataTable lst = Servies.HoaDonServices.getDataViewHoaDon(MaHD, TenKH, TenSP);
+                    DataTable lst = Servies.HoaDonServices.getDataFilterViewHoaDon(maReservation, ngayHoaDon, quan, 
+                        soShiper, tenShiper, trangThai);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
