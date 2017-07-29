@@ -162,7 +162,7 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
-            else if (type == "getData")
+            else if (type == "getDataFilter")
             {
                 try
                 {
@@ -171,6 +171,11 @@ namespace SYSGREEN.Configuation
                     String MaHD = context.Request.Form["MaHD"].ToString();
                     String TenKH = context.Request.Form["TenKH"].ToString();
                     String TenSP = context.Request.Form["TenSP"].ToString();
+                    //String TenSP = context.Request.Form["TenSP"].ToString();
+                   // String TenSP = context.Request.Form["TenSP"].ToString();
+                    //String TenSP = context.Request.Form["TenSP"].ToString();
+                    //String TenSP = context.Request.Form["TenSP"].ToString();
+
                     DataTable lst = Servies.HoaDonServices.getDataViewHoaDon(MaHD, TenKH, TenSP);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
@@ -181,7 +186,7 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
-            else if (type == "getALlData")
+            else if (type == "getALLData")
             {
                 try
                 {
