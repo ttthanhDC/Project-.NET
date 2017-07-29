@@ -8,9 +8,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].[vHoaDonShiper] AS
- select HD.ID as ID_HD, ('HD' + CAST(HD.ID AS varchar(100))) as MaReservation,
- HD.IDKhachHang,KH.TenKH AS TenKH_HD,
+ALTER VIEW [dbo].[vHoaDonShiper] AS
+ select HD.ID as ID_HD, ('HD' + CAST(HD.ID AS varchar(100)) + '-' + CAST(CTHD.ID AS varchar(100))) as MaReservation,
+ HD.IDKhachHang,KH.TenKH AS TenKH_HD,KH.DiaChi DiaChi,KH.SoDienThoai SoDienThoai,quanHuyen.TenQuan,
  HD.IDNguon, SS.Source_Name,
  HD.TongTien,HD.TongTienThuDuoc,HD.TongTienConNo,HD.ChietKhau,HD.TrangThai as TrangThaiHD,
  HD.NgayTao as NgayTaoHD ,HD.NguoiTao 
@@ -33,10 +33,8 @@ CREATE VIEW [dbo].[vHoaDonShiper] AS
  left join HoaDonSanPham HDSP ON HDSP.IDNgayHoaDon = NHD.ID
  left join SHIPER shiper ON shiper.NGAYHOADON_ID = NHD.ID
  left join SYS_USER sysUser ON sysUSer.ID = NHD.USER_ID
-
-
+ left join QuanHuyen quanHuyen ON quanHuyen.MaQuan = KH.MaQuan
 
 
 GO
-
 
