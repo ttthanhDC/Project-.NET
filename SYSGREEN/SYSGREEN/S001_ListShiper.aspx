@@ -22,9 +22,7 @@
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái" />
                 </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
-                </div>
+                
             </div> 
         </div> 
         <div class="form-horizontal">
@@ -49,7 +47,10 @@
                         </div>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btAssign ">Assign </button>
+                    <button type="button" class="btn btn-primary" id="btChuyen">Assign </button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
                 </div>
             </div> 
         </div> 
@@ -289,21 +290,21 @@
     });
 
     // btAssign button
-    $('#btAssign').on('click', function (e) {
-        var formDatasearch = new FormData();
-        formDatasearch.append('type', 'getDataFilter');
+    $('#btChuyen').on('click', function (e) {
+        var formDataAssign = new FormData();
+        formDataAssign.append('type', 'getDataFilter');
         var datatable = $('#table').bootstrapTable('getData');
         alert("Dât: " + datatable);
         var maReservation = $('#cbShip').val();
         var ngayHoaDon = $('#userid').val();
 
         
-        formDatasearch.append('tenShiper', tenShiper);
-        formDatasearch.append('trangThai', trangThai);
+        formDataAssign.append('tenShiper', tenShiper);
+        formDataAssign.append('trangThai', trangThai);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
-            data: formDatasearch,
+            data: formDataAssign,
             contentType: false,
             processData: false,
             success: function (result) {
