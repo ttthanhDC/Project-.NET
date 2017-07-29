@@ -292,15 +292,19 @@
     // btAssign button
     $('#btChuyen').on('click', function (e) {
         var formDataAssign = new FormData();
-        formDataAssign.append('type', 'getDataFilter');
+        formDataAssign.append('type', 'assignHoaDonToShiper');
         var datatable = $('#table').bootstrapTable('getData');
         alert("Dât: " + datatable);
-        var maReservation = $('#cbShip').val();
-        var ngayHoaDon = $('#userid').val();
+        var shiper = $('#cbShip').val();
+        var user = $('#userid').val();
+        var listNgayHoaDon = [30, 31, 32, 33];
+        var json = {
+            'shiper': shiper,
+            'user': user,
+            'listNgayHoaDon': listNgayHoaDon,
+        };
+        formDataAssign.append('data', JSON.stringify(json));
 
-        
-        formDataAssign.append('tenShiper', tenShiper);
-        formDataAssign.append('trangThai', trangThai);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",

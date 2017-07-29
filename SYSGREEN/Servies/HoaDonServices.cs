@@ -277,7 +277,7 @@ namespace Servies
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@User_Id", userId);
             cmd.Parameters.AddWithValue("@Shiper_Id", shiperId);
-            cmd.Parameters.AddWithValue("@ID", userId);
+            cmd.Parameters.AddWithValue("@ID", ngayHoaDonId);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();

@@ -97,11 +97,11 @@ namespace SYSGREEN.Configuation
                         userId = Int32.Parse(user);
                     }
 
-                    if (listNgayHoaDonJson != null && listNgayHoaDonJson.count)
+                    if (listNgayHoaDonJson != null && listNgayHoaDonJson.Count > 0)
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                         {
-                            Servies.HoaDonServices.updateNgayHoaDonToShiper(listNgayHoaDonJson[i], shiperId, userId);
+                            Servies.HoaDonServices.updateNgayHoaDonToShiper((int)listNgayHoaDonJson[i], shiperId, userId);
                         }
                     }
                     
