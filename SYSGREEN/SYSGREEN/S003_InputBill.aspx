@@ -203,6 +203,7 @@
                 title: 'Số TĐTT',
                 align: 'center',
                 valign: 'middle',
+                editable: true
             }, {
                 field: 'assign',
                 title: 'Assign',
@@ -213,6 +214,7 @@
                 title: 'Ghi chú',
                 align: 'center',
                 valign: 'middle',
+                editable: true
             }],
             data: [{
                 code: '002-001-123456',
@@ -253,7 +255,7 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay : '',
+                moneyPay : '0',
                 assign: "ThanhDC",
                 note: 'note'
             }, {
@@ -267,7 +269,7 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay: '',
+                moneyPay: '0',
                 assign: "ThanhDC",
                 note: 'note'
             }, {
@@ -281,7 +283,7 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay: '',
+                moneyPay: '0',
                 assign: "ThanhDC",
                 note: 'note'
             }, {
@@ -295,7 +297,7 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay: '',
+                moneyPay: '0',
                 assign: "ThanhDC",
                 note: 'note'
             }, {
@@ -309,13 +311,14 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay: '',
+                moneyPay: '0',
                 assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
                 name: 'Trần ngọc duy',
                 date: '20/07/2017',
+
                 phone: '0989485398',
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
@@ -323,7 +326,7 @@
                 status: 2,
                 statusTT: 2,
                 shiper: "Duytn4",
-                moneyPay: '',
+                moneyPay: '0',
                 assign: "ThanhDC",
                 note: 'note'
 
