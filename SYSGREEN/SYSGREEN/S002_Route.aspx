@@ -36,7 +36,7 @@
 <script>
     // Bootstrap Table
     $(function () {
-        /*var data = [];
+        var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
         var json = { 'ID': 0 };
@@ -66,51 +66,120 @@
                 $('#table').bootstrapTable({
                     columns: [{
                         field: 'code',
+                        title: 'Mã Reservation',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
-                        ///editable: true,
+                        formatter: function (value, row, index) {
+                            return '<label style = "color: blue;">' + value + '</label>';
+                        }
                     }, {
                         field: 'date',
                         title: 'Ngày',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
-                        // editable: true,
-
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }, {
                         field: 'district',
                         title: 'Quận',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
-                        //  editable: true,
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }, {
                         field: 'status',
                         title: 'Trạng thái',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }, {
                         field: 'name',
-                        title: 'name',
+                        title: 'Họ tên',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }, {
                         field: 'sdt',
                         title: 'SĐT',
                         align: 'center',
                         valign: 'middle',
-                        sortable: true,
-
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }, {
-                        field: 'operate',
-                        title: 'Thao tác',
+                        field: 'addres',
+                        title: 'Địa chỉ',
                         align: 'center',
                         valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
+                    }, {
+                        field: 'shipName',
+                        title: 'Ship Name',
+                        align: 'center',
+                        valign: 'middle',
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
+                    }, {
+                        field: 'shipNumber',
+                        title: 'ShipNo',
+                        align: 'center',
+                        valign: 'middle',
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
+                    }, {
+                        field: 'money',
+                        title: 'Tiền',
+                        align: 'center',
+                        valign: 'middle',
+                        formatter: function (value, row, index) {
+                            if (row.detb) {
+                                return '<label style = "color: red;">' + value + '</label>';
+                            } else {
+                                return value;
+                            }
+                        }
                     }],
                     data: data
                 });
@@ -118,284 +187,8 @@
             error: function (err) {
 
             }
-        });*/
-        // format table
-        $('#table').bootstrapTable({
-            columns: [{
-                field: 'code',
-                title: 'Mã Reservation',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<label style = "color: blue;">' + value + '</label>';
-                }
-            }, {
-                field: 'date',
-                title: 'Ngày',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'district',
-                title: 'Quận',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'status',
-                title: 'Trạng thái',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'name',
-                title: 'Họ tên',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'sdt',
-                title: 'SĐT',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'addres',
-                title: 'Địa chỉ',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'shipName',
-                title: 'Ship Name',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'shipNumber',
-                title: 'ShipNo',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'money',
-                title: 'Tiền',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }],
-            data: [{
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: false,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: false,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: true,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'ThanhDC',
-                shipNumber: '0012',
-                detb: false,
-            }, {
-                code: '002-001-123456',
-                date: '20/07/2017',
-                district: 'Hà đông',
-                status: 'Đang chuyển',
-                name: 'Trần ngọc duy',
-                sdt: '0989485398',
-                addres: '39 Hoàng mai, hà nội',
-                money: '300,000',
-                shipName: 'Duytn4',
-                shipNumber: '0012',
-                detb: true,
-            }]
         });
+        // format table
     });
     // function
     function userFormatter(data) {

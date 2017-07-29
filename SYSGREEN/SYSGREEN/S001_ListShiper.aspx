@@ -29,7 +29,7 @@
         </div> 
         <div class="form-horizontal">
             <div class="form-group">
-                 <label for="sel1" class="col-md-3"></label>
+                 <label for="sel1" class="col-md-1"></label>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" id="btIn">In hóa đơn vận chuyển</button>
                 </div>
@@ -37,14 +37,15 @@
                     <button type="button" class="btn btn-primary" id="btBeark">Tách bill</button>
                 </div>
                 <div class="col-md-2">
-                   
                     <div class="form-group">
                           <select class="form-control" id="cbShip">
-                            <option value ="1">Shiper 1</option>
-                            <option value ="2">Shiper 2</option>
-                            <option value ="3">Shiper 3</option>
-                            <option value ="4">Shiper 4</option>
+                            
                           </select>
+                        </div>
+                </div>
+                 <div class="col-md-2">
+                    <div class="form-group">
+                           <select class="form-control" id="userid"></select>
                         </div>
                 </div>
                 <div class="col-md-1">
@@ -63,7 +64,94 @@
 <script>
     // Bootstrap Table
     $(function () {
-        /*var data = [];
+        // Load Data user
+        var formDataUser = new FormData();
+        formDataUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysUser.ashx",
+            type: "POST",
+            data: formDataUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.UserName;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data = { menu: arr };
+                var $menu = $("#userid");
+                $.each(data.menu, function () {
+                    $menu.append(
+                        getUser(this)
+                    );
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+        // select box shiper  
+        var getUser = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+        // Load Data user
+        var formDataUser = new FormData();
+        formDataUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysUser.ashx",
+            type: "POST",
+            data: formDataUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.UserName;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data = { menu: arr };
+                var $menu = $("#cbShip");
+                $.each(data.menu, function () {
+                    $menu.append(
+                        getShip(this)
+                    );
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+        // select box user  
+        var getShip = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+        // table
+
+
+        var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
         var json = { 'ID': 0 };
@@ -82,73 +170,173 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID;
-                        obj.name = objectData.RoleName;
-                        obj.dateCreate = objectData.Create_Date;
-                        obj.user = objectData.Create_User;
+                        obj.code = objectData.RoleName;
+                        obj.date = objectData.Create_Date;
+                        obj.district = objectData.Create_User;
+                        obj.status = objectData.Create_User;
+                        obj.name = objectData.Create_User;
+                        obj.sdt = objectData.Create_User;
+                        obj.addres = objectData.Create_User;
+                        obj.money = objectData.Create_User;
+                        obj.shipName = objectData.Create_User;
+                        obj.shipNumber = objectData.Create_User;
+                        obj.detb = objectData.Create_User;
                         arr.push(obj);
                     }
                 }
                 data = arr;
-
-                $('#table').bootstrapTable({
-                    columns: [{
-                        field: 'code',
-                        title: 'Mã Reservation',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        ///editable: true,
-                    }, {
-                        field: 'date',
-                        title: 'Ngày',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        // editable: true,
-
-                    }, {
-                        field: 'district',
-                        title: 'Quận',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        //  editable: true,
-                    }, {
-                        field: 'status',
-                        title: 'Trạng thái',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                    }, {
-                        field: 'name',
-                        title: 'name',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                    }, {
-                        field: 'sdt',
-                        title: 'SĐT',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-
-                    }, {
-                        field: 'operate',
-                        title: 'Thao tác',
-                        align: 'center',
-                        valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
-                    }],
+                    $('#table').bootstrapTable({
+                        columns: [{
+                            field: 'check',
+                            title: 'Tích',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (value) {
+                                    return '<input type="checkbox" value="" checked></label>';
+                                } else {
+                                    return '<input type="checkbox" value=""></label>';
+                                }
+                            }
+                        },{
+                            field: 'code',
+                            title: 'Mã Reservation',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                return '<label style = "color: blue;">' + value + '</label>';
+                            }
+                        }, {
+                            field: 'date',
+                            title: 'Ngày',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'district',
+                            title: 'Quận',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'status',
+                            title: 'Trạng thái',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'name',
+                            title: 'Họ tên',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'sdt',
+                            title: 'SĐT',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'addres',
+                            title: 'Địa chỉ',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                        return value;
+                                }
+                            }
+                        }, {
+                            field: 'shipName',
+                            title: 'Ship Name',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'shipNumber',
+                            title: 'ShipNo',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'user',
+                            title: 'User',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }, {
+                            field: 'money',
+                            title: 'Tiền',
+                            align: 'center',
+                            valign: 'middle',
+                            formatter: function (value, row, index) {
+                                if (row.detb) {
+                                    return '<label style = "color: red;">' + value + '</label>';
+                                } else {
+                                    return value;
+                                }
+                            }
+                        }],
+                
                     data: data
                 });
             },
             error: function (err) {
 
             }
-        });*/
+        });
         // format table
-        $('#table').bootstrapTable({
+        /*$('#table').bootstrapTable({
             columns: [{
                 field: 'check',
                 title: 'Tích',
@@ -448,7 +636,7 @@
                 detb: true,
                 check: false
             }]
-        });
+        }); */
     });
     // function
     function userFormatter(data) {
