@@ -36,13 +36,14 @@
 <script>
     // Bootstrap Table
     $(function () {
+        // load data 
         var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getData');
+        formDataListUser.append('type', 'getALLData');
         var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/HandlerSysRole.ashx",
+            url: "Configuation/Handler1Test.ashx",
             type: "POST",
             data: formDataListUser,
             contentType: false,
@@ -54,161 +55,265 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        obj.id = objectData.ID;
-                        obj.name = objectData.RoleName;
-                        obj.dateCreate = objectData.Create_Date;
-                        obj.user = objectData.Create_User;
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+
+                        obj.user = objectData.userName || "";
+                        // userName
                         arr.push(obj);
                     }
                 }
                 data = arr;
-
-                $('#table').bootstrapTable({
-                    columns: [{
-                        field: 'code',
-                        title: 'Mã Reservation',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            return '<label style = "color: blue;">' + value + '</label>';
-                        }
-                    }, {
-                        field: 'date',
-                        title: 'Ngày',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'district',
-                        title: 'Quận',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'status',
-                        title: 'Trạng thái',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'name',
-                        title: 'Họ tên',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'sdt',
-                        title: 'SĐT',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'addres',
-                        title: 'Địa chỉ',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'shipName',
-                        title: 'Ship Name',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'shipNumber',
-                        title: 'ShipNo',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }, {
-                        field: 'money',
-                        title: 'Tiền',
-                        align: 'center',
-                        valign: 'middle',
-                        formatter: function (value, row, index) {
-                            if (row.detb) {
-                                return '<label style = "color: red;">' + value + '</label>';
-                            } else {
-                                return value;
-                            }
-                        }
-                    }],
-                    data: data
-                });
+                getDataTable(data);
             },
             error: function (err) {
-
             }
         });
-        // format table
     });
-    // function
-    function userFormatter(data) {
-        return data.length;
-    }
-    function operateFormatter(value, row, index) {
-        return [
-            '<a class="right" href="javascript:void(0)" title="nợ ?">',
-            'Nợ ?',
-            '</a>',
+    // tìm kiếm
+    $('#btSearch').on('click', function (e) {
+        var data1 = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
 
-        ].join('');
-    }
+        var maReservation = "";
+        var ngayHoaDon = $('#txt_Date').val();
+        var quan = "";
+        var soShiper = $('#txt_ShipNumber').val();
+        var tenShiper = $('#txt_ShipName').val();
+        var trangThai = "";
 
-    window.operateEvents = {
-        'click .right': function (e, value, row, index) {
-            //window.location = '/TheRightForUser.aspx?paramId=' + row.id;
-            alert('Đơn thanh toán chuyển khoản nhưng vẫn còn nợ tiền ');
-        }
+        txt_Date, txt_ShipNumber, txt_ShipNumber
+
+        formDatasearch.append('maReservation', maReservation);
+        formDatasearch.append('ngayHoaDon', ngayHoaDon);
+        formDatasearch.append('quan', quan);
+        formDatasearch.append('soShiper', soShiper);
+        formDatasearch.append('tenShiper', tenShiper);
+        formDatasearch.append('trangThai', trangThai);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation || "";
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User;// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+
+                        obj.user = objectData.userName || "";
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data1 = arr;
+                getDataTable(data1);
+            },
+            error: function (err) {
+            }
+        });
+    });
+
+    // btAssign button
+    $('#btSearch').on('click', function (e) {
+        alert("assign");
+    });
+    // getdata table 
+    var getDataTable = function (itemData) {
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'code',
+                title: 'Mã Reservation',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<label style = "color: blue;">' + value + '</label>';
+                }
+            }, {
+                field: 'date',
+                title: 'Ngày',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'district',
+                title: 'Quận',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'status',
+                title: 'Trạng thái',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'name',
+                title: 'Họ tên',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'sdt',
+                title: 'SĐT',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'addres',
+                title: 'Địa chỉ',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipName',
+                title: 'Ship Name',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipNumber',
+                title: 'ShipNo',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'user',
+                title: 'User',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'money',
+                title: 'Tiền',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }],
+
+            data: itemData
+        });
     };
+    // function
+
 </script>
     </asp:Content>
 

@@ -64,6 +64,95 @@
 <script>
     // Bootstrap Table
     $(function () {
+        // Load Data user
+        var formDataUser = new FormData();
+        formDataUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysUser.ashx",
+            type: "POST",
+            data: formDataUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.UserName;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data = { menu: arr };
+                var $menu = $("#userid");
+                $.each(data.menu, function () {
+                    $menu.append(
+                        getUser(this)
+                    );
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+        // select box user  
+        var getUser = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+        // 
+        // Load Data user
+        var formDataShip = new FormData();
+        formDataShip.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataShip.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysUser.ashx",
+            type: "POST",
+            data: formDataShip,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.UserName;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data = { menu: arr };
+                var $menu = $("#cbShip");
+                $.each(data.menu, function () {
+                    $menu.append(
+                        getShip(this)
+                    );
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+        // select box shiper  
+        var getShip = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+        // table
+
+
+        // load data 
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getALLData');
@@ -83,10 +172,10 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID_NHD;
-                        
-                        obj.code = objectData.MaReservation + "-" + objectData.ID_CTHD;
+
+                        obj.code = objectData.MaReservation;
                         var data_ngay = objectData.Ngay;
-                        var  z = "";
+                        var z = "";
                         if (data_ngay) {
                             var x = data_ngay.substr(0, 10);
                             var y = x.split("-");
@@ -96,16 +185,22 @@
                             z = y3 + "/" + y2 + "/" + y1;
                         }
                         obj.date = z;
-                        obj.district = objectData.Create_User;// chua có
-                        obj.status = objectData.TrangThaiNHD;
-                        obj.name = objectData.TenKH_HD;
-                        obj.sdt = objectData.Create_User;// chua có
-                        obj.addres = objectData.Create_User;// chua có
-                        obj.money = objectData.Create_User;// chua có
-                        obj.shipName = objectData.shipName;
-                        obj.shipNumber = objectData.shipNo;
-                        obj.detb = objectData.Create_User;// chua có
-                        obj.user = objectData.userName;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+
+                        obj.user = objectData.userName || "";
                         // userName
                         arr.push(obj);
                     }
@@ -117,6 +212,85 @@
             }
         });
     });
+    // tìm kiếm
+    $('#btSearch').on('click', function (e) {
+        var data1 = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
+
+        var maReservation= $('#txt_reservation').val();
+        var ngayHoaDon = $('#txt_Date').val();
+        var quan = $('#txt_Distric').val();
+        var soShiper = $('#txt_ShipNumber').val();
+        var tenShiper = $('#txt_ShipName').val();
+        var trangThai = $('#txt_status').val();
+
+        formDatasearch.append('maReservation', maReservation);
+        formDatasearch.append('ngayHoaDon', ngayHoaDon);
+        formDatasearch.append('quan', quan);
+        formDatasearch.append('soShiper', soShiper);
+        formDatasearch.append('tenShiper',tenShiper);
+        formDatasearch.append('trangThai', trangThai);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation || "";
+                        var data_ngay = objectData.Ngay ;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User;// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                       
+                        obj.user = objectData.userName || "";
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data1 = arr;
+                getDataTable(data1);
+            },
+            error: function (err) {
+            }
+        });
+    });
+
+    // btAssign button
+    $('#btSearch').on('click', function (e) {
+        alert("assign");
+    });
+    // getdata table 
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
