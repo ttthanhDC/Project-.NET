@@ -70,6 +70,39 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+
+            else if (type == "assignHoaDonToShiper")
+            {
+                try
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+
+                    String shiper = "";
+                    String user = "";
+                                       
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    dynamic listNgayHoaDonJson = data.listNgayHoaDon;
+
+                    shiper = data.shiper;
+                    user = data.user;
+                    
+                    if (listNgayHoaDonJson != null && listNgayHoaDonJson.count)
+                    {
+                        for (int i = 0; i < listNgayHoaDonJson.Count; i++)
+                        {
+
+                        }
+                    }
+                    DataTable lst = Servies.HoaDonServices.getAllShiper();
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
         }
 
         public bool IsReusable
