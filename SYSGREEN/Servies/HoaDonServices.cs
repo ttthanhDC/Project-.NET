@@ -251,5 +251,22 @@ namespace Servies
             conn.Close();
             return table;
         }
+
+        public static DataTable getAllShiper()
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from SHIPER ";
+
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
     }
+    
 }

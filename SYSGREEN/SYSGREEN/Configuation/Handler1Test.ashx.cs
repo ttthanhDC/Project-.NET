@@ -31,9 +31,8 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
-            }
-            else if (type == "getDataFilter")
-            {
+            } else if (type == "getDataFilter")
+                {
                 try
                 {
                     // Case ID > 0 -> Result = 1 record
@@ -47,6 +46,21 @@ namespace SYSGREEN.Configuation
 
                     DataTable lst = Servies.HoaDonServices.getDataFilterViewHoaDon(maReservation, ngayHoaDon, quan,
                         soShiper, tenShiper, trangThai);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getAllShiper")
+            {
+                try
+                {
+
+                    DataTable lst = Servies.HoaDonServices.getAllShiper();
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
