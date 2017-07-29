@@ -66,7 +66,6 @@
                 $('#table').bootstrapTable({
                     columns: [{
                         field: 'code',
-                        title: 'Mã Reservation',
                         align: 'center',
                         valign: 'middle',
                         sortable: true,
