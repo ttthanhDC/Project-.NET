@@ -109,11 +109,11 @@
         // 
         // Load Data user
         var formDataShip = new FormData();
-        formDataShip.append('type', 'getData');
+        formDataShip.append('type', 'getAllShiper');
         var json = { 'ID': 0 };
         formDataShip.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/HandlerSysUser.ashx",
+            url: "Configuation/Handler1Test.ashx",
             type: "POST",
             data: formDataShip,
             contentType: false,
@@ -125,8 +125,8 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        obj.name = objectData.UserName;
-                        obj.link = objectData.ID;
+                        obj.name = objectData.NAME;
+                        obj.link = objectData.SHIPER_ID;
                         obj.sub = null;
                         arr.push(obj);
                     }
