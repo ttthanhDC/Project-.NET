@@ -279,7 +279,9 @@
                     }
                 }
                 data1 = arr;
-                getDataTable(data1);
+                //getDataTable(data1);
+                var $table = $('#table');
+                $table.bootstrapTable('load', data1);
             },
             error: function (err) {
             }
@@ -287,8 +289,33 @@
     });
 
     // btAssign button
-    $('#btSearch').on('click', function (e) {
-        alert("assign");
+    $('#btAssign').on('click', function (e) {
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
+        var datatable = $('#table').bootstrapTable('getData');
+        alert("Dât: " + datatable);
+        var maReservation = $('#cbShip').val();
+        var ngayHoaDon = $('#userid').val();
+
+        
+        formDatasearch.append('tenShiper', tenShiper);
+        formDatasearch.append('trangThai', trangThai);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    alert("Assign thành công");
+                }
+            },
+            error: function (err) {
+            }
+        });
     });
     // getdata table 
     var getDataTable = function (itemData) {
