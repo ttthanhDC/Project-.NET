@@ -12,5 +12,9 @@ namespace DataObject
         public int IDPackageChitietHD { set; get; }
         public DateTime Ngay { set; get; }
         public string TrangThai { set; get; }
+
+        public int USER_ID { set; get; }
+
+        public int SHIPER_ID { set; get; }
     }
 }

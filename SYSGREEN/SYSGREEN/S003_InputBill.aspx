@@ -125,108 +125,96 @@
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent) {
-                        return '<label style = "color: blue;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
+                    return '<label style = "color: blue;">' + value + '</label>';
                 }
             }, {
                 field: 'name',
                 title: 'Họ và tên',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'date',
                 title: 'Ngày',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'phone',
                 title: 'SĐT',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'district',
                 title: 'Quận',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'address',
                 title: 'Địa chỉ',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'money',
                 title: 'Tiền',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
                 field: 'status',
-                title: 'Trạng thái đơn hàng',
+                title: 'Trạng thái',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
+                    if (value === 1) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                    } else if (value === 2) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2 selected = true>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                    } else if (value === 3) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3 selected = true>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                    } else if (value === 4) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4 selected = true>Giao 1 phần đơn hàng</option></select>'
                     } else {
-                        return value;
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
                     }
                 }
+            }, {
+                field: 'statusTT',
+                title: 'Tình trạng thanh toán',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value === 1) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                    } else if (value === 2) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2 selected = true>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                    } else if (value === 3) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3 selected = true>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                    } else if (value === 4) {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4 selected = true>Chuyển khoản</option></select>'
+                    } else {
+                        return '<select class="form-control" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                    }
+                }
+            }, {
+                field: 'shiper',
+                title: 'Shiper',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'moneyPay',
+                title: 'Số TĐTT',
+                align: 'center',
+                valign: 'middle',
+                editable: true
+            }, {
+                field: 'assign',
+                title: 'Assign',
+                align: 'center',
+                valign: 'middle',
             }, {
                 field: 'note',
                 title: 'Ghi chú',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.parent && row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
+                editable: true
             }],
             data: [{
                 code: '002-001-123456',
@@ -236,7 +224,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money : '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT : 2,
+                shiper: "Duytn4",
+                moneyPay: "20000",
+                assign : "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -246,7 +238,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: "20000",
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -256,7 +252,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay : '0',
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -266,7 +266,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: '0',
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -276,7 +280,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: '0',
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -286,7 +294,11 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: '0',
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
@@ -296,17 +308,26 @@
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: '0',
+                assign: "ThanhDC",
                 note: 'note'
             }, {
                 code: '002-001-123456',
                 name: 'Trần ngọc duy',
                 date: '20/07/2017',
+
                 phone: '0989485398',
                 district: 'Hà đông',
                 address: '39 Hoàng mai, hà nội',
                 money: '30000',
-                status: 'Đang chuyển',
+                status: 2,
+                statusTT: 2,
+                shiper: "Duytn4",
+                moneyPay: '0',
+                assign: "ThanhDC",
                 note: 'note'
 
             }]
