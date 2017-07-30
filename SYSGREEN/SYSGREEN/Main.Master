@@ -796,6 +796,7 @@
             <link href="Content/bootstrap-editable.css" rel="stylesheet" />
              <script src="Scripts/jquery.tmpl.js"></script>
              <script src="Scripts/jquery.tmpl.min.js"></script>
+             <script src="Scripts/moment.js"></script>
         </div>
     </form>
 </body>

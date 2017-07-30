@@ -2,35 +2,10 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
-          <div class="form-horizontal">
-            <div class="form-group">
-                <label for="sel1" class="col-md-3"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã reservation"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_fromDate" placeholder="Từ ngày" />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_toDate" placeholder="Đến ngày"/>
-                </div>
-                
-            </div> 
-        </div> 
         <div class="form-horizontal">
             <div class="form-group">
-                 <label for="sel1" class="col-md-3"></label>
-                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái bill" />
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_name"placeholder="Họ tên khách" />
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_phone"placeholder="SĐT" />
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                <div class="col-md-10">
+                    <button type="button" class="btn btn-primary" id="btSave">Lưu</button>
                 </div>
             </div> 
         </div> 
@@ -46,21 +21,29 @@
     // Bootstrap Table
     $(function () {
 
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            //alert('Query Variable ' + variable + ' not found');
+        };
         loadContent();
         function loadContent() {
+
             loadDataHoaDon();
         };
         function loadDataHoaDon() {
+            var idParam = getQueryVariable("paramId");
             var formSource = new FormData();
             var json = { 'type': 0 };
-            var makh = "";
-            var mahd = "HD13";
-            var tensp = "";
-            formSource.append('type', 'getData');
+            formSource.append('type', 'getvHoaDonStep2');
             formSource.append('data', JSON.stringify(json));
-            formSource.append('MaHD', mahd);
-            formSource.append('TenKH', makh);
-            formSource.append('TenSP', tensp);
+            formSource.append('ID', idParam);
             $.ajax({
                 url: "Configuation/HandlerInsertBill.ashx",
                 type: "POST",
@@ -110,19 +93,19 @@
                             valign: 'middle',
                             formatter: function (value, row, index) {
                                 if (value === 1) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 } else if (value === 2) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2 selected = true>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 } else if (value === 3) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 } else if (value === 4) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 } else if (value === 5) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 } else if (value === 6) {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
                                 } else {
-                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chờ sử lý</option><option value = 2>Đang sử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                                    return '<select class="form-control" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chờ xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                                 }
                             }
                         }, {
@@ -156,104 +139,58 @@
                             valign: 'middle',
                             events: operateEvents,
                             formatter: operateFormatter
-                        }],
-                        data: [{
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill:'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: '01/01/2017'
-
-                           
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 2,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-001-070217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn gói',
-                            date: '01/01/2017',
-                            money: '500,000',
-                            dateThu: ''
-                        }, {
-                            codeReser: '002-002-071217',
-                            name: 'Trần ngọc duy',
-                            sdt: '0989485398',
-                            district: 'Thanh xuân',
-                            address: '19 hoàng ngân',
-                            status: 1,
-                            typeBill: 'Đơn lẻ',
-                            date: '01/01/2017',
-                            money: '600,000',
-                            dateThu: '01/01/2017'
-                        }],
+                        }]
                     });
+                    //Load Data Grid
+                    var data = [];
+                    for (var i = 0 ; i < jsonData.length ; i++) {
+                        var obj = {
+                            codeReser: '',
+                            name: jsonData[i].TenKH,
+                            sdt: jsonData[i].SoDienThoai,
+                            district: jsonData[i].TenQuan,
+                            address: jsonData[i].DiaChi,
+                            status: -1,
+                            typeBill: -1,
+                            date: jsonData[i].NgayHD,
+                            money: jsonData[i].ThanhTien,
+                            IdNgayHD : jsonData[i].IdNgayHD,
+                        };
+                        var codeRever = 'HD' + (jsonData[i].ID < 10 ? '0' + jsonData[i].ID : jsonData[i].ID) + "-" + (jsonData[i].tabIndex < 10 ? '0' + jsonData[i].tabIndex : jsonData[i].tabIndex) ;
+                        obj.codeReser = codeRever;
+                        // Trạng thái
+                        if (jsonData[i].TrangThai == "Chưa xử lý") {
+                            obj.status = 1;
+                        }else if (jsonData[i].TrangThai == "Đang xử lý") {
+                            obj.status = 2;
+                        }else if (jsonData[i].TrangThai == "Hoàn thành") {
+                            obj.status = 3;
+                        }else if (jsonData[i].TrangThai == "Chờ giao lại") {
+                            obj.status = 4;
+                        }else if (jsonData[i].TrangThai == "Hủy") {
+                            obj.status = 5;
+                        } else if (jsonData[i].TrangThai == "Đang chuyển") {
+                            obj.status = 6;
+                        }
+                        // Type BIll
+                        if (jsonData[i].Loai == 1) {
+                            obj.typeBill = "Đơn gói";
+                        }else if (jsonData[i].Loai == 2) {
+                            obj.typeBill = "Đơn lẻ";
+                        }
+                        //Đang chuyển
+                        data.push(obj);
+                    }
+
+                    $('#table').bootstrapTable('load', data);
+
                 },
                 error: function (err) {
 
                 }
             });
+
+
         };
 
 

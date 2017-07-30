@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using log4net;
 
 namespace SYSGREEN.Configuation
 {
@@ -13,6 +14,7 @@ namespace SYSGREEN.Configuation
     /// </summary>
     public class HandlerInsertBill : IHttpHandler
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void ProcessRequest(HttpContext context)
         {
@@ -55,6 +57,7 @@ namespace SYSGREEN.Configuation
                     sotienthuduoc = data.sotienthuduoc;
                     chietkhau = data.chietkhau;
                     conNo = data.conNo;
+                    int isMasterTab = data.isMasterTab;
                     /********************************* 
                      * Check and Insert Khách hàng nếu không tồn tại
                      * Nếu tồn tại getId Khách hàng
@@ -77,13 +80,19 @@ namespace SYSGREEN.Configuation
                     hoadon.TrangThai = "Chưa xử lý";
                     hoadon.ChietKhau = Convert.ToDecimal(sotienthuduoc != "" ? chietkhau : "0");
                     int hoadonId = Servies.HoaDonServices.InsertDataReturnId(hoadon);
+
                     /********************************* 
                     * Insert Chi tiết hóa đơn , hoa đơn package , hóa đơn ngày , sản phẩm
                     * 
                     * *******************************/
                     for (int i = 0; i < infoBill.Count; i++)
                     {
-                        int IdChiTietHoaHD = InsertChiTietHoaDonReturnId(infoBill[i],hoadonId,IdKhachHang);
+                        bool checkMasterTab = false;
+                        if (isMasterTab == i)
+                        {
+                            checkMasterTab = true;
+                        }
+                        int IdChiTietHoaHD = InsertChiTietHoaDonReturnId(infoBill[i], hoadonId, IdKhachHang, checkMasterTab);
                         dynamic dataHD = infoBill[i].data;
                         for (int k = 0; k < dataHD.Count; k++)
                         {
@@ -91,10 +100,11 @@ namespace SYSGREEN.Configuation
 
                             dynamic detailMaster = dataHD[k].detalMaster;
                             int idNgayHDLe = -1;
+                            int idNgayHD = -1;
                             for (int j = 0; j < detailMaster.Count; j++)
                             {
                                 if (dataHD[k].fLoaiHinhDonId == 1) {
-                                    int idNgayHD = 0;
+                                    
                                     if (detailMaster[j].deliveryDate != "")
                                     {
                                         idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
@@ -110,8 +120,9 @@ namespace SYSGREEN.Configuation
                                 {
                                     if (j == 0)
                                     {
-                                        idNgayHDLe = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
+                                        idNgayHDLe = InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, (String)dataHD[k].ngayGiaoHangLe);
                                         InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
+                                        //InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, dataHD[k].ngayGiaoHangLe);
                                     }
                                     else
                                     {
@@ -124,7 +135,7 @@ namespace SYSGREEN.Configuation
                         }
                     }
                         context.Response.ContentType = "text/plain";
-                    context.Response.Write(hoten);
+                        context.Response.Write(hoadonId);
                 }
                 catch (Exception e)
                 {
@@ -176,6 +187,87 @@ namespace SYSGREEN.Configuation
                 }
                 catch (Exception e)
                 {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getvHoaDonStep1")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    String MaHD = context.Request.Form["MaHD"].ToString();
+                    String tuNgay = context.Request.Form["tuNgay"].ToString();
+                    String denNgay = context.Request.Form["denNgay"].ToString();
+                    String trangThai = context.Request.Form["trangThai"].ToString();
+                    String TenKH = context.Request.Form["TenKH"].ToString();
+                    String SoDT = context.Request.Form["SoDT"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getvHoaDonStep1(MaHD, tuNgay, denNgay, trangThai, TenKH, SoDT);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getvHoaDonStep2")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    String ID = context.Request.Form["ID"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getvHoaDonStep2(ID);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "updateStatusVHoaDonStep1")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        Servies.HoaDonServices.updateStatusVHoaDonStep1((int)data[i].idHoaDon, (String)data[i].statusBill);
+                    }
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(JsonConvert.SerializeObject("1"));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(JsonConvert.SerializeObject("0"));
+                }
+            }
+            else if (type == "getMaxIdHoaDon")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                   
+                    Int32 maxId = Servies.HoaDonServices.getMaxIdHoaDon();
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(maxId);
+                    log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    log.Error("Error function getMaxIdHoaDon ",e);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
@@ -240,12 +332,13 @@ namespace SYSGREEN.Configuation
             return IdKhachHang;
         }
 
-        public int InsertChiTietHoaDonReturnId(dynamic infoBill, int hoadonId, int IdKhachHang)
+        public int InsertChiTietHoaDonReturnId(dynamic infoBill, int hoadonId, int IdKhachHang,bool isMaster)
         {
             DataObject.ChiTietHoaDon chitietHD = new DataObject.ChiTietHoaDon();
             chitietHD.IDHoaDon = hoadonId;
-            chitietHD.IsMaster = infoBill.isMaster;
-            if (infoBill.isMaster == 1)
+            chitietHD.IsMaster = isMaster ? 1 : 0;
+            chitietHD.tabIndex = ((int)infoBill.tabIndex) + 1;
+            if (chitietHD.IsMaster == 1)
             {
                 chitietHD.IdKhachHang = IdKhachHang;
             }
@@ -261,6 +354,7 @@ namespace SYSGREEN.Configuation
                 chitietHD.IdKhachHang = returnIdKH(soDienThoai1, hoten1, email1, diaChi1, maquan1, ngaySinh1);
             }
             chitietHD.TrangThai = "Chưa xử lý";
+
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertChiTietHoaDonReturnId(chitietHD);
             return IdChiTietHoaHD;
         }
@@ -268,14 +362,24 @@ namespace SYSGREEN.Configuation
         public int InsertPackageChiTietHoaDonReturnId(dynamic data,int hoaDonChiTietId)
         {
             DataObject.PackageChiTietHoaDon packageChiTietHD = new DataObject.PackageChiTietHoaDon();
+            
             packageChiTietHD.IDChiTietHD = hoaDonChiTietId;
             packageChiTietHD.Loai = data.fLoaiHinhDonId;
             packageChiTietHD.Ship = data.fPhiShip;
             packageChiTietHD.SoNgay = data.fLoaiGoiId;
             packageChiTietHD.HinhThucThanhToan = data.fLoaiThanhToanId;
-            packageChiTietHD.HinhThucGiaoHang = "";
-            packageChiTietHD.ThanhTien = Convert.ToDecimal(data.fThanhTien != "" ? data.fThanhTien : "0");
+            packageChiTietHD.HinhThucGiaoHang = data.fHinhThucShip;
+            String thanhtien = (String)data.fThanhTien;
+            packageChiTietHD.ThanhTien = Convert.ToDecimal(thanhtien != "" ? thanhtien.Replace(".", "") : "0");
             packageChiTietHD.TrangThai = "Chưa xử lý";
+            String hoten1 = data.infoKH.hoTen;
+            String maKH1 = data.infoKH.maKH;
+            String ngaySinh1 = data.infoKH.ngaySinh;
+            String soDienThoai1 = data.infoKH.soDienThoai;
+            String email1 = data.infoKH.email;
+            String diaChi1 = data.infoKH.diaChi;
+            String maquan1 = data.infoKH.maquan;
+            packageChiTietHD.IDKhachHang = returnIdKH(soDienThoai1, hoten1, email1, diaChi1, maquan1, ngaySinh1);
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertPackageChiTietHoaDonReturnId(packageChiTietHD);
             return IdChiTietHoaHD;
         }
@@ -289,17 +393,41 @@ namespace SYSGREEN.Configuation
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
         }
+        public int InsertNgayHoaDonLeReturnId(dynamic data, int idPackageHD,String ngayHoaDonLe)
+        {
+            DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
+            ngayHoaDon.IDPackageChitietHD = idPackageHD;
+            ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
+            ngayHoaDon.TrangThai = "Chưa xử lý";
+            int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
+            return IdChiTietHoaHD;
+        }
 
         public int InsertHoaDonSanPhamReturnId(dynamic data, int idNgayHoaDon){
             DataObject.HoaDonSanPham ngayHoaDon = new DataObject.HoaDonSanPham();
             ngayHoaDon.IDNgayHoaDon = idNgayHoaDon;
-            ngayHoaDon.money = data.money;
+            String money = (String)data.money;
+            if (money == "")
+            {
+                money = "0";
+            }
+            ngayHoaDon.money = Convert.ToDecimal(money.Replace(".", ""));
             ngayHoaDon.product = data.product;
             ngayHoaDon.sugar = data.sugar;
             ngayHoaDon.quantity = data.quantity;
-            ngayHoaDon.price = data.price;
+            String price = (String)data.price;
+            if (price == "")
+            {
+                price = "0";
+            }
+            ngayHoaDon.price = Convert.ToDecimal(price.Replace(".", ""));
             ngayHoaDon.promotionCode = data.promotionCode;
-            ngayHoaDon.total = data.total;
+            String total = (String)data.total;
+            if (total == "")
+            {
+                total = "0";
+            }
+            ngayHoaDon.total = Convert.ToDecimal(total.Replace(".", ""));
             if(data.GhiChu != null && data.GhiChu != ""){
                 ngayHoaDon.GhiChu = data.GhiChu;
             }else{
