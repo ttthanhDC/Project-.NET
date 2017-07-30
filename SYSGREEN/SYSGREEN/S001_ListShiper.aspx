@@ -200,6 +200,7 @@
                         } else {
                             obj.detb = false;
                         }
+                        obj.check = false;
 
                         obj.user = objectData.userName || "";
                         // userName
@@ -213,6 +214,70 @@
             }
         });
     });
+    // search all
+    var SearchAllDataTable = function () { 
+        var dataSearch = [];
+        var formDataSearchAll = new FormData();
+        formDataSearchAll.append('type', 'getALLData');
+        var json = { 'ID': 0 };
+        formDataSearchAll.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDataSearchAll,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+
+                        obj.user = objectData.userName || "";
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                dataSearch = arr;
+               // getDataTable(dataSearch);
+                var $tableSearch = $('#table');
+                $tableSearch.bootstrapTable('load', dataSearch);
+            },
+            error: function (err) {
+            }
+        });
+    };
     // tìm kiếm
     $('#btSearch').on('click', function (e) {
         var data1 = [];
@@ -273,7 +338,7 @@
                         } else {
                             obj.detb = false;
                         }
-                       
+                        obj.check = false;
                         obj.user = objectData.userName || "";
                         // userName
                         arr.push(obj);
@@ -294,10 +359,18 @@
         var formDataAssign = new FormData();
         formDataAssign.append('type', 'assignHoaDonToShiper');
         var datatable = $('#table').bootstrapTable('getData');
-        alert("Dât: " + datatable);
+        var listNgayHoaDon = [];
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].check && datatable[i].id) {
+                    listNgayHoaDon.push(datatable[i].id);
+                }
+            }
+        }
+        //alert(listNgayHoaDon);
         var shiper = $('#cbShip').val();
         var user = $('#userid').val();
-        var listNgayHoaDon = [30, 31, 32, 33];
+       
         var json = {
             'shiper': shiper,
             'user': user,
@@ -315,6 +388,7 @@
                 var jsonData = result;
                 var arr = [];
                 if (jsonData && jsonData.length > 0) {
+                    SearchAllDataTable();
                     alert("Assign thành công");
                 }
             },
@@ -330,13 +404,7 @@
                 title: 'Tích',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (value) {
-                        return '<input type="checkbox" value="" checked></label>';
-                    } else {
-                        return '<input type="checkbox" value=""></label>';
-                    }
-                }
+                checkbox : true
             }, {
                 field: 'code',
                 title: 'Mã Reservation',

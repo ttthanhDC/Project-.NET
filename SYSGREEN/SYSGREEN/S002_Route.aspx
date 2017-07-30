@@ -165,16 +165,39 @@
                     }
                 }
                 data1 = arr;
-                getDataTable(data1);
+               // getDataTable(data1);
+                var $table = $('#table');
+                $table.bootstrapTable('load', data1);
             },
             error: function (err) {
             }
         });
     });
-
-    // btAssign button
-    $('#btSearch').on('click', function (e) {
-        alert("assign");
+    // in lộ trình
+    $('#btLoTrinh').on('click', function (e) {
+        var datatable = $('#table').bootstrapTable('getData');
+        var listNgayHoaDon = [];
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].id) {
+                    listNgayHoaDon.push(datatable[i].id);
+                }
+            }
+        }
+        alert("Danh sách lộ trình" + listNgayHoaDon)
+    });
+    // in hóa đơn
+    $('#btHoaDon').on('click', function (e) {
+        var datatable = $('#table').bootstrapTable('getData');
+        var listNgayHoaDon = [];
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].id) {
+                    listNgayHoaDon.push(datatable[i].id);
+                }
+            }
+        }
+        alert("Danh sách in hóa đơn" + listNgayHoaDon)
     });
     // getdata table 
     var getDataTable = function (itemData) {
