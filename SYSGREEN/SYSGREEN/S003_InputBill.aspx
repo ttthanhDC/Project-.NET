@@ -5,7 +5,7 @@
           <div class="form-horizontal">
             <div class="form-group">
                 
-                 <label for="sel1" class="col-md-2"></label>
+                 <label for="sel1" class="col-md-1"></label>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_code" placeholder="Mã đơn" />
                 </div>
@@ -19,7 +19,10 @@
                     <input type="text" class="form-control" name="title" id="txt_ShipName" placeholder="Shiper name"/>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+                <div class="col-md-1">
+                   <button type="button" class="btn btn-primary" id="btSave">Lưu data</button>
                 </div>
             </div> 
         </div> 
@@ -33,13 +36,13 @@
 <script>
     // Bootstrap Table
     $(function () {
-        /*var data = [];
+        var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getData');
+        formDataListUser.append('type', 'getALLData');
         var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/HandlerSysRole.ashx",
+            url: "Configuation/Handler1Test.ashx",
             type: "POST",
             data: formDataListUser,
             contentType: false,
@@ -51,73 +54,70 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        obj.id = objectData.ID;
-                        obj.name = objectData.RoleName;
-                        obj.dateCreate = objectData.Create_Date;
-                        obj.user = objectData.Create_User;
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.phone = objectData.SoDienThoai || "";
+                        obj.district = objectData.TenQuan || "";
+                        obj.address = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shiper = objectData.shipName || "";
+                        obj.status = 1;// chua có
+                        obj.statusTT = 2;// chua có
+                        obj.note = "jshdfksdhfksdfsafsdf";// chua có
+                        obj.moneyPay = objectData.shipNo || "";
+                        obj.assign = objectData.userName || "";
+                        // userName
                         arr.push(obj);
                     }
                 }
                 data = arr;
-
-                $('#table').bootstrapTable({
-                    columns: [{
-                        field: 'code',
-                        title: 'Mã Reservation',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        ///editable: true,
-                    }, {
-                        field: 'date',
-                        title: 'Ngày',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        // editable: true,
-
-                    }, {
-                        field: 'district',
-                        title: 'Quận',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                        //  editable: true,
-                    }, {
-                        field: 'status',
-                        title: 'Trạng thái',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                    }, {
-                        field: 'name',
-                        title: 'name',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-                    }, {
-                        field: 'sdt',
-                        title: 'SĐT',
-                        align: 'center',
-                        valign: 'middle',
-                        sortable: true,
-
-                    }, {
-                        field: 'operate',
-                        title: 'Thao tác',
-                        align: 'center',
-                        valign: 'middle',
-                        events: operateEvents,
-                        formatter: operateFormatter
-                    }],
-                    data: data
-                });
+                getDataTable(data);
             },
             error: function (err) {
-
             }
-        });*/
-        // format table
+        });
+    });
+    // button search
+    $('#btSearch').on('click', function (e) {
+        var datatable = $('#table').bootstrapTable('getData');
+        var listNgayHoaDon = [];
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].id) {
+                    listNgayHoaDon.push(datatable[i].id);
+                }
+            }
+        }
+        alert("Danh sách in hóa đơn" + listNgayHoaDon)
+    });
+    // button save
+    $('#btSave').on('click', function (e) {
+        var datatable = $('#table').bootstrapTable('getData');
+        var listNgayHoaDon = [];
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].id) {
+                    listNgayHoaDon.push(datatable[i].id);
+                }
+            }
+        }
+        alert("Danh sách in hóa đơn" + listNgayHoaDon)
+    });
+    var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
                 field: 'code',
@@ -216,123 +216,10 @@
                 valign: 'middle',
                 editable: true
             }],
-            data: [{
-                code: '002-001-123456',
-                name : 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money : '30000',
-                status: 2,
-                statusTT : 2,
-                shiper: "Duytn4",
-                moneyPay: "20000",
-                assign : "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: "20000",
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay : '0',
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: '0',
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: '0',
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: '0',
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: '0',
-                assign: "ThanhDC",
-                note: 'note'
-            }, {
-                code: '002-001-123456',
-                name: 'Trần ngọc duy',
-                date: '20/07/2017',
 
-                phone: '0989485398',
-                district: 'Hà đông',
-                address: '39 Hoàng mai, hà nội',
-                money: '30000',
-                status: 2,
-                statusTT: 2,
-                shiper: "Duytn4",
-                moneyPay: '0',
-                assign: "ThanhDC",
-                note: 'note'
-
-            }]
+            data: itemData
         });
-    });
+    };
     // function
     function userFormatter(data) {
         return data.length;
