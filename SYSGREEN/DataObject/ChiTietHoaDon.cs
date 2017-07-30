@@ -13,5 +13,6 @@ namespace DataObject
 	    public int IsMaster {set; get;}
 	    public int IdKhachHang {set; get;}
 	    public string TrangThai {set; get;}
+        public int tabIndex { set; get;}
     }
 }

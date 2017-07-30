@@ -36,7 +36,7 @@ namespace Servies
 
         public static int InsertChiTietHoaDonReturnId(DataObject.ChiTietHoaDon obj)
         {
-            String Insert = "INSERT INTO ChiTietHoaDon (IDHoaDon,IsMaster,IdKhachHang,TrangThai) VALUES (@IDHoaDon,@IsMaster,@IdKhachHang,@TrangThai);Select @@IDENTITY as newId";
+            String Insert = "INSERT INTO ChiTietHoaDon (IDHoaDon,IsMaster,IdKhachHang,TrangThai,tabIndex) VALUES (@IDHoaDon,@IsMaster,@IdKhachHang,@TrangThai,@tabIndex);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -45,6 +45,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@IsMaster", obj.IsMaster);
             cmd.Parameters.AddWithValue("@IdKhachHang", obj.IdKhachHang);
             cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+            cmd.Parameters.AddWithValue("@tabIndex", obj.tabIndex);
             conn.Open();
             object insertedID = cmd.ExecuteScalar();
             cmd.Connection.Close();
@@ -54,7 +55,7 @@ namespace Servies
 
         public static int InsertPackageChiTietHoaDonReturnId(DataObject.PackageChiTietHoaDon obj)
         {
-            String Insert = "INSERT INTO PackageChiTietHoaDon (IDChiTietHD,SoNgay,Loai,TrangThai,Ship,HinhThucThanhToan,HinhThucGiaoHang,ThanhTien) VALUES (@IDChiTietHD,@SoNgay,@Loai,@TrangThai,@Ship,@HinhThucThanhToan,@HinhThucGiaoHang,@ThanhTien);Select @@IDENTITY as newId";
+            String Insert = "INSERT INTO PackageChiTietHoaDon (IDChiTietHD,SoNgay,Loai,TrangThai,Ship,HinhThucThanhToan,HinhThucGiaoHang,ThanhTien,IDKhachHang) VALUES (@IDChiTietHD,@SoNgay,@Loai,@TrangThai,@Ship,@HinhThucThanhToan,@HinhThucGiaoHang,@ThanhTien,@IDKhachHang);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -67,6 +68,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
             cmd.Parameters.AddWithValue("@HinhThucGiaoHang", obj.HinhThucGiaoHang);
             cmd.Parameters.AddWithValue("@ThanhTien", obj.ThanhTien);
+            cmd.Parameters.AddWithValue("@IDKhachHang", obj.IDKhachHang);
             conn.Open();
             object insertedID = cmd.ExecuteScalar();
             cmd.Connection.Close();
@@ -192,57 +194,56 @@ namespace Servies
             return table;
         }
 
-        public static DataTable getAllDataViewHoaDon()
+        public static Int32 getMaxIdHoaDon()
         {
-            DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from vHoaDonShiper ORDER BY ID_CTHD ";
-            
+            String Select = "Select Max(ID) from HoaDon ";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
             conn.Open();
-            table.Load(cmd.ExecuteReader());
+            Int32 maxId = (Int32)cmd.ExecuteScalar();
             conn.Close();
-            return table;
+            return maxId;
         }
 
-        public static DataTable getDataFilterViewHoaDon(String maReservation, String ngayHoaDon, String quan,
-                        String soShiper, String tenShiper, String trangThai)
+        public static DataTable getvHoaDonStep1(String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
         {
+            //vHoaDonStep1
             DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from vHoaDonShiper where ";
-            if (maReservation != null && maReservation != "")
+            String Select = "Select * from vHoaDonStep1 where ";
+            if (MaHD != null && MaHD != "")
             {
-                Select += "MaReservation LIKE N'%" + maReservation + "%' AND ";
+                Select += "MaReservation LIKE N'%" + MaHD + "%' AND ";
             }
-            if (ngayHoaDon != null && ngayHoaDon != "")
+            if (TenKH != null && TenKH != "")
             {
-                Select += "Ngay LIKE N'%" + ngayHoaDon + "%' AND ";
+                Select += "TenKH LIKE N'%" + TenKH + "%' AND ";
             }
-            if (quan != null && quan != "")
-            {
-                Select += "TenQuan LIKE N'%" + quan + "%' AND ";
-            }
-
-            if (soShiper != null && soShiper != "")
-            {
-                Select += "shipNo LIKE N'%" + soShiper + "%' AND ";
-            }
-
-            if (tenShiper != null && tenShiper != "")
-            {
-                Select += "shipName LIKE N'%" + tenShiper + "%' AND ";
-            }
-
             if (trangThai != null && trangThai != "")
             {
-                Select += "TrangThaiHD LIKE N'%" + trangThai + "%' AND ";
+                Select += "TrangThai LIKE N'%" + trangThai + "%' AND ";
             }
-            Select += "1=1 ORDER BY ID_CTHD";
+            if (SoDT != null && SoDT != "")
+            {
+                Select += "SoDienThoai LIKE N'%" + SoDT + "%' AND ";
+            }//CONVERT(VARCHAR(10),a.NgayTao , 103)
+            if (tuNgay != "" && denNgay == "")
+            {
+                Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) >= convert(date,CONVERT(VARCHAR(10),'" + tuNgay  + "' , 103),103) AND ";
+            }
+            if (denNgay != "" && tuNgay == "")
+            {
+                Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) <= convert(date,CONVERT(VARCHAR(10),'" + denNgay + "' , 103),103) AND ";
+            }
+            if (denNgay != "" && tuNgay != "")
+            {
+                Select += "(convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) BETWEEN  convert(date,CONVERT(VARCHAR(10),'" + tuNgay + "' , 103),103) AND convert(date,CONVERT(VARCHAR(10),'" + denNgay  + "' , 103),103)) AND ";
+            }
+            Select += "1=1 ORDER BY NgayTao desc";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
@@ -252,36 +253,35 @@ namespace Servies
             return table;
         }
 
-        public static DataTable getAllShiper()
-        {
-            DataTable table = new DataTable();
-            SqlCommand cmd = null;
-            SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from SHIPER ";
-
-            cmd = new SqlCommand(Select);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            conn.Open();
-            table.Load(cmd.ExecuteReader());
-            conn.Close();
-            return table;
-        }
-
-        public static void updateNgayHoaDonToShiper(int? ngayHoaDonId, int? shiperId, int? userId)
+        public static void updateStatusVHoaDonStep1(int HoadonID,String trangthai)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Update = "UPDATE NgayHoaDon SET USER_ID = @User_Id, SHIPER_ID = @Shiper_Id Where ID = @ID";
+            String Update = "UPDATE HoaDon SET TrangThai = @TrangThai Where ID = @ID";
             SqlCommand cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@User_Id", userId);
-            cmd.Parameters.AddWithValue("@Shiper_Id", shiperId);
-            cmd.Parameters.AddWithValue("@ID", ngayHoaDonId);
+            cmd.Parameters.AddWithValue("@TrangThai", trangthai);
+            cmd.Parameters.AddWithValue("@ID", HoadonID);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+
+        public static DataTable getvHoaDonStep2(String ID)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vHoaDonStep1 where ID = " + ID + " AND ";
+            Select += " 1=1 ORDER BY NgayHD asc";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
     }
-    
 }

@@ -1,17 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="LT001V2Demo.aspx.cs" Inherits="SYSGREEN.LT001V2Demo" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <div class="main-content-inner">
-        <div id="contactForm">
+      <div id="contactForm" style="margin-left: 5px;">
       <div class="form-horizontal">
         <div class="form-group">
            <label for="sel1" class="col-md-1">Nguồn</label>
             <div class="col-md-2">
                 <select class="form-control" id="cb_SourceType"></select>
-                <!--
-                <select class="form-control" id="cb_SourceType">
-                            <option value ="1">Facebook</option>
-                            <option value ="2">Zalo</option>
-                 </select> -->
             </div>
             <label for="sel1" class="col-md-2">Mã khách hàng</label>
             <div class="col-md-3">
@@ -47,7 +42,7 @@
             </div>
             <label for="sel1" class="col-md-2">Ngày sinh</label>
             <div class="col-md-3">
-                <input type="text" placeholder="DD/MM/YYYY"  class="form-control" name="title" id="txtNgaySinh" />
+                <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgaySinh" />
             </div>
             <label for="sel1" class="col-md-2">Tổng</label>
             <div class="col-md-2">
@@ -148,9 +143,9 @@
     </li>
 </script>
 
-<a href="#" class="btn btn-primary" id="btnAddBill">Thêm đơn</a>
+<a href="#" class="btn btn-primary" id="btnAddBill" style="margin-bottom: 5px;">Thêm đơn</a>
 <ul class="nav nav-tabs" id="tabs">
-    <li class="li-tab-toggle active"><a class="tab-toggle" href="#tab1" data-toggle="tab">Master Đơn 001</a></li>
+    <li class="li-tab-toggle active"><a class="tab-toggle" href="#tab1" data-toggle="tab">Đơn 001</a></li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane active" id="tab1"></div>
@@ -158,7 +153,12 @@
         <div style ="height:50px"></div>  
         
          <div id="contactHD">
-             <div class="form-horizontal">
+             <div class="form-horizontal" style="margin-left:20px">
+                 <div class="checkbox" style="margin-bottom:10px">
+                    <label style="font-weight:bold">
+                      <input type="checkbox" id="chkCheckBox"/> Is Master
+                    </label>
+                  </div>
                 <div class="form-group">
                    <label for="sel1" class="col-md-3">Loại hình đơn</label>
                     <div class="col-md-3">
@@ -175,16 +175,21 @@
             </div> 
             <div class="form-horizontal">
                 <div class="form-group">
-                   <label for="sel1" class="col-md-3" id="lbLoaiGoi">Loại gói</label>
+                   <label for="sel1" class="col-md-3" id="lbLoaiGoi">Gói</label>
                    <div class="col-md-3">
                         <select class="form-control" id="cb_OrderType2">
                             <option value ="-1"></option>
-                            <option value ="2">Gói 2 ngày </option>
-                            <option value ="3">Gói 3 ngày </option>
-                            <option value ="4">Gói 4 ngày </option>
-                            <option value ="5">Gói 5 ngày </option>
-                            <option value ="6">Gói 6 ngày </option>
-                            <option value ="7">Gói 7 ngày </option>
+                            <option value ="8">A1 </option>
+                            <option value ="12">A2 </option>
+                            <option value ="12">A3 </option>
+                            <option value ="12">B1</option>
+                            <option value ="8">B2</option>
+                            <option value ="12">B3</option>
+                            <option value ="8">C1</option>
+                            <option value ="12">C2</option>
+                            <option value ="8">C3</option>
+                            <option value ="12">C4</option>
+                             <option value ="10">D</option>
                         </select>
                     </div>
                     <label for="sel1" class="col-md-3" id="lblHoTen">Họ và tên</label>
@@ -195,13 +200,17 @@
             </div>  
             <div class="form-horizontal">
                 <div class="form-group">
-                   <label for="sel1" class="col-md-3" id="lblPhiShip">Phí Ship</label>
+                   <label for="sel1" class="col-md-3" id="lblPhiShip">Hình thức Ship</label>
                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="title" id="txt_PhiShip" />
+                        <select class="form-control" id="cb_hinhthucShip">
+                            <option value = "-1"></option>
+                            <option value = "Ship đi">Ship đi</option>
+                            <option value = "Đến lấy">Đến lấy</option>
+                      </select>
                     </div>
                     <label for="sel1" class="col-md-3" id="lblNgaySinh">Ngày sinh</label>
                     <div class="col-md-3" id="divNgaySinh">
-                        <input type="text" placeholder="dd/mm/yyyy"  class="form-control" name="title" id="txtNgaySinh1" />
+                        <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgaySinh1" />
                     </div>
                 </div> 
             </div>  
@@ -223,9 +232,9 @@
              </div>  
               <div class="form-horizontal">
                 <div class="form-group">
-                   <label for="sel1" class="col-md-3"></label>
+                   <label for="sel1" class="col-md-3">Phí Ship</label>
                    <div class="col-md-3">
-                      
+                       <input type="text" class="form-control" name="title" id="txt_PhiShip" />
                     </div>
                     <label for="sel1" class="col-md-3" id="lblEmail">Email</label>
                     <div class="col-md-3" id="divEmail">
@@ -264,7 +273,6 @@
         
     <div style ="text-align:center;display: table;margin: 0 auto;">
        <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
-       <button type="button" class="btn btn-primary" id="btnTackBill" style="margin-left:10px;">Tách bill</button>
     </div>
 </div>
 <div style ="height:40px"></div>
@@ -310,6 +318,18 @@
                     <div class="modal-body">
                         <div id="dvHidden">
                         </div>
+                       <div class="form-horizontal">
+                        <div class="form-group">
+                           <label for="sel1" class="col-md-3" id="lblNgayGiaoHangLe">Ngày giao hàng</label>
+                           <div class="col-md-3">
+                                <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgayGiaoHangLe" />
+                            </div>
+                            <label for="sel1" class="col-md-3" id="lblThuGiaoHangLe"> Thứ </label>
+                            <div class="col-md-3" id="divThuGiaoHangLe">
+                                <input type="text" class="form-control" name="title" id="txtThuGiaoHangLe" disabled />
+                            </div>
+                         </div> 
+                      </div>  
                         <button type="button" class="btn btn-primary"  id="btnAddSingle">Thêm mới </button>
                         <table id="tablePopupSingle" 
                             data-id-field="undefined"
@@ -332,18 +352,89 @@
         var dataGlobal  = [];
         window.dataGlobal = [];
         window.indexTab = 0;
+        window.isMasterTab = 0;
+        window.TempTab = [{ 'txtHoTen': '', 'txtNgaySinh': '', 'txtSoDienThoai': '', 'txtEmailCustomer': '', 'txtDiaChiCustomer': '', 'cb_quan': '' }];
         /************************************************
         ******** Load Content Form
         ************************************************/
         loadContent();
         function loadContent() {
+            loadIsMasterTab();
+            //loadAutoMaHoaDon();
+            FormatDate();
             LoadComboBoxNguon();
             LoadComboBoxQH();
             validateKhachHang();
             eventKhachHang();
+            eventCheckBoxIsMaster();
             addHoaDon();
             indexTab = 0;
             updateComponent(0);
+        };
+        function eventCheckBoxIsMaster() {
+            
+            $('#chkCheckBox').change(function () {
+                window.isMasterTab = $('#chkCheckBox').prop('checked') ?  window.indexTab : -1;
+            });
+        };
+        function loadIsMasterTab() {
+            $("#chkCheckBox").attr('checked', true);
+        };
+        function FormatDate() {
+            $('#txtNgaySinh').datepicker({
+                dateFormat: 'dd/mm/yyyy'
+            });
+            $('#txtNgaySinh1').datepicker({
+                dateFormat: 'dd/mm/yyyy'
+            });
+            
+        };
+        function loadAutoMaHoaDon() {
+            var formSource = new FormData();
+            var json = { 'type': 0};
+            formSource.append('type', 'getMaxIdHoaDon');
+            formSource.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var maxIdHoa = parseInt(result);
+                    var maHoaDon = "HD" + (maxIdHoa < 10 ? ('0' + maxIdHoa) : maxIdHoa);
+                    $('#txtMaHD').val(maHoaDon);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+        function loadDataHoaDon() {
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            var makh = "";
+            var mahd = "HD13";
+            var tensp = "";
+            formSource.append('type', 'getData');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('MaHD', mahd);
+            formSource.append('TenKH', makh);
+            formSource.append('TenSP', tensp);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    
+                },
+                error: function (err) {
+
+                }
+            });
         };
         // validateKhachHang
         function validateKhachHang() {
@@ -517,6 +608,85 @@
             };
 
             // Onchange Customer
+            $('#txtHoTen').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].txtHoTen = this.value;
+                    }
+                    $("#txtHoTen1").val(this.value);
+                }
+            });
+            $('#txtNgaySinh').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].txtNgaySinh = this.value;
+                    }
+                    $("#txtNgaySinh1").val(this.value);
+                }
+            });
+            $('#txtSoDienThoai').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].txtSoDienThoai = this.value;
+                    }
+                    $("#txtSoDienThoai1").val(this.value);
+                }
+            });
+            $('#txtEmailCustomer').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].txtEmailCustomer = this.value;
+                    }
+                    $("#txtEmailCustomer1").val(this.value);
+                }
+            });
+            $('#txtDiaChiCustomer').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].txtDiaChiCustomer = this.value;
+                    }
+                    $("#txtDiaChiCustomer1").val(this.value);
+                }
+            });
+            $('#cb_quan').on('change', function () {
+                if (window.isMasterTab == 0) {
+                    if (window.TempTab.length > 0) {
+                        window.TempTab[window.indexTab].cb_quan = this.value;
+                    }
+                    $("#cb_quan1 option[value=" + this.value + "]").attr('selected', 'selected');
+                }
+            });
+
+            $('#txtHoTen1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].txtHoTen = this.value;
+                }
+            });
+            $('#txtNgaySinh1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].txtNgaySinh = this.value;
+                }
+            });
+            $('#txtSoDienThoai1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].txtSoDienThoai = this.value;
+                }
+            });
+            $('#txtEmailCustomer1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].txtEmailCustomer = this.value;
+                }
+            });
+            $('#txtDiaChiCustomer1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].txtDiaChiCustomer = this.value;
+                }
+            });
+            $('#cb_quan1').on('change', function () {
+                if (window.TempTab.length > 0) {
+                    window.TempTab[window.indexTab].cb_quan = this.value;
+                }
+            });
             $('#txtSoDienThoai').on('change', function () {
                 var formCustomer = new FormData();
                 var json = { 'PhoneNumber': this.value };
@@ -539,6 +709,22 @@
                             document.getElementById('txtEmailCustomer').value = objectData.Email;
                             document.getElementById('txtDiaChiCustomer').value = objectData.Address;
                             $("#cb_quan option[value=" + objectData.MaQuan + "]").attr('selected', 'selected');
+                            if (window.isMasterTab == 0) {
+                                if (window.TempTab.length > 0) {
+                                    window.TempTab[0].cb_quan = objectData.MaQuan;
+                                    window.TempTab[0].txtMaKH = $('#txtMaKH').val();
+                                    window.TempTab[0].txtHoTen = $('#txtHoTen').val();
+                                    window.TempTab[0].txtNgaySinh = $('#txtNgaySinh').val();
+                                    window.TempTab[0].txtEmailCustomer = $('#txtEmailCustomer').val();
+                                    window.TempTab[0].txtDiaChiCustomer = $('#txtDiaChiCustomer').val();
+                                }
+                                $("#txtMaKH1").val($('#txtMaKH').val());
+                                $("#txtHoTen1").val($('#txtHoTen').val());
+                                $("#txtNgaySinh1").val($('#txtNgaySinh').val());
+                                $("#txtEmailCustomer1").val($('#txtEmailCustomer').val());
+                                $("#txtDiaChiCustomer1").val($('#txtDiaChiCustomer').val());
+                                $("#cb_quan1 option[value=" + objectData.MaQuan + "]").attr('selected', 'selected');
+                            }
                         }
                             /*
                         else {
@@ -576,6 +762,12 @@
                             document.getElementById('txtEmailCustomer1').value = objectData.Email;
                             document.getElementById('txtDiaChiCustomer1').value = objectData.Address;
                             $("#cb_quan1 option[value=" + objectData.MaQuan + "]").attr('selected', 'selected');
+                            window.TempTab[window.indexTab].cb_quan = objectData.MaQuan;
+                            window.TempTab[window.indexTab].txtMaKH = $('#txtMaKH1').val();
+                            window.TempTab[window.indexTab].txtHoTen = $('#txtHoTen1').val();
+                            window.TempTab[window.indexTab].txtNgaySinh = $('#txtNgaySinh1').val();
+                            window.TempTab[window.indexTab].txtEmailCustomer = $('#txtEmailCustomer1').val();
+                            window.TempTab[window.indexTab].txtDiaChiCustomer = $('#txtDiaChiCustomer1').val();
                         }
                             /*
                         else {
@@ -614,6 +806,23 @@
                             document.getElementById('txtSoDienThoai').value = objectData.PhoneNumber;
                             document.getElementById('txtDiaChiCustomer').value = objectData.Address;
                             $("#cb_quan option[value=" + objectData.MaQuan + "]").attr('selected', 'selected');
+                            if (window.isMasterTab == 0) {
+                                if (window.TempTab.length > 0) {
+                                    window.TempTab[0].cb_quan = objectData.MaQuan;
+                                    window.TempTab[0].txtMaKH = $('#txtMaKH').val();
+                                    window.TempTab[0].txtHoTen = $('#txtNgaySinh').val();
+                                    window.TempTab[0].txtNgaySinh = $('#txtEmailCustomer').val();
+                                    window.TempTab[0].txtDiaChiCustomer = $('#txtDiaChiCustomer').val();
+                                    window.TempTab[0].txtSoDienThoai = $('#txtSoDienThoai').val();
+                                }
+                                $("#txtMaKH1").val($('#txtMaKH').val());
+                                $("#txtHoTen1").val($('#txtHoTen').val());
+                                $("#txtNgaySinh1").val($('#txtNgaySinh').val());
+                                $("#txtSoDienThoai1").val($('#txtSoDienThoai').val());
+                                $("#txtDiaChiCustomer1").val($('#txtDiaChiCustomer').val());
+                                $("#cb_quan1 option[value=" + objectData.MaQuan + "]").attr('selected', 'selected');
+                            }
+                            
                         } else {
                             /*
                             $('#txtMaKH').val('');
@@ -665,6 +874,10 @@
                 });
             });
         };
+        // Onchange Ship
+        $('#txt_PhiShip').on('change', function () {
+            $("#txt_PhiShip").val(formatterThousandDelimiter(this.value));
+        });
         // event add Hoa Don
         function hiddenInfoKH() {
             $("#div_cb_OrderType2").css("display", "block");
@@ -684,6 +897,10 @@
                 $.tmpl(tabTemp, { "device": index }).appendTo('.tab-content');
                 $('.li-tab-toggle:last a').tab('show');
                 lstTable.push({ 'lst': [] });
+                x = document.getElementById('chkCheckBox');
+                x.checked = false;
+                window.TempTab.push({ 'txtHoTen': '', 'txtNgaySinh': '', 'txtSoDienThoai': '', 'txtEmailCustomer': '', 'txtDiaChiCustomer': '', 'cb_quan': '' });
+                resetTab();
                 updateTabs();
             });
 
@@ -697,6 +914,7 @@
                 $('a', nav.is('li:last') ? nav.prev() : nav.next()).tab('show');
                 nav.add($('a', nav).attr('href')).remove();
                 lstTable.splice(lstTable.length - 1);
+                
                 updateTabs();
             });
 
@@ -716,6 +934,19 @@
                 if (index == "tabs" || index == "") {
                     // Không làm gì hết !
                 } else {
+                    $("#txtMaKH1").val(window.TempTab[parseInt(parseInt(index))].txtMaKH);
+                    $("#txtHoTen1").val(window.TempTab[parseInt(parseInt(index))].txtHoTen);
+                    $("#txtNgaySinh1").val(window.TempTab[parseInt(parseInt(index))].txtNgaySinh);
+                    $("#txtSoDienThoai1").val(window.TempTab[parseInt(parseInt(index))].txtSoDienThoai);
+                    $("#txtDiaChiCustomer1").val(window.TempTab[parseInt(parseInt(index))].txtDiaChiCustomer);
+                    $("#txtEmailCustomer1").val(window.TempTab[parseInt(parseInt(index))].txtEmailCustomer);
+                    $("#cb_quan1 option[value=" + window.TempTab[parseInt(parseInt(index))].cb_quan + "]").attr('selected', 'selected');
+                    x = document.getElementById('chkCheckBox');
+                    if (window.isMasterTab == index) {
+                        x.checked = true;
+                    } else {
+                        x.checked = false;
+                    }
                     window.indexTab = parseInt(index);
                     updateComponent(parseInt(index));
                 }
@@ -724,6 +955,25 @@
 
            
         };
+        // format Money
+        function formatterThousandDelimiter(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+        }
+        // Check Khách hàng Tab có dữ liệu hay không
+        function resetTab() {
+            $("#txtMaKH1").val("");
+            $("#txtHoTen1").val("");
+            $("#txtNgaySinh1").val("");
+            $("#txtSoDienThoai1").val("");
+            $("#txtEmailCustomer1").val("");
+            $("#txtDiaChiCustomer1").val("");
+            $("#cb_OrderType option[value= -1]").attr('selected', 'selected');
+            $("#cb_OrderType2 option[value= -1]").attr('selected', 'selected');
+            $("#cb_PayType option[value= -1]").attr('selected', 'selected');
+            $("#cb_hinhthucShip option[value= -1]").attr('selected', 'selected');
+            $("#txt_PhiShip").val("");
+            $('#txt_PhiShip').removeAttr('disabled');
+        }
         /************************************************
         ******** Hóa đơn Grid 
         ************************************************/
@@ -861,6 +1111,7 @@
                         document.getElementById('txtEmailCustomer1').value = infoKH.email;
                         document.getElementById('txtDiaChiCustomer1').value = infoKH.diaChi;
                         $("#cb_quan1 option[value=" + objectData.maquan + "]").attr('selected', 'selected');
+                        $("#chkCheckBox").attr('checked', window.dataGlobal[i].isMaster);
                         break;
                     }
                 }
@@ -875,10 +1126,25 @@
             $('#cb_OrderType').on('change', function () {
                 if (this.value == "1") {
                     $('#txt_PhiShip').attr('disabled', 'disabled');
+                    $('#txt_PhiShip').val("");
+                    $("#cb_OrderType2").removeAttr('disabled');
                 } else {
+                    $("#cb_OrderType2 option[value=-1]").attr('selected', 'selected');
+                    $("#cb_OrderType2").attr("disabled", "disabled");
                     $('#txt_PhiShip').removeAttr('disabled');
                 }
-            })
+            });
+            $('#cb_hinhthucShip').on('change', function () {
+                if (this.value == "Ship đi") {
+                    if ($('#cb_OrderType').val() != "1") {
+                        $('#txt_PhiShip').removeAttr('disabled');
+                    }
+                } else {
+                    $('#txt_PhiShip').val("0");
+                }
+            });
+
+
         };
         $('#btnAdd').on('click', function () {
             var $table = $('#table');
@@ -916,6 +1182,7 @@
                 obj.fSTT = data.length + 1;
                 obj.fLoaiHinhDon = $('#cb_OrderType :selected').text();
                 obj.fLoaiHinhDonId = $('#cb_OrderType').val();
+                obj.fHinhThucShip = $('#cb_hinhthucShip').val();
                 if (obj.fLoaiHinhDonId == 1) {
                     obj.fLoaiGoi = $('#cb_OrderType2 :selected').text();
                     obj.fLoaiGoiId = $('#cb_OrderType2').val();
@@ -940,6 +1207,17 @@
                     songayconlai = Number(songayconlai) + 1;
                     $('#txtSoNgayConLai').val(songayconlai);
                 }
+                var infoKHPackage = {};
+                infoKHPackage.maKH = $('#txtMaKH1').val();
+                infoKHPackage.hoTen = $('#txtHoTen1').val();
+                infoKHPackage.ngaySinh = $('#txtNgaySinh1').val();
+                infoKHPackage.soDienThoai = $('#txtSoDienThoai1').val();
+                infoKHPackage.soDienThoai = document.getElementById('txtSoDienThoai1').value;
+                infoKHPackage.email = document.getElementById('txtEmailCustomer1').value;
+                infoKHPackage.diaChi = document.getElementById('txtDiaChiCustomer1').value;
+                infoKHPackage.maquan = $('cb_quan1').val();
+                infoKHPackage.billId = 0;
+                obj.infoKH = infoKHPackage;
                 //Harcode
                 if (window.dataGlobal.length > 0) {
                     var check = false;
@@ -1002,7 +1280,7 @@
                         infoKH.maquan = $('cb_quan1').val();
                         infoKH.billId = 0;
                     }
-                    window.dataGlobal.push({ 'tabIndex': window.indexTab, 'data': [obj], 'infoKH': infoKH, 'isMaster': window.indexTab == 0 ? true : false});
+                    window.dataGlobal.push({ 'tabIndex': window.indexTab, 'data': [obj], 'infoKH': infoKH, 'isMaster': $("#chkCheckBox").prop('checked')});
                     $table.bootstrapTable('append', [obj]);
                 }
                 //$table.bootstrapTable('insertRow', { index: obj.stt, row: obj });
@@ -1036,8 +1314,9 @@
                     var dataTemp = [];
                     var n = row.fLoaiGoiId;
                     for (var m = 0; m < n; m++) {
+                        var index = m + 1;
                         var obj = {};
-                        obj.id = m;
+                        obj.id = index;
                         obj.parent = true;
                         obj.parentBillId = row.billId;
                         obj.parentId = -1;
@@ -1051,11 +1330,15 @@
                         obj.total = '';
                         obj.test = '';
                         obj.operate = '1';
+                        obj.thugiaohang = '';
+                        obj.note = '';
                         dataTemp.push(obj);
                     }
                     $table.bootstrapTable('load', dataTemp);
+                    
                 }
                 $('#modalTable').modal('show');
+                disableEditableTable();
             } else if (row.fLoaiHinhDonId == 2) { // Lẻ
                 var $table = $('#tablePopupSingle');
                 $('#dvHidden').css({ 'display': 'block' });
@@ -1094,6 +1377,9 @@
                     $table.bootstrapTable('load', dataTemp);
                 }
                 $('#modalTableSingle').modal('show');
+                $('#txtNgayGiaoHangLe').datepicker({
+                    dateFormat: 'dd/mm/yyyy'
+                });
             }
             
         };
@@ -1134,7 +1420,14 @@
                         }
                     }
 
-                }, {
+                },
+                {
+                    field: 'thugiaohang',
+                    title: 'Thứ giao hàng',
+                    align: 'center',
+                    valign: 'middle',
+                },
+                {
                     field: 'product',
                     title: 'Sản phẩm',
                     align: 'center',
@@ -1160,7 +1453,16 @@
                     align: 'center',
                     valign: 'middle',
                     formatter: function (value, row, index) {
-                        return '<input type="checkbox" value=""></label>';
+                        if (row.operate == "1") {
+                            return "<label></label>";
+                        } else {
+                            if (row.sugar == "1") {
+                                return '<input type="checkbox"  checked="checked" />';
+                            } else {
+                                return '<input type="checkbox"  />';
+                            }
+                            
+                        }
                     }
                 },
                 {
@@ -1168,13 +1470,6 @@
                     title: 'Thành tiền',
                     align: 'center',
                     valign: 'middle'
-                },
-                {
-                    field: 'promotionCode',
-                    title: 'Promotion Code',
-                    align: 'center',
-                    valign: 'middle',
-                    editable: true,
                 },
                 {
                     field: 'total',
@@ -1186,7 +1481,8 @@
                     field: 'note',
                     title: 'Ghi chú',
                     align: 'center',
-                    valign: 'middle'
+                    valign: 'middle',
+                    editable: true,
                 },
                 {
                     field: 'operate',
@@ -1203,10 +1499,22 @@
                 }],
                 data: []
             });
-
+            $table.on('check.bs.table', function(e, field, row, old, $el){
+                var x = "1";
+            });
             $table.on('editable-save.bs.table', function (e, field, row, old, $el) {
                 var $els = $table.find('.editable');
                 next = $els.index($el) + 1;
+                if (field == "deliveryDate") {
+                    var deliveryDate = row.deliveryDate;
+                    row.thugiaohang = convertDateToDay(deliveryDate);
+                    $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                    disableEditableTable();
+                }
+                if (field == "note") {
+                    $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                    disableEditableTable();
+                }
                 if (field == "product") {
                     var formProduct = new FormData();
                     var json = { 'Product_Code': row[field] };
@@ -1230,12 +1538,14 @@
                                 row.money = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 row.total = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                                disableEditableTable();
                             } else {
                                 row.quantity = "";
                                 row.price = "";
                                 row.money = "";
                                 row.total = "";
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                                disableEditableTable();
                             }
                         },
                         error: function (err) {
@@ -1248,6 +1558,7 @@
                     row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                    disableEditableTable();
                 }
                 if (field == "promotionCode") {
                     var formpromotionCode = new FormData();
@@ -1270,12 +1581,31 @@
                                 total = total == "" ? Number('0') : Number(total);
                                 row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                                disableEditableTable();
                             }
                         },
                         error: function (err) {
 
                         }
                     });
+                }
+                
+            });
+        };
+
+        function disableEditableTable() {
+            var $table = $('#tablePopup');
+            $tableRows = $table.find('tbody tr');
+            tableData = $table.bootstrapTable('getData', true);
+            $.each(tableData, function (i, row) {
+                //that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
+                if (row.operate == "1") {
+                    $tableRows.eq(i).find('a[data-name="' + 'product' + '"]').editable('toggleDisabled');
+                    $tableRows.eq(i).find('a[data-name="' + 'quantity' + '"]').editable('toggleDisabled');
+                    //$tableRows.eq(i).find('a[data-name="' + 'promotionCode' + '"]').editable('toggleDisabled');
+                    $tableRows.eq(i).find('a[data-name="' + 'note' + '"]').editable('toggleDisabled');
+                } else {
+                    $tableRows.eq(i).find('a[data-name="' + 'deliveryDate' + '"]').editable('toggleDisabled');
                 }
             });
         };
@@ -1301,6 +1631,7 @@
                 obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
                 obj.parentBillId = parentBillId; obj.parentId = parendId + 1;
+                obj.thugiaohang = ''; obj.note = '';
                 dataTemp.push(obj);
                 var k = position + 1;
                 for (k ; k < data.length ; k++) {
@@ -1329,6 +1660,7 @@
                 }
                 $table.bootstrapTable('load', data);
             }
+            disableEditableTable();
         }
         function operateFormatterPopup(value, row, index) {
             if (value == "1") {
@@ -1350,6 +1682,14 @@
             var $tablePopup = $('#tablePopup');
             var $table = $('#table');
             var dataPopup = $('#tablePopup').bootstrapTable('getData');
+            var objCustomer = {};
+            objCustomer.maKH = $("#txtMaKH1").val();
+            objCustomer.hoTen = $("#txtHoTen1").val();
+            objCustomer.ngaySinh = $("#txtNgaySinh1").val();
+            objCustomer.soDienThoai = $("#txtSoDienThoai1").val();
+            objCustomer.email = $("#txtEmailCustomer1").val();
+            objCustomer.diaChi = $("#txtDiaChiCustomer").val("");
+            objCustomer.maquan = $('#cb_quan1').val();
             if (dataPopup.length > 0) {
                 var totalMoneyPopup = 0;
                 for (var i = 0; i < dataPopup.length ; i++) {
@@ -1367,6 +1707,7 @@
                             if (window.dataGlobal[m].data[k].billId == dataPopup[0].parentBillId) {
                                 window.dataGlobal[m].data[k].fThanhTien = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 window.dataGlobal[m].data[k].detalMaster = dataPopup;
+                                window.dataGlobal[m].data[k].detailCustomer = objCustomer;
                                 $table.bootstrapTable('updateRow', { index: window.dataGlobal[m].data[k].id - 1, row: window.dataGlobal[m].data[k] });
                             }
                         }
@@ -1377,6 +1718,7 @@
                 
             }
         });
+        
         /************************************************
         ******** Popup Hóa đơn lẻ Grid 
         ************************************************/
@@ -1546,6 +1888,46 @@
                 }
             });
         };
+        $('#txtNgayGiaoHangLe').on('change', function () {
+            var dateNgaygiaoHangLe = this.value;
+            $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
+        });
+        function convertDateToDay(num) {
+            var x = num;
+            x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+            var date = new Date(x);
+            var day = date.getDay();
+            var strDay = "";
+            switch(day){
+                case 0:
+                    strDay = "Chủ Nhật";
+                    break;
+                case 1:
+                    strDay = "Thứ hai";
+                    break;
+                case 2:
+                    strDay = "Thứ ba";
+                    break;
+                case 3:
+                    strDay = "Thứ tư";
+                    break;
+                case 4:
+                    strDay = "Thứ năm";
+                    break;
+                case 5:
+                    strDay = "Thứ sáu";
+                    break;
+                case 6:
+                    strDay = "Thứ bảy";
+                    break;
+                case 7:
+                    strDay = "Chủ Nhật";
+                    break;
+                default :
+                    break;
+            }
+            return strDay
+        }
         function operateFormatterPopupSingle(value, row, index) {
             return [
                 '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
@@ -1576,12 +1958,16 @@
         $('#btnPopupSingle').on('click', function () {
             var $tablePopup = $('#tablePopupSingle');
             var $table = $('#table');
+            var ngayGiaoHangLe = $("#txtNgayGiaoHangLe").val();
             var dataPopup = $('#tablePopupSingle').bootstrapTable('getData');
             var objCustomer = {};
-            objCustomer.name = $('#txtHoTenPopUp').val();
-            objCustomer.phone = $('#txtSoDienThoaiPopUp').val();
-            objCustomer.address = $('#txtDiaChiPopUp').val();
-            objCustomer.delivery = $('#txtDeliveryPopup').val();
+            objCustomer.maKH = $("#txtMaKH1").val();
+            objCustomer.hoTen = $("#txtHoTen1").val();
+            objCustomer.ngaySinh = $("#txtNgaySinh1").val();
+            objCustomer.soDienThoai = $("#txtSoDienThoai1").val();
+            objCustomer.email = $("#txtEmailCustomer1").val();
+            objCustomer.diaChi = $("#txtDiaChiCustomer").val("");
+            objCustomer.maquan = $('#cb_quan1').val();
             if (dataPopup.length > 0) {
                 var totalMoneyPopup = 0;
                 for (var i = 0; i < dataPopup.length ; i++) {
@@ -1600,6 +1986,7 @@
                                 window.dataGlobal[m].data[k].fThanhTien = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 window.dataGlobal[m].data[k].detalMaster = dataPopup;
                                 window.dataGlobal[m].data[k].detailCustomer = objCustomer;
+                                window.dataGlobal[m].data[k].ngayGiaoHangLe = ngayGiaoHangLe;
                                 $table.bootstrapTable('updateRow', { index: window.dataGlobal[m].data[k].id - 1, row: window.dataGlobal[m].data[k] });
                             }
                         }
@@ -1623,6 +2010,7 @@
             obj.diaChi = document.getElementById('txtDiaChiCustomer').value;
             obj.maquan = $('#cb_quan').val();
             var bill = {};
+            //bill.maReversion = $('#txtMaHD').val();
             bill.sourceName = $('#cb_SourceType :selected').text();
             bill.sourceId = $('#cb_SourceType').val();
             bill.songayconlai = $('#txtSoNgayConLai').val();
@@ -1632,6 +2020,7 @@
             bill.conNo = $('#txtNo').val() != "" ? $('#txtNo').val().split('.').join('') : '0'
             bill.inFoCustomer = obj;
             bill.infoBill = window.dataGlobal;
+            bill.isMasterTab = window.isMasterTab;
             var formBill = new FormData();
             formBill.append('type', 'insert');
             formBill.append('data', JSON.stringify(bill));
@@ -1642,7 +2031,10 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    $('#txtMaHD').val("HD" + result);
+                    alert("Thêm mới đơn hàng thành công");
+                    $('#txtMaHD').val("HD" + (result < 0) ? ("0" + result) : result);
+                    $("#btnSave").attr('disabled', true);
+                    $("#btnAddBill").attr('disabled', true);
                 },
                 error: function (err) {
 
