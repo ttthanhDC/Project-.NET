@@ -32,6 +32,54 @@ namespace Servies
             conn.Close();
             return Convert.ToInt32(insertedID);
         }
+        public static int InsertDataStep3ReturnId(DataObject.HoaDonSanPham obj)
+        {
+            String Insert = "INSERT INTO HoaDonSanPham (IDNgayHoaDon,product,sugar,quantity,price,money,promotionCode,total,GhiChu,Error) VALUES (@IDNgayHoaDon,@product,@sugar,@quantity,@price,@money,@promotionCode,@total,@GhiChu,@Error);Select @@IDENTITY as newId";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@IDNgayHoaDon", obj.IDNgayHoaDon);
+            cmd.Parameters.AddWithValue("@product", obj.product);
+            cmd.Parameters.AddWithValue("@sugar", obj.sugar);
+            cmd.Parameters.AddWithValue("@quantity", obj.quantity);
+            cmd.Parameters.AddWithValue("@price", obj.price);
+            cmd.Parameters.AddWithValue("@money", obj.money);
+            cmd.Parameters.AddWithValue("@promotionCode", obj.promotionCode);
+            cmd.Parameters.AddWithValue("@total", obj.total);
+            cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+            cmd.Parameters.AddWithValue("@Error", obj.Error);
+            conn.Open();
+            object insertedID = cmd.ExecuteScalar();
+            cmd.Connection.Close();
+            conn.Close();
+            return Convert.ToInt32(insertedID);
+        }
+
+        public static void UpdateDataHoaDonSP(DataObject.HoaDonSanPham obj)
+        {
+            String Insert = "Update HoaDonSanPham SET IDNgayHoaDon = @IDNgayHoaDon ,product = @product ,sugar = @sugar ,quantity = @quantity ,price = @price,money = @money, promotionCode = @promotionCode,total = @total ,GhiChu = @GhiChu ,Error = @Error where ID = @ID";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@IDNgayHoaDon", obj.IDNgayHoaDon);
+            cmd.Parameters.AddWithValue("@product", obj.product);
+            cmd.Parameters.AddWithValue("@sugar", obj.sugar);
+            cmd.Parameters.AddWithValue("@quantity", obj.quantity);
+            cmd.Parameters.AddWithValue("@price", obj.price);
+            cmd.Parameters.AddWithValue("@money", obj.money);
+            cmd.Parameters.AddWithValue("@promotionCode", obj.promotionCode);
+            cmd.Parameters.AddWithValue("@total", obj.total);
+            cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+            cmd.Parameters.AddWithValue("@Error", obj.Error);
+            cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
+            
+        }
 
         public static int InsertChiTietHoaDonReturnId(DataObject.ChiTietHoaDon obj)
         {

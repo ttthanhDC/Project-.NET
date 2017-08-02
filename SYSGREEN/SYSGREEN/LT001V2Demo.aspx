@@ -349,7 +349,8 @@
     $(function () {
         var maxTabs = 50, index = 1;
         var lstTable = [];
-        var dataGlobal  = [];
+        var dataGlobal = [];
+        window.dataGoi = [];
         window.dataGlobal = [];
         window.indexTab = 0;
         window.isMasterTab = 0;
@@ -370,6 +371,7 @@
             addHoaDon();
             indexTab = 0;
             updateComponent(0);
+            loadGoiHD();
         };
         function eventCheckBoxIsMaster() {
             
@@ -389,6 +391,25 @@
             });
             
         };
+        function loadGoiHD() {
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            formSource.append('type', 'getGoiHD');
+            formSource.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    window.dataGoi = result;
+                },
+                error: function (err) {
+
+                }
+            });
+        }
         function loadAutoMaHoaDon() {
             var formSource = new FormData();
             var json = { 'type': 0};
@@ -1187,16 +1208,23 @@
                     obj.fLoaiGoi = $('#cb_OrderType2 :selected').text();
                     obj.fLoaiGoiId = $('#cb_OrderType2').val();
                     obj.fPhiShip = "0";
+                    for (var k = 0; k < window.dataGoi.length ; k++) {
+                        if (window.dataGoi[k].Name.trim() == obj.fLoaiGoi.trim()) {
+                            obj.fThanhTien = window.dataGoi[k].Tien.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            obj.IDGoi = window.dataGoi[k].ID;
+                            break;
+                        }
+                    }
                 } else {
                     obj.fLoaiGoi = "....";
                     obj.fLoaiGoiId = 1;
                     obj.fPhiShip = $('#txt_PhiShip').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + " VNĐ";
-
+                    obj.fThanhTien = "0";
                 }
 
                 obj.fLoaiThanhToan = $('#cb_PayType :selected').text();
                 obj.fLoaiThanhToanId = $('#cb_PayType').val();
-                obj.fThanhTien = "0";
+                
                 obj.detalMaster = [];
                 if ($('#cb_OrderType :selected').text() == 'Gói') {
                     var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0'
@@ -1313,9 +1341,13 @@
                 } else {
                     var dataTemp = [];
                     var n = row.fLoaiGoiId;
+                    var tien = 0;
+                    //var idGoi = 0;
+                    
                     for (var m = 0; m < n; m++) {
                         var index = m + 1;
                         var obj = {};
+
                         obj.id = index;
                         obj.parent = true;
                         obj.parentBillId = row.billId;
@@ -1691,11 +1723,12 @@
             objCustomer.diaChi = $("#txtDiaChiCustomer").val("");
             objCustomer.maquan = $('#cb_quan1').val();
             if (dataPopup.length > 0) {
+                /*
                 var totalMoneyPopup = 0;
                 for (var i = 0; i < dataPopup.length ; i++) {
                     var thanhtien = dataPopup[i].total.split('.').join('');
                     totalMoneyPopup += Number(thanhtien);
-                }
+                }*/
                 var total = 0;
                 for (var m = 0; m < window.dataGlobal.length ; m++) {
                     var check = false;
@@ -1705,7 +1738,7 @@
                     for (var k = 0; k < window.dataGlobal[m].data.length ; k++) {
                         if (check) {
                             if (window.dataGlobal[m].data[k].billId == dataPopup[0].parentBillId) {
-                                window.dataGlobal[m].data[k].fThanhTien = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                //window.dataGlobal[m].data[k].fThanhTien = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 window.dataGlobal[m].data[k].detalMaster = dataPopup;
                                 window.dataGlobal[m].data[k].detailCustomer = objCustomer;
                                 $table.bootstrapTable('updateRow', { index: window.dataGlobal[m].data[k].id - 1, row: window.dataGlobal[m].data[k] });
@@ -2000,6 +2033,10 @@
         ******** Save Hóa đơn 
         *************************************************/
         $('#btnSave').on('click', function () {
+            if (window.isMasterTab == -1) {
+                alert('Vui lòng tích chọn đơn Master!');
+                return;
+            }
             var obj = {};
             obj.maKH = $('#txtMaKH').val();
             obj.hoTen = $('#txtHoTen').val();

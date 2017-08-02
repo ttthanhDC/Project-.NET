@@ -68,6 +68,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
             cmd.Parameters.AddWithValue("@Address", obj.Address);
             cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
+            cmd.Parameters.AddWithValue("@ID", obj.ID);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();

@@ -253,6 +253,172 @@ namespace SYSGREEN.Configuation
                     context.Response.Write(JsonConvert.SerializeObject("0"));
                 }
             }
+            else if (type == "updateStatusVHoaDonStep2")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    dynamic hoadon = data.HD;
+                    dynamic lsthoadon = data.NHD;
+                    DataObject.HoaDon dtoHoaDon = new DataObject.HoaDon();
+                    int idHoadon = (int)hoadon.id;
+                    String sotienthuduoc = (String) hoadon.sotienthu;
+                    dtoHoaDon.TongTienThuDuoc = Convert.ToDecimal(sotienthuduoc != "" ? sotienthuduoc : "0");
+                    String conNo = (String) hoadon.sotienconlai;
+                    dtoHoaDon.TongTienConNo = Convert.ToDecimal(conNo != "" ? conNo : "0");
+                    Servies.HoaDonServices.updateHoaDonStep2(idHoadon, dtoHoaDon);
+                    for (int i = 0; i < lsthoadon.Count; i++)
+                    {
+                        DataObject.NgayHoaDon ngayhoadon = new DataObject.NgayHoaDon();
+                        ngayhoadon.Ngay = Convert.ToDateTime((String)lsthoadon[i].date);
+                        var ghichu = (String)lsthoadon[i].ghichu;
+                        ngayhoadon.GhiChu = ghichu != null ? ghichu : "";
+                        ngayhoadon.TrangThai = (String)lsthoadon[i].status;
+                        String tong = (String)lsthoadon[i].money;
+                        String sotiendathu = (String)lsthoadon[i].sotiendathu;
+                        String sotienconlai = (String)lsthoadon[i].sotienconlai;
+                        ngayhoadon.TongTien = Convert.ToDecimal(tong != "" ? tong : "0");
+                        ngayhoadon.SoTienThu = Convert.ToDecimal(sotiendathu != "" ? sotiendathu : "0");
+                        ngayhoadon.SoTienConLai = Convert.ToDecimal(sotienconlai != "" ? sotienconlai : "0");
+                        Servies.HoaDonServices.updateNgayHoaDonStep2((int)lsthoadon[i].IdNgayHD, ngayhoadon);
+                    }
+                    String ID = Convert.ToString(idHoadon);
+                    DataTable lst = Servies.HoaDonServices.getvHoaDonStep2(ID);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(JsonConvert.SerializeObject("0"));
+                }
+            }
+            else if (type == "getvHoaDonStep3")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    String ngayhdId = context.Request.Form["ngayhdId"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getvHoaDonStep3(ngayhdId);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getSoLanGiao")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    String ngayhdId = context.Request.Form["ngayhdId"].ToString();
+                    int solan = Servies.HoaDonServices.getSoLanGiao(ngayhdId);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(solan);
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getSoTienChuaXuLy")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    String ngayhdId = context.Request.Form["ngayhdId"].ToString();
+                    Int32 sotien = Servies.HoaDonServices.getSoTienChuaXuLy(ngayhdId);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(sotien);
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "updateStatusVHoaDonStep3")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    dynamic infoKH = data.infoKH;
+                    dynamic infoGoi = data.infoGoi;
+                    dynamic infoSP = data.infoSP;
+                    dynamic infoIdDelete = data.infoDeleteIdSP;
+                    /*** Update Khách hàng *****/
+                    DataObject.SysCustomer sysCustomer = new DataObject.SysCustomer();
+                    sysCustomer.Address = (String)infoKH.diaChi;
+                    if (infoKH.ngaySinh != "")
+                    {
+                        sysCustomer.BirthDay = DateTime.Parse((String)infoKH.ngaySinh);
+                    }
+                    sysCustomer.CustomerName = (String)infoKH.hoTen;
+                    sysCustomer.Email = (String)infoKH.email;
+                    sysCustomer.ID = (int)infoKH.idKH;
+                    sysCustomer.PhoneNumber = (String)infoKH.soDienThoai;
+                    sysCustomer.MaQuan = (String)infoKH.maquan;
+                    Servies.SysCustomerServices.UpdateData(sysCustomer);
+                    /*** Update Gói *****/
+                    Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam);
+                    /** Update, Delete , Insert Sản phẩm ******/
+                    if(infoIdDelete.Count > 0){
+                        for(int i = 0; i < infoIdDelete.Count ; i++){
+                            Servies.HoaDonServices.deleteHoaDonSP((String)infoIdDelete[i]);
+                        }
+                    }
+                    
+                    for(int k = 0; k < infoSP.Count ; k++){
+                        if((String)infoSP[k].idhdSp == ""){
+                            InsertDataStep3ReturnId(infoSP[k], Convert.ToInt32((String)infoSP[k].idngayHD));
+                        }else{
+                            UpdateHoaDonSP(infoSP[k], Convert.ToInt32((String)infoSP[k].idngayHD));
+                        }
+                    }
+
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(JsonConvert.SerializeObject("1"));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(JsonConvert.SerializeObject("0"));
+                }
+            }
+            else if (type == "getGoiHD")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+
+                    DataTable dt = Servies.HoaDonServices.getGoiHD();
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else if (type == "getMaxIdHoaDon")
             {
                 try
@@ -372,6 +538,7 @@ namespace SYSGREEN.Configuation
             String thanhtien = (String)data.fThanhTien;
             packageChiTietHD.ThanhTien = Convert.ToDecimal(thanhtien != "" ? thanhtien.Replace(".", "") : "0");
             packageChiTietHD.TrangThai = "Chưa xử lý";
+            packageChiTietHD.IDGoi = Convert.ToInt32(data.IDGoi);
             String hoten1 = data.infoKH.hoTen;
             String maKH1 = data.infoKH.maKH;
             String ngaySinh1 = data.infoKH.ngaySinh;
@@ -436,5 +603,83 @@ namespace SYSGREEN.Configuation
             int IdChiTietHoaHD = Servies.HoaDonSanPhamServices.InsertDataReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
         }
+        public int InsertDataStep3ReturnId(dynamic data, int idNgayHoaDon)
+        {
+            DataObject.HoaDonSanPham ngayHoaDon = new DataObject.HoaDonSanPham();
+            ngayHoaDon.IDNgayHoaDon = idNgayHoaDon;
+            String money = (String)data.money;
+            if (money == "")
+            {
+                money = "0";
+            }
+            ngayHoaDon.money = Convert.ToDecimal(money.Replace(".", ""));
+            ngayHoaDon.product = data.product;
+            ngayHoaDon.sugar = data.sugar;
+            ngayHoaDon.Error = data.error;
+            ngayHoaDon.quantity = data.quantity;
+            String price = (String)data.price;
+            if (price == "")
+            {
+                price = "0";
+            }
+            ngayHoaDon.price = Convert.ToDecimal(price.Replace(".", ""));
+            ngayHoaDon.promotionCode = data.promotionCode;
+            String total = (String)data.total;
+            if (total == "")
+            {
+                total = "0";
+            }
+            ngayHoaDon.total = Convert.ToDecimal(total.Replace(".", ""));
+            if (data.GhiChu != null && data.GhiChu != "")
+            {
+                ngayHoaDon.GhiChu = data.GhiChu;
+            }
+            else
+            {
+                ngayHoaDon.GhiChu = "";
+            }
+            Servies.HoaDonSanPhamServices.InsertDataStep3ReturnId(ngayHoaDon);
+            return 1;
+        }
+        public int UpdateHoaDonSP(dynamic data, int idNgayHoaDon)
+        {
+            DataObject.HoaDonSanPham ngayHoaDon = new DataObject.HoaDonSanPham();
+            ngayHoaDon.IDNgayHoaDon = idNgayHoaDon;
+            String money = (String)data.money;
+            if (money == "")
+            {
+                money = "0";
+            }
+            ngayHoaDon.money = Convert.ToDecimal(money.Replace(".", ""));
+            ngayHoaDon.product = data.product;
+            ngayHoaDon.sugar = data.sugar;
+            ngayHoaDon.Error = data.Error;
+            ngayHoaDon.quantity = data.quantity;
+            ngayHoaDon.ID = Convert.ToInt32(data.idhdSp);
+            String price = (String)data.price;
+            if (price == "")
+            {
+                price = "0";
+            }
+            ngayHoaDon.price = Convert.ToDecimal(price.Replace(".", ""));
+            ngayHoaDon.promotionCode = data.promotionCode;
+            String total = (String)data.total;
+            if (total == "")
+            {
+                total = "0";
+            }
+            ngayHoaDon.total = Convert.ToDecimal(total.Replace(".", ""));
+            if (data.GhiChu != null && data.GhiChu != "")
+            {
+                ngayHoaDon.GhiChu = data.GhiChu;
+            }
+            else
+            {
+                ngayHoaDon.GhiChu = "";
+            }
+            Servies.HoaDonSanPhamServices.UpdateDataHoaDonSP(ngayHoaDon);
+            return 1;
+        }
+
     }
 }

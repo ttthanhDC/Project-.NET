@@ -198,9 +198,7 @@
     function operateFormatter(value, row, index) {
         return [
         '<a class="linkIn" href="javascript:void(0)" title="in hóa đơn">',
-        'In hóa đơn', '|',
-        '<a class="link" href="javascript:void(0)" title="chi tiết">',
-            'Chi tiết'
+        'In hóa đơn'
         ].join('');
     }
 

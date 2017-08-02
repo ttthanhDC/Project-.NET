@@ -55,7 +55,7 @@ namespace Servies
 
         public static int InsertPackageChiTietHoaDonReturnId(DataObject.PackageChiTietHoaDon obj)
         {
-            String Insert = "INSERT INTO PackageChiTietHoaDon (IDChiTietHD,SoNgay,Loai,TrangThai,Ship,HinhThucThanhToan,HinhThucGiaoHang,ThanhTien,IDKhachHang) VALUES (@IDChiTietHD,@SoNgay,@Loai,@TrangThai,@Ship,@HinhThucThanhToan,@HinhThucGiaoHang,@ThanhTien,@IDKhachHang);Select @@IDENTITY as newId";
+            String Insert = "INSERT INTO PackageChiTietHoaDon (IDChiTietHD,SoNgay,Loai,TrangThai,Ship,HinhThucThanhToan,HinhThucGiaoHang,ThanhTien,IDKhachHang,IDGoi) VALUES (@IDChiTietHD,@SoNgay,@Loai,@TrangThai,@Ship,@HinhThucThanhToan,@HinhThucGiaoHang,@ThanhTien,@IDKhachHang,@IDGoi);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -69,6 +69,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@HinhThucGiaoHang", obj.HinhThucGiaoHang);
             cmd.Parameters.AddWithValue("@ThanhTien", obj.ThanhTien);
             cmd.Parameters.AddWithValue("@IDKhachHang", obj.IDKhachHang);
+            cmd.Parameters.AddWithValue("@IDGoi", obj.IDGoi);
             conn.Open();
             object insertedID = cmd.ExecuteScalar();
             cmd.Connection.Close();
@@ -273,8 +274,227 @@ namespace Servies
             DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from vHoaDonStep1 where ID = " + ID + " AND ";
-            Select += " 1=1 ORDER BY NgayHD asc";
+            String Select = "Select * from vHoaDonStep2 where ID = " + ID + " AND ";
+            Select += " 1=1 ORDER BY IsMaster desc , IdNgayHD asc";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+
+        public static DataTable getvHoaDonStep3(String ID)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vHoaDonStep3 where ID = " + ID + " AND ";
+            Select += " 1=1 ";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+
+
+
+        public static void updateHoaDonStep2(int HoadonID, DataObject.HoaDon hoadon)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Update = "UPDATE HoaDon SET TongTienThuDuoc = @TongTienThuDuoc , TongTienConNo = @TongTienConNo Where ID = @ID";
+            SqlCommand cmd = new SqlCommand(Update);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@TongTienThuDuoc", hoadon.TongTienThuDuoc);
+            cmd.Parameters.AddWithValue("@TongTienConNo", hoadon.TongTienConNo);
+            cmd.Parameters.AddWithValue("@ID", HoadonID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public static void updateNgayHoaDonStep2(int HoadonID, DataObject.NgayHoaDon ngayhoadon)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Update = "UPDATE NgayHoaDon SET TrangThai = @TrangThai , GhiChu = @GhiChu , Ngay = @Ngay , TongTien = @TongTien , SoTienThu = @SoTienThu , SoTienConLai = @SoTienConLai Where ID = @ID";
+            SqlCommand cmd = new SqlCommand(Update);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@TrangThai", ngayhoadon.TrangThai);
+            cmd.Parameters.AddWithValue("@GhiChu", ngayhoadon.GhiChu);
+            cmd.Parameters.AddWithValue("@Ngay", ngayhoadon.Ngay);
+            cmd.Parameters.AddWithValue("@TongTien", ngayhoadon.TongTien);
+            cmd.Parameters.AddWithValue("@SoTienThu", ngayhoadon.SoTienThu);
+            cmd.Parameters.AddWithValue("@SoTienConLai", ngayhoadon.SoTienConLai);
+            cmd.Parameters.AddWithValue("@ID", HoadonID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        public static int getSoLanGiao(String ID)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlCommand cmd1 = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select top 1 idPCTHD from vHoaDonStep3  where ID = " + ID + " AND ";
+            Select += " 1=1 ";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object insertedID = cmd.ExecuteScalar();
+            String idPCTHD = Convert.ToString(insertedID);
+            conn.Close();
+            String Select1 = "select distinct ID from vHoaDonStep3 where idPCTHD = " + idPCTHD ;
+            cmd1 = new SqlCommand(Select1);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            table.Load(cmd1.ExecuteReader());
+            int solangiao = 0;
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                String idTbl = table.Rows[i]["ID"].ToString();
+                if (idTbl == ID){
+                    solangiao = i + 1;
+                    break;
+                }
+            }
+            conn.Close();
+
+            return solangiao;
+        }
+        public static int getSoTienChuaXuLy(String ID)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlCommand cmd1 = null;
+            SqlCommand cmd2 = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select hd.ID from NgayHoaDon nhd ";
+            Select +="left join PackageChiTietHoaDon pcthd on pcthd.ID = nhd.IDPackageChitietHD ";
+            Select +="left join ChiTietHoaDon cthd on cthd.ID = pcthd.IDChiTietHD ";
+            Select += "left join HoaDon hd on hd.ID = cthd.IDHoaDon ";
+            Select += "where  nhd.ID = " + ID;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object insertedID = cmd.ExecuteScalar();
+            String idPCTHD = Convert.ToString(insertedID);
+            conn.Close();
+            String Select1 = "select SUM(nhd.SoTienThu) from NgayHoaDon nhd ";
+            Select1 +="left join PackageChiTietHoaDon pcthd on pcthd.ID = nhd.IDPackageChitietHD ";
+            Select1 +="left join ChiTietHoaDon cthd on cthd.ID = pcthd.IDChiTietHD ";
+            Select1 +="left join HoaDon hd on hd.ID = cthd.IDHoaDon ";
+            Select1 += "where  hd.ID = " + idPCTHD + " and nhd.TrangThai = N'Hoàn thành' ";
+            cmd1 = new SqlCommand(Select1);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            object sumTotal = cmd1.ExecuteScalar();
+            Int32 solangiao = 0;
+
+            if (sumTotal.ToString() != "")
+            {
+                solangiao = Convert.ToInt32(sumTotal);
+            } 
+            conn.Close();
+            String Select2 = "select TongTien from HoaDon where ID = " + idPCTHD;
+            cmd2 = new SqlCommand(Select2);
+            cmd2.CommandType = CommandType.Text;
+            cmd2.Connection = conn;
+            conn.Open();
+            object Total = cmd2.ExecuteScalar();
+            Int32 intTotal = Convert.ToInt32(Total);
+            conn.Close();
+            Int32 result = intTotal - solangiao;
+            return result;
+        }
+        // Update KH Step V3
+        public static int updateGóiStepV3(String ID, String ghichu, String tienTangGiam)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlCommand cmd1 = null;
+            SqlCommand cmd2 = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select top 1 idPCTHD from vHoaDonStep3  where ID = " + ID ;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object insertedID = cmd.ExecuteScalar();
+            conn.Close();
+            String idPCTHD = Convert.ToString(insertedID);
+            if(tienTangGiam == "" || tienTangGiam == null){
+                tienTangGiam = "0";
+            }
+            Decimal tanggiamTien = Convert.ToDecimal(tienTangGiam);
+            String Select1 = "Update PackageChiTietHoaDon set TangGiamTien = @TangGiamTien where ID =@ID";
+            cmd1 = new SqlCommand(Select1);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            cmd1.Parameters.AddWithValue("@TangGiamTien", tanggiamTien);
+            cmd1.Parameters.AddWithValue("@ID", insertedID);
+            conn.Open();
+            cmd1.ExecuteNonQuery();
+            conn.Close();
+            String Select2 = "Update NgayHoaDon set GhiChu = @GhiChu where ID =@ID";
+            cmd2 = new SqlCommand(Select2);
+            cmd2.CommandType = CommandType.Text;
+            cmd2.Connection = conn;
+            cmd2.Parameters.AddWithValue("@GhiChu", ghichu);
+            cmd2.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
+            conn.Open();
+            cmd2.ExecuteNonQuery();
+            conn.Close();
+            return 1;
+        }
+
+        public static void deleteHoaDonSP(String ID)
+        {
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select2 = "Delete  HoaDonSanPham  where ID =@ID";
+            cmd = new SqlCommand(Select2);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+        public static void insertHoaDonSP(String ID)
+        {
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select2 = "Delete  HoaDonSanPham  where ID =@ID";
+            cmd = new SqlCommand(Select2);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public static DataTable getGoiHD()
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from HoaDonGoi";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;

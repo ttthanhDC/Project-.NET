@@ -19,5 +19,7 @@ namespace DataObject
         public String HinhThucGiaoHang { get; set; }
         public Decimal ThanhTien { get; set; }
         public int IDKhachHang { get; set; }
+        public Decimal TangGiamTien { get; set; }
+        public int IDGoi { get; set; }
     }
 }

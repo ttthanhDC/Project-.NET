@@ -18,5 +18,6 @@ namespace DataObject
 	    public string promotionCode {set; get;}
         public Decimal total { set; get; }
 	    public string GhiChu {set; get;}
+        public int Error { set; get; }
     }
 }
