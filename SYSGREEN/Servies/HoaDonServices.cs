@@ -375,16 +375,19 @@ namespace Servies
 
         public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId)
         {
-            DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from SHIPER ";
-            cmd = new SqlCommand(Select);
+            String Update = "UPDATE NgayHoaDon SET USER_ID = @User_Id, SHIPER_ID = @Shiper_Id Where ID = @ID";
+            cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@User_Id", userId);
+            cmd.Parameters.AddWithValue("@Shiper_Id", shiperId);
+            cmd.Parameters.AddWithValue("@ID", ngayHoaDonId);
             conn.Open();
-            table.Load(cmd.ExecuteReader());
+            cmd.ExecuteNonQuery();
             conn.Close();
+
         }
 
         public static DataTable getAllDataViewHoaDon()

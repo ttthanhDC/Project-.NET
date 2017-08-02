@@ -124,9 +124,8 @@
                 title: 'Mã Reservation',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<label style = "color: blue;">' + value + '</label>';
-                }
+                events: codeReserEvents,
+                formatter: codeReserFormatter
             }, {
                 field: 'name',
                 title: 'Họ và tên',
@@ -237,6 +236,19 @@
         'click .right': function (e, value, row, index) {
             //window.location = '/TheRightForUser.aspx?paramId=' + row.id;
             alert('Đơn thanh toán chuyển khoản nhưng vẫn còn nợ tiền ');
+        }
+    };
+    function codeReserFormatter(value, row, index) {
+        return [
+        '<a class="next" href="javascript:void(0)" title="chi tiết" >',
+        '' + value + ''
+        ].join('');
+    }
+
+    window.codeReserEvents = {
+        'click .next': function (e, value, row, index) {
+            window.location = '/LT002_Demo3.aspx?paramId=' + row.id;
+            //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
 </script>
