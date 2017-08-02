@@ -372,6 +372,98 @@ namespace Servies
 
             return solangiao;
         }
+
+        public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from SHIPER ";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+        }
+
+        public static DataTable getAllDataViewHoaDon()
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vHoaDonShiper ORDER BY ID_CTHD ";
+
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+
+
+        public static DataTable getDataFilterViewHoaDon(String maReservation, String ngayHoaDon, String quan,
+                String soShiper, String tenShiper, String trangThai)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vHoaDonShiper where ";
+            if (maReservation != null && maReservation != "")
+            {
+                Select += "MaReservation LIKE N'%" + maReservation + "%' AND ";
+            }
+            if (ngayHoaDon != null && ngayHoaDon != "")
+            {
+                Select += "Ngay LIKE N'%" + ngayHoaDon + "%' AND ";
+            }
+            if (quan != null && quan != "")
+            {
+                Select += "TenQuan LIKE N'%" + quan + "%' AND ";
+            }
+
+            if (soShiper != null && soShiper != "")
+            {
+                Select += "shipNo LIKE N'%" + soShiper + "%' AND ";
+            }
+
+            if (tenShiper != null && tenShiper != "")
+            {
+                Select += "shipName LIKE N'%" + tenShiper + "%' AND ";
+            }
+
+            if (trangThai != null && trangThai != "")
+            {
+                Select += "TrangThaiHD LIKE N'%" + trangThai + "%' AND ";
+            }
+            Select += "1=1 ORDER BY ID_CTHD";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+        public static DataTable getAllShiper()
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from SHIPER ";
+
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+
+
         public static int getSoTienChuaXuLy(String ID)
         {
             //vHoaDonStep1
