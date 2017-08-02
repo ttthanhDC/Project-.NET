@@ -16,7 +16,7 @@ namespace SYSGREEN
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            log4net.Config.XmlConfigurator.Configure();
+           // log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

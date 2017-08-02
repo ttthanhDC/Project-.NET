@@ -429,11 +429,11 @@ namespace SYSGREEN.Configuation
                     Int32 maxId = Servies.HoaDonServices.getMaxIdHoaDon();
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(maxId);
-                    log.Info(maxId);
+                    //log.Info(maxId);
                 }
                 catch (Exception e)
                 {
-                    log.Error("Error function getMaxIdHoaDon ",e);
+                    //log.Error("Error function getMaxIdHoaDon ",e);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }

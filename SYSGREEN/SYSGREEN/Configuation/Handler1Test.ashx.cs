@@ -101,7 +101,7 @@ namespace SYSGREEN.Configuation
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                         {
-                            Servies.HoaDonServices.updateNgayHoaDonToShiper((int)listNgayHoaDonJson[i], shiperId, userId);
+                            Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32(listNgayHoaDonJson[i]),Convert.ToInt32(shiperId),Convert.ToInt32(userId));
                         }
                     }
                     
