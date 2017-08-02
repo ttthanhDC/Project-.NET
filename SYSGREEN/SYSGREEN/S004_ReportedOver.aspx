@@ -60,7 +60,7 @@
                     title: 'Đơn',
                     align: 'center',
                     valign: 'middle',
-                    sortable: true,
+                    //sortable: true,
                     //editable: true,
 
                 }, {

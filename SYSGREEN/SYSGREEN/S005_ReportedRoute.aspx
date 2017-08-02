@@ -3,51 +3,69 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <script>
         $(function () {
-            // get data table
-            //var data = [];
-            //var formDataListUser = new FormData();
-            //formDataListUser.append('type', 'getData');
-            //var json = { 'ID': 0 };
-            //formDataListUser.append('data', JSON.stringify(json));
-            //$.ajax({
-            //    url: "Configuation/HandlerSysUser.ashx",
-            //    type: "POST",
-            //    data: formDataListUser,
-            //    contentType: false,
-            //    processData: false,
-            //    success: function (result) {
-            //        var jsonData = result;
-            //        var arr = [];
-            //        if (jsonData && jsonData.length > 0) {
-            //            for (var i = 0; i < jsonData.length ; i++) {
-            //                var objectData = jsonData[i];
-            //                var obj = {};
-            //                obj.id = objectData.ID;
-            //                obj.customer = objectData.ID;
-            //                obj.bill = objectData.ID;
-            //                obj.address = objectData.ID;
-            //                obj.typePay = objectData.ID;
-            //                obj.user = objectData.ID;
-            //                obj.time = objectData.ID;
-            //                obj.total = objectData.ID;
+            // load data 
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getALLData');
+            var json = { 'ID': 0 };
+            formDataListUser.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/Handler1Test.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.id = objectData.ID_NHD;
 
-            //                arr.push(obj);
-            //            }
-            //        }
-            //        // init table
-            //    },
-            //    error: function (err) {
-            //    }
-            //});
-            // format table
+                            obj.codeBill = objectData.MaReservation || "";
+                            var data_ngay = objectData.Ngay;
+                            var z = "";
+                            if (data_ngay) {
+                                var x = data_ngay.substr(0, 10);
+                                var y = x.split("-");
+                                var y1 = y[0];
+                                var y2 = y[1];
+                                var y3 = y[2];
+                                z = y3 + "/" + y2 + "/" + y1;
+                            }
+                            obj.date = z;
+                            obj.customer = objectData.TenKH_HD || "";
+                            obj.sdt = objectData.SoDienThoai || "";
+                            var add1 = objectData.DiaChi || "";
+                            var add2 = objectData.TenQuan || "";
+                            var add3 = add1 + " " + add2;
+                            obj.address = add3 || "";
+                            obj.money = objectData.Create_User;// chua có
+                            obj.shiper = objectData.shipName || "";
+                            arr.push(obj);
+                        }
+                    }
+                    data = arr;
+                    getDataTable(data);
+                },
+                error: function (err) {
+                }
+            });
+        });
+       
+        // getdata table 
+        var getDataTable = function (itemData) {
             $('#table').bootstrapTable({
                 columns: [{
                     field: 'codeBill',
                     title: 'Mã đơn',
                     align: 'center',
                     valign: 'middle',
-                    events: reservationEvents,
-                    formatter: reservationFormatter
+                    formatter: function (value, row, index) {
+                        return '<label style = "color: blue;">' + value + '</label>';
+                    }
                 }, {
                     field: 'customer',
                     title: 'Khách đặt',
@@ -72,7 +90,7 @@
                     // editable: true,
                 }, {
                     field: 'address',
-                    title: 'lộ trình',
+                    title: 'Lộ trình',
                     align: 'center',
                     valign: 'middle',
                     //sortable: true,
@@ -86,7 +104,7 @@
                     //editable: false
                 }, {
                     field: 'shiper',
-                    title: 'người ship',
+                    title: 'Shiper',
                     align: 'center',
                     valign: 'middle',
                     //sortable: true,
@@ -99,135 +117,9 @@
                     //sortable: true,
                     // editable: true,
                 }],
-                data: [{
-                    codeBill: '0001',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0002',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0003',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '1,000,000',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0004',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0005',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0006',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0007',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0008',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0009',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0010',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }, {
-                    codeBill: '0011',
-                    customer: 'Trần ngọc duy',
-                    sdt: '0989485398',
-                    money: '0',
-                    address: 'số 17 ngõ 109 hoàng ngân thanh xuân',
-                    date: '23/07/2017',
-                    shiper: 'Thànhdc',
-                    note: 'thu tiền'
-                }],
+                data: itemData
             });
-        });
-        // function
-        function userFormatter(data) {
-            return data.length;
-        }
-        function reservationFormatter(value, row, index) {
-            return [
-                '<a class="edit" href="javascript:void(0)" title="mã rỉevation">',
-                '' + row.codeBill + '',
-                '</a>  ',
-            ].join('');
-        }
-
-        window.reservationEvents = {
-            'click .edit': function (e, value, row, index) {
-                //window.location = '/UserManger.aspx?paramId=' + row.id;
-                alert('Sự kiện chuyển màn hình');
-            },
-            'click .remove': function (e, value, row, index) {
-                $('#table').bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                });
-            }
         };
-
-
-
     </script>
     <div style ="margin-left:10px;margin-right:10px">
          <table id="table" 

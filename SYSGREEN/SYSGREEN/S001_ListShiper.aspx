@@ -151,8 +151,6 @@
             return item;
         };
         // table
-
-
         // load data 
         var data = [];
         var formDataListUser = new FormData();
@@ -407,7 +405,7 @@
                 checkbox : true
             }, {
                 field: 'code',
-                title: 'Mã Reservation',
+                title: 'Mã đơn',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {

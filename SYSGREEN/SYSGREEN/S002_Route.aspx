@@ -175,16 +175,7 @@
     });
     // in lộ trình
     $('#btLoTrinh').on('click', function (e) {
-        var datatable = $('#table').bootstrapTable('getData');
-        var listNgayHoaDon = [];
-        if (datatable) {
-            for (var i = 0; i < datatable.length; i++) {
-                if (datatable[i].id) {
-                    listNgayHoaDon.push(datatable[i].id);
-                }
-            }
-        }
-        alert("Danh sách lộ trình" + listNgayHoaDon)
+        window.location = '/S005_ReportedRoute.aspx?paramId=' + row.shipNumber;
     });
     // in hóa đơn
     $('#btHoaDon').on('click', function (e) {
@@ -204,7 +195,7 @@
         $('#table').bootstrapTable({
             columns: [{
                 field: 'code',
-                title: 'Mã Reservation',
+                title: 'Mã đơn',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
