@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using log4net;
+//using log4net;
 
 namespace SYSGREEN.Configuation
 {
@@ -14,7 +14,7 @@ namespace SYSGREEN.Configuation
     /// </summary>
     public class HandlerInsertBill : IHttpHandler
     {
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+       // private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void ProcessRequest(HttpContext context)
         {
