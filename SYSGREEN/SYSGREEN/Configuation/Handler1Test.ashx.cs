@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using DataObject;
 
 namespace SYSGREEN.Configuation
 {
@@ -113,6 +114,55 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
+            }
+            else if (type == "saveS003InputBill")
+            {
+                try
+                {
+
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    /*
+                    obj.status = 1;// chua có
+                    obj.statusTT = 2;// chua có
+                    obj.note = "jshdfksdhfksdfsafsdf";// chua có
+                    obj.moneyPay = objectData.shipNo || "";
+                     Int32 idNHD, Int32 ID_PTCHD, String status, String HinhThucThanhToan, String tienthu, String ghiChu
+                     */
+                    for (int i = 0; i < data.length; i++)
+                    {
+                        String idNHD = (String)data[i].ID_NHD;
+                        if (idNHD == "")
+                        {
+                            idNHD = "0";
+                        }
+                        String ID_PTCHD = (String)data[i].ID_PTCHD;
+                        if (ID_PTCHD == "")
+                        {
+                            ID_PTCHD = "0";
+                        }
+                        String HinhThucThanhToan = (String)data[i].httt;
+                        String tienthu = (String)data[i].moneyPay;
+                        if (tienthu == "")
+                        {
+                            tienthu = "0";
+                        }
+                        String ghiChu = (String)data[i].note;
+
+                        Servies.HoaDonServices.saveS003InputBill(idNHD,ID_PTCHD,status,HinhThucThanhToan,tienthu,ghiChu); 
+                    }
+                        context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else
+            {
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("1");
             }
         }
 

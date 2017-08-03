@@ -597,6 +597,35 @@ namespace Servies
             table.Load(cmd.ExecuteReader());
             conn.Close();
             return table;
+            //httt
         }
-    }
+
+        public void saveS003InputBill(Int32 idNHD, Int32 ID_PTCHD, String status, String HinhThucThanhToan, String tienthu, String ghiChu)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlCommand cmd1 = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Update PackageChiTietHoaDon set HinhThucThanhToan = @HinhThucThanhToan where ID =@ID";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@HinhThucThanhToan", HinhThucThanhToan);
+            cmd.Parameters.AddWithValue("@ID", Convert.ToInt32(ID_PTCHD));
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            String Select1 = "Update NgayHoaDon set TrangThai = @TrangThai,GhiChu = @GhiChu,SoTienThu = @SoTienThu where ID =@ID";
+            cmd1 = new SqlCommand(Select1);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            cmd1.Parameters.AddWithValue("@TrangThai", status);
+            cmd1.Parameters.AddWithValue("@GhiChu", ghiChu);
+            cmd1.Parameters.AddWithValue("@SoTienThu", Convert.ToDecimal(tienthu));
+            cmd1.Parameters.AddWithValue("@ID", Convert.ToInt32(idNHD));
+            conn.Open();
+            cmd1.ExecuteNonQuery();
+            conn.Close();
+        }
+    } 
 }
