@@ -119,7 +119,7 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-
+                    String jsonData = context.Request.Form["data"].ToString();
                     dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
                     /*
                     obj.status = 1;// chua có
@@ -147,11 +147,12 @@ namespace SYSGREEN.Configuation
                             tienthu = "0";
                         }
                         String ghiChu = (String)data[i].note;
+                        String status = (String)data[i].status;
 
                         Servies.HoaDonServices.saveS003InputBill(idNHD,ID_PTCHD,status,HinhThucThanhToan,tienthu,ghiChu); 
                     }
-                        context.Response.ContentType = "application/json";
-                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1");
                 }
                 catch (Exception e)
                 {
