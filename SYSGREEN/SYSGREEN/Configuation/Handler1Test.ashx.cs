@@ -128,9 +128,9 @@ namespace SYSGREEN.Configuation
                     obj.moneyPay = objectData.shipNo || "";
                      Int32 idNHD, Int32 ID_PTCHD, String status, String HinhThucThanhToan, String tienthu, String ghiChu
                      */
-                    for (int i = 0; i < data.length; i++)
+                    for (int i = 0; i < data.Count; i++)
                     {
-                        String idNHD = (String)data[i].ID_NHD;
+                        String idNHD = (String)data[i].id;
                         if (idNHD == "")
                         {
                             idNHD = "0";

@@ -5,8 +5,13 @@
           <div class="form-horizontal">
             <div class="form-group">
                 
-                 <label for="sel1" class="col-md-1"></label>
-                <div class="col-md-2">
+                 <div class="col-md-1">
+                    <input type="text" class="form-control" name="title" id="txt_tuGio" placeholder="Từ giờ" />
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control" name="title" id="txt_denGio" placeholder="Đến giờ" />
+                </div>
+                <div class="col-md-1">
                     <input type="text" class="form-control" name="title" id="txt_code" placeholder="Mã đơn" />
                 </div>
                 <div class="col-md-2">
@@ -55,6 +60,7 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID_NHD;
+                        obj.ID_PTCHD = objectData.ID_PTCHD;
 
                         obj.code = objectData.MaReservation;
                         var data_ngay = objectData.Ngay;
@@ -68,18 +74,42 @@
                             z = y3 + "/" + y2 + "/" + y1;
                         }
                         obj.date = z;
-                        obj.status = objectData.TrangThaiNHD || "";
+                        //obj.status = objectData.TrangThaiNHD || "";
                         obj.name = objectData.TenKH_HD || "";
                         obj.phone = objectData.SoDienThoai || "";
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
                         obj.money = objectData.Create_User || "";// chua có
-                        obj.shiper = objectData.shipName || "";
-                        obj.status = 1;// chua có
-                        obj.statusTT = 2;// chua có
-                        obj.note = "jshdfksdhfksdfsafsdf";// chua có
-                        obj.moneyPay = objectData.shipNo || "";
-                        obj.assign = objectData.userName || "";
+                        
+                        if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
+                            obj.status = 1;
+                        } else if (jsonData[i].TrangThaiNHD == "Đang xử lý") {
+                            obj.status = 2;
+                        } else if (jsonData[i].TrangThaiNHD == "Hoàn thành") {
+                            obj.status = 3;
+                        } else if (jsonData[i].TrangThaiNHD == "Chờ giao lại") {
+                            obj.status = 4;
+                        } else if (jsonData[i].TrangThaiNHD == "Hủy") {
+                            obj.status = 5;
+                        } else if (jsonData[i].TrangThaiNHD == "Đang chuyển") {
+                            obj.status = 6;
+                        } else if (jsonData[i].TrangThaiNHD == "") {
+                            obj.status = 0;
+                        }
+                        // hình thúc thanh toán
+                        if (jsonData[i].HinhThucThanhToan == "Tiền mặt") {
+                            obj.httt = 1;
+                        } else if (jsonData[i].HinhThucThanhToan == "Chuyển khoản") {
+                            obj.httt = 2;
+                        } else {
+                            obj.httt = 0;
+                        }
+
+
+                        obj.httt = objectData.HinhThucThanhToan;
+                        obj.note = objectData.GhiChu_NHD;
+                        obj.moneyPay = objectData.SoTienThu || "";
+
                         // userName
                         arr.push(obj);
                     }
@@ -107,21 +137,40 @@
     // button save
     $('#btSave').on('click', function (e) {
         var datatable = $('#table').bootstrapTable('getData');
-        var listNgayHoaDon = [];
-        if (datatable) {
-            for (var i = 0; i < datatable.length; i++) {
-                if (datatable[i].id) {
-                    listNgayHoaDon.push(datatable[i].id);
-                }
-            }
+        var select1 = $('#table select.select1 option:selected');
+        var select2 = $('#table select.select2 option:selected');
+        for (var i = 0; i < datatable.length ; i++) {
+            datatable[i].status = select1[i].text;
+            datatable[i].httt = select2[i].text;
         }
-        alert("Danh sách in hóa đơn" + listNgayHoaDon)
+        var formDataListData = new FormData();
+        formDataListData.append('type', 'saveS003InputBill');
+        formDataListData.append('data', JSON.stringify(datatable));
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDataListData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                if (jsonData) {
+                    alert("Lưu data thành công");
+                } else {
+                    alert("Lưu data không thành công");
+                }
+                data = arr;
+                getDataTable(data);
+            },
+            error: function (err) {
+            }
+        });
     });
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
                 field: 'code',
-                title: 'Mã Reservation',
+                title: 'Mã đơn',
                 align: 'center',
                 valign: 'middle',
                 events: codeReserEvents,
@@ -163,51 +212,41 @@
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     if (value === 1) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 2) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2 selected = true>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 3) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3 selected = true>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 4) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4 selected = true>Giao 1 phần đơn hàng</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                    } else if (value === 5) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                    } else if (value === 6) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
                     } else {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Chờ giao lại</option><option value = 2>Đã giao</option><option value = 3>Hủy đơn</option><option value = 4>Giao 1 phần đơn hàng</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     }
                 }
             }, {
-                field: 'statusTT',
-                title: 'Tình trạng thanh toán',
+                field: 'httt',
+                title: 'Hình thức thanh toán',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     if (value === 1) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                        return '<select class="select2" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Tiền mặt</option><option value = 2>Chuyển khoản</option></select>'
                     } else if (value === 2) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2 selected = true>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
-                    } else if (value === 3) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3 selected = true>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
-                    } else if (value === 4) {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4 selected = true>Chuyển khoản</option></select>'
+                        return '<select class="select2" id="STT' + index + '"> <option value = 0></option><option value = 1>Tiền mặt</option><option value = 2 selected = true>Chuyển khoản</option></select>'
                     } else {
-                        return '<select class="form-control" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Đã thanh toán ( tiền mặt)</option><option value = 2>Chưa thanh toán ( tiền mặt)</option><option value = 3>Thanh toán 1 phần</option><option value = 4>Chuyển khoản</option></select>'
+                        return '<select class="select2" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Tiền mặt</option><option value = 2>Chuyển khoản</option></select>'
                     }
                 }
-            }, {
-                field: 'shiper',
-                title: 'Shiper',
-                align: 'center',
-                valign: 'middle',
             }, {
                 field: 'moneyPay',
                 title: 'Số TĐTT',
                 align: 'center',
                 valign: 'middle',
                 editable: true
-            }, {
-                field: 'assign',
-                title: 'Assign',
-                align: 'center',
-                valign: 'middle',
             }, {
                 field: 'note',
                 title: 'Ghi chú',

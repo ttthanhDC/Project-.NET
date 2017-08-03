@@ -5,7 +5,7 @@
           <div class="form-horizontal">
             <div class="form-group">
                 <div class="col-md-1">
-                    <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã reservation"/>
+                    <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã đơn"/>
                 </div>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_Date" placeholder="Ngày" />
@@ -13,7 +13,7 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_Distric" placeholder="Quận"/>
                 </div>
-                 <div class="col-md-1">
+                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_ShipNumber"placeholder="Shiper number" />
                 </div>
                   <div class="col-md-2">
@@ -27,7 +27,7 @@
         </div> 
         <div class="form-horizontal">
             <div class="form-group">
-                 <label for="sel1" class="col-md-1"></label>
+                 <label for="sel1" class="col-md-2"></label>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" id="btIn">In hóa đơn vận chuyển</button>
                 </div>
@@ -37,15 +37,10 @@
                 <div class="col-md-2">
                     <div class="form-group">
                           <select class="form-control" id="cbShip">
-                            
                           </select>
                         </div>
                 </div>
-                 <div class="col-md-2">
-                    <div class="form-group">
-                           <select class="form-control" id="userid"></select>
-                        </div>
-                </div>
+                 
                 <div class="col-md-1">
                     <button type="button" class="btn btn-primary" id="btChuyen">Assign </button>
                 </div>
@@ -65,8 +60,13 @@
 <script>
     // Bootstrap Table
     $(function () {
+        //<div class="col-md-2">
+                   // <div class="form-group">
+                          // <select class="form-control" id="userid"></select>
+                       // </div>
+               // </div>
         // Load Data user
-        var formDataUser = new FormData();
+        /*var formDataUser = new FormData();
         formDataUser.append('type', 'getData');
         var json = { 'ID': 0 };
         formDataUser.append('data', JSON.stringify(json));
@@ -106,7 +106,7 @@
             var item = $("<option value='" + itemData.link + "'>")
                 .append(itemData.name);
             return item;
-        };
+        };*/
         // 
         // Load Data user
         var formDataShip = new FormData();
