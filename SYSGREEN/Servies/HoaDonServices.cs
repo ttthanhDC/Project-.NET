@@ -600,7 +600,7 @@ namespace Servies
             //httt
         }
 
-        public void saveS003InputBill(String idNHD, String ID_PTCHD, String status, String HinhThucThanhToan, String tienthu, String ghiChu)
+        public static void saveS003InputBill(String idNHD, String ID_PTCHD, String status, String HinhThucThanhToan, String tienthu, String ghiChu)
         {
             DataTable table = new DataTable();
             SqlCommand cmd = null;
