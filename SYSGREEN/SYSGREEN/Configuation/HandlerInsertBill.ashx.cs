@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using Excel;
 //using log4net;
 
 namespace SYSGREEN.Configuation
@@ -412,6 +413,39 @@ namespace SYSGREEN.Configuation
                     DataTable dt = Servies.HoaDonServices.getGoiHD();
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(dt));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "uploadFile")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getvHoaDonStep1(
+                    //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+                    HttpPostedFile file = context.Request.Files[0];
+
+                    if (file.ContentLength > 0)
+                    {
+                        IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(file.InputStream);
+                        DataSet result = excelReader.AsDataSet();
+                        excelReader.IsFirstRowAsColumnNames = true;
+                        DataTable dt = result.Tables[0];
+                        for (Int32 i = 1; i < dt.Rows.Count; i++)
+                        {
+                            String x = "1";
+                        }
+                        //do something
+                    }
+                    //DataTable dt = Servies.HoaDonServices.getGoiHD();
+                    //context.Response.ContentType = "application/json";
+                    //context.Response.Write(JsonConvert.SerializeObject(dt));
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
                 }
                 catch (Exception e)
                 {

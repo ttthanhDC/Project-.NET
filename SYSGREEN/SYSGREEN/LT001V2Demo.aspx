@@ -288,12 +288,29 @@
 <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="width: 1200px;">
                 <div class="modal-content">
+                    
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">Thông tin gói đơn hàng</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                     <div class="form-group">
+                                            <label for="sel1" class="col-md-2">Import Template</label>
+                                            <div class="col-md-4">
+                                                <input type="file" class="form-control" name="title" id="txtFile"/>
+                                            </div>
+                                            <label for="sel1" class="col-md-2" id="lblSoTien"></label>
+                                            <div class="col-md-4">
+                                                <button type="button" class="btn btn-primary"  id="btnUpload">Upload</button>
+                                            </div>
+                                     </div> 
+                                </div>
+                            </div>
+                        </div>
                         <table id="tablePopup" 
                             data-id-field="undefined"
                             data-unique-id="undefined"
@@ -2028,6 +2045,32 @@
                 }
                 $('#txtTong').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
             }
+        });
+        /*****
+        ******* Upload file Excel *****
+        *******/
+        $('#btnUpload').on('click', function () {
+            var file = document.getElementById("txtFile");
+            var files = file.files;
+            var obj = {};
+            var formBill = new FormData();
+            formBill.append('type', 'uploadFile');
+            formBill.append('file', files[0]);
+            formBill.append('data', JSON.stringify(obj));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formBill,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var x = 1;
+                },
+                error: function (err) {
+
+                }
+            });
+
         });
         /*************************************************
         ******** Save Hóa đơn 
