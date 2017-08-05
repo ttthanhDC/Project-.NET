@@ -1,7 +1,21 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master"CodeBehind="LT002_Demo2.aspx.cs" Inherits="SYSGREEN.LT002_Demo2" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-<div style ="height:40px"></div>
+<div style ="height:10px"></div>
+     <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+        <div class="form-horizontal">
+            <div class="form-group">
+                 <label for="sel1" class="col-md-5"></label>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btThemGoi">Thêm gói</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btThemNgay">Thêm ngày</button>
+                </div>
+            </div> 
+        </div> 
+        
+    </div>
 <div style="margin-left : 30px; margin-right : 30px">
     <table id="table1" 
     ></table>
@@ -526,7 +540,14 @@
             
         }
     };
-    
+    // action thêm gói
+    $('#btThemGoi').on('click', function (e) {
+        window.location = '/LT002_ThemGoi.aspx?idKHParam= ' + window.idParam;
+    });
+    // action thêm ngày
+    $('#btThemNgay').on('click', function (e) {
+        window.location = '/LT002_ThemNgay.aspx?idKHParam= ' + window.idParam;
+    });
     function codeReserFormatter(value, row, index) {
         return [
         '<a class="next" href="javascript:void(0)" title="chi tiết" >',
