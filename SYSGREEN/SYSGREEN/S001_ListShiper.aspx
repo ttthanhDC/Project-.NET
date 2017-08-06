@@ -1,10 +1,54 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S001_ListShiper.aspx.cs" Inherits="SYSGREEN.S001_ListShiper" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_LoTrinh">
+         <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ngayTT" placeholder="Ngày"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_IDLoTinh" placeholder="ID lộ trình" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_shipNameTT" placeholder="Ship name"/>
+                </div>
+                 <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ShipNumberTT"placeholder="Shiper number" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ttLoTrinh"placeholder="Trạng thái Lộ trình" />
+                </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btTKLoTrinh">Tìm kiếm lộ trình</button>
+                </div>
+                
+            </div> 
+        </div> 
+    </div>
+    <div style ="margin-left:20px;margin-right:20px" id ="div_TableLoTrinh">
+          <table id="tableLoTrinh" 
+       
+        ></table>
+    </div>
+    <div style="height:20px"></div>
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_TaoLoTrinh">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel1" class="col-md-5"></label>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button>
+                </div>
+                 
+            </div> 
+        </div> 
+    </div>
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px;display : none" id ="div_sanPham">
+        <hr />
           <div class="form-horizontal">
             <div class="form-group">
-                <div class="col-md-1">
+                 <label for="sel1" class="col-md-2"></label>
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã đơn"/>
                 </div>
                 <div class="col-md-2">
@@ -13,16 +57,12 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_Distric" placeholder="Quận"/>
                 </div>
-                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumber"placeholder="Shiper number" />
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipName"placeholder="Shiper name" />
-                </div>
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái" />
                 </div>
-                
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
             </div> 
         </div> 
         <div class="form-horizontal">
@@ -32,26 +72,30 @@
                     <button type="button" class="btn btn-primary" id="btIn">In hóa đơn vận chuyển</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btBeark">Tách bill</button>
+                    <button type="button" class="btn btn-primary" id="btInLoTrinh">In lộ trình</button>
                 </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btGopDon">Gộp đơn </button>
+                </div>
+                  <label for="sel1" class="col-md-2"></label>
                 <div class="col-md-2">
                     <div class="form-group">
                           <select class="form-control" id="cbShip">
                           </select>
                         </div>
                 </div>
-                 
+                
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btChuyen">Assign </button>
+                    <button type="button" class="btn btn-primary" id="btChuyen">Lưu </button>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                    <button type="button" class="btn btn-primary" id="btSua">Sửa</button>
                 </div>
             </div> 
         </div> 
         
     </div>
-   <div style ="margin-left:20px;margin-right:20px">
+   <div style ="margin-left:20px;margin-right:20px" id="Div_tableSanPham">
        <table id="table" 
        
         ></table>
@@ -60,54 +104,7 @@
 <script>
     // Bootstrap Table
     $(function () {
-        //<div class="col-md-2">
-                   // <div class="form-group">
-                          // <select class="form-control" id="userid"></select>
-                       // </div>
-               // </div>
-        // Load Data user
-        /*var formDataUser = new FormData();
-        formDataUser.append('type', 'getData');
-        var json = { 'ID': 0 };
-        formDataUser.append('data', JSON.stringify(json));
-        $.ajax({
-            url: "Configuation/HandlerSysUser.ashx",
-            type: "POST",
-            data: formDataUser,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                var jsonData = result;
-                var arr = [];
-                if (jsonData && jsonData.length > 0) {
-                    for (var i = 0; i < jsonData.length ; i++) {
-                        var objectData = jsonData[i];
-                        var obj = {};
-                        obj.name = objectData.UserName;
-                        obj.link = objectData.ID;
-                        obj.sub = null;
-                        arr.push(obj);
-                    }
-                }
-                var data = { menu: arr };
-                var $menu = $("#userid");
-                $.each(data.menu, function () {
-                    $menu.append(
-                        getUser(this)
-                    );
-                });
-            },
-            error: function (err) {
-
-            }
-        });
-        // select box user  
-        var getUser = function (itemData) {
-            var item = $("<option value='" + itemData.link + "'>")
-                .append(itemData.name);
-            return item;
-        };*/
-        // 
+        
         // Load Data user
         var formDataShip = new FormData();
         formDataShip.append('type', 'getAllShiper');
@@ -276,7 +273,57 @@
             }
         });
     };
-    // tìm kiếm
+    // btTKLoTrinh
+    $('#btTKLoTrinh').on('click', function (e) {
+        
+      //  $('#div_TableLoTrinh')[0].style.display = "block";
+        var itemData = [
+            {
+                codeLT: '20082017-AM',
+                shipName: 'Trần ngọc duy',
+                shipNo: 'Ship 001',
+                date: '20/08/2017',
+                user: 'Duytn4',
+                status: 3,
+            }, {
+                codeLT: '21082017-AM',
+                shipName: 'Trần ngọc duy',
+                shipNo: 'Ship 001',
+                date: '20/08/2017',
+                user: 'Duytn4',
+                status: 2,
+            }, {
+                codeLT: '22082017-AM',
+                shipName: 'Trần ngọc duy',
+                shipNo: 'Ship 001',
+                date: '20/08/2017',
+                user: 'Duytn4',
+                status: 1,
+            }, {
+                codeLT: '23082017-AM',
+                shipName: 'Trần ngọc duy',
+                shipNo: 'Ship 001',
+                date: '20/08/2017',
+                user: 'Duytn4',
+                status: 3,
+            }, {
+                codeLT: '24082017-AM',
+                shipName: 'Trần ngọc duy',
+                shipNo: 'Ship 001',
+                date: '20/08/2017',
+                user: 'Duytn4',
+                status: 2,
+            }
+        ];
+        getDataTableLoTrinh(itemData);
+        
+    });
+    $('#btTaoLoTrinh').on('click', function (e) {
+        $('#div_sanPham')[0].style.display = "block";
+        //$('#Div_tableSanPham')[0].style.display = "block";
+        
+    });
+    //// tìm kiếm 
     $('#btSearch').on('click', function (e) {
         var data1 = [];
         var formDatasearch = new FormData();
@@ -285,15 +332,15 @@
         var maReservation= $('#txt_reservation').val();
         var ngayHoaDon = $('#txt_Date').val();
         var quan = $('#txt_Distric').val();
-        var soShiper = $('#txt_ShipNumber').val();
-        var tenShiper = $('#txt_ShipName').val();
+       // var soShiper = $('#txt_ShipNumber').val();
+       // var tenShiper = $('#txt_ShipName').val();
         var trangThai = $('#txt_status').val();
 
         formDatasearch.append('maReservation', maReservation);
         formDatasearch.append('ngayHoaDon', ngayHoaDon);
         formDatasearch.append('quan', quan);
-        formDatasearch.append('soShiper', soShiper);
-        formDatasearch.append('tenShiper',tenShiper);
+        formDatasearch.append('soShiper', "");
+        formDatasearch.append('tenShiper',"");
         formDatasearch.append('trangThai', trangThai);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
@@ -394,7 +441,59 @@
             }
         });
     });
-    // getdata table 
+    // getdata table lộ trình
+    var getDataTableLoTrinh = function (itemData) {
+        $('#tableLoTrinh').bootstrapTable({
+            columns: [{
+                field: 'codeLT',
+                title: 'Mã lộ trình',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<label style = "color: blue;">' + value + '</label>';
+                }
+            }, {
+                field: 'shipName',
+                title: 'Ship Name',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'shipNo',
+                title: 'Ship Number',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'date',
+                title: 'Ngày tạo lộ trình',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'user',
+                title: 'User tạo lộ trình',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'status',
+                title: 'Trạng thái',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value === 1) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
+                    } else if (value === 2) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2  selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
+                    } else if (value === 3) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3  selected = true>Hoàn thành</option></select>'
+                    } else {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0  selected = true></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
+                    }
+                }
+            }],
+
+            data: itemData
+        });
+    };
+    // getdata table san phẩm
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
