@@ -163,7 +163,7 @@
         function loadDataHoaDon() {
             var formatDateTime = function (value) {
                 if (value && value != "") {
-                    var date = new Date(value);
+                    var date = new Date(value.split("/")[1] + "/" + value.split("/")[0] + "/" + value.split("/")[2]);
                     var d = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
                     var m = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
                     var y = date.getFullYear();
@@ -400,6 +400,9 @@
                             tabIndex = jsonData[i].tabIndex;
                         }
                         else{
+                            if (jsonData[i].Loai == 2) {
+                                obj.typeBill = "Đơn lẻ";
+                            }
                             if (jsonData[i].Loai == loaiGoi && check) {
                                 // Không làm gì
                             } else {
@@ -605,11 +608,11 @@
     };
     // action thêm gói
     $('#btThemGoi').on('click', function (e) {
-        window.location = '/LT002_ThemGoi.aspx?idKHParam= ' + window.idParam;
+        window.location = '/LT002_ThemGoi.aspx?idHD=' + window.idParam;
     });
     // action thêm ngày
     $('#btThemNgay').on('click', function (e) {
-        window.location = '/LT002_ThemNgay.aspx?idKHParam= ' + window.idParam;
+        window.location = '/LT002_ThemNgay.aspx?idHD=' + window.idParam;
     });
     function codeReserFormatter(value, row, index) {
         return [
