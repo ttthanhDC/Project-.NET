@@ -377,7 +377,7 @@ namespace SYSGREEN.Configuation
                     sysCustomer.ID = (int)infoKH.idKH;
                     sysCustomer.PhoneNumber = (String)infoKH.soDienThoai;
                     sysCustomer.MaQuan = (String)infoKH.maquan;
-                    Servies.SysCustomerServices.UpdateData(sysCustomer);
+                    Servies.SysCustomerServices.UpdateDataTableKH(sysCustomer);
                     /*** Update Gói *****/
                     Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam);
                     /** Update, Delete , Insert Sản phẩm ******/
@@ -532,6 +532,7 @@ namespace SYSGREEN.Configuation
                 {
                     sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
                 }
+                
                 IdKhachHang = Servies.SysCustomerServices.InsertDataReturnId(sysCustomer);
             }
             return IdKhachHang;
@@ -549,6 +550,7 @@ namespace SYSGREEN.Configuation
             {
                 sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
             }
+            sysCustomer.NgayHoaDonId = NgayHoaDon;
             int IdKhachHang = Servies.SysCustomerServices.InsertDataKHNgayReturnId(sysCustomer);
             return IdKhachHang;
         }

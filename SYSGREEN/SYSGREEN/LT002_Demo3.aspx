@@ -486,10 +486,14 @@
                             align: 'center',
                             valign: 'middle',
                             formatter: function (value, row, index) {
-                                if (row.Error == 1) {
-                                    return '<input type="checkbox" class="errorP" checked="checked" />';
+                                if (value === 1) {
+                                    return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Vỡ chai</option><option value = 2>Sữa lỗi</option><option value = 3>Sữa đổ</option></select>'
+                                } else if (value === 2) {
+                                    return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Vỡ chai</option><option value = 2  selected = true>Sữa lỗi</option><option value = 3>Sữa đổ</option></select>'
+                                } else if (value === 3) {
+                                    return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Vỡ chai</option><option value = 2>Sữa lỗi</option><option value = 3  selected = true>Sữa đổ</option></select>'
                                 } else {
-                                    return '<input type="checkbox"  class="errorP" />';
+                                    return '<select class="select1" id="Bill' + index + '"> <option value = 0  selected = true></option><option value = 1>Vỡ chai</option><option value = 2>Sữa lỗi</option><option value = 3>Sữa đổ</option></select>'
                                 }
                             }
                         },
@@ -687,7 +691,8 @@
 
                 }
             });
-        };
+    };
+        
         function loadSoLanGiao() {
             var formSource = new FormData();
             var json = { 'ID': 0 };
@@ -769,10 +774,19 @@
         objGoi.idngayHD = window.idNgayHoaDonParam;
         //window.lstIdDelete
         var data = $('#table').bootstrapTable('getData');
-        var lstError = $('#table').find('input.errorP[type="checkbox"]');
+        var lstError = $('#table select.select1 option:selected');
+        //var lstError = $('#table').find('input.errorP[type="checkbox"]');
         var lstSurgar = $('#table').find('input.surgarP[type="checkbox"]');
         for (var i = 0; i < data.length ; i++) {
-            data[i].Error = lstError[i].checked ? 1 : 0;
+            if (lstError[i].text === "Vỡ chai") {
+                data[i].Error = 1;
+            } else if (lstError[i].text === "Sữa lỗi") {
+                data[i].Error = 2;
+            } else if (lstError[i].text === "Sữa đổ") {
+                data[i].Error = 3;
+            } else {
+                data[i].Error = 0;
+            }
             data[i].sugar = lstSurgar[i].checked ? 1 : 0;
         }
         var json = {
@@ -794,7 +808,19 @@
             }
         });
     });
-    
+    var getErrorData = function (itemData) {
+        var Error = 0;
+        if (itemData === "Vỡ chai") {
+            Error = 1;
+        } else if (itemData === "Sữa lỗi") {
+            Error = 2;
+        } else if (itemData === "Sữa đổ") {
+            Error = 3;
+        } else {
+            Error = 0;
+        }
+        return Error;
+    };
 
 </script>
     </asp:Content>

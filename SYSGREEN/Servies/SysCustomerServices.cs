@@ -94,6 +94,25 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+        // duytn4 edit
+        public static void UpdateDataTableKH(DataObject.SysCustomer obj)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Update = "UPDATE KhachHangNgay SET CustomerName = @CustomerName, PhoneNumber = @PhoneNumber, Email = @Email, BirthDay = @BirthDay, Address = @Address,MaQuan = @MaQuan Where ID = @ID";
+            SqlCommand cmd = new SqlCommand(Update);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@CustomerName", obj.CustomerName);
+            cmd.Parameters.AddWithValue("@PhoneNumber", obj.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", obj.Email);
+            cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
+            cmd.Parameters.AddWithValue("@Address", obj.Address);
+            cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
+            cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
 
         public static void DeleteData(Int32 Id)
         {
@@ -194,7 +213,7 @@ namespace Servies
             SqlConnection conn = Common.Connection.SqlConnect();
             if (Id > 0)
             {
-                Select = "Select * from SYS_CUSTOMER Where ID = @ID";
+                Select = "Select * from KhachHangNgay Where ID = @ID";
 
                 cmd = new SqlCommand(Select);
                 cmd.CommandType = CommandType.Text;
