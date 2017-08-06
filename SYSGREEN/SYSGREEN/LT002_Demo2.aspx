@@ -322,11 +322,12 @@
                         var index = i +1;
                         var obj = {
                             id: index,
-                            IDHD: jsonData[i].IDHD,
+                            IDHD: jsonData[i].ID,
                             IdCTHD: jsonData[i].IdCTHD,
-                            IdPCTHD: jsonData[i].IdCTHD,
+                            IdPCTHD: jsonData[i].IdPCTHD,
                             IdNgayHD: jsonData[i].IdNgayHD,
-                            idKH : jsonData[i].IdKH,
+                            idKH: jsonData[i].IdKH,
+                            ThanhTien: jsonData[i].ThanhTien,
                             codeReser: '',
                             name: jsonData[i].TenKH,
                             sdt: jsonData[i].SoDienThoai,
@@ -532,7 +533,28 @@
     window.operateEventsTachBill = {
         'click .product': function (e, value, row, index) {
             // window.location = '/UserManger.aspx?paramId=' + row.id;
-            alert('TachBill');
+            //alert('TachBill');
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            formSource.append('type', 'tachbill');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('idHD', row.IDHD);
+            formSource.append('IdCTHD', row.IdCTHD);
+            formSource.append('IdPCTHD', row.IdPCTHD);
+            formSource.append('IdNgayHD', row.IdNgayHD);
+            formSource.append('ThanhTien', row.ThanhTien);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var hd = result < 10 ? "0" + result : result;
+                    alert("Hóa đơn Mã HD " + hd + "được sinh ra từ tách bill thành công");
+                    loadContent();
+                }
+            });
         }
     };
     window.operateEventsKH = {

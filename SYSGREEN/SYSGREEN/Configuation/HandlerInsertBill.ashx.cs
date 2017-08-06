@@ -457,6 +457,29 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
+            }//tachbill
+            else if (type == "tachbill")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idHD = context.Request.Form["idHD"].ToString();
+                    String IdCTHD = context.Request.Form["IdCTHD"].ToString();
+                    String IdPCTHD = context.Request.Form["IdPCTHD"].ToString();
+                    String IdNgayHD = context.Request.Form["IdNgayHD"].ToString();
+                    String ThanhTien = context.Request.Form["ThanhTien"].ToString();
+                    Int32 IdHDNew = Servies.HoaDonServices.getTachBill(idHD,IdCTHD,IdPCTHD,IdNgayHD,ThanhTien);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(IdHDNew);
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
             }
             else if (type == "getMaxIdHoaDon")
             {
