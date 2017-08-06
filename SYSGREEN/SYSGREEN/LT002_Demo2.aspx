@@ -284,6 +284,7 @@
                             align: 'center',
                             valign: 'middle'
                         },
+                        
                         {
                             field: 'ghichu',
                             title: 'Ghi chú',
@@ -291,6 +292,7 @@
                             valign: 'middle',
                             //editable: true,
                         },
+                        /*
                         {
                             field: 'operate',
                             title: 'In đơn',
@@ -298,11 +300,19 @@
                             valign: 'middle',
                             events: operateEvents,
                             formatter: operateFormatter
+                        }, */{
+                            field: 'operate',
+                            title: 'Bill',
+                            align: 'center',
+                            valign: 'middle',
+                            events:operateEventsTachBill,
+                            formatter: operateFormatterTachBill
                         }]
                     });
                     //Load Data Grid
                     var data = [];
                     var loaiGoi = -1;
+                    var loaiGoiTemp = -1;
                     var tabIndex = -1;
                     var check = false;
                     var totalTienConLai = 0;
@@ -313,6 +323,8 @@
                         var obj = {
                             id: index,
                             IDHD: jsonData[i].IDHD,
+                            IdCTHD: jsonData[i].IdCTHD,
+                            IdPCTHD: jsonData[i].IdCTHD,
                             IdNgayHD: jsonData[i].IdNgayHD,
                             idKH : jsonData[i].IdKH,
                             codeReser: '',
@@ -321,7 +333,7 @@
                             district: jsonData[i].TenQuan,
                             address: jsonData[i].DiaChi,
                             status: -1,
-                            typeBill: -1,
+                            typeBill: '',
                             date: formatDateTime(jsonData[i].NgayHD),
                             money: '',
                             IdNgayHD: jsonData[i].IdNgayHD,
@@ -353,13 +365,9 @@
                             obj.status = 0;
                         }*/
                         // Type BIll
-                        if (jsonData[i].Loai == 1) {
-                            obj.typeBill = "Đơn gói";
-                        }else if (jsonData[i].Loai == 2) {
-                            obj.typeBill = "Đơn lẻ";
-                        }
+                        
 
-
+                        loaiGoiTemp = jsonData[i].Loai;
                         if (i == 0) {
                             totalTong = jsonData[i].TongTien;
                             if (jsonData[i].TrangThai != "Hoàn thành") {
@@ -382,7 +390,13 @@
                                 obj.sotienconlai = tienconlai.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                 totalTienConLai += tienconlai;
                             }
-                           
+                            if (jsonData[i].Loai == 1) {
+                                obj.typeBill = jsonData[i].TenGoi;
+                            } else if (jsonData[i].Loai == 2) {
+                                obj.typeBill = "Đơn lẻ";
+                            }
+                            loaiGoi = jsonData[i].Loai;
+                            tabIndex = jsonData[i].tabIndex;
                         }
                         else{
                             if (jsonData[i].Loai == loaiGoi && check) {
@@ -390,11 +404,21 @@
                             } else {
                                 if (jsonData[i].Loai != loaiGoi) {
                                     //obj.money = jsonData[i].ThanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    if (jsonData[i].Loai == 1) {
+                                        obj.typeBill = jsonData[i].TenGoi;
+                                    } else if (jsonData[i].Loai == 2) {
+                                        obj.typeBill = "Đơn lẻ";
+                                    }
                                     loaiGoi = jsonData[i].Loai;
                                 }
                                 if (jsonData[i].Loai == loaiGoi && jsonData[i].tabIndex != tabIndex) {
+                                    if (jsonData[i].Loai == 1) {
+                                        obj.typeBill = jsonData[i].TenGoi;
+                                    } else if (jsonData[i].Loai == 2) {
+                                        obj.typeBill = "Đơn lẻ";
+                                    }
                                     //obj.money = jsonData[i].ThanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                    //tabIndex = jsonData[i].tabIndex;
+                                    tabIndex = jsonData[i].tabIndex;
                                 }
                                 if (jsonData[i].TrangThai == "Hoàn thành") {
                                     if (totalTienConLai > 0) {
@@ -417,6 +441,9 @@
                                 }
                             }
                         }
+
+                        
+                        
                         //Đang chuyển
                         data.push(obj);
                     }
@@ -467,23 +494,30 @@
 
     });
 
-    function operateFormatter(value, row, index) {
-        return [
-        '<a class="linkIn" href="javascript:void(0)" title="in hóa đơn">',
-        'IN'
-        ].join('');
+
+    function operateFormatterTachBill(value, row, index) {
+        if (row.typeBill != '') {
+            return [
+           '<a class="product" href="javascript:void(0)" title="In Hóa đơn">',
+           'Tách Bill'
+                ].join('');
+        } else {
+            return '';
+        }
+       
+        
     }
 
     function operateFormatter(value, row, index) {
         return [
-        '<a class="linkIn" href="javascript:void(0)" title="Xem thông tin khách hàng">',
-        'IN'
+        '<a class="linkIn" href="javascript:void(0)" title="In Hóa đơn">',
+        'Print'
         ].join('');
     }
 
     function operateFormatterKH(value, row, index) {
         return [
-        '<a class="linkIn" href="javascript:void(0)" title="Xem thông tin khách hàng">',
+        '<a class="linkInKH" href="javascript:void(0)" title="Xem thông tin khách hàng">',
         '' + value + ''
         ].join('');
     }
@@ -494,8 +528,15 @@
             alert('Action In');
         }
     };
+
+    window.operateEventsTachBill = {
+        'click .product': function (e, value, row, index) {
+            // window.location = '/UserManger.aspx?paramId=' + row.id;
+            alert('TachBill');
+        }
+    };
     window.operateEventsKH = {
-        'click .linkIn': function (e, value, row, index) {
+        'click .linkInKH': function (e, value, row, index) {
             // window.location = '/UserManger.aspx?paramId=' + row.id;
             var formatDateTime = function (value) {
                 if (value && value != "") {

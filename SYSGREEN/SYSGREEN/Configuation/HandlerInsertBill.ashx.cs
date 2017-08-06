@@ -109,6 +109,7 @@ namespace SYSGREEN.Configuation
                                     if (detailMaster[j].deliveryDate != "")
                                     {
                                         idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
+                                        InsertKhachHangNgay(idNgayHD, dataHD[k]);
                                     }
                                     else
                                     {
@@ -122,6 +123,7 @@ namespace SYSGREEN.Configuation
                                     if (j == 0)
                                     {
                                         idNgayHDLe = InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, (String)dataHD[k].ngayGiaoHangLe);
+                                        InsertKhachHangNgay(idNgayHD, dataHD[k]);
                                         InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
                                         //InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, dataHD[k].ngayGiaoHangLe);
                                     }
@@ -435,17 +437,20 @@ namespace SYSGREEN.Configuation
                         DataSet result = excelReader.AsDataSet();
                         excelReader.IsFirstRowAsColumnNames = true;
                         DataTable dt = result.Tables[0];
+                        /*
                         for (Int32 i = 1; i < dt.Rows.Count; i++)
                         {
                             String x = "1";
-                        }
+                        }*/
                         //do something
+                        context.Response.ContentType = "application/json";
+                        context.Response.Write(JsonConvert.SerializeObject(dt));
                     }
                     //DataTable dt = Servies.HoaDonServices.getGoiHD();
                     //context.Response.ContentType = "application/json";
                     //context.Response.Write(JsonConvert.SerializeObject(dt));
-                    context.Response.ContentType = "text/plain";
-                    context.Response.Write("Error");
+                    //context.Response.ContentType = "text/plain";
+                   // context.Response.Write("Error");
                 }
                 catch (Exception e)
                 {
@@ -532,6 +537,22 @@ namespace SYSGREEN.Configuation
             return IdKhachHang;
         }
 
+        public int returnIdKHNgay(string soDienThoai, string hoten, string email, string diaChi, string maquan, string ngaySinh,int NgayHoaDon)
+        {
+            DataObject.KhachHangNgay sysCustomer = new DataObject.KhachHangNgay();
+            sysCustomer.PhoneNumber = soDienThoai;
+            sysCustomer.CustomerName = hoten;
+            sysCustomer.Email = email;
+            sysCustomer.Address = diaChi;
+            sysCustomer.MaQuan = maquan;
+            if (ngaySinh != "")
+            {
+                sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
+            }
+            int IdKhachHang = Servies.SysCustomerServices.InsertDataKHNgayReturnId(sysCustomer);
+            return IdKhachHang;
+        }
+
         public int InsertChiTietHoaDonReturnId(dynamic infoBill, int hoadonId, int IdKhachHang,bool isMaster)
         {
             DataObject.ChiTietHoaDon chitietHD = new DataObject.ChiTietHoaDon();
@@ -558,6 +579,8 @@ namespace SYSGREEN.Configuation
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertChiTietHoaDonReturnId(chitietHD);
             return IdChiTietHoaHD;
         }
+
+        
 
         public int InsertPackageChiTietHoaDonReturnId(dynamic data,int hoaDonChiTietId)
         {
@@ -593,6 +616,17 @@ namespace SYSGREEN.Configuation
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
+        }
+        public void InsertKhachHangNgay(int idNgayHoaDon,dynamic data)
+        {
+            String hoten1 = data.infoKH.hoTen;
+            String maKH1 = data.infoKH.maKH;
+            String ngaySinh1 = data.infoKH.ngaySinh;
+            String soDienThoai1 = data.infoKH.soDienThoai;
+            String email1 = data.infoKH.email;
+            String diaChi1 = data.infoKH.diaChi;
+            String maquan1 = data.infoKH.maquan;
+            returnIdKHNgay(soDienThoai1, hoten1, email1, diaChi1, maquan1, ngaySinh1, idNgayHoaDon);
         }
         public int InsertNgayHoaDonLeReturnId(dynamic data, int idPackageHD,String ngayHoaDonLe)
         {

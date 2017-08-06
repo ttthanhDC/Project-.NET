@@ -311,6 +311,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                     <div class="form-group">
+                                            <label for="sel1" class="col-md-2">Promition Code</label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="title" id="txtPromotionCode"/>
+                                            </div>
+                                            <label for="sel1" class="col-md-2" id="Tổng tiền gói"></label>
+                                            <div class="col-md-4">
+                                                <input type="text" class="form-control" name="title" id="txtTotalTienGoi" disabled="disabled"/>
+                                            </div>
+                                     </div> 
+                                </div>
+                            </div>
+                        </div>
                         <table id="tablePopup" 
                             data-id-field="undefined"
                             data-unique-id="undefined"
@@ -370,6 +386,8 @@
         window.dataGoi = [];
         window.dataGlobal = [];
         window.indexTab = 0;
+        window.totalTienGoi = 0;
+        window.indexGoi = -1;
         window.isMasterTab = 0;
         window.TempTab = [{ 'txtHoTen': '', 'txtNgaySinh': '', 'txtSoDienThoai': '', 'txtEmailCustomer': '', 'txtDiaChiCustomer': '', 'cb_quan': '' }];
         /************************************************
@@ -1225,6 +1243,7 @@
                     obj.fLoaiGoi = $('#cb_OrderType2 :selected').text();
                     obj.fLoaiGoiId = $('#cb_OrderType2').val();
                     obj.fPhiShip = "0";
+                    obj.fPromotionCode = "0";
                     for (var k = 0; k < window.dataGoi.length ; k++) {
                         if (window.dataGoi[k].Name.trim() == obj.fLoaiGoi.trim()) {
                             obj.fThanhTien = window.dataGoi[k].Tien.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1237,6 +1256,7 @@
                     obj.fLoaiGoiId = 1;
                     obj.fPhiShip = $('#txt_PhiShip').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + " VNĐ";
                     obj.fThanhTien = "0";
+                    obj.fPromotionCode = "0";
                 }
 
                 obj.fLoaiThanhToan = $('#cb_PayType :selected').text();
@@ -1260,7 +1280,7 @@
                 infoKHPackage.soDienThoai = document.getElementById('txtSoDienThoai1').value;
                 infoKHPackage.email = document.getElementById('txtEmailCustomer1').value;
                 infoKHPackage.diaChi = document.getElementById('txtDiaChiCustomer1').value;
-                infoKHPackage.maquan = $('cb_quan1').val();
+                infoKHPackage.maquan = $('#cb_quan1').val();
                 infoKHPackage.billId = 0;
                 obj.infoKH = infoKHPackage;
                 //Harcode
@@ -1285,7 +1305,7 @@
                             infoKH.soDienThoai = document.getElementById('txtSoDienThoai').value;
                             infoKH.email = document.getElementById('txtEmailCustomer').value;
                             infoKH.diaChi = document.getElementById('txtDiaChiCustomer').value;
-                            infoKH.maquan = $('cb_quan').val();
+                            infoKH.maquan = $('#cb_quan').val();
                             infoKH.billId = 0;
                         } else {
                             infoKH.maKH = $('#txtMaKH1').val();
@@ -1295,7 +1315,7 @@
                             infoKH.soDienThoai = document.getElementById('txtSoDienThoai1').value;
                             infoKH.email = document.getElementById('txtEmailCustomer1').value;
                             infoKH.diaChi = document.getElementById('txtDiaChiCustomer1').value;
-                            infoKH.maquan = $('cb_quan1').val();
+                            infoKH.maquan = $('#cb_quan1').val();
                             infoKH.billId = 0;
                         }
                         window.dataGlobal.push({ 'tabIndex': window.indexTab, 'data': [obj], 'infoKH': infoKH, 'isMaster': window.indexTab == 0 ? true : false });
@@ -1312,7 +1332,7 @@
                         infoKH.soDienThoai = document.getElementById('txtSoDienThoai').value;
                         infoKH.email = document.getElementById('txtEmailCustomer').value;
                         infoKH.diaChi = document.getElementById('txtDiaChiCustomer').value;
-                        infoKH.maquan = $('cb_quan').val();
+                        infoKH.maquan = $('#cb_quan').val();
                         infoKH.billId = 0;
                     } else {
                         infoKH.maKH = $('#txtMaKH1').val();
@@ -1322,7 +1342,7 @@
                         infoKH.soDienThoai = document.getElementById('txtSoDienThoai1').value;
                         infoKH.email = document.getElementById('txtEmailCustome1r').value;
                         infoKH.diaChi = document.getElementById('txtDiaChiCustomer1').value;
-                        infoKH.maquan = $('cb_quan1').val();
+                        infoKH.maquan = $('#cb_quan1').val();
                         infoKH.billId = 0;
                     }
                     window.dataGlobal.push({ 'tabIndex': window.indexTab, 'data': [obj], 'infoKH': infoKH, 'isMaster': $("#chkCheckBox").prop('checked')});
@@ -1360,7 +1380,7 @@
                     var n = row.fLoaiGoiId;
                     var tien = 0;
                     //var idGoi = 0;
-                    
+                    window.indexGoi = row.billId;
                     for (var m = 0; m < n; m++) {
                         var index = m + 1;
                         var obj = {};
@@ -1386,6 +1406,8 @@
                     $table.bootstrapTable('load', dataTemp);
                     
                 }
+                $('#txtTotalTienGoi').val(row.fThanhTien.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                $('#txtPromotionCode').val(row.fPromotionCode);
                 $('#modalTable').modal('show');
                 disableEditableTable();
             } else if (row.fLoaiHinhDonId == 2) { // Lẻ
@@ -1641,7 +1663,33 @@
                 
             });
         };
+        $('#txtPromotionCode').on('change', function () {
+            var formpromotionCode = new FormData();
+            var json = { 'Code': $('#txtPromotionCode').val() };
+            formpromotionCode.append('type', 'getDataByPromotionCode');
+            formpromotionCode.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysPromotion.ashx",
+                type: "POST",
+                data: formpromotionCode,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        var objectData = jsonData[0];
+                        var percent = Number(objectData.Promotion_Percent) / 100;
+                        var total = $('#txtTotalTienGoi').val().toString().split('.').join('');
+                        total = total == "" ? Number('0') : Number(total);
+                        $('#txtTotalTienGoi').val((total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                    }
+                },
+                error: function (err) {
 
+                }
+            });
+        });
         function disableEditableTable() {
             var $table = $('#tablePopup');
             $tableRows = $table.find('tbody tr');
@@ -1755,7 +1803,8 @@
                     for (var k = 0; k < window.dataGlobal[m].data.length ; k++) {
                         if (check) {
                             if (window.dataGlobal[m].data[k].billId == dataPopup[0].parentBillId) {
-                                //window.dataGlobal[m].data[k].fThanhTien = totalMoneyPopup.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                window.dataGlobal[m].data[k].fThanhTien = $('#txtTotalTienGoi').val().toString().split('.').join('').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                window.dataGlobal[m].data[k].fPromotionCode = $('#txtPromotionCode').val();
                                 window.dataGlobal[m].data[k].detalMaster = dataPopup;
                                 window.dataGlobal[m].data[k].detailCustomer = objCustomer;
                                 $table.bootstrapTable('updateRow', { index: window.dataGlobal[m].data[k].id - 1, row: window.dataGlobal[m].data[k] });
@@ -2050,6 +2099,17 @@
         ******* Upload file Excel *****
         *******/
         $('#btnUpload').on('click', function () {
+            var formatDateTime = function (value) {
+                if (value && value != "") {
+                    var date = new Date(value);
+                    var d = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
+                    var m = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
+                    var y = date.getFullYear();
+                    return d + '/' + m + '/' + y;
+                } else {
+                    return ''
+                }
+            };
             var file = document.getElementById("txtFile");
             var files = file.files;
             var obj = {};
@@ -2064,7 +2124,53 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    var x = 1;
+                    var x = result;
+                    var index = 0;
+                    var dataTemp = [];
+                    for(var i = 1; i < result.length ; i++){
+                        var obj = {};
+                        if (result[i].Column1 && result[i].Column1 != "") {
+                            index = i;
+                            obj.id = index;
+                            obj.parent = true;
+                            obj.parentBillId = window.indexGoi;
+                            obj.parentId = -1;
+                            obj.deliveryDate = formatDateTime(result[i].Column1);
+                            obj.thugiaohang = convertDateToDay(result[i].Column1);
+                            obj.product = '';
+                            obj.sugar = 0;
+                            obj.quantity = '';
+                            obj.price = '';
+                            obj.money = '';
+                            obj.promotionCode = '';
+                            obj.total = '';
+                            obj.test = '';
+                            obj.operate = '1';
+                            obj.thugiaohang = '';
+                            obj.note = '';
+                        } else {
+                            obj.id = i;
+                            obj.parent = false;
+                            obj.parentBillId = window.indexGoi;
+                            obj.parentId = index;
+                            obj.deliveryDate = "";
+                            obj.thugiaohang = "";
+                            obj.product = result[i].Column3;
+                            obj.sugar = result[i].Column6 ? result[i].Column6 : 0 ;
+                            obj.quantity = result[i].Column4;
+                            obj.price = '0';
+                            obj.money = '0';
+                            obj.promotionCode = '0';
+                            obj.total = '0';
+                            obj.test = '';
+                            obj.operate = '0';
+                            obj.thugiaohang = '';
+                            obj.note = '';
+                        }
+                        dataTemp.push(obj);
+                    }
+                    $('#tablePopup').bootstrapTable('load', dataTemp);
+                    disableEditableTable();
                 },
                 error: function (err) {
 

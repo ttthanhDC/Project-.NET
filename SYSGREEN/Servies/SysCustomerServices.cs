@@ -55,6 +55,27 @@ namespace Servies
             return IdKhachHang;
         }
 
+        public static int InsertDataKHNgayReturnId(DataObject.KhachHangNgay obj)
+        {
+            String Insert = "INSERT INTO KhachHangNgay (CustomerName,PhoneNumber,Email,BirthDay,Address,MaQuan,NgayHoaDonId) VALUES (@CustomerName,@PhoneNumber,@Email,@BirthDay,@Address,@MaQuan,@NgayHoaDonId);SELECT SCOPE_IDENTITY();";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@CustomerName", obj.CustomerName);
+            cmd.Parameters.AddWithValue("@PhoneNumber", obj.PhoneNumber);
+            cmd.Parameters.AddWithValue("@Email", obj.Email);
+            cmd.Parameters.AddWithValue("@BirthDay", obj.BirthDay);
+            cmd.Parameters.AddWithValue("@Address", obj.Address);
+            cmd.Parameters.AddWithValue("@MaQuan", obj.MaQuan);
+            cmd.Parameters.AddWithValue("@NgayHoaDonId", obj.NgayHoaDonId);
+            conn.Open();
+            int modified = cmd.ExecuteNonQuery();
+            cmd.Parameters.Clear();
+            conn.Close();
+            return 1;
+        }
+
         public static void UpdateData(DataObject.SysCustomer obj)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
