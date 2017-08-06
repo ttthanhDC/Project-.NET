@@ -625,5 +625,174 @@ namespace Servies
             cmd1.ExecuteNonQuery();
             conn.Close();
         }
+
+        public static int getTachBill(String idHD, String IdCTHD, String IdPCTHD, String IdNgayHD,String ThanhTien)
+        {
+            SqlCommand cmd = null;
+            SqlCommand cmdUpdateHoaDon = null;
+            SqlCommand cmdInsertPCTHD = null;
+            SqlCommand cmdUpdatePCTHD = null;
+            int IdHDNew = -1;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from HoaDon where ID = " + idHD;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.HoaDon obj = new DataObject.HoaDon();
+                    obj.IDKhachHang = Int32.Parse(oReader["IDKhachHang"].ToString());
+                    obj.IDNguon = Int32.Parse(oReader["IDNguon"].ToString());
+                    obj.TongTien = Convert.ToDecimal(ThanhTien);
+                    obj.TongTienThuDuoc = Convert.ToDecimal("0");
+                    obj.TongTienConNo = Convert.ToDecimal("0");
+                    obj.ChietKhau = Convert.ToDecimal(oReader["ChietKhau"].ToString());
+                    obj.TrangThai = oReader["TrangThai"].ToString();
+                    if (oReader["NgayTao"].ToString() != "" && oReader["NgayTao"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", DateTime.Now.ToShortDateString());
+                        obj.NgayTao = DateTime.Parse(createDate);
+                    }
+                    obj.NguoiTao = oReader["NguoiTao"].ToString();
+                    obj.TongSoNgay = Int32.Parse(oReader["TongSoNgay"].ToString());
+                    Decimal TongTienHD = Convert.ToDecimal(oReader["TongTien"].ToString()) - Convert.ToDecimal(ThanhTien);
+                    IdHDNew = InsertDataReturnId(obj);
+                    conn.Close();
+                    //Update Lai Tien HD
+                    
+                    String updateHoaDon = "Update HoaDon set TongTien = @TongTien where ID =@ID";
+                    cmdUpdateHoaDon = new SqlCommand(updateHoaDon);
+                    cmdUpdateHoaDon.CommandType = CommandType.Text;
+                    cmdUpdateHoaDon.Connection = conn;
+                    cmdUpdateHoaDon.Parameters.AddWithValue("@TongTien", TongTienHD);
+                    cmdUpdateHoaDon.Parameters.AddWithValue("@ID", Convert.ToInt32(idHD));
+                    conn.Open();
+                    cmdUpdateHoaDon.ExecuteNonQuery();
+                    conn.Close();
+                    break;
+                    
+                }
+
+            }
+            
+
+
+
+            String SelectChiTietHoaDon = "Select * from ChiTietHoaDon where ID = " + IdCTHD;
+            cmdInsertPCTHD = new SqlCommand(SelectChiTietHoaDon);
+            cmdInsertPCTHD.CommandType = CommandType.Text;
+            cmdInsertPCTHD.Connection = conn;
+            conn.Open();
+            int IdPCTHDNew = -1;
+            using (SqlDataReader oReader = cmdInsertPCTHD.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.ChiTietHoaDon obj = new DataObject.ChiTietHoaDon();
+                    obj.IDHoaDon = IdHDNew;
+                    obj.IdKhachHang = Int32.Parse(oReader["IdKhachHang"].ToString());
+                    obj.IsMaster = 1;
+                    obj.tabIndex = 1;
+                    obj.TrangThai = oReader["TrangThai"].ToString();
+                    IdPCTHDNew = InsertChiTietHoaDonReturnId(obj);
+                    conn.Close();
+                    String updatePCTHD = "Update PackageChiTietHoaDon set  IDChiTietHD = " + IdPCTHDNew + " where ID = " + IdPCTHD;
+                    cmdUpdatePCTHD = new SqlCommand(updatePCTHD);
+                    cmdUpdatePCTHD.CommandType = CommandType.Text;
+                    cmdUpdatePCTHD.Connection = conn;
+                    conn.Open();
+                    cmdUpdatePCTHD.ExecuteNonQuery();
+                    conn.Close();
+                    break;
+                }
+            }
+            
+            return IdHDNew;
+        }
+        public static DataTable getLv2HD(String idHD)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String select = "Select * from ChiTietHoaDon where IDHoaDon = " + idHD;
+            cmd = new SqlCommand(select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+        public static DataTable getLv3HD(String idCTHD)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String select = "select pcthd.ID,hdg.Name from PackageChiTietHoaDon pcthd ";
+            select += "left join HoaDonGoi hdg ON hdg.ID = pcthd.IDGoi where IDChiTietHD = " + idCTHD;
+            cmd = new SqlCommand(select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+        public static void insertKhachHangNgayByGoiHD(int IdPCTHD, int IdNgayHD)
+        {
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select * from PackageChiTietHoaDon pcthd ";
+            Select += "left join SYS_CUSTOMER sc on sc.ID = pcthd.IDKhachHang ";
+            Select += "where pcthd.ID = " + IdPCTHD;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.KhachHangNgay obj = new DataObject.KhachHangNgay();
+                    obj.NgayHoaDonId = IdNgayHD;
+                    obj.MaQuan = oReader["MaQuan"].ToString();
+                    obj.PhoneNumber = oReader["PhoneNumber"].ToString();
+                    obj.Email = oReader["Email"].ToString();
+                    obj.CustomerName = oReader["CustomerName"].ToString();
+                    if (oReader["BirthDay"].ToString() != "" && oReader["BirthDay"].ToString() != null)
+                    {
+                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["BirthDay"].ToString());
+                        obj.BirthDay = DateTime.Parse(createDate);
+                    }
+                    obj.Address = oReader["Address"].ToString();
+                    Servies.SysCustomerServices.InsertDataKHNgayReturnId(obj);
+                    conn.Close();
+                    break;
+
+                }
+
+            }
+        }
+
+        public static DataTable loadInfoKHByHD(String ID)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select hd.ID, sc.ID as IdKH,sc.Address,sc.BirthDay,sc.CustomerName,sc.Email,sc.MaQuan,sc.PhoneNumber from HoaDon hd  ";
+            Select += " left join SYS_CUSTOMER sc on sc.ID = hd.IDKhachHang";
+            Select += " where hd.ID = " + ID;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
     } 
 }

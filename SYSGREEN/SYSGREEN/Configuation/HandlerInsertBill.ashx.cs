@@ -457,6 +457,113 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
+            }//tachbill
+            else if (type == "tachbill")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idHD = context.Request.Form["idHD"].ToString();
+                    String IdCTHD = context.Request.Form["IdCTHD"].ToString();
+                    String IdPCTHD = context.Request.Form["IdPCTHD"].ToString();
+                    String IdNgayHD = context.Request.Form["IdNgayHD"].ToString();
+                    String ThanhTien = context.Request.Form["ThanhTien"].ToString();
+                    Int32 IdHDNew = Servies.HoaDonServices.getTachBill(idHD,IdCTHD,IdPCTHD,IdNgayHD,ThanhTien);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(IdHDNew);
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getLv2HD")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idHD = context.Request.Form["idHD"].ToString();
+                  
+                    DataTable dt = Servies.HoaDonServices.getLv2HD(idHD);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getLv3HD")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idCTHD = context.Request.Form["idCTHD"].ToString();
+                    DataTable dt = Servies.HoaDonServices.getLv3HD(idCTHD);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "insertNgayDonHang")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idGoi = context.Request.Form["idGoi"].ToString();
+                    String ngayDH = context.Request.Form["ngayDH"].ToString();
+                    int idNgayHD = InsertNgayHoaDonStep2ReturnId(Convert.ToInt32(idGoi), ngayDH);
+                    Servies.HoaDonServices.insertKhachHangNgayByGoiHD(Convert.ToInt32(idGoi), idNgayHD);
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    for (var i = 0; i < data.Count; i++)
+                    {
+                        InsertHoaDonSanPhamReturnId(data[i], idNgayHD);
+                    }
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1");
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "loadInfoKHByHD")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+                    String idHD = context.Request.Form["idHD"].ToString();
+                    DataTable dt = Servies.HoaDonServices.loadInfoKHByHD(idHD);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
             }
             else if (type == "getMaxIdHoaDon")
             {
@@ -615,6 +722,16 @@ namespace SYSGREEN.Configuation
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
             ngayHoaDon.Ngay = Convert.ToDateTime(data.deliveryDate != "" ? data.deliveryDate : DateTime.Now);
+            ngayHoaDon.TrangThai = "Chưa xử lý";
+            int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
+            return IdChiTietHoaHD;
+        }
+        public int InsertNgayHoaDonStep2ReturnId(int idPackageHD,String ngayHD)
+        {
+            DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
+            ngayHoaDon.IDPackageChitietHD = idPackageHD;
+            String createDate = String.Format("{0:dd/MM/yyyy}", ngayHD);
+            ngayHoaDon.Ngay = DateTime.Parse(createDate);
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;

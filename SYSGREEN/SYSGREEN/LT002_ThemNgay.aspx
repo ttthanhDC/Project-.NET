@@ -6,16 +6,22 @@
        <div class="form-horizontal" style="margin-left:20px">
            <div class="form-group">
                 <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-2">Loại đơn</label>
+                <label for="sel1" class="col-md-2">Đơn dọc</label>
                 <div class="col-md-2">
-                    <select class="form-control" id="cb_LoaiDon">
-                        <option value ="-1"></option>
-                        <option value ="1">001</option>
-                        <option value ="2">002</option>
-                        </select>
+                   <select class="form-control" id="cb_DonDoc"></select>
                 </div>
             </div> 
-           <div class="form-horizontal">
+        </div>
+        <div class="form-horizontal" style="margin-left:20px">
+           <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <label for="sel1" class="col-md-2">Đơn</label>
+                <div class="col-md-2">
+                   <select class="form-control" id="cb_Don"></select>
+                </div>
+            </div> 
+        </div>
+        <div class="form-horizontal">
            <div class="form-group">
                 <label for="sel1" class="col-md-3"></label>
                 <label for="sel1" class="col-md-2">Ngày</label>
@@ -23,7 +29,16 @@
                      <input type="text" class="form-control" name="title" id="txt_Ngay" />
                 </div>
             </div> 
-    </div>    
+    </div>
+    <div class="form-horizontal">
+           <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <label for="sel1" class="col-md-2">Thứ</label>
+                <div class="col-md-2">
+                     <input type="text" class="form-control" name="title" id="txt_Thu" disabled="disabled" />
+                </div>
+            </div> 
+    </div>      
  </div>   
  <div style="text-align:center;display: table;margin-top: 10px;margin-left: 3%;">
     <button type="button" class="btn btn-primary" id="btnThem">Thêm mới sản phẩm</button>
@@ -40,6 +55,7 @@
     // Bootstrap Table
     $(function () {
         window.idKHParam = 0;
+        window.idHD = 0;
         window.idNgayHoaDonParam = 0;
         window.lstIdDelete = [];
         loadContent();
@@ -55,44 +71,100 @@
             //alert('Query Variable ' + variable + ' not found');
         };
         function loadContent() {
-            window.idKHParam = getQueryVariable("idKHParam");
-            window.idNgayHoaDonParam = getQueryVariable("idNgayHoaDonParam");
-            LoadComboBoxQH();
+            //window.idKHParam = getQueryVariable("idKHParam");
+            window.idHD = getQueryVariable("idHD");
+            LoadComboBoxDonDoc();
+            //window.idNgayHoaDonParam = getQueryVariable("idNgayHoaDonParam");
+            //LoadComboBoxQH();
             FormatDate();
-            loadThongTinKH();
+            //loadThongTinKH();
             loadDataHoaDon();
-            loadSoLanGiao();
+            //loadSoLanGiao();
         };
-        function LoadComboBoxQH() {
+
+        $('#txt_Ngay').on('change', function () {
+            var dateNgaygiaoHangLe = this.value;
+            $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
+        });
+        function convertDateToDay(num) {
+            var x = num;
+            x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+            var date = new Date(x);
+            var day = date.getDay();
+            var strDay = "";
+            switch (day) {
+                case 0:
+                    strDay = "Chủ Nhật";
+                    break;
+                case 1:
+                    strDay = "Thứ hai";
+                    break;
+                case 2:
+                    strDay = "Thứ ba";
+                    break;
+                case 3:
+                    strDay = "Thứ tư";
+                    break;
+                case 4:
+                    strDay = "Thứ năm";
+                    break;
+                case 5:
+                    strDay = "Thứ sáu";
+                    break;
+                case 6:
+                    strDay = "Thứ bảy";
+                    break;
+                case 7:
+                    strDay = "Chủ Nhật";
+                    break;
+                default:
+                    break;
+            }
+            return strDay
+        }
+        function loadComboxBoxDon(value) {
             var formSource = new FormData();
             var json = { 'ID': 0 };
-            formSource.append('type', 'getData');
+            formSource.append('type', 'getLv3HD');
+            formSource.append('idCTHD', value);
             formSource.append('data', JSON.stringify(json));
             $.ajax({
-                url: "Configuation/HandlerQuanHuyen.ashx",
+                url: "Configuation/HandlerInsertBill.ashx",
                 type: "POST",
                 data: formSource,
                 contentType: false,
                 processData: false,
                 success: function (result) {
                     var jsonData = result;
-                    var arr = [];
-                    if (jsonData && jsonData.length > 0) {
-                        for (var i = 0; i < jsonData.length ; i++) {
-                            var objectData = jsonData[i];
-                            var obj = {};
-                            obj.name = objectData.TenQuan;
-                            obj.link = objectData.MaQuan;
-                            obj.sub = null;
-                            arr.push(obj);
-                        }
-                    }
-                    var data1 = { menu: arr };
-                    var $menu = $("#cb_quan");
-                    var $menu1 = $("#cb_quan1");
-                    $.each(data1.menu, function () {
-                        $menu.append(getSource(this));
-                        $menu1.append(getSource(this));
+                    var $menu = $("#cb_Don").empty();
+                    $.each(jsonData, function () {
+                        $menu.append(getSourceDon(this));
+                    });
+
+                },
+                error: function (err) {
+
+                }
+            });
+        };
+        function LoadComboBoxDonDoc() {
+            var formSource = new FormData();
+            var json = { 'ID': 0 };
+            formSource.append('type', 'getLv2HD');
+            formSource.append('idHD', window.idHD);
+            formSource.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var $menu = $("#cb_DonDoc");
+                    loadComboxBoxDon(jsonData[0].ID);
+                    $.each(jsonData, function () {
+                        $menu.append(getSourceDonDoc(this));
                     });
                 },
                 error: function (err) {
@@ -100,6 +172,18 @@
                 }
             });
         };
+        //getSourceDonDoc
+        function getSourceDonDoc(itemData) {
+            var name = itemData.tabIndex < 10 ? "0" + itemData.tabIndex : itemData.tabIndex;
+            var item = $("<option value='" + itemData.ID + "'>").append(name);
+            return item;
+        }
+        //getSourceDon
+        function getSourceDon(itemData) {
+            var name = itemData.Name ? itemData.Name : 'Đơn lẻ';
+            var item = $("<option value='" + itemData.ID + "'>").append(name);
+            return item;
+        }
         // getSource
         function getSource(itemData) {
             var item = $("<option value='" + itemData.link + "'>")
@@ -111,6 +195,10 @@
                 dateFormat: 'dd/mm/yyyy'
             });
         };
+
+        $("#cb_DonDoc").on('change', function () {
+            loadComboxBoxDon(this.value);
+        });
         // eventKhachHang
         function eventKhachHang() {
             var formatDateTime = function (value) {
@@ -351,19 +439,6 @@
                                     return '<input type="checkbox" class="surgarP"  checked="checked" />';
                                 } else {
                                     return '<input type="checkbox" class="surgarP" />';
-                                }
-                            }
-                        },
-                        {
-                            field: 'Error',
-                            title: 'Sữa lỗi',
-                            align: 'center',
-                            valign: 'middle',
-                            formatter: function (value, row, index) {
-                                if (row.Error == 1) {
-                                    return '<input type="checkbox" class="errorP" checked="checked" />';
-                                } else {
-                                    return '<input type="checkbox"  class="errorP" />';
                                 }
                             }
                         },
@@ -624,39 +699,29 @@
     });
 
     $('#btnSave').on('click', function () {
+        var formatDateTime = function (value) {
+            if (value && value != "") {
+                var date = new Date(value.split("/")[1] + "/" + value.split("/")[0] + "/" + value.split("/")[2]);
+                var d = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
+                var m = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
+                var y = date.getFullYear();
+                return m + '/' + d + '/' + y;
+            } else {
+                return ''
+            }
+        };
         var formSource = new FormData();
         //String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT
-        var obj = {};
-        obj.maKH = $('#txtMaKH').val();
-        obj.hoTen = $('#txtHoTen').val();
-        obj.ngaySinh = $('#txtNgaySinh').val();
-        obj.soDienThoai = $('#txtSoDienThoai').val();
-        obj.soDienThoai = document.getElementById('txtSoDienThoai').value;
-        obj.email = document.getElementById('txtEmailCustomer').value;
-        obj.diaChi = document.getElementById('txtDiaChiCustomer').value;
-        obj.maquan = $('#cb_quan').val();
-        obj.idKH = window.idKHParam;
-
-        var objGoi = {};
-        objGoi.tienTangGiam = $('#txtTangGiamTien').val() != "" ? $('#txtTangGiamTien').val().split('.').join('') : '0'
-        objGoi.GhiChu = $('#txtGhiChu').val();
-        objGoi.idngayHD = window.idNgayHoaDonParam;
         //window.lstIdDelete
         var data = $('#table').bootstrapTable('getData');
-        var lstError = $('#table').find('input.errorP[type="checkbox"]');
         var lstSurgar = $('#table').find('input.surgarP[type="checkbox"]');
         for (var i = 0; i < data.length ; i++) {
-            data[i].Error = lstError[i].checked ? 1 : 0;
             data[i].sugar = lstSurgar[i].checked ? 1 : 0;
         }
-        var json = {
-            'infoKH': obj,
-            'infoGoi': objGoi,
-            'infoSP': data,
-            'infoDeleteIdSP': window.lstIdDelete
-        };
-        formSource.append('type', 'updateStatusVHoaDonStep3');
-        formSource.append('data', JSON.stringify(json));
+        formSource.append('type', 'insertNgayDonHang');
+        formSource.append('data', JSON.stringify(data));
+        formSource.append('idGoi', $('#cb_Don').val());
+        formSource.append('ngayDH', formatDateTime($('#txt_Ngay').val()));
         $.ajax({
             url: "Configuation/HandlerInsertBill.ashx",
             type: "POST",
@@ -664,7 +729,7 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                alert("Cập nhật thông tin đơn hàng thành công");
+                alert("Thêm mới ngày cho đơn hàng thành công");
             }
         });
     });

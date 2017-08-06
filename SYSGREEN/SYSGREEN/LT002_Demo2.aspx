@@ -163,7 +163,7 @@
         function loadDataHoaDon() {
             var formatDateTime = function (value) {
                 if (value && value != "") {
-                    var date = new Date(value);
+                    var date = new Date(value.split("/")[1] + "/" + value.split("/")[0] + "/" + value.split("/")[2]);
                     var d = date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate();
                     var m = (date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1);
                     var y = date.getFullYear();
@@ -322,11 +322,12 @@
                         var index = i +1;
                         var obj = {
                             id: index,
-                            IDHD: jsonData[i].IDHD,
+                            IDHD: jsonData[i].ID,
                             IdCTHD: jsonData[i].IdCTHD,
-                            IdPCTHD: jsonData[i].IdCTHD,
+                            IdPCTHD: jsonData[i].IdPCTHD,
                             IdNgayHD: jsonData[i].IdNgayHD,
-                            idKH : jsonData[i].IdKH,
+                            idKH: jsonData[i].IdKH,
+                            ThanhTien: jsonData[i].ThanhTien,
                             codeReser: '',
                             name: jsonData[i].TenKH,
                             sdt: jsonData[i].SoDienThoai,
@@ -399,6 +400,9 @@
                             tabIndex = jsonData[i].tabIndex;
                         }
                         else{
+                            if (jsonData[i].Loai == 2) {
+                                obj.typeBill = "Đơn lẻ";
+                            }
                             if (jsonData[i].Loai == loaiGoi && check) {
                                 // Không làm gì
                             } else {
@@ -532,7 +536,28 @@
     window.operateEventsTachBill = {
         'click .product': function (e, value, row, index) {
             // window.location = '/UserManger.aspx?paramId=' + row.id;
-            alert('TachBill');
+            //alert('TachBill');
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            formSource.append('type', 'tachbill');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('idHD', row.IDHD);
+            formSource.append('IdCTHD', row.IdCTHD);
+            formSource.append('IdPCTHD', row.IdPCTHD);
+            formSource.append('IdNgayHD', row.IdNgayHD);
+            formSource.append('ThanhTien', row.ThanhTien);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var hd = result < 10 ? "0" + result : result;
+                    alert("Hóa đơn Mã HD " + hd + "được sinh ra từ tách bill thành công");
+                    loadContent();
+                }
+            });
         }
     };
     window.operateEventsKH = {
@@ -583,11 +608,11 @@
     };
     // action thêm gói
     $('#btThemGoi').on('click', function (e) {
-        window.location = '/LT002_ThemGoi.aspx?idKHParam= ' + window.idParam;
+        window.location = '/LT002_ThemGoi.aspx?idHD=' + window.idParam;
     });
     // action thêm ngày
     $('#btThemNgay').on('click', function (e) {
-        window.location = '/LT002_ThemNgay.aspx?idKHParam= ' + window.idParam;
+        window.location = '/LT002_ThemNgay.aspx?idHD=' + window.idParam;
     });
     function codeReserFormatter(value, row, index) {
         return [

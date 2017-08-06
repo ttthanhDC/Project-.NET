@@ -10,11 +10,11 @@
             </div>
             <label for="sel1" class="col-md-2">Mã khách hàng</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" name="title" id="txtMaKH" disabled/>
+                <input type="text" class="form-control" name="title" id="txtMaKH" disabled ="disabled"/>
             </div>
             <label for="sel1" class="col-md-2">Mã Reservation</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txtMaHD" disabled />
+                <input type="text" class="form-control" name="title" id="txtMaHD" disabled ="disabled" />
             </div>
         </div> 
     </div>  
