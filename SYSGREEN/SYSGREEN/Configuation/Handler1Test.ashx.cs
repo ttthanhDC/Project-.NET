@@ -100,16 +100,26 @@ namespace SYSGREEN.Configuation
                         userId = Int32.Parse(user);
                     }
 
+
+                    String lstHD = "";
                     if (listNgayHoaDonJson != null && listNgayHoaDonJson.Count > 0)
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                         {
+                            lstHD += (String)listNgayHoaDonJson[i] + ",";
                             Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32(listNgayHoaDonJson[i]), Convert.ToInt32(shiperId), Convert.ToInt32(userId), Convert.ToInt32(IdLotrinhShipper),NguoiTao);
                         }
                     }
+                    DataTable dt = null;
+                    if (lstHD != "")
+                    {
+                        lstHD = lstHD.Substring(0, lstHD.Length - 1);
+                        dt = Servies.HoaDonServices.getAllDataViewHoaDonByListId(lstHD);
+                    }
+
                     
                     context.Response.ContentType = "application/json";
-                    context.Response.Write(JsonConvert.SerializeObject("update successful"));
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
                 }
                 catch (Exception e)
                 {

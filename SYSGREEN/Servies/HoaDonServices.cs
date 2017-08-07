@@ -414,6 +414,21 @@ namespace Servies
             return table;
         }
 
+        public static DataTable getAllDataViewHoaDonByListId(String lstID)
+        {
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vHoaDonShiper where ID_NHD in (" + lstID + ") ORDER BY ID_CTHD "
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
+
 
         public static DataTable getDataFilterViewHoaDon(String maReservation, String ngayHoaDon, String quan,
                 String soShiper, String tenShiper, String trangThai)
