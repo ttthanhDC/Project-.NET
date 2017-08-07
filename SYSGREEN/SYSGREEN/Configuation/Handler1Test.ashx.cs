@@ -172,6 +172,22 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            if (type == "getALLDataByIdLoTrinh")
+            {
+                try
+                {
+
+                    String IdLotrinhShipper = context.Request.Form["IdLotrinh"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getAllDataViewHoaDonByIdLoTrinh(IdLotrinhShipper);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
