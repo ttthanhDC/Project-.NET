@@ -62,6 +62,20 @@
     // Bootstrap Table
     $(function () {
         
+        window.idParam = getQueryVariable("paramId");
+        //alert("Data" + window.idParam);
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+        }
+
+
         // Load Data user
         var formDataShip = new FormData();
         formDataShip.append('type', 'getAllShiper');
@@ -108,9 +122,9 @@
         // load data 
         var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLData');
-        var json = { 'ID': 0 };
-        formDataListUser.append('data', JSON.stringify(json));
+        formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+        //var json = { 'IdLotrinh': 0 };
+        formDataListUser.append('IdLotrinh', window.idParam);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -322,14 +336,18 @@
         }
         //alert(listNgayHoaDon);
         var shiper = $('#cbShip').val();
-        var user = $('#userid').val();
+        var user =1 ;//$('#userid').val(); TODO
+        var IdLotrinh = window.idParam;
        
         var json = {
             'shiper': shiper,
             'user': user,
+            'IdLotrinh':IdLotrinh,
             'listNgayHoaDon': listNgayHoaDon,
         };
         formDataAssign.append('data', JSON.stringify(json));
+        formDataAssign.append('IdLotrinh', IdLotrinh);
+        formDataAssign.append('NguoiTao', user);
 
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
@@ -343,13 +361,139 @@
                 if (jsonData && jsonData.length > 0) {
                     SearchAllDataTable();
                     alert("Assign thành công");
+                    loadDataByID();
                 }
             },
             error: function (err) {
             }
         });
     });
+    $('#btSua').on('click', function (e) {
+        var dataSearch = [];
+        var formDataSearchAll = new FormData();
+        formDataSearchAll.append('type', 'getALLData');
+        var json = { 'ID': 0 };
+        formDataSearchAll.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDataSearchAll,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
 
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+
+                        obj.user = objectData.userName || "";
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                dataSearch = arr;
+                // getDataTable(dataSearch);
+                var $tableSearch = $('#table');
+                $tableSearch.bootstrapTable('load', dataSearch);
+            },
+            error: function (err) {
+            }
+        });
+    });
+    var loadDataByID = function () { 
+        var data = [];
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+        //var json = { 'IdLotrinh': 0 };
+        formDataListUser.append('IdLotrinh', window.idParam);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDataListUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+
+                        obj.user = objectData.userName || "";
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $tableSearch = $('#table');
+                $tableSearch.bootstrapTable('load', data);
+                //getDataTable(data);
+            },
+            error: function (err) {
+            }
+        });
+    };
     // getdata table san phẩm
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
@@ -492,6 +636,7 @@
             data: itemData
         });
     };
+    // dtaa
 </script>
     </asp:Content>
 
