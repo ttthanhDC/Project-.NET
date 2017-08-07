@@ -27,9 +27,9 @@ namespace Servies
             conn.Close();
             return Convert.ToInt32(insertedID);
         }
-        public static int UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
+        public static void UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
         {
-            String Insert = "Update  LoTrinhShipper set ShipID = @ShipID  where ID = @ID";
+            String Insert = "Update  LoTrinhShipper set ShipID = @ShipID, TrangThai= @TrangThai  where ID = @ID";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -38,10 +38,22 @@ namespace Servies
             cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
             conn.Open();
-            object insertedID = cmd.ExecuteScalar();
+            cmd.ExecuteNonQuery();
             cmd.Connection.Close();
             conn.Close();
-            return Convert.ToInt32(insertedID);
+
+            if (obj.TrangThai == "Đang xử lý")
+            {
+                String updateStatusNHD = "Update NgayHoaDon set TrangThai = 'Đang chuyển'  where IdLotrinhShipper = " + obj.ID;
+                SqlCommand cmd1 = new SqlCommand(updateStatusNHD);
+                cmd1.CommandType = CommandType.Text;
+                cmd1.Connection = conn;
+                conn.Open();
+                cmd1.ExecuteNonQuery();
+                cmd1.Connection.Close();
+                conn.Close();
+            }
+            
         }
         public static DataTable ViewLoTrinhShipper(String NgayLotrinh, String MaLoTrinh, String ShipName, String ShipNumber, String TrangThai)
         {
