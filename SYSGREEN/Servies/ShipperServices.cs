@@ -60,7 +60,7 @@ namespace Servies
             DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select lts.ID, lst.ShipID , s.NAME as ShipperName , s.NUMBER as ShipperNumber , lts.MaLoTrinh ,lts.NgayTao,lts.NguoiTao,lts.TrangThai  from LoTrinhShipper lts left join SHIPER s on s.SHIPER_ID = lts.ShipID ";
+            String Select = "Select lts.ID, lts.ShipID , s.NAME as ShipperName , s.NUMBER as ShipperNumber , lts.MaLoTrinh ,lts.NgayTao,lts.NguoiTao,lts.TrangThai  from LoTrinhShipper lts left join SHIPER s on s.SHIPER_ID = lts.ShipID Where  ";
             if (MaLoTrinh != null && MaLoTrinh != "")
             {
                 Select += "MaLoTrinh LIKE N'%" + MaLoTrinh + "%' AND ";
