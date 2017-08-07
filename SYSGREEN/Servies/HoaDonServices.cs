@@ -419,7 +419,7 @@ namespace Servies
             DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Select = "Select * from vHoaDonShiper where ID_NHD in (" + lstID + ") ORDER BY ID_CTHD "
+            String Select = "Select * from vHoaDonShiper where ID_NHD in (" + lstID + ") ORDER BY ID_CTHD ";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
