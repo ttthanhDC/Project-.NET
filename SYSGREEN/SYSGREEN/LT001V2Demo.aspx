@@ -1202,6 +1202,15 @@
 
 
         };
+        function parseStringToDate(value) {
+            var x = value.substr(0, 10);
+            var y = x.split("-");
+            var y1 = y[0];
+            var y2 = y[1];
+            var y3 = y[2];
+            z = y3 + "/" + y2 + "/" + y1;
+            return z;
+        };
         $('#btnAdd').on('click', function () {
             var $table = $('#table');
             //$table.bootstrapTable('insertRow', { index: 1, row: row });
@@ -1992,8 +2001,8 @@
             $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
         });
         function convertDateToDay(num) {
-            var x = num;
-            x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+            var x = parseStringToDate(num);
+           // x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
             var date = new Date(x);
             var day = date.getDay();
             var strDay = "";

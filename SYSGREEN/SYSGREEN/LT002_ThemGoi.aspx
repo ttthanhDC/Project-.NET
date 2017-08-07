@@ -167,7 +167,19 @@
                                         </div>
                                         <label for="sel1" class="col-md-3" id="lblThuGiaoHangLe"> Thứ </label>
                                         <div class="col-md-3" id="divThuGiaoHangLe">
-                                            <input type="text" class="form-control" name="title" id="txtThuGiaoHangLe" disabled />
+                                            <input type="text" class="form-control" name="title" id="txtThuGiaoHangLe" disabled="disabled" />
+                                        </div>
+                                     </div> 
+                            </div>  
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                       <label for="sel1" class="col-md-3" id="lblTongTienLe">Tổng tiền</label>
+                                       <div class="col-md-3">
+                                            <input type="text" class="form-control" name="title" id="txtTongTienLe" disabled="disabled" />
+                                        </div>
+                                        <label for="sel1" class="col-md-3" id="lblxx"> Thứ </label>
+                                        <div class="col-md-3" id="divxx">
+                                            
                                         </div>
                                      </div> 
                             </div>  
@@ -726,7 +738,7 @@
                             return "<label></label>";
                         } else {
                             if (row.sugar == "1") {
-                                return '<input type="checkbox"  checked="checked" />';
+                                return '<input type="checkbox" class="surgarP"  checked="checked" />';
                             } else {
                                 return '<input type="checkbox"  />';
                             }
@@ -1050,9 +1062,9 @@
                     valign: 'middle',
                     formatter: function (value, row, index) {
                         if (value) {
-                            return '<input type="checkbox" value="" checked></label>';
+                            return '<input type="checkbox" class="surgarP" value="" checked></label>';
                         } else {
-                            return '<input type="checkbox" value=""></label>';
+                            return '<input type="checkbox" class="surgarP" value=""></label>';
                         }
 
                     }
@@ -1134,9 +1146,15 @@
                                 row.quantity = "";
                                 row.price = "";
                                 row.money = "";
-                                row.total = "";
+                                row.total = "0";
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             }
+                            var total = 0;
+                            var data = $table.bootstrapTable('getData');
+                            for (var k = 0; k < data.length ; k++) {
+                                total += Number(data[k].total.split('.').join(''));
+                            }
+                            $('#txtTongTienLe').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
                         },
                         error: function (err) {
 
@@ -1148,6 +1166,12 @@
                     row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                    var total = 0;
+                    var data = $table.bootstrapTable('getData');
+                    for (var k = 0; k < data.length ; k++) {
+                        total += Number(data[k].total.split('.').join(''));
+                    }
+                    $('#txtTongTienLe').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
                 }
                 if (field == "promotionCode") {
                     var formpromotionCode = new FormData();
@@ -1172,6 +1196,12 @@
 
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             }
+                            var total = 0;
+                            var data = $table.bootstrapTable('getData');
+                            for (var k = 0; k < data.length ; k++) {
+                                total += Number(data[k].total.split('.').join(''));
+                            }
+                            $('#txtTongTienLe').val(total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
                         },
                         error: function (err) {
 
@@ -1185,8 +1215,7 @@
             $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
         });
         function convertDateToDay(num) {
-            var x = num;
-            x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+            var x = parseStringToDate(num);
             var date = new Date(x);
             var day = date.getDay();
             var strDay = "";
@@ -1233,7 +1262,7 @@
             var obj = {};
             obj.id = data.length + 1;;
             obj.parent = false;
-            obj.parentBillId = window.rowTemp.billId;
+            obj.parentBillId = -1;
             obj.parentId = -1;
             obj.deliveryDate = '';
             obj.product = '';
@@ -1291,6 +1320,15 @@
         /*****
         ******* Upload file Excel *****
         *******/
+        function parseStringToDate(value) {
+            var x = value.substr(0, 10);
+            var y = x.split("-");
+            var y1 = y[0];
+            var y2 = y[1];
+            var y3 = y[2];
+            z = y3 + "/" + y2 + "/" + y1;
+            return z;
+        };
         $('#btnUpload').on('click', function () {
             var formatDateTime = function (value) {
                 if (value && value != "") {
@@ -1339,7 +1377,6 @@
                             obj.total = '';
                             obj.test = '';
                             obj.operate = '1';
-                            obj.thugiaohang = '';
                             obj.note = '';
                         } else {
                             obj.id = i;
@@ -1371,6 +1408,171 @@
             });
 
         });
+        $('#btnSave').on('click', function () {
+            var $table = $('#table');
+            //$table.bootstrapTable('insertRow', { index: 1, row: row });
+            var obj = {};
+            var check = true;
+            if ($('#cb_OrderType').val() == -1) {
+                alert('Vui lòng chọn loại hình đơn !');
+                check = false;
+                return;
+            }
+            if ($('#cb_billType').val() != -1) {
+                if ($('#cb_OrderType').val() == 1) {
+                    if ($('#cb_OrderType2').val() == -1) {
+                        alert('Vui lòng chọn loại gói !');
+                        check = false;
+                        return;
+                    }
+                } else if ($('#cb_OrderType').val() == 2) {
+                    if ($('#txt_PhiShip').val() == "") {
+                        alert('Vui lòng nhập phí ship !');
+                        check = false;
+                        return;
+                    }
+                }
+            }
+            if ($('#cb_PayType').val() == -1) {
+                alert('Vui lòng chọn hình thức thanh toán !');
+                check = false;
+                return;
+            }
+
+            if (check) {
+                var data = $table.bootstrapTable('getData');
+                obj.fSTT = data.length + 1;
+                obj.fLoaiHinhDon = $('#cb_OrderType :selected').text();
+                obj.fLoaiHinhDonId = $('#cb_OrderType').val();
+                obj.fHinhThucShip = $('#cb_hinhthucShip').val();
+                obj.idCTHD = $('#cb_LoaiDon').val();
+                var data = null;
+                if (obj.fLoaiHinhDonId == 1) {
+                    obj.fLoaiGoi = $('#cb_OrderType2 :selected').text();
+                    obj.fLoaiGoiId = $('#cb_OrderType2').val();
+                    obj.fPhiShip = "0";
+                    obj.fPromotionCode = $("#txtPromotionCode").val();
+                    obj.NgayHD = "";
+                    data = $('#tablePopup').bootstrapTable('getData');
+                    var lstSurgar = $('#tablePopup').find('input[type="checkbox"]');
+                    /*
+                    for (var i = 0; i < data.length ; i++) {
+                        data[i].sugar = lstSurgar[i].checked ? 1 : 0;
+                    }*/
+                    for (var k = 0; k < window.dataGoi.length ; k++) {
+                        if (window.dataGoi[k].Name.trim() == obj.fLoaiGoi.trim()) {
+                            obj.fThanhTien = $("#txtTotalTienGoi").val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                            obj.IDGoi = window.dataGoi[k].ID;
+                            break;
+                        }
+                    }
+                } else {
+                    obj.fLoaiGoi = "....";
+                    obj.fLoaiGoiId = 1;
+                    obj.fPhiShip = $('#txt_PhiShip').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") + " VNĐ";
+                    obj.fThanhTien = $('#txtTongTienLe').val().toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                    obj.fPromotionCode = "0";
+                    obj.NgayHD = $('#txtNgayGiaoHangLe').val();
+                    data = $('#tablePopupSingle').bootstrapTable('getData');
+                    var lstSurgar = $('#tablePopupSingle').find('input[type="checkbox"]');
+                    /*
+                    for (var i = 0; i < data.length ; i++) {
+                        data[i].sugar = lstSurgar[i].checked ? 1 : 0;
+                    }*/
+                }
+
+                obj.fLoaiThanhToan = $('#cb_PayType :selected').text();
+                obj.fLoaiThanhToanId = $('#cb_PayType').val();
+
+                obj.detalMaster = [];
+                if ($('#cb_OrderType :selected').text() == 'Gói') {
+                    //var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0'
+                    //songayconlai = Number(songayconlai) + parseInt($('#cb_OrderType2').val());
+                    //$('#txtSoNgayConLai').val(songayconlai);
+                } else {
+                    //var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0';
+                    //songayconlai = Number(songayconlai) + 1;
+                    //$('#txtSoNgayConLai').val(songayconlai);
+                }
+                var infoKH = {};
+                infoKH.maKH = $('#txtMaKH').val();
+                infoKH.hoTen = $('#txtHoTen').val();
+                infoKH.ngaySinh = $('#txtNgaySinh').val();
+                infoKH.soDienThoai = $('#txtSoDienThoai').val();
+                infoKH.soDienThoai = document.getElementById('txtSoDienThoai').value;
+                infoKH.email = document.getElementById('txtEmailCustomer').value;
+                infoKH.diaChi = document.getElementById('txtDiaChiCustomer').value;
+                infoKH.maquan = $('#cb_quan').val();
+                obj.infoKH = infoKH;
+                
+                obj.Data = data;
+
+                var formBill = new FormData();
+                formBill.append('type', 'insertGoiStepv2');
+                formBill.append('data', JSON.stringify(obj));
+                $.ajax({
+                    url: "Configuation/HandlerInsertBill.ashx",
+                    type: "POST",
+                    data: formBill,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        alert("Thêm mới đơn hàng thành công");
+                        $('#txtMaHD').val("HD" + (result < 0) ? ("0" + result) : result);
+                        $("#btnSave").attr('disabled', true);
+                        $("#btnAddBill").attr('disabled', true);
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            }
+            
+
+            /*
+            var obj = {};
+            obj.maKH = $('#txtMaKH').val();
+            obj.hoTen = $('#txtHoTen').val();
+            obj.ngaySinh = $('#txtNgaySinh').val();
+            obj.soDienThoai = $('#txtSoDienThoai').val();
+            obj.soDienThoai = document.getElementById('txtSoDienThoai').value;
+            obj.email = document.getElementById('txtEmailCustomer').value;
+            obj.diaChi = document.getElementById('txtDiaChiCustomer').value;
+            obj.maquan = $('#cb_quan').val();
+            var bill = {};
+            //bill.maReversion = $('#txtMaHD').val();
+            bill.sourceName = $('#cb_SourceType :selected').text();
+            bill.sourceId = $('#cb_SourceType').val();
+            bill.songayconlai = $('#txtSoNgayConLai').val();
+            bill.tong = $('#txtTong').val().split('.').join('');
+            bill.sotienthuduoc = $('#txtSoTienThuDuoc').val() != "" ? $('#txtSoTienThuDuoc').val().split('.').join('') : '0'
+            bill.chietkhau = $('#txtChietKhau').val() != "" ? $('#txtChietKhau').val().split('.').join('') : '0'
+            bill.conNo = $('#txtNo').val() != "" ? $('#txtNo').val().split('.').join('') : '0'
+            bill.inFoCustomer = obj;
+            bill.infoBill = window.dataGlobal;
+            var formBill = new FormData();
+            formBill.append('type', 'insert');
+            formBill.append('data', JSON.stringify(bill));
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formBill,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    alert("Thêm mới đơn hàng thành công");
+                    $('#txtMaHD').val("HD" + (result < 0) ? ("0" + result) : result);
+                    $("#btnSave").attr('disabled', true);
+                    $("#btnAddBill").attr('disabled', true);
+                },
+                error: function (err) {
+
+                }
+            });*/
+        });
+
+
+
         });
         </script>
 </asp:Content>

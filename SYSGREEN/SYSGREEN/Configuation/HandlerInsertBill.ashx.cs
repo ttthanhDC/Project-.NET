@@ -565,6 +565,81 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "insertGoiStepv2")
+            {
+                try
+                {
+                    String hoten = "";
+                    String maKH = "";
+                    String ngaySinh = "";
+                    String soDienThoai = "";
+                    String email = "";
+                    String diaChi = "";
+                    String maquan = "";
+                    String tong = "";
+                    String IdChiTietHoaHD = "";
+
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    dynamic inFoCustomer = data.infoKH;
+                    dynamic infoBill = data.infoBill;
+                    hoten = (String)inFoCustomer.hoTen;
+                    maKH = (String)inFoCustomer.maKH;
+                    ngaySinh = (String)inFoCustomer.ngaySinh;
+                    soDienThoai = (String)inFoCustomer.soDienThoai;
+                    email = (String)inFoCustomer.email;
+                    diaChi = (String)inFoCustomer.diaChi;
+                    maquan = (String)inFoCustomer.maquan;
+                    tong = (String)data.fThanhTien;
+                    IdChiTietHoaHD = (String)data.idCTHD;
+                    dynamic dataHD = data.Data;
+                    /********************************* 
+                     * Check and Insert Khách hàng nếu không tồn tại
+                     * Nếu tồn tại getId Khách hàng
+                     * 
+                     * *******************************/
+                    int IdKhachHang = returnIdKH(soDienThoai, hoten, email, diaChi, maquan, ngaySinh);
+                    /********************************* 
+                    * Insert Hóa đơn
+                    * 
+                    * *******************************/
+
+                    /********************************* 
+                    * Insert Chi tiết hóa đơn , hoa đơn package , hóa đơn ngày , sản phẩm
+                    * 
+                    * *******************************/
+                    int idPackageHD = InsertPackageChiTietHoaDonReturnId(data, Convert.ToInt32(IdChiTietHoaHD));
+                    if ((String)data.NgayHD != "")
+                    {
+                        int idNgayHDLe = InsertNgayHoaDonLeReturnId(data, idPackageHD, (String)data.NgayHD);
+                        InsertKhachHangNgay(idNgayHDLe, data);
+                        for (int j = 0; j < dataHD.Count; j++)
+                        {
+                            InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHDLe);
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < dataHD.Count; j++)
+                        {
+                            int idNgayHD = -1;
+                            if (dataHD[j].deliveryDate != ""){
+                                idNgayHD = InsertNgayHoaDonReturnId(dataHD[j], idPackageHD);
+                                InsertKhachHangNgay(idNgayHD, data);
+                            }else{
+                                InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHD);
+                             }
+                        }
+                    }                    
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1");
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else if (type == "getMaxIdHoaDon")
             {
                 try
