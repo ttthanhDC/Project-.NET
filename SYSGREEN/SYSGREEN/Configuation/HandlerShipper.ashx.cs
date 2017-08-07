@@ -22,9 +22,9 @@ namespace SYSGREEN.Configuation
                 if (type == "InsertLoTrinhShipperReturnId")
                 {
                     DataObject.LoTrinhShipper obj = new DataObject.LoTrinhShipper();
-                    String MaLoTrinh = DateTime.Now.ToString("dd/MM/yyyy") + "-" + DateTime.Now.ToString("tt");
+                    String MaLoTrinh = DateTime.Now.ToString("ddMMyyyy") + "-" + DateTime.Now.ToString("tt");
                     obj.MaLoTrinh = MaLoTrinh;
-                    obj.NguoiTao = "ThanhDC7";
+                    obj.NguoiTao = "";
                     obj.NgayTao = DateTime.Now;
                     obj.TrangThai = "";
                     int idLotrinh = Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);

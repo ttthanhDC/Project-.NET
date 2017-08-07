@@ -373,21 +373,29 @@ namespace Servies
             return solangiao;
         }
 
-        public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId)
+        public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId, Int32 IdLotrinhShipper,String NguoiTao)
         {
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Update = "UPDATE NgayHoaDon SET USER_ID = @User_Id, SHIPER_ID = @Shiper_Id Where ID = @ID";
+            String Update = "UPDATE NgayHoaDon SET USER_ID = @User_Id, SHIPER_ID = @Shiper_Id,IdLotrinhShipper = @IdLotrinhShipper Where ID = @ID";
             cmd = new SqlCommand(Update);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@User_Id", userId);
             cmd.Parameters.AddWithValue("@Shiper_Id", shiperId);
+            cmd.Parameters.AddWithValue("@IdLotrinhShipper", IdLotrinhShipper);
             cmd.Parameters.AddWithValue("@ID", ngayHoaDonId);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
 
+            String updateLotrinh = "Update LoTrinhShipper Set NguoiTao = '" + NguoiTao + "' where ID = " + IdLotrinhShipper;
+            SqlCommand cmd1 = new SqlCommand(updateLotrinh);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public static DataTable getAllDataViewHoaDon()

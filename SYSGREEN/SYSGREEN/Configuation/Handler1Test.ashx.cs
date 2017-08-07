@@ -77,6 +77,8 @@ namespace SYSGREEN.Configuation
                 try
                 {
                     String jsonData = context.Request.Form["data"].ToString();
+                    String IdLotrinhShipper = context.Request.Form["IdLotrinh"].ToString();
+                    String NguoiTao = context.Request.Form["NguoiTao"].ToString();
 
                     String shiper = "";
                     String user = "";
@@ -102,7 +104,7 @@ namespace SYSGREEN.Configuation
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                         {
-                            Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32(listNgayHoaDonJson[i]),Convert.ToInt32(shiperId),Convert.ToInt32(userId));
+                            Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32(listNgayHoaDonJson[i]), Convert.ToInt32(shiperId), Convert.ToInt32(userId), Convert.ToInt32(IdLotrinhShipper),NguoiTao);
                         }
                     }
                     
