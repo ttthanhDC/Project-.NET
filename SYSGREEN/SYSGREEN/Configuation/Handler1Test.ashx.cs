@@ -172,7 +172,7 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
-            if (type == "getALLDataByIdLoTrinh")
+            else if (type == "getALLDataByIdLoTrinh")
             {
                 try
                 {
