@@ -27,15 +27,16 @@ namespace SYSGREEN.Configuation
                     obj.NguoiTao = "ThanhDC7";
                     obj.NgayTao = DateTime.Now;
                     obj.TrangThai = "";
-                    Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);
+                    int idLotrinh = Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write("1");
+                    context.Response.Write(idLotrinh);
 
                 }
                 else if (type == "UpdateLoTrinhShipper")
                 {
                     String idLotrinh = context.Request.Form["idLotrinh"].ToString();
                     String idShipper = context.Request.Form["idShipper"].ToString();
+                    String trangThaiLotrinh = context.Request.Form["trangThaiLotrinh"].ToString();
                     DataObject.LoTrinhShipper obj = new DataObject.LoTrinhShipper();
                     obj.ID = Convert.ToInt32(idLotrinh);
                     obj.ShipID = Convert.ToInt32(idShipper);
