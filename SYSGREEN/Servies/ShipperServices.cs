@@ -29,12 +29,11 @@ namespace Servies
         }
         public static void UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
         {
-            String Insert = "Update  LoTrinhShipper set ShipID = @ShipID, TrangThai= @TrangThai  where ID = @ID";
+            String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@ShipID", obj.ShipID);
             cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
             cmd.Parameters.AddWithValue("@ID", obj.ID);
             conn.Open();

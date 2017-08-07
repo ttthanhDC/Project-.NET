@@ -389,7 +389,7 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
 
-            String updateLotrinh = "Update LoTrinhShipper Set NguoiTao = '" + NguoiTao + "' where ID = " + IdLotrinhShipper;
+            String updateLotrinh = "Update LoTrinhShipper Set ShipID = " + shiperId  + ", NguoiTao = '" + NguoiTao + "' where ID = " + IdLotrinhShipper;
             SqlCommand cmd1 = new SqlCommand(updateLotrinh);
             cmd1.CommandType = CommandType.Text;
             cmd1.Connection = conn;
