@@ -1,50 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S001_ListShiper.aspx.cs" Inherits="SYSGREEN.S001_ListShiper" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_LoTrinh">
-         <div class="form-horizontal">
-            <div class="form-group">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ngayTT" placeholder="Ngày"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_IDLoTinh" placeholder="ID lộ trình" />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_shipNameTT" placeholder="Ship name"/>
-                </div>
-                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumberTT"placeholder="Shiper number" />
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ttLoTrinh"placeholder="Trạng thái Lộ trình" />
-                </div>
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" id="btTKLoTrinh">Tìm kiếm lộ trình</button>
-                </div>
-                
-            </div> 
-        </div> 
-    </div>
-    <div style ="margin-left:20px;margin-right:20px" id ="div_TableLoTrinh">
-          <table id="tableLoTrinh" 
-       
-        ></table>
-    </div>
-    <div style="height:20px"></div>
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_TaoLoTrinh">
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="sel1" class="col-md-5"></label>
-                  <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button>
-                </div>
-                 
-            </div> 
-        </div> 
-    </div>
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px;display : none" id ="div_sanPham">
-        <hr />
+    <div class="main-content-inner"  id ="div_sanPham">
           <div class="form-horizontal">
             <div class="form-group">
                  <label for="sel1" class="col-md-2"></label>
@@ -273,56 +230,7 @@
             }
         });
     };
-    // btTKLoTrinh
-    $('#btTKLoTrinh').on('click', function (e) {
-        
-      //  $('#div_TableLoTrinh')[0].style.display = "block";
-        var itemData = [
-            {
-                codeLT: '20082017-AM',
-                shipName: 'Trần ngọc duy',
-                shipNo: 'Ship 001',
-                date: '20/08/2017',
-                user: 'Duytn4',
-                status: 3,
-            }, {
-                codeLT: '21082017-AM',
-                shipName: 'Trần ngọc duy',
-                shipNo: 'Ship 001',
-                date: '20/08/2017',
-                user: 'Duytn4',
-                status: 2,
-            }, {
-                codeLT: '22082017-AM',
-                shipName: 'Trần ngọc duy',
-                shipNo: 'Ship 001',
-                date: '20/08/2017',
-                user: 'Duytn4',
-                status: 1,
-            }, {
-                codeLT: '23082017-AM',
-                shipName: 'Trần ngọc duy',
-                shipNo: 'Ship 001',
-                date: '20/08/2017',
-                user: 'Duytn4',
-                status: 3,
-            }, {
-                codeLT: '24082017-AM',
-                shipName: 'Trần ngọc duy',
-                shipNo: 'Ship 001',
-                date: '20/08/2017',
-                user: 'Duytn4',
-                status: 2,
-            }
-        ];
-        getDataTableLoTrinh(itemData);
-        
-    });
-    $('#btTaoLoTrinh').on('click', function (e) {
-        $('#div_sanPham')[0].style.display = "block";
-        //$('#Div_tableSanPham')[0].style.display = "block";
-        
-    });
+
     //// tìm kiếm 
     $('#btSearch').on('click', function (e) {
         var data1 = [];
@@ -441,58 +349,7 @@
             }
         });
     });
-    // getdata table lộ trình
-    var getDataTableLoTrinh = function (itemData) {
-        $('#tableLoTrinh').bootstrapTable({
-            columns: [{
-                field: 'codeLT',
-                title: 'Mã lộ trình',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    return '<label style = "color: blue;">' + value + '</label>';
-                }
-            }, {
-                field: 'shipName',
-                title: 'Ship Name',
-                align: 'center',
-                valign: 'middle',
-            }, {
-                field: 'shipNo',
-                title: 'Ship Number',
-                align: 'center',
-                valign: 'middle',
-            }, {
-                field: 'date',
-                title: 'Ngày tạo lộ trình',
-                align: 'center',
-                valign: 'middle',
-            }, {
-                field: 'user',
-                title: 'User tạo lộ trình',
-                align: 'center',
-                valign: 'middle',
-            }, {
-                field: 'status',
-                title: 'Trạng thái',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (value === 1) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
-                    } else if (value === 2) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2  selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
-                    } else if (value === 3) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3  selected = true>Hoàn thành</option></select>'
-                    } else {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0  selected = true></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
-                    }
-                }
-            }],
 
-            data: itemData
-        });
-    };
     // getdata table san phẩm
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
@@ -635,8 +492,6 @@
             data: itemData
         });
     };
-    // function
-    
 </script>
     </asp:Content>
 
