@@ -652,7 +652,7 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
 
-            String Select1 = "Update NgayHoaDon set TrangThai = '" + status + "', GhiChu = '" + ghiChu + "',SoTienThu = " + Convert.ToDecimal(tienthu) + " where ID =" + Convert.ToInt32(idNHD);
+            String Select1 = "Update NgayHoaDon set TrangThai = N'" + status + "', GhiChu = N'" + ghiChu + "',SoTienThu = " + Convert.ToDecimal(tienthu) + " where ID =" + Convert.ToInt32(idNHD);
             //String Select1 = "Update NgayHoaDon set TrangThai = @TrangThai,GhiChu = @GhiChu,SoTienThu = @SoTienThu where ID = @ID";
             cmd1 = new SqlCommand(Select1);
             cmd1.CommandType = CommandType.Text;
