@@ -5,23 +5,9 @@
           <div class="form-horizontal">
             <div class="form-group">
                 
-                 <div class="col-md-1">
-                    <input type="text" class="form-control" name="title" id="txt_tuGio" placeholder="Từ giờ" />
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" name="title" id="txt_denGio" placeholder="Đến giờ" />
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" name="title" id="txt_code" placeholder="Mã đơn" />
-                </div>
+                 <label for="sel1" class="col-md-7"></label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_name" placeholder="Họ tên khách" />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumber" placeholder="Shiper number"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipName" placeholder="Shiper name"/>
+                    <input type="text" class="form-control" name="title" id="txt_maLoTrinh" placeholder="Mã lộ trình"/>
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>

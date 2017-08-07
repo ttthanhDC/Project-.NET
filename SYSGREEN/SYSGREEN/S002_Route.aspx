@@ -1,42 +1,44 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S002_Route.aspx.cs" Inherits="SYSGREEN.S002_Route" %>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
-          <div class="form-horizontal">
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_LoTrinh">
+         <div class="form-horizontal">
             <div class="form-group">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ngayTT" placeholder="Ngày"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_IDLoTinh" placeholder="ID lộ trình" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_shipNameTT" placeholder="Ship name"/>
+                </div>
+                 <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ShipNumberTT"placeholder="Shiper number" />
+                </div>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_ttLoTrinh"placeholder="Trạng thái Lộ trình" />
+                </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btTKLoTrinh">Tìm kiếm lộ trình</button>
+                </div>
                 
-                 <label for="sel1" class="col-md-2"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_Date" placeholder="Ngày" />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumber" placeholder="Shiper number"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipName" placeholder="Shiper name"/>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btLoTrinh">In lộ trình</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btHoaDon">In hóa đơn</button>
-                </div>
             </div> 
         </div> 
     </div>
-   <div style ="margin-left:20px;margin-right:20px">
-       <table id="table" 
-        
-        ></table>
-   </div> 
+    <div style ="margin-left:20px;margin-right:20px" id ="div_TableLoTrinh">
+        <div style ="width: 100%;text-align:right"><button type="button" class="btn btn-primary" id="btLuu">lưu data</button></div>
+        <table id="tableLoTrinh"></table>
+        <div style ="width: 100%;text-align:center;margin-top:20px"><button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button></div>
+    </div>
    
 <script>
     // Bootstrap Table
     $(function () {
-        // load data 
+        var itemData = [];
+        getDataTableLoTrinh(itemData);
+    });
+  
+    $('#btTKLoTrinh').on('click', function (e) {
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getALLData');
@@ -57,7 +59,7 @@
                         var obj = {};
                         obj.id = objectData.ID_NHD;
 
-                        obj.code = objectData.MaReservation;
+                        obj.codeLT = objectData.MaReservation;
                         var data_ngay = objectData.Ngay;
                         var z = "";
                         if (data_ngay) {
@@ -69,265 +71,160 @@
                             z = y3 + "/" + y2 + "/" + y1;
                         }
                         obj.date = z;
-                        obj.district = objectData.TenQuan || "";
-                        obj.status = objectData.TrangThaiNHD || "";
-                        obj.name = objectData.TenKH_HD || "";
-                        obj.sdt = objectData.SoDienThoai || "";
-                        obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
-                        obj.shipName = objectData.shipName || "";
-                        obj.shipNumber = objectData.shipNo || "";
-                        var TongTienConNo = objectData.TongTienConNo;
-                        if (TongTienConNo) {
-                            obj.detb = true;
+                        obj.shipName = objectData.TenQuan || "";
+                        obj.shipNo = objectData.TrangThaiNHD || "";
+                        obj.user = objectData.TenKH_HD || "";
+                        if (objectData.TenKH_HD === "Chưa xử lý") {
+                            obj.status = 1;
+                        } else if (objectData.TenKH_HD === "Đang xử lý") {
+                            obj.status = 2;
+                        } else if (objectData.TenKH_HD === "Hoàn thành") {
+                            obj.status = 3;
                         } else {
-                            obj.detb = false;
+                            obj.status = 0;
                         }
-
-                        obj.user = objectData.userName || "";
-                        // userName
                         arr.push(obj);
                     }
                 }
                 data = arr;
-                getDataTable(data);
+                getDataTableLoTrinh(data);
             },
             error: function (err) {
             }
         });
     });
-    // tìm kiếm
-    $('#btSearch').on('click', function (e) {
-        var data1 = [];
-        var formDatasearch = new FormData();
-        formDatasearch.append('type', 'getDataFilter');
-
-        var maReservation = "";
-        var ngayHoaDon = $('#txt_Date').val();
-        var quan = "";
-        var soShiper = $('#txt_ShipNumber').val();
-        var tenShiper = $('#txt_ShipName').val();
-        var trangThai = "";
-
-        txt_Date, txt_ShipNumber, txt_ShipNumber
-
-        formDatasearch.append('maReservation', maReservation);
-        formDatasearch.append('ngayHoaDon', ngayHoaDon);
-        formDatasearch.append('quan', quan);
-        formDatasearch.append('soShiper', soShiper);
-        formDatasearch.append('tenShiper', tenShiper);
-        formDatasearch.append('trangThai', trangThai);
+    $('#btTaoLoTrinh').on('click', function (e) {
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getALLData');
+        var json = { 'ID': 0 };
+        formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
-            data: formDatasearch,
+            data: formDataListUser,
             contentType: false,
             processData: false,
             success: function (result) {
-                var jsonData = result;
-                var arr = [];
-                if (jsonData && jsonData.length > 0) {
-                    for (var i = 0; i < jsonData.length ; i++) {
-                        var objectData = jsonData[i];
-                        var obj = {};
-                        obj.id = objectData.ID_NHD;
-
-                        obj.code = objectData.MaReservation || "";
-                        var data_ngay = objectData.Ngay;
-                        var z = "";
-                        if (data_ngay) {
-                            var x = data_ngay.substr(0, 10);
-                            var y = x.split("-");
-                            var y1 = y[0];
-                            var y2 = y[1];
-                            var y3 = y[2];
-                            z = y3 + "/" + y2 + "/" + y1;
-                        }
-                        obj.date = z;
-                        obj.district = objectData.TenQuan || "";
-                        obj.status = objectData.TrangThaiNHD || "";
-                        obj.name = objectData.TenKH_HD || "";
-                        obj.sdt = objectData.SoDienThoai || "";
-                        obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User;// chua có
-                        obj.shipName = objectData.shipName || "";
-                        obj.shipNumber = objectData.shipNo || "";
-                        var TongTienConNo = objectData.TongTienConNo;
-                        if (TongTienConNo) {
-                            obj.detb = true;
-                        } else {
-                            obj.detb = false;
-                        }
-
-                        obj.user = objectData.userName || "";
-                        // userName
-                        arr.push(obj);
-                    }
-                }
-                data1 = arr;
-               // getDataTable(data1);
-                var $table = $('#table');
-                $table.bootstrapTable('load', data1);
+                var maLT = result;
+                // chuyển màn hình tạo data cho mã lộ trình
+                window.location = '/S001_ListShiper.aspx?paramId=' + maLT;
             },
             error: function (err) {
             }
         });
     });
-    // in lộ trình
-    $('#btLoTrinh').on('click', function (e) {
-        window.location = '/S005_ReportedRoute.aspx?paramId=' + row.shipNumber;
-    });
-    // in hóa đơn
-    $('#btHoaDon').on('click', function (e) {
-        var datatable = $('#table').bootstrapTable('getData');
-        var listNgayHoaDon = [];
-        if (datatable) {
-            for (var i = 0; i < datatable.length; i++) {
-                if (datatable[i].id) {
-                    listNgayHoaDon.push(datatable[i].id);
-                }
-            }
-        }
-        alert("Danh sách in hóa đơn" + listNgayHoaDon)
-    });
-    // getdata table 
-    var getDataTable = function (itemData) {
-        $('#table').bootstrapTable({
+    
+
+    // getdata table lộ trình
+    var getDataTableLoTrinh = function (itemData) {
+        $('#tableLoTrinh').bootstrapTable({
             columns: [{
-                field: 'code',
-                title: 'Mã đơn',
+                field: 'codeLT',
+                title: 'Mã lộ trình',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     return '<label style = "color: blue;">' + value + '</label>';
                 }
             }, {
-                field: 'date',
-                title: 'Ngày',
+                field: 'shipName',
+                title: 'Ship Name',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
             }, {
-                field: 'district',
-                title: 'Quận',
+                field: 'shipNo',
+                title: 'Ship Number',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
+            }, {
+                field: 'date',
+                title: 'Ngày tạo lộ trình',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'user',
+                title: 'User tạo lộ trình',
+                align: 'center',
+                valign: 'middle',
             }, {
                 field: 'status',
                 title: 'Trạng thái',
                 align: 'center',
                 valign: 'middle',
                 formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
+                    if (value === 1) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
+                    } else if (value === 2) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2  selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
+                    } else if (value === 3) {
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3  selected = true>Hoàn thành</option></select>'
                     } else {
-                        return value;
+                        return '<select class="select1" id="Bill' + index + '"> <option value = 0  selected = true></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
                     }
                 }
             }, {
-                field: 'name',
-                title: 'Họ tên',
+                field: 'operate',
+                title: 'Thao tác',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'sdt',
-                title: 'SĐT',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'addres',
-                title: 'Địa chỉ',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'shipName',
-                title: 'Ship Name',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'shipNumber',
-                title: 'ShipNo',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'user',
-                title: 'User',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
-            }, {
-                field: 'money',
-                title: 'Tiền',
-                align: 'center',
-                valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.detb) {
-                        return '<label style = "color: red;">' + value + '</label>';
-                    } else {
-                        return value;
-                    }
-                }
+                events: operateEvents,
+                formatter: operateFormatter
             }],
 
             data: itemData
         });
     };
+   
     // function
+    function userFormatter(data) {
+        return data.length;
+    }
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="chiTiet" href="javascript:void(0)" title="Chi Tiết">',
+            'Chi tiết',
+            '</a>  ', '|',
+            '<a class="remove" href="javascript:void(0)" title="Xoá">',
+            'Xóa',
+            '</a>',
+        ].join('');
+    }
 
+    window.operateEvents = {
+        'click .chiTiet': function (e, value, row, index) {
+            window.location = '/S001_ListShiper.aspx?paramId=' + row.id;
+            //alert('You click like action, row: ' + JSON.stringify(row));
+        },
+        'click .remove': function (e, value, row, index) {
+            var formData = new FormData();
+            var id = parseInt(row.id + "");
+            var json = { 'ID': id };
+            jQuery.ajaxSetup({ async: true });
+            formData.append('type', 'delete');
+            formData.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysUser.ashx",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('#table').bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+                },
+                error: function (err) {
+                    $('#table').bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+                }
+            });
+        }
+    };
 </script>
     </asp:Content>
+
+
 
