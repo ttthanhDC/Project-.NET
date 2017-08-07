@@ -102,6 +102,7 @@ namespace SYSGREEN.Configuation
 
 
                     String lstHD = "";
+                    Servies.HoaDonServices.ResetNgayHoaDonToShiper(-1,-1,-1,Convert.ToInt32(IdLotrinhShipper), NguoiTao);
                     if (listNgayHoaDonJson != null && listNgayHoaDonJson.Count > 0)
                     {
                         for (int i = 0; i < listNgayHoaDonJson.Count; i++)

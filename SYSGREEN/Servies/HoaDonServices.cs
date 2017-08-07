@@ -372,7 +372,31 @@ namespace Servies
 
             return solangiao;
         }
-
+        public static void ResetNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId, Int32 IdLotrinhShipper, String NguoiTao)
+        {
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Update = "UPDATE NgayHoaDon SET USER_ID = @User_Id, SHIPER_ID = @Shiper_Id,IdLotrinhShipper = @IdLotrinhShipper1 Where IdLotrinhShipper = @IdLotrinhShipper";
+            cmd = new SqlCommand(Update);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@User_Id", -1);
+            cmd.Parameters.AddWithValue("@Shiper_Id", -1);
+            cmd.Parameters.AddWithValue("@IdLotrinhShipper1", -1);
+            cmd.Parameters.AddWithValue("@IdLotrinhShipper", IdLotrinhShipper);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            NguoiTao = "";
+            shiperId = -1;
+            String updateLotrinh = "Update LoTrinhShipper Set ShipID = " + shiperId + ", NguoiTao = '" + NguoiTao + "' where ID = " + IdLotrinhShipper;
+            SqlCommand cmd1 = new SqlCommand(updateLotrinh);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
         public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId, Int32 IdLotrinhShipper,String NguoiTao)
         {
             SqlCommand cmd = null;
