@@ -34,12 +34,13 @@ namespace SYSGREEN.Configuation
                 }
                 else if (type == "UpdateLoTrinhShipper")
                 {
-                    String idLotrinh = context.Request.Form["idLotrinh"].ToString();
-                    String idShipper = context.Request.Form["idShipper"].ToString();
-                    String trangThaiLotrinh = context.Request.Form["trangThaiLotrinh"].ToString();
+                    String ID = context.Request.Form["ID"].ToString();
+                    String ShipID = context.Request.Form["ShipID"].ToString();
+                    String TrangThai = context.Request.Form["TrangThai"].ToString();
                     DataObject.LoTrinhShipper obj = new DataObject.LoTrinhShipper();
-                    obj.ID = Convert.ToInt32(idLotrinh);
-                    obj.ShipID = Convert.ToInt32(idShipper);
+                    obj.ID = Convert.ToInt32(ID);
+                    obj.ShipID = Convert.ToInt32(ShipID);
+                    obj.TrangThai = TrangThai;
                     Servies.ShipperServices.UpdateLoTrinhShipper(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("1");
