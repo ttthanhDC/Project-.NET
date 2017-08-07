@@ -621,14 +621,17 @@ namespace Servies
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
-            String Select1 = "Update NgayHoaDon set TrangThai = @TrangThai,GhiChu = @GhiChu,SoTienThu = @SoTienThu where ID = @ID";
+
+            String Select1 = "Update NgayHoaDon set TrangThai = '" + status + "', GhiChu = '" + ghiChu + "',SoTienThu = " + Convert.ToDecimal(tienthu) + " where ID =" + Convert.ToInt32(idNHD);
+            //String Select1 = "Update NgayHoaDon set TrangThai = @TrangThai,GhiChu = @GhiChu,SoTienThu = @SoTienThu where ID = @ID";
             cmd1 = new SqlCommand(Select1);
             cmd1.CommandType = CommandType.Text;
             cmd1.Connection = conn;
+            /*
             cmd1.Parameters.AddWithValue("@TrangThai", status);
             cmd1.Parameters.AddWithValue("@GhiChu", ghiChu);
             cmd1.Parameters.AddWithValue("@SoTienThu", Convert.ToDecimal(tienthu));
-            cmd1.Parameters.AddWithValue("@ID", Convert.ToInt32(idNHD));
+            cmd1.Parameters.AddWithValue("@ID", Convert.ToInt32(idNHD));*/
             conn.Open();
             cmd1.ExecuteNonQuery();
             conn.Close();
