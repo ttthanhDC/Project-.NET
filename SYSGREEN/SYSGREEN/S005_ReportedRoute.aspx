@@ -1,14 +1,37 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S005_ReportedRoute.aspx.cs" Inherits="SYSGREEN.S005_ReportedRoute" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+          <div class="form-horizontal">
+            <div class="form-group">
+                
+                 <label for="sel1" class="col-md-7"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_maLoTrinh" placeholder="Mã lộ trình"/>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+                
+            </div> 
+        </div> 
+    </div>
+   <div style ="margin-left:20px;margin-right:20px">
+       <table id="table"></table>
+   </div> 
     <script>
         $(function () {
             // load data 
+            var datatable = [];
+            getDataTable(datatable);
+        });
+        $('#btSearch').on('click', function (e) {
             var data = [];
             var formDataListUser = new FormData();
-            formDataListUser.append('type', 'getALLData');
-            var json = { 'ID': 0 };
-            formDataListUser.append('data', JSON.stringify(json));
+            formDataListUser.append('type', 'getALLDataByMaLoTrinh');
+            //var json = { 'IdLotrinh': 0 };
+            var MaLT = $('#txt_maLoTrinh').val();
+            formDataListUser.append('MaLotrinh', MaLT);
             $.ajax({
                 url: "Configuation/Handler1Test.ashx",
                 type: "POST",
@@ -23,8 +46,10 @@
                             var objectData = jsonData[i];
                             var obj = {};
                             obj.id = objectData.ID_NHD;
+                            obj.idKH = objectData.IdKH;
+                            obj.ID_PTCHD = objectData.ID_PTCHD;
 
-                            obj.codeBill = objectData.MaReservation || "";
+                            obj.codeBill = objectData.MaReservation;
                             var data_ngay = objectData.Ngay;
                             var z = "";
                             if (data_ngay) {
@@ -33,7 +58,7 @@
                                 var y1 = y[0];
                                 var y2 = y[1];
                                 var y3 = y[2];
-                                z = y3 + "/" + y2 + "/" + y1;
+                                z = y2 + "/" + y3 + "/" + y1;
                             }
                             obj.date = z;
                             obj.customer = objectData.TenKH_HD || "";
@@ -42,19 +67,21 @@
                             var add2 = objectData.TenQuan || "";
                             var add3 = add1 + " " + add2;
                             obj.address = add3 || "";
-                            obj.money = objectData.Create_User;// chua có
+                            obj.money = objectData.SoTienThu;
+                            obj.note = objectData.GhiChu;
                             obj.shiper = objectData.shipName || "";
                             arr.push(obj);
                         }
                     }
                     data = arr;
-                    getDataTable(data);
+                    var $tableSearch = $('#table');
+                    $tableSearch.bootstrapTable('load', data);
+                    //getDataTable(data);
                 },
                 error: function (err) {
                 }
             });
         });
-       
         // getdata table 
         var getDataTable = function (itemData) {
             $('#table').bootstrapTable({
@@ -121,14 +148,7 @@
             });
         };
     </script>
-    <div style ="margin-left:10px;margin-right:10px">
-         <table id="table" 
-      data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        ></table>
-    </div>
+    
     </asp:Content>
 
 

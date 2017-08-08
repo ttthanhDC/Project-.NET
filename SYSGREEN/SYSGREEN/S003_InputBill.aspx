@@ -34,10 +34,10 @@
     $('#btSearch').on('click', function (e) {
         var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+        formDataListUser.append('type', 'getALLDataByMaLoTrinh');
         //var json = { 'IdLotrinh': 0 };
         var MaLT = $('#txt_maLoTrinh').val();
-        formDataListUser.append('IdLotrinh', MaLT);
+        formDataListUser.append('MaLotrinh', MaLT);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -52,6 +52,7 @@
                         var objectData = jsonData[i];
                         var obj = {};
                         obj.id = objectData.ID_NHD;
+                        obj.idKH = objectData.IdKH;
                         obj.ID_PTCHD = objectData.ID_PTCHD;
 
                         obj.code = objectData.MaReservation;
@@ -71,13 +72,7 @@
                         obj.phone = objectData.SoDienThoai || "";
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
-                        if (objectData.TongTienConNo) {
-                            obj.money = objectData.TongTienConNo;
-                        } else {
-                            if (objectData.TongTien) {
-                                obj.money = objectData.TongTien;
-                            }
-                        }
+                        obj.money = objectData.SoTienThu;
                        // obj.money = objectData.Create_User || "";// chua có
                         
                         if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
@@ -106,7 +101,7 @@
 
 
                         obj.httt = objectData.HinhThucThanhToan;
-                        obj.note = objectData.GhiChu_NHD;
+                        obj.note = objectData.GhiChu;
                         obj.moneyPay = objectData.SoTienThu || "";
 
                         // userName
@@ -274,7 +269,7 @@
 
     window.codeReserEvents = {
         'click .next': function (e, value, row, index) {
-            window.location = '/LT002_Demo3.aspx?paramId=' + row.id;
+            window.location = '/LT002_Demo3.aspx?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
