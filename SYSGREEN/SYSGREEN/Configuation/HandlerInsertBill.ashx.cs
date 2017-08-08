@@ -796,7 +796,13 @@ namespace SYSGREEN.Configuation
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
-            ngayHoaDon.Ngay = Convert.ToDateTime(data.deliveryDate != "" ? data.deliveryDate : DateTime.Now);
+            String deliveryDate = (String)data.deliveryDate;
+            if (deliveryDate != "")
+            {
+                deliveryDate = deliveryDate.Split('/')[1] + "/" + deliveryDate.Split('/')[0] + "/" + deliveryDate.Split('/')[2];
+            }
+
+            ngayHoaDon.Ngay = Convert.ToDateTime(deliveryDate != "" ? deliveryDate : DateTime.Now.ToShortDateString());
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
@@ -826,6 +832,7 @@ namespace SYSGREEN.Configuation
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
+            ngayHoaDonLe = ngayHoaDonLe.Split('/')[1] + "/" + ngayHoaDonLe.Split('/')[0] + "/" + ngayHoaDonLe.Split('/')[2];
             ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);

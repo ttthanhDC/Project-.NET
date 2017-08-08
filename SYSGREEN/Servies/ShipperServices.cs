@@ -54,6 +54,29 @@ namespace Servies
             }
             
         }
+        public static void DeleteTrinhShipper(DataObject.LoTrinhShipper obj)
+        {
+            String Insert = "Delete  LoTrinhShipper  where ID = @ID";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@ID", obj.ID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
+
+            String updateStatusNHD = "Update NgayHoaDon set IdLotrinhShipper = -1  where IdLotrinhShipper = " + obj.ID;
+            SqlCommand cmd1 = new SqlCommand(updateStatusNHD);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            cmd1.ExecuteNonQuery();
+            cmd1.Connection.Close();
+            conn.Close();
+
+        }
         public static DataTable ViewLoTrinhShipper(String NgayLotrinh, String MaLoTrinh, String ShipName, String ShipNumber, String TrangThai)
         {
             DataTable table = new DataTable();
