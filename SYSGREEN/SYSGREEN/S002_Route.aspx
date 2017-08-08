@@ -40,14 +40,26 @@
   
     $('#btTKLoTrinh').on('click', function (e) {
         var data = [];
-        var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLData');
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'ViewLoTrinhShipper');
+
+        var NgayLotrinh = $('#txt_ngayTT').val();
+        var MaLoTrinh = $('#txt_IDLoTinh').val();
+        var ShipName = $('#txt_shipNameTT').val();
+        var ShipNumber = $('#txt_ShipNumberTT').val();
+        var TrangThai = $('#txt_ttLoTrinh').val();
+
+        formDatasearch.append('NgayLotrinh', NgayLotrinh);
+        formDatasearch.append('MaLoTrinh', MaLoTrinh);
+        formDatasearch.append('ShipName', ShipName);
+        formDatasearch.append('ShipNumber', ShipNumber);
+        formDatasearch.append('TrangThai', TrangThai);
         var json = { 'ID': 0 };
-        formDataListUser.append('data', JSON.stringify(json));
+        formDatasearch.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/Handler1Test.ashx",
+            url: "Configuation/HandlerShipper.ashx",
             type: "POST",
-            data: formDataListUser,
+            data: formDatasearch,
             contentType: false,
             processData: false,
             success: function (result) {
@@ -57,10 +69,10 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        obj.id = objectData.ID_NHD;
+                        obj.id = objectData.ID;
 
-                        obj.codeLT = objectData.MaReservation;
-                        var data_ngay = objectData.Ngay;
+                        obj.codeLT = objectData.MaLoTrinh;
+                        var data_ngay = objectData.NgayTao;
                         var z = "";
                         if (data_ngay) {
                             var x = data_ngay.substr(0, 10);
@@ -71,23 +83,25 @@
                             z = y3 + "/" + y2 + "/" + y1;
                         }
                         obj.date = z;
-                        obj.shipName = objectData.TenQuan || "";
-                        obj.shipNo = objectData.TrangThaiNHD || "";
-                        obj.user = objectData.TenKH_HD || "";
-                        if (objectData.TenKH_HD === "Chưa xử lý") {
+                        obj.shipName = objectData.ShipperName || "";
+                        obj.shipNo = objectData.ShipperNumber || "";
+                        obj.user = objectData.NguoiTao || "";
+                        if (objectData.TrangThai === "Chưa xử lý") {
                             obj.status = 1;
-                        } else if (objectData.TenKH_HD === "Đang xử lý") {
+                        } else if (objectData.TrangThai === "Đang xử lý") {
                             obj.status = 2;
-                        } else if (objectData.TenKH_HD === "Hoàn thành") {
+                        } else if (objectData.TrangThai === "Hoàn thành") {
                             obj.status = 3;
                         } else {
                             obj.status = 0;
                         }
+                        obj.ShipID =  objectData.ShipID || "";
                         arr.push(obj);
                     }
                 }
                 data = arr;
-                getDataTableLoTrinh(data);
+                var $table = $('#tableLoTrinh');
+                $table.bootstrapTable('load', data);
             },
             error: function (err) {
             }
@@ -95,11 +109,11 @@
     });
     $('#btTaoLoTrinh').on('click', function (e) {
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLData');
+        formDataListUser.append('type', 'InsertLoTrinhShipperReturnId');
         var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
-            url: "Configuation/Handler1Test.ashx",
+            url: "Configuation/HandlerShipper.ashx",
             type: "POST",
             data: formDataListUser,
             contentType: false,
@@ -113,12 +127,53 @@
             }
         });
     });
-    
+    $('#btLuu').on('click', function (e) {
+        var formDataSave = new FormData();
+        formDataSave.append('type', 'UpdateLoTrinhShipper');
+        var datatable = $('#tableLoTrinh').bootstrapTable('getData');
+        var listIdLoTrinh = [];
+        var listStatus = [];
+        var lstTT = $('#tableLoTrinh select.select1 option:selected');
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+                if (datatable[i].check && datatable[i].id) {
+                    listIdLoTrinh.push(datatable[i].id);
+                    listStatus.push(lstTT[i].text);
+                }
+            }
+        }
+       
+        var json = {
+            'listStatus': listStatus,
+            'listIdLoTrinh': listIdLoTrinh,
+        };
+        formDataSave.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerShipper.ashx",
+            type: "POST",
+            data: formDataSave,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var maLT = result;
+                // chuyển màn hình tạo data cho mã lộ trình
+                //window.location = '/S001_ListShiper.aspx?paramId=' + maLT;
+            },
+            error: function (err) {
+            }
+        });
+    });
 
     // getdata table lộ trình
     var getDataTableLoTrinh = function (itemData) {
         $('#tableLoTrinh').bootstrapTable({
             columns: [{
+                field: 'check',
+                title: 'Tích',
+                align: 'center',
+                valign: 'middle',
+                checkbox: true
+            }, {
                 field: 'codeLT',
                 title: 'Mã lộ trình',
                 align: 'center',
@@ -203,7 +258,7 @@
             formData.append('type', 'delete');
             formData.append('data', JSON.stringify(json));
             $.ajax({
-                url: "Configuation/HandlerSysUser.ashx",
+                url: "Configuation/HandlerShipper.ashx",
                 type: "POST",
                 data: formData,
                 contentType: false,
