@@ -60,6 +60,15 @@ namespace SYSGREEN.Configuation
                     }
 
                 }
+                else if (type == "DeleteTrinhShipper")
+                {
+                    String IdLotrinh = context.Request.Form["IdLotrinh"].ToString();
+                    DataObject.LoTrinhShipper obj = new DataObject.LoTrinhShipper();
+                    obj.ID = Convert.ToInt32(IdLotrinh);
+                    Servies.ShipperServices.DeleteTrinhShipper(obj);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1"); 
+                }
                 else if (type == "ViewLoTrinhShipper")
                 {
 

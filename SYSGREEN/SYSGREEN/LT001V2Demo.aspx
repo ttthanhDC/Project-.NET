@@ -1586,6 +1586,7 @@
                         var x = new Date();
                         deliveryDate = deliveryDate + "/" + x.getFullYear();
                         row.thugiaohang = convertDateToDay(deliveryDate);
+                        row.deliveryDate = deliveryDate;
                     }
                     
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
@@ -1846,7 +1847,21 @@
                 },
                 {
                     field: 'product',
-                    title: 'Sản phẩm',
+                    title: 'Mã Sản phẩm',
+                    align: 'center',
+                    valign: 'middle',
+                    editable: true
+                },
+                {
+                    field: 'productName',
+                    title: 'Tên Sản phẩm',
+                    align: 'center',
+                    valign: 'middle',
+                    editable: true
+                },
+                {
+                    field: 'note',
+                    title: 'Ghi chú',
                     align: 'center',
                     valign: 'middle',
                     editable: true
@@ -1866,7 +1881,7 @@
                 },
                 {
                     field: 'sugar',
-                    title: 'Sugar',
+                    title: 'Đường',
                     align: 'center',
                     valign: 'middle',
                     formatter: function (value, row, index) {
@@ -1897,12 +1912,7 @@
                     align: 'center',
                     valign: 'middle'
                 },
-                {
-                    field: 'note',
-                    title: 'Ghi chú',
-                    align: 'center',
-                    valign: 'middle'
-                },
+                
                 {
                     field: 'operate',
                     title: 'Thao tác',
@@ -1946,6 +1956,7 @@
                                 var objectData = jsonData[0];
                                 var quantity = Number(objectData.Product_Unit);
                                 row.quantity = quantity;
+                                row.productName = objectData.Product_Name;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
                                 row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 row.money = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1953,6 +1964,7 @@
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             } else {
                                 row.quantity = "";
+                                row.productName = "";
                                 row.price = "";
                                 row.money = "";
                                 row.total = "";
@@ -1969,6 +1981,9 @@
                     row.money = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     row.total = (row[field] * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+                }
+                if (field == "note") {
+                    
                 }
                 if (field == "promotionCode") {
                     var formpromotionCode = new FormData();
@@ -2009,7 +2024,7 @@
             }else if(dateNgaygiaoHangLe.split('/').length == 2){
                 dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
                 $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
-                $("#txtThuGiaoHangLe").val(dateNgaygiaoHangLe);
+                $("#txtNgayGiaoHangLe").val(dateNgaygiaoHangLe);
             }
             
         });
@@ -2066,6 +2081,7 @@
             obj.parentBillId = window.rowTemp.billId;
             obj.parentId = -1;
             obj.deliveryDate = '';
+            obj.productName = '';
             obj.product = '';
             obj.sugar = 1;
             obj.quantity = '';
@@ -2075,6 +2091,7 @@
             obj.total = '';
             obj.test = '';
             obj.operate = '1';
+            obj.note = '';
             $table.bootstrapTable('append', [obj]);
         });
         $('#btnPopupSingle').on('click', function () {
