@@ -28,10 +28,16 @@
     // Bootstrap Table
     $(function () {
         var data = [];
+        getDataTable(data);
+    });
+    // button search
+    $('#btSearch').on('click', function (e) {
+        var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLData');
-        var json = { 'ID': 0 };
-        formDataListUser.append('data', JSON.stringify(json));
+        formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+        //var json = { 'IdLotrinh': 0 };
+        var MaLT = $('#txt_maLoTrinh').val();
+        formDataListUser.append('IdLotrinh', MaLT);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -65,7 +71,14 @@
                         obj.phone = objectData.SoDienThoai || "";
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                       // obj.money = objectData.Create_User || "";// chua có
                         
                         if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
                             obj.status = 1;
@@ -101,24 +114,13 @@
                     }
                 }
                 data = arr;
-                getDataTable(data);
+                var $tableSearch = $('#table');
+                $tableSearch.bootstrapTable('load', data);
+                //getDataTable(data);
             },
             error: function (err) {
             }
         });
-    });
-    // button search
-    $('#btSearch').on('click', function (e) {
-        var datatable = $('#table').bootstrapTable('getData');
-        var listNgayHoaDon = [];
-        if (datatable) {
-            for (var i = 0; i < datatable.length; i++) {
-                if (datatable[i].id) {
-                    listNgayHoaDon.push(datatable[i].id);
-                }
-            }
-        }
-        alert("Danh sách in hóa đơn" + listNgayHoaDon)
     });
     // button save
     $('#btSave').on('click', function (e) {
@@ -145,7 +147,7 @@
                 } else {
                     alert("Lưu data không thành công");
                 }
-                data = arr;
+                data = jsonData;
                 getDataTable(data);
             },
             error: function (err) {
