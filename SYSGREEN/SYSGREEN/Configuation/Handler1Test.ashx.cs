@@ -189,6 +189,22 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "getALLDataByMaLoTrinh")
+            {
+                try
+                {
+
+                    String MaLotrinh = context.Request.Form["MaLotrinh"].ToString();
+                    DataTable lst = Servies.HoaDonServices.getAllDataViewHoaDonByMaLoTrinh(MaLotrinh);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
