@@ -418,7 +418,7 @@ namespace Servies
             cmd1.CommandType = CommandType.Text;
             cmd1.Connection = conn;
             conn.Open();
-            cmd.ExecuteNonQuery();
+            cmd1.ExecuteNonQuery();
             conn.Close();
         }
 

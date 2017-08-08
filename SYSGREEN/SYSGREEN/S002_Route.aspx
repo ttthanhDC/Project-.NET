@@ -39,6 +39,9 @@
     });
   
     $('#btTKLoTrinh').on('click', function (e) {
+        eventSearch();
+    });
+    var eventSearch = function () {
         var data = [];
         var formDatasearch = new FormData();
         formDatasearch.append('type', 'ViewLoTrinhShipper');
@@ -95,7 +98,7 @@
                         } else {
                             obj.status = 0;
                         }
-                        obj.ShipID =  objectData.ShipID || "";
+                        obj.ShipID = objectData.ShipID || "";
                         arr.push(obj);
                     }
                 }
@@ -106,7 +109,7 @@
             error: function (err) {
             }
         });
-    });
+    };
     $('#btTaoLoTrinh').on('click', function (e) {
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'InsertLoTrinhShipperReturnId');
@@ -255,8 +258,8 @@
             var id = parseInt(row.id + "");
             var json = { 'ID': id };
             jQuery.ajaxSetup({ async: true });
-            formData.append('type', 'delete');
-            formData.append('data', JSON.stringify(json));
+            formData.append('type', 'DeleteTrinhShipper');
+            formData.append('IdLotrinh', id);
             $.ajax({
                 url: "Configuation/HandlerShipper.ashx",
                 type: "POST",
@@ -264,16 +267,10 @@
                 contentType: false,
                 processData: false,
                 success: function (result) {
-                    $('#table').bootstrapTable('remove', {
-                        field: 'id',
-                        values: [row.id]
-                    });
+                    eventSearch();
                 },
                 error: function (err) {
-                    $('#table').bootstrapTable('remove', {
-                        field: 'id',
-                        values: [row.id]
-                    });
+                    eventSearch();
                 }
             });
         }
