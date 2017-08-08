@@ -874,5 +874,46 @@ namespace Servies
             conn.Close();
             return table;
         }
+
+        public static void updateTienHD(String idCTHD,int idPCTHD)
+        {
+            //vHoaDonStep1
+
+            SqlCommand cmd = null;
+            SqlCommand cmd1 = null;
+            SqlCommand cmd2 = null;
+            SqlCommand cmd3 = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select IDHoaDon from ChiTietHoaDon where ID = " + idCTHD;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object IdHoaDon = cmd.ExecuteScalar();
+            conn.Close();
+            String SelectHD = "select TongTien from HoaDon where ID = " + Convert.ToInt32(IdHoaDon);
+            cmd1 = new SqlCommand(SelectHD);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            object TongTien = cmd1.ExecuteScalar();
+            conn.Close();
+            String SelectTienGoi = "Select ThanhTien from PackageChiTietHoaDon where ID= " + idPCTHD;
+            cmd2 = new SqlCommand(SelectTienGoi);
+            cmd2.CommandType = CommandType.Text;
+            cmd2.Connection = conn;
+            conn.Open();
+            object ThanhTien = cmd2.ExecuteScalar();
+            conn.Close();
+            Decimal tong = Convert.ToDecimal(TongTien) + Convert.ToDecimal(ThanhTien);
+            String UpdateTienHD = "Update  HoaDon set TongTien = " + tong + " where ID = " + Convert.ToInt32(IdHoaDon);
+            cmd3 = new SqlCommand(UpdateTienHD);
+            cmd3.CommandType = CommandType.Text;
+            cmd3.Connection = conn;
+            conn.Open();
+            cmd3.ExecuteNonQuery();
+            conn.Close();
+        }
+
     } 
 }

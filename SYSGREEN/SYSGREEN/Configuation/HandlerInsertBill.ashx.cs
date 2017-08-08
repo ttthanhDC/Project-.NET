@@ -123,7 +123,7 @@ namespace SYSGREEN.Configuation
                                     if (j == 0)
                                     {
                                         idNgayHDLe = InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, (String)dataHD[k].ngayGiaoHangLe);
-                                        InsertKhachHangNgay(idNgayHD, dataHD[k]);
+                                        InsertKhachHangNgay(idNgayHDLe, dataHD[k]);
                                         InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
                                         //InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, dataHD[k].ngayGiaoHangLe);
                                     }
@@ -608,6 +608,7 @@ namespace SYSGREEN.Configuation
                     * 
                     * *******************************/
                     int idPackageHD = InsertPackageChiTietHoaDonReturnId(data, Convert.ToInt32(IdChiTietHoaHD));
+                    Servies.HoaDonServices.updateTienHD(IdChiTietHoaHD, idPackageHD);
                     if ((String)data.NgayHD != "")
                     {
                         int idNgayHDLe = InsertNgayHoaDonLeReturnId(data, idPackageHD, (String)data.NgayHD);
