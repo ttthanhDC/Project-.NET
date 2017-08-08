@@ -52,16 +52,20 @@
         </div> 
         
     </div>
-   <div style ="margin-left:20px;margin-right:20px" id="Div_tableSanPham">
-       <table id="table" 
-       
-        ></table>
+   <div style ="margin-left:20px;margin-right:20px;display:none" id="Div_tableSanPham">
+       <table id="table"  ></table>
+   </div> 
+    <div style ="margin-left:20px;margin-right:20px" id="Div_tableTT">
+       <table id="tableTT"  ></table>
    </div> 
    
 <script>
     // Bootstrap Table
     $(function () {
-        
+        var dataTable = [];
+        getDataTable(dataTable);
+
+
         window.idParam = getQueryVariable("paramId");
         //alert("Data" + window.idParam);
         function getQueryVariable(variable) {
@@ -157,7 +161,14 @@
                         obj.name = objectData.TenKH_HD || "";
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                       // obj.money = objectData.Create_User || "";// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -174,7 +185,7 @@
                     }
                 }
                 data = arr;
-                getDataTable(data);
+                getDataTableTT(data);
             },
             error: function (err) {
             }
@@ -219,7 +230,14 @@
                         obj.name = objectData.TenKH_HD || "";
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User || "";// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -247,6 +265,9 @@
 
     //// tìm kiếm 
     $('#btSearch').on('click', function (e) {
+        $('#Div_tableSanPham')[0].style.display = "block";
+        $('#Div_tableTT')[0].style.display = "none";
+
         var data1 = [];
         var formDatasearch = new FormData();
         formDatasearch.append('type', 'getDataFilter');
@@ -296,7 +317,14 @@
                         obj.name = objectData.TenKH_HD || "";
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User;// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User;// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -307,6 +335,11 @@
                         }
                         obj.check = false;
                         obj.user = objectData.userName || "";
+                        if (objectData.IdLotrinhShipper + "" === window.idParam + "") {
+                            obj.check = 1;
+                        } else {
+                            obj.check = 0;
+                        }
                         // userName
                         arr.push(obj);
                     }
@@ -323,13 +356,21 @@
 
     // btAssign button
     $('#btChuyen').on('click', function (e) {
+        $('#Div_tableSanPham')[0].style.display = "none";
+        $('#Div_tableTT')[0].style.display = "block";
+
+
+        
         var formDataAssign = new FormData();
         formDataAssign.append('type', 'assignHoaDonToShiper');
         var datatable = $('#table').bootstrapTable('getData');
+        var lstCheck = $('#table').find('input.check[type="checkbox"]');
         var listNgayHoaDon = [];
+
         if (datatable) {
             for (var i = 0; i < datatable.length; i++) {
-                if (datatable[i].check && datatable[i].id) {
+
+                if (lstCheck[i].checked && datatable[i].id) {
                     listNgayHoaDon.push(datatable[i].id);
                 }
             }
@@ -356,20 +397,106 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                var jsonData = result;
-                var arr = [];
-                if (jsonData && jsonData.length > 0) {
-                    SearchAllDataTable();
-                    alert("Assign thành công");
-                    loadDataByID();
-                }
+                alert("Assign thành công");
+                loadDataByID();
             },
             error: function (err) {
             }
         });
     });
     $('#btSua').on('click', function (e) {
-        var dataSearch = [];
+        $('#Div_tableSanPham')[0].style.display = "block";
+        $('#Div_tableTT')[0].style.display = "none";
+        var data1 = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
+
+        var maReservation = $('#txt_reservation').val();
+        var ngayHoaDon = $('#txt_Date').val();
+        var quan = $('#txt_Distric').val();
+        // var soShiper = $('#txt_ShipNumber').val();
+        // var tenShiper = $('#txt_ShipName').val();
+        var trangThai = $('#txt_status').val();
+
+        formDatasearch.append('maReservation', maReservation);
+        formDatasearch.append('ngayHoaDon', ngayHoaDon);
+        formDatasearch.append('quan', quan);
+        formDatasearch.append('soShiper', "");
+        formDatasearch.append('tenShiper', "");
+        formDatasearch.append('trangThai', trangThai);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User || "";// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+
+                        obj.user = objectData.userName || "";
+                        if (objectData.IdLotrinhShipper + "" === window.idParam + "") {
+                            obj.check = 1;
+                        } else {
+                            obj.check = 0;
+                        }
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data1 = arr;
+                //getDataTable(data1);
+                var $table = $('#table');
+                $table.bootstrapTable('load', data1);
+            },
+            error: function (err) {
+            }
+        });
+
+
+
+
+        /*var dataSearch = [];
         var formDataSearchAll = new FormData();
         formDataSearchAll.append('type', 'getALLData');
         var json = { 'ID': 0 };
@@ -406,7 +533,14 @@
                         obj.name = objectData.TenKH_HD || "";
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User || "";// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -418,18 +552,23 @@
                         obj.check = false;
 
                         obj.user = objectData.userName || "";
+                        if (objectData.IdLotrinhShipper + "" === window.idParam + "") {
+                            obj.check = 1;
+                        } else {
+                            obj.check = 0;
+                        }
                         // userName
                         arr.push(obj);
                     }
                 }
                 dataSearch = arr;
-                // getDataTable(dataSearch);
-                var $tableSearch = $('#table');
-                $tableSearch.bootstrapTable('load', dataSearch);
+                getDataTable(dataSearch);
+                //var $tableSearch = $('#table');
+               // $tableSearch.bootstrapTable('load', dataSearch);
             },
             error: function (err) {
             }
-        });
+        });*/
     });
     var loadDataByID = function () { 
         var data = [];
@@ -469,7 +608,14 @@
                         obj.name = objectData.TenKH_HD || "";
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
-                        obj.money = objectData.Create_User || "";// chua có
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User || "";// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -486,7 +632,7 @@
                     }
                 }
                 data = arr;
-                var $tableSearch = $('#table');
+                var $tableSearch = $('#tableTT');
                 $tableSearch.bootstrapTable('load', data);
                 //getDataTable(data);
             },
@@ -502,8 +648,152 @@
                 title: 'Tích',
                 align: 'center',
                 valign: 'middle',
-                checkbox : true
+                //checkbox: true
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '<input type="checkbox" class="check"  checked="checked" />';
+                    } else {
+                        return '<input type="checkbox" class="check" />';
+                    }
+                }
             }, {
+                field: 'code',
+                title: 'Mã đơn',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    return '<label style = "color: blue;">' + value + '</label>';
+                }
+            }, {
+                field: 'date',
+                title: 'Ngày',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'district',
+                title: 'Quận',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'status',
+                title: 'Trạng thái',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'name',
+                title: 'Họ tên',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'sdt',
+                title: 'SĐT',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'addres',
+                title: 'Địa chỉ',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipName',
+                title: 'Ship Name',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'shipNumber',
+                title: 'ShipNo',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'user',
+                title: 'User',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
+                field: 'money',
+                title: 'Tiền',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (row.detb) {
+                        return '<label style = "color: red;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }],
+
+            data: itemData
+        });
+    };
+    // getdata table san phẩm
+    var getDataTableTT = function (itemData) {
+        $('#tableTT').bootstrapTable({
+            columns: [{
+                
                 field: 'code',
                 title: 'Mã đơn',
                 align: 'center',

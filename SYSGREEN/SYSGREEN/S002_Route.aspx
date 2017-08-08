@@ -26,9 +26,9 @@
         </div> 
     </div>
     <div style ="margin-left:20px;margin-right:20px" id ="div_TableLoTrinh">
-        <div style ="width: 100%;text-align:right"><button type="button" class="btn btn-primary" id="btLuu">lưu data</button></div>
+         <div style ="width: 100%;text-align:right"><button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button><button type="button" class="btn btn-primary" id="btLuu">lưu data</button></div>
         <table id="tableLoTrinh"></table>
-        <div style ="width: 100%;text-align:center;margin-top:20px"><button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button></div>
+       
     </div>
    
 <script>
