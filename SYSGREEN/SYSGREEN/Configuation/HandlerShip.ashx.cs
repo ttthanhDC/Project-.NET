@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using CrystalDecisions.Shared;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -201,6 +203,7 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            
             else
             {
                 context.Response.ContentType = "text/plain";

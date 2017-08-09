@@ -915,5 +915,34 @@ namespace Servies
             conn.Close();
         }
 
+        public static DataTable InHoaDonSanPhamByNgay(String ngayHD)
+        {
+            //vHoaDonStep1
+            
+            DataTable table = new DataTable();
+            SqlConnection conn = Common.Connection.SqlConnect();
+            /*
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "select * from vHoaDonStep3 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayHD + "' , 103),103)";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();*/
+            conn.Open();
+            SqlDataAdapter sda = new SqlDataAdapter("PGetStepV3", conn);
+            sda.SelectCommand.CommandType = CommandType.StoredProcedure;
+            sda.SelectCommand.Parameters.AddWithValue("@NgayHD", ngayHD);
+            sda.Fill(table);
+            conn.Close();
+            //ReportDocument rd = new ReportDocument();
+            //CrystalDecisions.CrystalReports.Engine.ReportDocument rpt = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
+            //F:\SysLaProject\GitHub\SYSGREEN\SYSGREEN\CrystalReport1.rpt
+            return table;
+        }
+
+
     } 
 }
