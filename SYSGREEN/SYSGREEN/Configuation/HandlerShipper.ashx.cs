@@ -41,7 +41,7 @@ namespace SYSGREEN.Configuation
                     dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
                     dynamic listIdLoTrinh = data.listIdLoTrinh;
                     dynamic listStatus = data.listStatus;
-                    int check = 0;
+                    int check = -1;
                     if (listIdLoTrinh.Count > 0)
                     {
                         for (int i = 0; i < listIdLoTrinh.Count; i++)
@@ -59,7 +59,7 @@ namespace SYSGREEN.Configuation
                     else
                     {
                         context.Response.ContentType = "text/plain";
-                        context.Response.Write(0);
+                        context.Response.Write(-1);
                     }
 
                 }

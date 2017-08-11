@@ -29,6 +29,10 @@ namespace Servies
         }
         public static int UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
         {
+            // 1 : Lưu thành công
+            // 2 : Lưu thông tin không thành công trạng thái đang xử lý
+            // 3 : Lưu thông tin không thành công trạng thái hoàn thành
+            // 4  : Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý 
             SqlConnection conn = Common.Connection.SqlConnect();
             String getTrangThaiLoTrinh = "Select TrangThai FROM LoTrinhShipper  where ID = @ID";
             SqlCommand cmdGetTrangThai = new SqlCommand(getTrangThaiLoTrinh);
@@ -78,7 +82,7 @@ namespace Servies
             {
                 if (result != 0)
                 {
-                    return 0;
+                    return 3;
                 }
                 else
                 {
@@ -97,11 +101,11 @@ namespace Servies
             }
             else if (statusLT == "Đang xử lý" && obj.TrangThai == "Chưa xử lý")
             {
-                return 0;
+                return 4;
             }
             else if (statusLT == "Hoàn thành" && obj.TrangThai != "Hoàn thành")
             {
-                return 0;
+                return 5;
             }
             else if (statusLT == "Chưa xử lý" && obj.TrangThai == "Chưa xử lý")
             {
