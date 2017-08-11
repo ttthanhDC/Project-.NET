@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace DataObject
 {
-    class Shiper
+    public class Shiper
     {
         public string Table = "SHIPER";
         public int SHIPER_ID { get; set; }
         public String NUMBER { get; set; }
         public String NAME { get; set; }
         public String DESCRIPTION { get; set; }
+        public String DiaChi { get; set; }
+        public String SoDienThoai { get; set; }
+        public DateTime NgayTao { get; set; }
+        public String NguoiTao { get; set; }
        
     }
 }

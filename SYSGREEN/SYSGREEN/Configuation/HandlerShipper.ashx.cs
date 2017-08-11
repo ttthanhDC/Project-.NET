@@ -108,6 +108,52 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("0");
                 }
+                else if (type == "InsertShipperReturnId")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    String DiaChi = context.Request.Form["DiaChi"].ToString();
+                    String SoDienThoai = context.Request.Form["SoDienThoai"].ToString();
+                    String NAME = context.Request.Form["NAME"].ToString();
+                    DataObject.Shiper s = new DataObject.Shiper();
+                    s.NAME = NAME;
+                    s.DiaChi = DiaChi;
+                    s.SoDienThoai = SoDienThoai;
+                    s.NguoiTao = "";
+                    s.NgayTao = DateTime.Now;
+                    s.DESCRIPTION = "";
+                    int idShipper = Servies.ShipperServices.InsertShipperReturnId(s);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(idShipper);
+                }
+                else if (type == "UpdateShipperReturnId")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    String DiaChi = context.Request.Form["DiaChi"].ToString();
+                    String SoDienThoai = context.Request.Form["SoDienThoai"].ToString();
+                    String NAME = context.Request.Form["NAME"].ToString();
+                    String Shipe_ID = context.Request.Form["Shipe_ID"].ToString();
+                    DataObject.Shiper s = new DataObject.Shiper();
+                    s.NAME = NAME;
+                    s.DiaChi = DiaChi;
+                    s.SoDienThoai = SoDienThoai;
+                    s.DESCRIPTION = "";
+                    s.SHIPER_ID = Convert.ToInt16(Shipe_ID);
+                    Servies.ShipperServices.UpdateShipperReturnId(s);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1");
+                }
+                else if (type == "getDataShipper")
+                {
+                    DataTable table = new DataTable();
+                    String NAME = context.Request.Form["NAME"].ToString();
+                    String Shipe_ID = context.Request.Form["Shipe_ID"].ToString();
+                    DataObject.Shiper s = new DataObject.Shiper();
+                    s.NAME = NAME;
+                    s.SHIPER_ID = Convert.ToInt16(Shipe_ID);
+                    table = Servies.ShipperServices.getDataShipper(s);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(table));
+                }
             }
             catch (Exception e)
             {

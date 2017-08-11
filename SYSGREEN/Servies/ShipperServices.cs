@@ -200,5 +200,66 @@ namespace Servies
             conn.Close();
             return table;
         }
+        public static int InsertShipperReturnId(DataObject.Shiper obj)
+        {
+            String Insert = "INSERT INTO SHIPER (NAME,DiaChi,SoDienThoai,DESCRIPTION,NguoiTao,NgayTao) VALUES (@NAME,@DiaChi,@SoDienThoai,@DESCRIPTION,@NguoiTao,@NgayTao);Select @@IDENTITY as newId";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+            cmd.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+            cmd.Parameters.AddWithValue("@SoDienThoai", obj.SoDienThoai);
+            cmd.Parameters.AddWithValue("@DESCRIPTION", obj.DESCRIPTION);
+            cmd.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+            cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+            conn.Open();
+            object insertedID = cmd.ExecuteScalar();
+            cmd.Connection.Close();
+            conn.Close();
+            return Convert.ToInt32(insertedID);
+        }
+        public static void UpdateShipperReturnId(DataObject.Shiper obj)
+        {
+            String Insert = "Update SHIPER SET NAME = @NAME,DiaChi = @DiaChi,SoDienThoai = @SoDienThoai where ID = @ID";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@NAME", obj.NAME);
+            cmd.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+            cmd.Parameters.AddWithValue("@SoDienThoai", obj.SoDienThoai);
+            cmd.Parameters.AddWithValue("@ID", obj.SHIPER_ID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
+        }
+
+        public static DataTable getDataShipper(DataObject.Shiper obj)
+        {
+
+            DataTable table = new DataTable();
+            String Select  = "Select * from  SHIPER ";
+            if (obj.SHIPER_ID != null && obj.SHIPER_ID > 0)
+            {
+                Select += "SHIPER_ID =" + obj.SHIPER_ID + " AND ";
+            }
+            if (obj.NAME != null && obj.NAME != "")
+            {
+                Select += "NAME LIKE N'%" + obj.NAME + "%' AND ";
+                
+            }
+
+            Select += "1=1 ORDER BY SHIPER_ID DESC";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
     }
 }
