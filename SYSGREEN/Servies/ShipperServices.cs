@@ -82,10 +82,6 @@ namespace Servies
             {
                 if (result != 0)
                 {
-                    return 3;
-                }
-                else
-                {
                     String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
                     SqlCommand cmd = new SqlCommand(Insert);
                     cmd.CommandType = CommandType.Text;
@@ -97,6 +93,10 @@ namespace Servies
                     cmd.Connection.Close();
                     conn.Close();
                     return 1;
+                }
+                else
+                {
+                    return 3;
                 }
             }
             else if (statusLT == "Đang xử lý" && obj.TrangThai == "Chưa xử lý")
