@@ -7,6 +7,14 @@
           <div class="form-horizontal">
             <div class="form-group">
                  <label for="sel1" class="col-md-2"></label>
+                 <div class="col-md-2">
+                    <div class="form-group">
+                          <select class="form-control" id="cbTime">
+                              <option value =" 1"> Ship đi</option>
+                              <option value =" 2"> Đến lấy</option>
+                          </select>
+                        </div>
+                </div>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_reservation" placeholder="Mã đơn"/>
                 </div>
@@ -15,9 +23,6 @@
                 </div>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_Distric" placeholder="Quận"/>
-                </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_status"placeholder="Trạng thái" />
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
@@ -291,13 +296,15 @@
         var data1 = [];
         var formDatasearch = new FormData();
         formDatasearch.append('type', 'getDataFilter');
+        // thêm search theo hình thức ship
+        var hinhThucShip = $('#cbTime').val();
 
         var maReservation= $('#txt_reservation').val();
         var ngayHoaDon = $('#txt_Date').val();
         var quan = $('#txt_Distric').val();
        // var soShiper = $('#txt_ShipNumber').val();
        // var tenShiper = $('#txt_ShipName').val();
-        var trangThai = $('#txt_status').val();
+        var trangThai = "";//$('#txt_status').val();
 
         formDatasearch.append('maReservation', maReservation);
         formDatasearch.append('ngayHoaDon', ngayHoaDon);
@@ -436,7 +443,7 @@
         var quan = $('#txt_Distric').val();
         // var soShiper = $('#txt_ShipNumber').val();
         // var tenShiper = $('#txt_ShipName').val();
-        var trangThai = $('#txt_status').val();
+        var trangThai = "";//$('#txt_status').val();
 
         formDatasearch.append('maReservation', maReservation);
         formDatasearch.append('ngayHoaDon', ngayHoaDon);

@@ -95,7 +95,7 @@
                         } else if (jsonData[i].TrangThaiNHD == "Đang chuyển") {
                             obj.status = 6;
                         } else if (jsonData[i].TrangThaiNHD == "") {
-                            obj.status = 0;
+                            obj.status =1;
                         }
                         // hình thúc thanh toán
                         if (jsonData[i].HinhThucThanhToan == "Tiền mặt") {
@@ -103,7 +103,7 @@
                         } else if (jsonData[i].HinhThucThanhToan == "Chuyển khoản") {
                             obj.httt = 2;
                         } else {
-                            obj.httt = 0;
+                            obj.httt = 1;
                         }
 
 
@@ -185,11 +185,6 @@
                 align: 'center',
                 valign: 'middle',
             }, {
-                field: 'district',
-                title: 'Quận',
-                align: 'center',
-                valign: 'middle',
-            }, {
                 field: 'address',
                 title: 'Địa chỉ',
                 align: 'center',
@@ -206,21 +201,18 @@
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     if (value === 1) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 2) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 3) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 4) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
                     } else if (value === 5) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                    } else if (value === 6) {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0></option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
-                    } else {
-                        return '<select class="select1" id="Bill' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                    }
-                }
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                    } else 
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
+                    } 
             }, {
                 field: 'httt',
                 title: 'Hình thức thanh toán',
@@ -228,11 +220,9 @@
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     if (value === 1) {
-                        return '<select class="select2" id="STT' + index + '"> <option value = 0></option><option value = 1 selected = true>Tiền mặt</option><option value = 2>Chuyển khoản</option></select>'
-                    } else if (value === 2) {
-                        return '<select class="select2" id="STT' + index + '"> <option value = 0></option><option value = 1>Tiền mặt</option><option value = 2 selected = true>Chuyển khoản</option></select>'
+                        return '<select class="select2" id="STT' + index + '"><option value = 1 selected = true>Tiền mặt</option><option value = 2>Chuyển khoản</option></select>'
                     } else {
-                        return '<select class="select2" id="STT' + index + '"> <option value = 0 selected = true></option><option value = 1>Tiền mặt</option><option value = 2>Chuyển khoản</option></select>'
+                        return '<select class="select2" id="STT' + index + '"><option value = 1>Tiền mặt</option><option value = 2 selected = true>Chuyển khoản</option></select>'
                     }
                 }
             }, {
