@@ -29,7 +29,7 @@ namespace SYSGREEN.Configuation
                     obj.MaLoTrinh = MaLoTrinh;
                     obj.NguoiTao = "";
                     obj.NgayTao = DateTime.Now;
-                    obj.TrangThai = "";
+                    obj.TrangThai = "Chưa xử lý";
                     int idLotrinh = Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(idLotrinh);
