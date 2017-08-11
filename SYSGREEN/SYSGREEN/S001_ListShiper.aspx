@@ -26,7 +26,8 @@
             <div class="form-group">
                  <label for="sel1" class="col-md-2"></label>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" id="btIn">In hóa đơn vận chuyển</button>
+                    <asp:Button ID="btIn1" runat="server" AutoPostBack="false" class="btn btn-primary" Text="In hóa đơn vận chuyển" OnClick="InHoaDon_click" />
+                    <!--<button   class="btn btn-primary" id="btIn" runat="server" >In hóa đơn vận chuyển</button> -->
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-primary" id="btInLoTrinh">In lộ trình</button>

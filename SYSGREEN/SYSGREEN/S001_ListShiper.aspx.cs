@@ -11,7 +11,14 @@ namespace SYSGREEN
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
 
+            }
+        }
+        protected void InHoaDon_click(object sender, EventArgs e)
+        {
+            String x = "1";
         }
     }
 }
