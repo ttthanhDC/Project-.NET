@@ -497,7 +497,20 @@ namespace Servies
             }
             if (ngayHoaDon != null && ngayHoaDon != "")
             {
-                Select += "convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) LIKE N'%" + ngayHoaDon + "%' AND ";
+
+                string[] words = ngayHoaDon.Split('/');
+                if (words.Length == 1)
+                {
+                    Select += "CONVERT(varchar(10), DAY(Ngay)) = '" + words[0] + "' AND ";
+                }
+                else if (words.Length == 2)
+                {
+                    Select += "CONVERT(varchar(10), DAY(Ngay)) + '/' + CONVERT(varchar(10), MONTH(Ngay)) = '" + words[0] + "/" + words[1] + "' AND ";
+                }
+                else if (words.Length == 3)
+                {
+                    Select += "convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayHoaDon + "' , 103),103) AND ";
+                }
             }
             if (quan != null && quan != "")
             {
