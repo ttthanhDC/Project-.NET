@@ -513,7 +513,7 @@ namespace Servies
             {
                 Select += "shipName LIKE N'%" + tenShiper + "%' AND ";
             }
-            Select += "TrangThaiNHD ='Chưa xử lý' AND ";
+            Select += "TrangThaiNHD = N'Chưa xử lý' AND ";
             /*
             if (trangThai != null && trangThai != "")
             {
