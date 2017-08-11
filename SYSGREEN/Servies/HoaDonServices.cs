@@ -497,7 +497,7 @@ namespace Servies
             }
             if (ngayHoaDon != null && ngayHoaDon != "")
             {
-                Select += "Ngay LIKE N'%" + ngayHoaDon + "%' AND ";
+                Select += "convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) LIKE N'%" + ngayHoaDon + "%' AND ";
             }
             if (quan != null && quan != "")
             {
