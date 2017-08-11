@@ -48,7 +48,7 @@ namespace Servies
             object checkTT = cmdCheck.ExecuteScalar();
             conn.Close();
             int result = Convert.ToInt16(checkTT);
-            if (trangthaiLT == "Chưa xử lý" && obj.TrangThai == "Đang xử lý")
+            if (statusLT == "Chưa xử lý" && obj.TrangThai == "Đang xử lý")
             {
                 //SELECT dbo.fCheckStatusLoTrinh(1,'Chưa xử lý') AS MyResult
                 
@@ -71,7 +71,7 @@ namespace Servies
                     
                 }
             }
-            else if (trangthaiLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
+            else if (statusLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
             {
                 if (result != 0)
                 {
@@ -92,11 +92,11 @@ namespace Servies
                     return 1;
                 }
             }
-            else if (trangthaiLT == "Đang xử lý" && obj.TrangThai == "Chưa xử lý")
+            else if (statusLT == "Đang xử lý" && obj.TrangThai == "Chưa xử lý")
             {
                 return 0;
             }
-            else if (trangthaiLT == "Hoàn thành" && obj.TrangThai != "Hoàn thành")
+            else if (statusLT == "Hoàn thành" && obj.TrangThai != "Hoàn thành")
             {
                 return 0;
             }
