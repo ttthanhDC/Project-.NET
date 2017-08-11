@@ -77,15 +77,15 @@
                 }
             }
         }
-        if (window.idParam === "Add") {
+        if (window.id === "Add") {
             $('#div_number')[0].style.display = "none";
             $('#div_date')[0].style.display = "none";
         } else {
-            window.shipNo = getQueryVariable("shipNo");
-            window.shipName = getQueryVariable("shipName");
-            window.adress = getQueryVariable("adress");
-            window.date = getQueryVariable("date");
-            window.desc = getQueryVariable("desc");
+            window.shipNo = getQueryVariable("shipNo").replace(/%20/g, " ");
+            window.shipName = getQueryVariable("shipName").replace(/%20/g, " ");
+            window.adress = getQueryVariable("adress").replace(/%20/g, " ");
+            window.date = getQueryVariable("date").replace(/%20/g, " ");
+            window.desc = getQueryVariable("desc").replace(/%20/g, " ");
             window.id = getQueryVariable("id");
             // 
             $('#txt_shipname').val(window.shipName);
@@ -97,6 +97,15 @@
         // event 
         $('#btBack').on('click', function (e) {
             window.location = '/S006_ListShiper.aspx?paramId= 0';
+        });
+        // save
+        $('#btSave').on('click', function (e) {
+            if (window.id === "Add") {
+                // function save
+
+            } else {
+                // function update
+            }
         });
     });
 </script>

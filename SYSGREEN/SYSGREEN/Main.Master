@@ -387,6 +387,15 @@
 
 								<b class="arrow"></b>
 							</li>
+                            
+							<li class="">
+								<a runat="server" href="~/S006_ListShiper">
+									<i class="menu-icon fa fa-caret-right"></i>
+									S003 List Shiper
+								</a>
+
+								<b class="arrow"></b>
+							</li>
 						</ul>
 					</li>
 

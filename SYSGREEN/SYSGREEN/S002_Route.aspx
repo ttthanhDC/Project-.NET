@@ -26,7 +26,7 @@
         </div> 
     </div>
     <div style ="margin-left:20px;margin-right:20px" id ="div_TableLoTrinh">
-         <div style ="width: 100%;text-align:right"><button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button><button type="button" class="btn btn-primary" id="btLuu">lưu data</button></div>
+         <div style ="width: 100%;text-align:right"><button type="button" class="btn btn-primary" id="btTaoLoTrinh">Tạo lộ trình</button></div>
         <table id="tableLoTrinh"></table>
        
     </div>
@@ -96,7 +96,7 @@
                         } else if (objectData.TrangThai === "Hoàn thành") {
                             obj.status = 3;
                         } else {
-                            obj.status = 0;
+                            obj.status = 1;
                         }
                         obj.ShipID = objectData.ShipID || "";
                         arr.push(obj);
@@ -130,7 +130,7 @@
             }
         });
     });
-    $('#btLuu').on('click', function (e) {
+   /* $('#btLuu').on('click', function (e) {
         var formDataSave = new FormData();
         formDataSave.append('type', 'UpdateLoTrinhShipper');
         var datatable = $('#tableLoTrinh').bootstrapTable('getData');
@@ -165,18 +165,12 @@
             error: function (err) {
             }
         });
-    });
+    });*/
 
     // getdata table lộ trình
     var getDataTableLoTrinh = function (itemData) {
         $('#tableLoTrinh').bootstrapTable({
             columns: [{
-                field: 'check',
-                title: 'Tích',
-                align: 'center',
-                valign: 'middle',
-                checkbox: true
-            }, {
                 field: 'codeLT',
                 title: 'Mã lộ trình',
                 align: 'center',
@@ -253,6 +247,9 @@
     }
     function operateFormatter(value, row, index) {
         return [
+            '<a class="save" href="javascript:void(0)" title="Lưu data">',
+            'Lưu lộ trình',
+            '</a>  ', '|',
             '<a class="chiTiet" href="javascript:void(0)" title="Chi Tiết">',
             'Sửa',
             '</a>  ', '|',
@@ -267,6 +264,43 @@
             window.location = '/S001_ListShiper.aspx?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         },
+        // save 
+        'click .save': function (e, value, row, index) {
+            var formDataSave = new FormData();
+            formDataSave.append('type', 'UpdateLoTrinhShipper');
+            var listIdLoTrinh = [];
+            var listStatus = [];
+            if (row.status === 1) {
+                listStatus.push("Chưa xử lý");
+            } else if (row.status === 2) {
+                 listStatus.push("Đang xử lý");
+            } else if (row.status === 3) {
+                 listStatus.push("Hoàn thành");
+            } 
+            listIdLoTrinh.push(row.id);
+            var json = {
+                'listStatus': listStatus,
+                'listIdLoTrinh': listIdLoTrinh,
+            };
+            formDataSave.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerShipper.ashx",
+                type: "POST",
+                data: formDataSave,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result === 0) {
+                        alert("Lưu thành công.");
+                    }else{
+                        alert("Lưu không thành công.");
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        },
+        // delete
         'click .remove': function (e, value, row, index) {
             var formData = new FormData();
             var id = parseInt(row.id + "");

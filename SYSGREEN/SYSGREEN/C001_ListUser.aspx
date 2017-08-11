@@ -2,22 +2,12 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <table id="table" 
-        data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-show-toggle="true" 
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        data-show-footer="false" 
-        ></table>
-   
-
-    <div style ="height:40px"></div>
-    <div style ="text-align:center;display: table;margin: 0 auto;">
-         <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+    <div style ="margin-left:30px;margin-right:30px">
+        <button type="button" class="btn btn-primary" id="btnAdd">Thêm</button>
+        <table id="table"></table>
     </div>
-
-    <script>
+     
+ <script>
         $(function () {
             var data = [];
             var formDataListUser = new FormData();
@@ -53,44 +43,31 @@
                             title: 'Id',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                            //editable: true,
                         }, {
                             field: 'email',
                             title: 'Email',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                            //editable: true,
                         }, {
                             field: 'department',
                             title: 'Bộ phận',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                            //editable: true,
-
                         }, {
                             field: 'local',
                             title: 'Cơ sở',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                           // editable: true,
                         }, {
                             field: 'dateCreate',
                             title: 'Ngày tạo',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                           // editable: true,
                         }, {
                             field: 'user',
                             title: 'User',
                             align: 'center',
                             valign: 'middle',
-                            sortable: true,
-                            //editable: false
                         }, {
                             field: 'operate',
                             title: 'Thao tác',

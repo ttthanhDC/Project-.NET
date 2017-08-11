@@ -28,11 +28,11 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        obj.shipNo = objectData.NUMBER;
-                        obj.shipName = objectData.NAME;
+                        obj.shipNo = objectData.NUMBER || "";
+                        obj.shipName = objectData.NAME || "";
                         obj.adress = "";
                         obj.date = "";
-                        obj.desc = objectData.DESCRIPTION;
+                        obj.desc = objectData.DESCRIPTION || "";
                         obj.id = objectData.SHIPER_ID;
                         arr.push(obj);
                     }
@@ -110,7 +110,7 @@
 
     window.operateEventsAdd = {
         'click .add': function (e, value, row, index) {
-            window.location = '/S007_ManagerShiper.aspx?paramId=' + "Add";
+            window.location = '/S007_ManagerShiper.aspx?id=' + "Add";
         }
     };
     // opera1
