@@ -121,7 +121,7 @@ namespace SYSGREEN.Configuation
                     s.SoDienThoai = SoDienThoai;
                     s.NguoiTao = "";
                     s.NgayTao = DateTime.Now;
-                    s.DESCRIPTION = "";
+                    s.DESCRIPTION = DESCRIPTION;
                     int idShipper = Servies.ShipperServices.InsertShipperReturnId(s);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(idShipper);
