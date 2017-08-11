@@ -72,7 +72,7 @@ namespace Servies
                 conn.Open();
                 cmdUpdateNHD.ExecuteNonQuery();
                 cmdUpdateNHD.Connection.Close();
-                cmdUpdateNHD.Close();
+                conn.Close();
             }
             else if (statusLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
             {
