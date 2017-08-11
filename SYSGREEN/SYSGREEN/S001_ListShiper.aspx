@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S001_ListShiper.aspx.cs" Inherits="SYSGREEN.S001_ListShiper" %>
 
+<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
     <div class="main-content-inner"  id ="div_sanPham">
           <div class="form-horizontal">
@@ -34,6 +36,7 @@
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-primary" id="btGopDon">Gộp đơn </button>
+                    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
                 </div>
                   <label for="sel1" class="col-md-2"></label>
                 <div class="col-md-2">
@@ -59,6 +62,10 @@
     <div style ="margin-left:20px;margin-right:20px" id="Div_tableTT">
        <table id="tableTT"  ></table>
    </div> 
+    <div>
+         <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />
+    </div>
+   
    
 <script>
     // Bootstrap Table
