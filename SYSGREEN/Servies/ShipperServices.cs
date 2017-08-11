@@ -27,32 +27,80 @@ namespace Servies
             conn.Close();
             return Convert.ToInt32(insertedID);
         }
-        public static void UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
+        public static int UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
         {
-            String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
             SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(Insert);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
-            cmd.Parameters.AddWithValue("@ID", obj.ID);
+            String getTrangThaiLoTrinh = "Select TrangThai  LoTrinhShipper  where ID = @ID";
+            SqlCommand cmdGetTrangThai = new SqlCommand(getTrangThaiLoTrinh);
+            cmdGetTrangThai.CommandType = CommandType.Text;
+            cmdGetTrangThai.Connection = conn;
+            cmdGetTrangThai.Parameters.AddWithValue("@ID", obj.ID);
             conn.Open();
-            cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
+            object trangthaiLT = cmdGetTrangThai.ExecuteScalar();
             conn.Close();
+            String statusLT = (String)trangthaiLT;
 
-            if (obj.TrangThai == "Đang xử lý")
+            String strCheck = "SELECT dbo.fCheckStatusLoTrinh(" + obj.ID + ",'" + obj.TrangThai + "') AS MyResult";
+            SqlCommand cmdCheck = new SqlCommand(strCheck);
+            cmdCheck.CommandType = CommandType.Text;
+            cmdCheck.Connection = conn;
+            conn.Open();
+            object checkTT = cmdCheck.ExecuteScalar();
+            conn.Close();
+            int result = Convert.ToInt16(checkTT);
+            if (trangthaiLT == "Chưa xử lý" && obj.TrangThai == "Đang xử lý")
             {
-                String updateStatusNHD = "Update NgayHoaDon set TrangThai = 'Đang chuyển'  where IdLotrinhShipper = " + obj.ID;
-                SqlCommand cmd1 = new SqlCommand(updateStatusNHD);
-                cmd1.CommandType = CommandType.Text;
-                cmd1.Connection = conn;
-                conn.Open();
-                cmd1.ExecuteNonQuery();
-                cmd1.Connection.Close();
-                conn.Close();
+                //SELECT dbo.fCheckStatusLoTrinh(1,'Chưa xử lý') AS MyResult
+                
+                if (result != 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
+                    SqlCommand cmd = new SqlCommand(Insert);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                    cmd.Parameters.AddWithValue("@ID", obj.ID);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Connection.Close();
+                    conn.Close();
+                    
+                }
             }
-            
+            else if (trangthaiLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
+            {
+                if (result != 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
+                    SqlCommand cmd = new SqlCommand(Insert);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                    cmd.Parameters.AddWithValue("@ID", obj.ID);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    cmd.Connection.Close();
+                    conn.Close();
+                    return 1;
+                }
+            }
+            else if (trangthaiLT == "Đang xử lý" && obj.TrangThai == "Chưa xử lý")
+            {
+                return 0;
+            }
+            else if (trangthaiLT == "Hoàn thành" && obj.TrangThai != "Hoàn thành")
+            {
+                return 0;
+            }
+            return 1;
         }
         public static void DeleteTrinhShipper(DataObject.LoTrinhShipper obj)
         {
