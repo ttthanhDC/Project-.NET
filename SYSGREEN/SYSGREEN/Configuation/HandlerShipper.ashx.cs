@@ -114,6 +114,7 @@ namespace SYSGREEN.Configuation
                     String DiaChi = context.Request.Form["DiaChi"].ToString();
                     String SoDienThoai = context.Request.Form["SoDienThoai"].ToString();
                     String NAME = context.Request.Form["NAME"].ToString();
+                    String DESCRIPTION = context.Request.Form["DESCRIPTION"].ToString();
                     DataObject.Shiper s = new DataObject.Shiper();
                     s.NAME = NAME;
                     s.DiaChi = DiaChi;
@@ -132,11 +133,12 @@ namespace SYSGREEN.Configuation
                     String SoDienThoai = context.Request.Form["SoDienThoai"].ToString();
                     String NAME = context.Request.Form["NAME"].ToString();
                     String Shipe_ID = context.Request.Form["Shipe_ID"].ToString();
+                    String DESCRIPTION = context.Request.Form["DESCRIPTION"].ToString();
                     DataObject.Shiper s = new DataObject.Shiper();
                     s.NAME = NAME;
                     s.DiaChi = DiaChi;
                     s.SoDienThoai = SoDienThoai;
-                    s.DESCRIPTION = "";
+                    s.DESCRIPTION = DESCRIPTION;
                     s.SHIPER_ID = Convert.ToInt16(Shipe_ID);
                     Servies.ShipperServices.UpdateShipperReturnId(s);
                     context.Response.ContentType = "text/plain";
