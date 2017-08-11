@@ -274,28 +274,12 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
-								<a runat="server" href="~/LT001_createContract">
-									<i class="menu-icon fa fa-caret-right"></i>
-									LT001a Nhập reservation
-								</a>
-
-								<b class="arrow"></b>
-							</li>
 
 							<li class="">
 								<a runat="server" href="~/LT001V2Demo">
 									<i class="menu-icon fa fa-caret-right"></i>
                                     <!-- ~/LT001b_createReservation -->
-									LT001b Nhập reservation
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-                            <li class="">
-								<a runat="server" href="~/LT002_ListReservation">
-									<i class="menu-icon fa fa-caret-right"></i>
-									LT002 DS reservation
+									LT001 Nhập reservation
 								</a>
 
 								<b class="arrow"></b>
@@ -303,7 +287,7 @@
                             <li class="">
 								<a runat="server" href="~/LT002_demo">
 									<i class="menu-icon fa fa-caret-right"></i>
-									LT002 demo
+									LT002 DS reservation
 								</a>
 
 								<b class="arrow"></b>
