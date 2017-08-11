@@ -367,6 +367,11 @@
                         }*/
                         // Type BIll
                         
+                        if (jsonData[i].Loai == 1) {
+                            obj.typeBill = jsonData[i].TenGoi;
+                        } else if (jsonData[i].Loai == 2) {
+                            obj.typeBill = "Đơn lẻ";
+                        }
 
                         loaiGoiTemp = jsonData[i].Loai;
                         if (i == 0) {
@@ -400,27 +405,25 @@
                             tabIndex = jsonData[i].tabIndex;
                         }
                         else{
+                            /*
                             if (jsonData[i].Loai == 2) {
                                 obj.typeBill = "Đơn lẻ";
-                            }
+                            }*/
                             if (jsonData[i].Loai == loaiGoi && check) {
                                 // Không làm gì
                             } else {
                                 if (jsonData[i].Loai != loaiGoi) {
                                     //obj.money = jsonData[i].ThanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    /*
                                     if (jsonData[i].Loai == 1) {
                                         obj.typeBill = jsonData[i].TenGoi;
                                     } else if (jsonData[i].Loai == 2) {
                                         obj.typeBill = "Đơn lẻ";
-                                    }
+                                    }*/
                                     loaiGoi = jsonData[i].Loai;
                                 }
                                 if (jsonData[i].Loai == loaiGoi && jsonData[i].tabIndex != tabIndex) {
-                                    if (jsonData[i].Loai == 1) {
-                                        obj.typeBill = jsonData[i].TenGoi;
-                                    } else if (jsonData[i].Loai == 2) {
-                                        obj.typeBill = "Đơn lẻ";
-                                    }
+                                    
                                     //obj.money = jsonData[i].ThanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                     tabIndex = jsonData[i].tabIndex;
                                 }
