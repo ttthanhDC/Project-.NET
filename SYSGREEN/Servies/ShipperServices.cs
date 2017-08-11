@@ -221,7 +221,7 @@ namespace Servies
         }
         public static void UpdateShipperReturnId(DataObject.Shiper obj)
         {
-            String Insert = "Update SHIPER SET NAME = @NAME,DiaChi = @DiaChi,SoDienThoai = @SoDienThoai,DESCRIPTION = @DESCRIPTION where Shipe_ID = @ID";
+            String Insert = "Update SHIPER SET NAME = @NAME,DiaChi = @DiaChi,SoDienThoai = @SoDienThoai,DESCRIPTION = @DESCRIPTION where SHIPER_ID = @ID";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
