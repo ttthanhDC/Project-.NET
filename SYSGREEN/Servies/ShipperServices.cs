@@ -241,7 +241,7 @@ namespace Servies
         {
 
             DataTable table = new DataTable();
-            String Select  = "Select * from  SHIPER ";
+            String Select  = "Select * from  SHIPER Where  ";
             if (obj.SHIPER_ID != null && obj.SHIPER_ID > 0)
             {
                 Select += "SHIPER_ID =" + obj.SHIPER_ID + " AND ";
