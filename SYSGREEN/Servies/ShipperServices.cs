@@ -51,25 +51,28 @@ namespace Servies
             if (statusLT == "Chưa xử lý" && obj.TrangThai == "Đang xử lý")
             {
                 //SELECT dbo.fCheckStatusLoTrinh(1,'Chưa xử lý') AS MyResult
-                
-                if (result != 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
-                    SqlCommand cmd = new SqlCommand(Insert);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Connection = conn;
-                    cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
-                    cmd.Parameters.AddWithValue("@ID", obj.ID);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    cmd.Connection.Close();
-                    conn.Close();
-                    
-                }
+
+                String Insert = "Update  LoTrinhShipper set  TrangThai= @TrangThai  where ID = @ID";
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                cmd.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+                conn.Close();
+
+                String strUpdateNHD = "Update  NgayHoaDon set  TrangThai= @TrangThai  where IdlotrinhShipper = @ID";
+                SqlCommand cmdUpdateNHD = new SqlCommand(strUpdateNHD);
+                cmdUpdateNHD.CommandType = CommandType.Text;
+                cmdUpdateNHD.Connection = conn;
+                cmdUpdateNHD.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                cmdUpdateNHD.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmdUpdateNHD.ExecuteNonQuery();
+                cmdUpdateNHD.Connection.Close();
+                cmdUpdateNHD.Close();
             }
             else if (statusLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
             {
@@ -99,6 +102,10 @@ namespace Servies
             else if (statusLT == "Hoàn thành" && obj.TrangThai != "Hoàn thành")
             {
                 return 0;
+            }
+            else if (statusLT == "Chưa xử lý" && obj.TrangThai == "Chưa xử lý")
+            {
+                return 1;
             }
             return 1;
         }
