@@ -85,19 +85,6 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
-                else if (type == "ViewLoTrinhShipper")
-                {
-
-                    String jsonData = context.Request.Form["data"].ToString();
-                    String NgayLotrinh = context.Request.Form["NgayLotrinh"].ToString();
-                    String MaLoTrinh = context.Request.Form["MaLoTrinh"].ToString();
-                    String ShipName = context.Request.Form["ShipName"].ToString();
-                    String ShipNumber = context.Request.Form["ShipNumber"].ToString();
-                    String TrangThai = context.Request.Form["TrangThai"].ToString();
-                    DataTable lst = Servies.ShipperServices.ViewLoTrinhShipper(NgayLotrinh, MaLoTrinh, ShipName, ShipNumber, TrangThai);
-                    context.Response.ContentType = "application/json";
-                    context.Response.Write(JsonConvert.SerializeObject(lst));
-                }
                 else if (type == "InLoTrinh")
                 {
                     DataTable table = new DataTable();

@@ -43,10 +43,10 @@ namespace SYSGREEN.Configuation
                     String quan = context.Request.Form["quan"].ToString();
                     String soShiper = context.Request.Form["soShiper"].ToString();
                     String tenShiper = context.Request.Form["tenShiper"].ToString();
-                    String trangThai = context.Request.Form["trangThai"].ToString();
+                    String hinhThucShip = context.Request.Form["hinhThucShip"].ToString();
 
                     DataTable lst = Servies.HoaDonServices.getDataFilterViewHoaDon(maReservation, ngayHoaDon, quan,
-                        soShiper, tenShiper, trangThai);
+                        soShiper, tenShiper, hinhThucShip);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }

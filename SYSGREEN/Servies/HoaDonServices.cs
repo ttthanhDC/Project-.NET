@@ -485,7 +485,7 @@ namespace Servies
 
 
         public static DataTable getDataFilterViewHoaDon(String maReservation, String ngayHoaDon, String quan,
-                String soShiper, String tenShiper, String trangThai)
+                String soShiper, String tenShiper, String hinhthucShip)
         {
             DataTable table = new DataTable();
             SqlCommand cmd = null;
@@ -512,6 +512,14 @@ namespace Servies
             if (tenShiper != null && tenShiper != "")
             {
                 Select += "shipName LIKE N'%" + tenShiper + "%' AND ";
+            }
+            if (hinhthucShip != null && hinhthucShip != "")
+            {
+                Select += "HinhThucGiaoHang LIKE N'%" + hinhthucShip + "%' AND ";
+            }
+            else
+            {
+                Select += "HinhThucGiaoHang = N'Ship đi' AND ";
             }
             Select += "TrangThaiNHD = N'Chưa xử lý' AND ";
             /*
