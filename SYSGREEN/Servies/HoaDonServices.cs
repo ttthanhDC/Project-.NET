@@ -513,11 +513,12 @@ namespace Servies
             {
                 Select += "shipName LIKE N'%" + tenShiper + "%' AND ";
             }
-
+            Select += "TrangThaiNHD ='Chưa xử lý' AND ";
+            /*
             if (trangThai != null && trangThai != "")
             {
                 Select += "TrangThaiHD LIKE N'%" + trangThai + "%' AND ";
-            }
+            }*/
             Select += "1=1 ORDER BY IdLotrinhShipper DESC";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
