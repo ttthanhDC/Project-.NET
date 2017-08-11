@@ -25,7 +25,7 @@ namespace SYSGREEN.Configuation
                 {
                     String jsonData = context.Request.Form["data"].ToString();
                     DataObject.LoTrinhShipper obj = new DataObject.LoTrinhShipper();
-                    String MaLoTrinh = DateTime.Now.ToString("ddMMyyyy") + "-" + DateTime.Now.ToString("tt");
+                    String MaLoTrinh = DateTime.Now.ToString("ddMMyy") + DateTime.Now.ToString("tt") + DateTime.Now.ToString("hh") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
                     obj.MaLoTrinh = MaLoTrinh;
                     obj.NguoiTao = "";
                     obj.NgayTao = DateTime.Now;
