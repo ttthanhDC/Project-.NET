@@ -221,6 +221,20 @@
                     }
                 }
             }, {
+                field: 'operate1',
+                title: 'Nhập liệu bill',
+                align: 'center',
+                valign: 'middle',
+                events: operateEventsBill,
+                formatter: operateFormatterBill
+            }, {
+                field: 'operate2',
+                title: 'View lộ trình',
+                align: 'center',
+                valign: 'middle',
+                events: operateEventsView,
+                formatter: operateFormatterView
+            }, {
                 field: 'operate',
                 title: 'Thao tác',
                 align: 'center',
@@ -240,7 +254,7 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="chiTiet" href="javascript:void(0)" title="Chi Tiết">',
-            'Chi tiết',
+            'Sửa',
             '</a>  ', '|',
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
             'Xóa',
@@ -273,6 +287,36 @@
                     eventSearch();
                 }
             });
+        }
+    };
+    // operater 1
+    function operateFormatterBill(value, row, index) {
+        return [
+            '<a class="bill" href="javascript:void(0)" title="Nhập liệu bill">',
+            'Nhập liệu bill',
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEventsBill = {
+        'click .bill': function (e, value, row, index) {
+            window.location = '/S003_InputBill.aspx?paramId=' + row.id;
+            //alert('You click like action, row: ' + JSON.stringify(row));
+        }
+    };
+    // operater 2
+    function operateFormatterView(value, row, index) {
+        return [
+            '<a class="view" href="javascript:void(0)" title="view">',
+            'View lộ trình',
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEventsView = {
+        'click .view': function (e, value, row, index) {
+            window.location = '/S005_ReportedRoute.aspx?paramId=' + row.id;
+            //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
 </script>

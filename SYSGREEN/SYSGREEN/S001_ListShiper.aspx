@@ -38,7 +38,9 @@
                     <button type="button" class="btn btn-primary" id="btGopDon">Gộp đơn </button>
                     <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
                 </div>
-                  <label for="sel1" class="col-md-2"></label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_loTrinhID" readOnly = 'true'/>
+                </div>
                 <div class="col-md-2">
                     <div class="form-group">
                           <select class="form-control" id="cbShip">
@@ -58,9 +60,11 @@
     </div>
    <div style ="margin-left:20px;margin-right:20px;display:none" id="Div_tableSanPham">
        <table id="table"  ></table>
+       <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback1">Quay lại</button></div>
    </div> 
     <div style ="margin-left:20px;margin-right:20px" id="Div_tableTT">
        <table id="tableTT"  ></table>
+        <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback2">Quay lại</button></div>
    </div> 
     <div>
          <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />
@@ -75,6 +79,7 @@
 
 
         window.idParam = getQueryVariable("paramId");
+       
         //alert("Data" + window.idParam);
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
@@ -86,7 +91,7 @@
                 }
             }
         }
-
+        $('#txt_loTrinhID').val(window.idParam);
 
         // Load Data user
         var formDataShip = new FormData();
@@ -146,6 +151,7 @@
             success: function (result) {
                 var jsonData = result;
                 var arr = [];
+               
                 if (jsonData && jsonData.length > 0) {
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
@@ -272,6 +278,12 @@
     };
 
     //// tìm kiếm 
+    $('#btback1').on('click', function (e) {
+        window.location = '/S002_Route.aspx?paramId= 0';
+    });
+    $('#btback2').on('click', function (e) {
+        window.location = '/S002_Route.aspx?paramId= 0';
+    });
     $('#btSearch').on('click', function (e) {
         $('#Div_tableSanPham')[0].style.display = "block";
         $('#Div_tableTT')[0].style.display = "none";
@@ -405,7 +417,7 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                alert("Assign thành công");
+                //alert("Assign thành công");
                 loadDataByID();
             },
             error: function (err) {

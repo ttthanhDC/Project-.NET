@@ -1,37 +1,38 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S005_ReportedRoute.aspx.cs" Inherits="SYSGREEN.S005_ReportedRoute" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
-          <div class="form-horizontal">
-            <div class="form-group">
-                
-                 <label for="sel1" class="col-md-7"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_maLoTrinh" placeholder="Mã lộ trình"/>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
-                </div>
-                
-            </div> 
-        </div> 
-    </div>
    <div style ="margin-left:20px;margin-right:20px">
        <table id="table"></table>
+        <div style ="text-align:center;margin-top:20px"><button type="button" class="btn btn-primary" id="btback">Quay lại</button></div>
    </div> 
     <script>
         $(function () {
             // load data 
             var datatable = [];
             getDataTable(datatable);
-        });
-        $('#btSearch').on('click', function (e) {
+
+            window.idParam = getQueryVariable("paramId");
+            //alert("Data" + window.idParam);
+            function getQueryVariable(variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    if (pair[0] == variable) {
+                        return pair[1];
+                    }
+                }
+            }
+            // get data by id
             var data = [];
             var formDataListUser = new FormData();
-            formDataListUser.append('type', 'getALLDataByMaLoTrinh');
+           // formDataListUser.append('type', 'getALLDataByMaLoTrinh');
             //var json = { 'IdLotrinh': 0 };
-            var MaLT = $('#txt_maLoTrinh').val();
-            formDataListUser.append('MaLotrinh', MaLT);
+           // var MaLT = $('#txt_maLoTrinh').val();
+            // formDataListUser.append('MaLotrinh', MaLT);
+            formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+            //var json = { 'IdLotrinh': 0 };
+            formDataListUser.append('IdLotrinh', window.idParam);
             $.ajax({
                 url: "Configuation/Handler1Test.ashx",
                 type: "POST",
@@ -81,6 +82,10 @@
                 error: function (err) {
                 }
             });
+
+        });
+        $('#btback').on('click', function (e) {
+            window.location = '/S002_Route.aspx?paramId= 0';
         });
         // getdata table 
         var getDataTable = function (itemData) {

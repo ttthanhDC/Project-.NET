@@ -5,13 +5,7 @@
           <div class="form-horizontal">
             <div class="form-group">
                 
-                 <label for="sel1" class="col-md-7"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_maLoTrinh" placeholder="Mã lộ trình"/>
-                </div>
-                <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
-                </div>
+                 <label for="sel1" class="col-md-10"></label>
                 <div class="col-md-1">
                    <button type="button" class="btn btn-primary" id="btSave">Lưu data</button>
                 </div>
@@ -19,9 +13,8 @@
         </div> 
     </div>
    <div style ="margin-left:20px;margin-right:20px">
-       <table id="table" 
-       
-        ></table>
+       <table id="table"></table>
+       <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback">Quay lại</button></div>
    </div> 
    
 <script>
@@ -29,15 +22,29 @@
     $(function () {
         var data = [];
         getDataTable(data);
-    });
-    // button search
-    $('#btSearch').on('click', function (e) {
+
+        window.idParam = getQueryVariable("paramId");
+        //alert("Data" + window.idParam);
+        function getQueryVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+        }
+        // load data by id
         var data = [];
         var formDataListUser = new FormData();
-        formDataListUser.append('type', 'getALLDataByMaLoTrinh');
+        // formDataListUser.append('type', 'getALLDataByMaLoTrinh');
         //var json = { 'IdLotrinh': 0 };
-        var MaLT = $('#txt_maLoTrinh').val();
-        formDataListUser.append('MaLotrinh', MaLT);
+        // var MaLT = $('#txt_maLoTrinh').val();
+        //formDataListUser.append('MaLotrinh', MaLT);
+        formDataListUser.append('type', 'getALLDataByIdLoTrinh');
+        //var json = { 'IdLotrinh': 0 };
+        formDataListUser.append('IdLotrinh', window.idParam);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -73,8 +80,8 @@
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
                         obj.money = objectData.SoTienThu;
-                       // obj.money = objectData.Create_User || "";// chua có
-                        
+                        // obj.money = objectData.Create_User || "";// chua có
+
                         if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
                             obj.status = 1;
                         } else if (jsonData[i].TrangThaiNHD == "Đang xử lý") {
@@ -116,6 +123,10 @@
             error: function (err) {
             }
         });
+    });
+    // button search
+    $('#btback').on('click', function (e) {
+        window.location = '/S002_Route.aspx?paramId= 0';
     });
     // button save
     $('#btSave').on('click', function (e) {
