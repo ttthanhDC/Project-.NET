@@ -30,7 +30,7 @@ namespace Servies
         public static int UpdateLoTrinhShipper(DataObject.LoTrinhShipper obj)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
-            String getTrangThaiLoTrinh = "Select TrangThai  LoTrinhShipper  where ID = @ID";
+            String getTrangThaiLoTrinh = "Select TrangThai FROM LoTrinhShipper  where ID = @ID";
             SqlCommand cmdGetTrangThai = new SqlCommand(getTrangThaiLoTrinh);
             cmdGetTrangThai.CommandType = CommandType.Text;
             cmdGetTrangThai.Connection = conn;
