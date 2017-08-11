@@ -32,7 +32,7 @@ namespace SYSGREEN.Configuation
                     obj.TrangThai = "Chưa xử lý";
                     int idLotrinh = Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write(idLotrinh);
+                    context.Response.Write(idLotrinh + "," + MaLoTrinh);
 
                 }
                 else if (type == "UpdateLoTrinhShipper")
