@@ -27,52 +27,73 @@
                 var jsonData = result;
                 var arr = [];
                 if (jsonData && jsonData.length > 0) {
+                    var idCheck = 0;
+                    var check = false;
+                    var check2 = false;
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        //var id_check = 0;
-                        obj.idGoi = objectData.ID_HD;
-                        obj.permission = true;
-                        var data_ngay = objectData.Ngay;
-                        var z = "";
-                        if (data_ngay) {
-                            var x = data_ngay.substr(0, 10);
-                            var y = x.split("-");
-                            var y1 = y[0];
-                            var y2 = y[1];
-                            var y3 = y[2];
-                            z = y3 + "/" + y2 + "/" + y1;
-                        }
-                        obj.date = z;
+                        if (!check && !check2) {
+                            idCheck = objectData.ID_PTCHD;
+                            obj.id = objectData.ID_PTCHD;
+                            obj.idKT = objectData.ID_PTCHD;// TODO
+                            obj.permission = true;
+                            var data_ngay = objectData.Ngay;
+                            var z = "";
+                            if (data_ngay) {
+                                var x = data_ngay.substr(0, 10);
+                                var y = x.split("-");
+                                var y1 = y[0];
+                                var y2 = y[1];
+                                var y3 = y[2];
+                                z = y3 + "/" + y2 + "/" + y1;
+                            }
+                            obj.date = z;
+                            obj.name = objectData.TenKH_HD || "";
+                            obj.money = objectData.TongTienGoi || "";
 
-
-                        obj.name = objectData.TenKH_HD || "";
-                        obj.money = objectData.TongTienGoi || "";
-                        
-                        obj.bank = objectData.MaNganHang || 0;
-                        obj.code = objectData.MaGiaoDich  || "";
-                        obj.staus = objectData.TinhTrang || 0;
-                        obj.note = objectData.GhiChu;
-                        arr.push(obj);
-                    }
-                }
-                var idCheck = 0;
-                var check = false;
-                for (var j = 0; j < arr.length ; j++) {
-                    if (!check) {
-                        idCheck = arr[j].idGoi;
-                        check = true;
-                    } else {
-                        if (idCheck === arr[j].idGoi) {
-                            arr[j].money = "";
+                            obj.bank = objectData.MaNganHang || 0;
+                            obj.code = objectData.MaGiaoDich || "";
+                            obj.staus = objectData.TinhTrang || 0;
+                            obj.note = objectData.GhiChu;
+                            arr.push(obj);
+                            check = true;
+                            check2 = false;
                         } else {
-                            check = false;
+                            if (idCheck === objectData.ID_PTCHD) {
+                                
+                            } else {
+                                check2 = true;
+                                idCheck = objectData.ID_PTCHD;
+                                obj.id = objectData.ID_PTCHD;
+                                obj.idKT = objectData.ID_PTCHD;// TODO
+                                obj.permission = true;
+                                var data_ngay = objectData.Ngay;
+                                var z = "";
+                                if (data_ngay) {
+                                    var x = data_ngay.substr(0, 10);
+                                    var y = x.split("-");
+                                    var y1 = y[0];
+                                    var y2 = y[1];
+                                    var y3 = y[2];
+                                    z = y3 + "/" + y2 + "/" + y1;
+                                }
+                                obj.date = z;
+                                obj.name = objectData.TenKH_HD || "";
+                                obj.money = objectData.TongTienGoi || "";
+
+                                obj.bank = objectData.MaNganHang || 0;
+                                obj.code = objectData.MaGiaoDich || "";
+                                obj.staus = objectData.TinhTrang || 0;
+                                obj.note = objectData.GhiChu;
+                                arr.push(obj);
+                                check = false;
+                            }
                         }
                     }
                     
-                    
-                    
                 }
+               
                 data = arr;
                 getDataTable(data);
                
@@ -188,26 +209,60 @@
 
     window.operateEvents = {
         'click .save': function (e, value, row, index) {
-            var formData = new FormData();
-            var id = parseInt(row.id + "");
-            var json = { 'ID': id };
-            jQuery.ajaxSetup({ async: true });
-            formData.append('type', 'DeleteTrinhShipper');
-            formData.append('IdLotrinh', id);
-            $.ajax({
-                url: "Configuation/HandlerShipper.ashx",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    eventSearch();
-                },
-                error: function (err) {
-                    eventSearch();
-                }
-            });
+            if(row.idKT){
+                eventUpdate();
+            } else {
+                var formData = new FormData();
+                var id = parseInt(row.id + "");
+                var json = { 'ID': id };
+                jQuery.ajaxSetup({ async: true });
+                formData.append('type', 'InsertKeToanReturnId');
+                formData.append('Ngay', row.date);
+                formData.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerKeToan.ashx",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        eventUpdate(result);
+                    },
+                    error: function (err) {
+                        
+                    }
+                });
+            }
         }
+    };
+    var eventUpdate = function (id) {
+        var formData = new FormData();
+        var id = parseInt(row.id + "");
+        var json = { 'ID': id };
+        jQuery.ajaxSetup({ async: true });
+        formData.append('type', 'InsertChiTietThuReturnId');
+        formData.append('data', JSON.stringify(json));
+        formData.append('Ngay', row.date);
+        formData.append('SoTien', row.money);
+        formData.append('MaNganHang', row.bank);
+        formData.append('MaGiaoDich', row.rowcode);
+        formData.append('TinhTrang', row.status);
+        formData.append('LoaiThu', "");
+        formData.append('GhiChu', row.note);
+        formData.append('IdKeToan', id);
+
+        $.ajax({
+            url: "Configuation/HandlerKeToan.ashx",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                alert("Lưu thành công");
+            },
+            error: function (err) {
+            }
+        });
     };
 </script>
     </asp:Content>
