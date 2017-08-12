@@ -99,6 +99,7 @@
                             obj.status = 1;
                         }
                         obj.ShipID = objectData.ShipID || "";
+                        obj.MaLoTrinh = objectData.MaLoTrinh || "";
                         arr.push(obj);
                     }
                 }
@@ -123,8 +124,9 @@
             processData: false,
             success: function (result) {
                 var maLT = result;
-                // chuyển màn hình tạo data cho mã lộ trình
-                window.location = '/S001_ListShiper.aspx?paramId=' + maLT;
+                var y = maLT.split(",")
+                var x = parseInt(y[0]);
+                window.location = '/S001_ListShiper.aspx?paramId=' + x + '&MaLoTrinh=' + y[1];
             },
             error: function (err) {
             }
@@ -229,8 +231,22 @@
                 events: operateEventsView,
                 formatter: operateFormatterView
             }, {
+                field: 'operate3',
+                title: 'Lưu lộ trình',
+                align: 'center',
+                valign: 'middle',
+                events: operateEventsSave,
+                formatter: operateFormatterSave
+            }, {
+                field: 'operate4',
+                title: 'Sửa',
+                align: 'center',
+                valign: 'middle',
+                events: operateEventsEdit,
+                formatter: operateFormatterEdit
+            }, {
                 field: 'operate',
-                title: 'Thao tác',
+                title: 'Xóa',
                 align: 'center',
                 valign: 'middle',
                 events: operateEvents,
@@ -247,12 +263,6 @@
     }
     function operateFormatter(value, row, index) {
         return [
-            '<a class="save" href="javascript:void(0)" title="Lưu data">',
-            'Lưu lộ trình',
-            '</a>  ', '|',
-            '<a class="chiTiet" href="javascript:void(0)" title="Chi Tiết">',
-            'Sửa',
-            '</a>  ', '|',
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
             'Xóa',
             '</a>',
@@ -260,46 +270,8 @@
     }
 
     window.operateEvents = {
-        'click .chiTiet': function (e, value, row, index) {
-            window.location = '/S001_ListShiper.aspx?paramId=' + row.id;
-            //alert('You click like action, row: ' + JSON.stringify(row));
-        },
-        // save 
-        'click .save': function (e, value, row, index) {
-            var formDataSave = new FormData();
-            formDataSave.append('type', 'UpdateLoTrinhShipper');
-            var listIdLoTrinh = [];
-            var listStatus = [];
-            if (row.status === 1) {
-                listStatus.push("Chưa xử lý");
-            } else if (row.status === 2) {
-                 listStatus.push("Đang xử lý");
-            } else if (row.status === 3) {
-                 listStatus.push("Hoàn thành");
-            } 
-            listIdLoTrinh.push(row.id);
-            var json = {
-                'listStatus': listStatus,
-                'listIdLoTrinh': listIdLoTrinh,
-            };
-            formDataSave.append('data', JSON.stringify(json));
-            $.ajax({
-                url: "Configuation/HandlerShipper.ashx",
-                type: "POST",
-                data: formDataSave,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    if (result === 0) {
-                        alert("Lưu thành công.");
-                    }else{
-                        alert("Lưu không thành công.");
-                    }
-                },
-                error: function (err) {
-                }
-            });
-        },
+        
+       
         // delete
         'click .remove': function (e, value, row, index) {
             var formData = new FormData();
@@ -352,6 +324,76 @@
             window.location = '/S005_ReportedRoute.aspx?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
+    };
+    // operater 3
+    function operateFormatterSave(value, row, index) {
+        return [
+           '<a class="save" href="javascript:void(0)" title="Lưu data">',
+            'Lưu lộ trình',
+            '</a>  ', 
+            
+        ].join('');
+    }
+
+    window.operateEventsSave = {
+        // save 
+        'click .save': function (e, value, row, index) {
+            var formDataSave = new FormData();
+            formDataSave.append('type', 'UpdateLoTrinhShipper');
+            var lst = $('#tableLoTrinh select.select1 option:selected');
+            var listIdLoTrinh = [];
+            var listStatus = [];
+            listStatus.push(lst[index].text);
+            listIdLoTrinh.push(row.id);
+            var json = {
+                'listStatus': listStatus,
+                'listIdLoTrinh': listIdLoTrinh,
+            };
+            formDataSave.append('data', JSON.stringify(json));
+            if (listStatus.push(lst[index].text) === "Hoàn thành") {
+                alert("Lộ trình đang ở trạng thái hoàn thành. Vui lòng ko chuyển trạng thái.");
+            }
+            $.ajax({
+                url: "Configuation/HandlerShipper.ashx",
+                type: "POST",
+                data: formDataSave,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result === 1 || result === "1") {
+                        alert("Lưu thành công.");
+                    } else if (result === 2 || result === "2") {
+                        alert(" Lưu thông tin không thành công trạng thái đang xử lý. Có ngày hóa đơn đang không ở trạng thái Chưa sử lý");
+                    } else if (result === 3 || result === "3") {
+                        alert("Lưu thông tin không thành công trạng thái hoàn thành.. Có ngày hóa đơn đang không ở trạng thái Hoàn thành");
+                    } else if (result === 4 || result === "4") {
+                        alert("Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý.");
+                    }
+
+                    // 1 : Lưu thành công
+                    // 2 : Lưu thông tin không thành công trạng thái đang xử lý
+                    // 3 : Lưu thông tin không thành công trạng thái hoàn thành
+                    // 4  : Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý 
+                },
+                error: function (err) {
+                }
+            });
+        },
+    };
+    // operater 4
+    function operateFormatterEdit(value, row, index) {
+        return [
+           '<a class="chiTiet" href="javascript:void(0)" title="Chi Tiết">',
+            'Sửa',
+            '</a>  ', 
+        ].join('');
+    }
+
+    window.operateEventsEdit = {
+        'click .chiTiet': function (e, value, row, index) {
+            window.location = '/S001_ListShiper.aspx?paramId=' + row.id + '&MaLoTrinh=' + row.MaLoTrinh;
+            //alert('You click like action, row: ' + JSON.stringify(row));
+        },
     };
 </script>
     </asp:Content>

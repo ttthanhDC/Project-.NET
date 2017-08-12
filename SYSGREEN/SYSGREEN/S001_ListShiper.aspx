@@ -10,8 +10,8 @@
                  <div class="col-md-2">
                     <div class="form-group">
                           <select class="form-control" id="cbTime">
-                              <option value =" 1"> Ship đi</option>
-                              <option value =" 2"> Đến lấy</option>
+                              <option value ="1"> Ship đi</option>
+                              <option value ="2"> Đến lấy</option>
                           </select>
                         </div>
                 </div>
@@ -83,7 +83,8 @@
         getDataTable(dataTable);
 
 
-        window.idParam = getQueryVariable("paramId");
+        window.idParam = getQueryVariable("paramId"); 
+        window.MaLoTrinh = getQueryVariable("MaLoTrinh");
        
         //alert("Data" + window.idParam);
         function getQueryVariable(variable) {
@@ -96,7 +97,7 @@
                 }
             }
         }
-        $('#txt_loTrinhID').val(window.idParam);
+        $('#txt_loTrinhID').val(window.MaLoTrinh);
 
         // Load Data user
         var formDataShip = new FormData();
@@ -298,6 +299,11 @@
         formDatasearch.append('type', 'getDataFilter');
         // thêm search theo hình thức ship
         var hinhThucShip = $('#cbTime').val();
+        if ($('#cbTime').val() === "1" || $('#cbTime').val() === "") {
+            hinhThucShip = "Ship đi";
+        } else {
+            hinhThucShip = "Đến lấy";
+        }
 
         var maReservation= $('#txt_reservation').val();
         var ngayHoaDon = $('#txt_Date').val();
@@ -311,7 +317,7 @@
         formDatasearch.append('quan', quan);
         formDatasearch.append('soShiper', "");
         formDatasearch.append('tenShiper',"");
-        formDatasearch.append('trangThai', trangThai);
+        formDatasearch.append('hinhThucShip', hinhThucShip);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -385,8 +391,6 @@
     $('#btChuyen').on('click', function (e) {
         $('#Div_tableSanPham')[0].style.display = "none";
         $('#Div_tableTT')[0].style.display = "block";
-
-
         
         var formDataAssign = new FormData();
         formDataAssign.append('type', 'assignHoaDonToShiper');
@@ -441,9 +445,10 @@
         var maReservation = $('#txt_reservation').val();
         var ngayHoaDon = $('#txt_Date').val();
         var quan = $('#txt_Distric').val();
-        // var soShiper = $('#txt_ShipNumber').val();
+        var soShiper = $('#txt_ShipNumber').val();
         // var tenShiper = $('#txt_ShipName').val();
         var trangThai = "";//$('#txt_status').val();
+
 
         formDatasearch.append('maReservation', maReservation);
         formDatasearch.append('ngayHoaDon', ngayHoaDon);
