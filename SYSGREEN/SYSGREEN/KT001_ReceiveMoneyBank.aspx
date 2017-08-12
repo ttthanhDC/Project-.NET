@@ -36,6 +36,7 @@
                         if (!check && !check2) {
                             idCheck = objectData.ID_PTCHD;
                             obj.id = objectData.ID_PTCHD;
+                            obj.idKT = objectData.ID_PTCHD;// TODO
                             obj.permission = true;
                             var data_ngay = objectData.Ngay;
                             var z = "";
@@ -65,6 +66,7 @@
                                 check2 = true;
                                 idCheck = objectData.ID_PTCHD;
                                 obj.id = objectData.ID_PTCHD;
+                                obj.idKT = objectData.ID_PTCHD;// TODO
                                 obj.permission = true;
                                 var data_ngay = objectData.Ngay;
                                 var z = "";
@@ -207,26 +209,60 @@
 
     window.operateEvents = {
         'click .save': function (e, value, row, index) {
-            var formData = new FormData();
-            var id = parseInt(row.id + "");
-            var json = { 'ID': id };
-            jQuery.ajaxSetup({ async: true });
-            formData.append('type', 'DeleteTrinhShipper');
-            formData.append('IdLotrinh', id);
-            $.ajax({
-                url: "Configuation/HandlerShipper.ashx",
-                type: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    eventSearch();
-                },
-                error: function (err) {
-                    eventSearch();
-                }
-            });
+            if(row.idKT){
+                eventUpdate();
+            } else {
+                var formData = new FormData();
+                var id = parseInt(row.id + "");
+                var json = { 'ID': id };
+                jQuery.ajaxSetup({ async: true });
+                formData.append('type', 'InsertKeToanReturnId');
+                formData.append('Ngay', row.date);
+                formData.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "Configuation/HandlerKeToan.ashx",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        eventUpdate(result);
+                    },
+                    error: function (err) {
+                        
+                    }
+                });
+            }
         }
+    };
+    var eventUpdate = function (id) {
+        var formData = new FormData();
+        var id = parseInt(row.id + "");
+        var json = { 'ID': id };
+        jQuery.ajaxSetup({ async: true });
+        formData.append('type', 'InsertChiTietThuReturnId');
+        formData.append('data', JSON.stringify(json));
+        formData.append('Ngay', row.date);
+        formData.append('SoTien', row.money);
+        formData.append('MaNganHang', row.bank);
+        formData.append('MaGiaoDich', row.rowcode);
+        formData.append('TinhTrang', row.status);
+        formData.append('LoaiThu', "");
+        formData.append('GhiChu', row.note);
+        formData.append('IdKeToan', id);
+
+        $.ajax({
+            url: "Configuation/HandlerKeToan.ashx",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                alert("Lưu thành công");
+            },
+            error: function (err) {
+            }
+        });
     };
 </script>
     </asp:Content>
