@@ -9,107 +9,80 @@
 <script>
     // Bootstrap Table
     $(function () {
-        var data =  [{
-            permission: true,
-            date: '01/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 1,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '03/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 2,
-            code: '123456789',
-            staus: 2,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '04/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 3,
-            code: '123456789',
-            staus: 'a',
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '06/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 4,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '09/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 'TPB',
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '11/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 3,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '13/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 4,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '23/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 0,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '24/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 3,
-            code: '123456789',
-            staus: 2,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '25/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 2,
-            code: '123456789',
-            staus: 1,
-            note: 'Gấm nhận chuyển tiền'
-        }, {
-            permission: true,
-            date: '30/07/2017',
-            name: 'Trần ngọc duy',
-            money: '1,000,000',
-            bank: 1,
-            code: '123456789',
-            staus: 2,
-            note: 'Gấm nhận chuyển tiền'
-        }]
-        getDataTable(data);
+        var data = [];
+        var formData = new FormData();
+       // var id = parseInt(row.id + "");
+        var json = { 'ID': "0" };
+        jQuery.ajaxSetup({ async: true });
+        formData.append('type', 'viewManHinhThuCK');
+        formData.append('data', json);
+        formData.append('Ngay', "");
+        $.ajax({
+            url: "Configuation/HandlerKeToan.ashx",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        //var id_check = 0;
+                        obj.idGoi = objectData.ID_HD;
+                        obj.permission = true;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+
+
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.money = objectData.TongTienGoi || "";
+                        
+                        obj.bank = objectData.MaNganHang || 0;
+                        obj.code = objectData.MaGiaoDich  || "";
+                        obj.staus = objectData.TinhTrang || 0;
+                        obj.note = objectData.GhiChu;
+                        arr.push(obj);
+                    }
+                }
+                var idCheck = 0;
+                var check = false;
+                for (var j = 0; j < arr.length ; j++) {
+                    if (!check) {
+                        idCheck = arr[j].idGoi;
+                        check = true;
+                    } else {
+                        if (idCheck === arr[j].idGoi) {
+                            arr[j].money = "";
+                        } else {
+                            check = false;
+                        }
+                    }
+                    
+                    
+                    
+                }
+                data = arr;
+                getDataTable(data);
+               
+            },
+            error: function (err) {
+                eventSearch();
+            }
+        });
+       
+       
     });
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
