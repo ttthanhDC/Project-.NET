@@ -123,14 +123,14 @@ namespace Servies
         public static DataTable viewManHinhThuCK(String Ngay)
         {
             DataTable table = new DataTable();
-            String Select = "select x.ID_HD,x.TenKH_HD,x.Ngay,x.TongTien as TongTienGoi ,ctt.* from vHoaDonShiper x  ";
+            String Select = "select x.ID_PTCHD,x.TenKH_HD,x.Ngay,x.TongTien as TongTienGoi ,ctt.* from vHoaDonShiper x  ";
             Select += " left join ChiTietThu ctt on x.Ngay = ctt.Ngay Where ";
             Select += " HinhTHucThanhToan = N'Chuyển khoản' AND ";
             if (Ngay != null && Ngay != "")
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),x.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
             }
-            Select += "1=1 ORDER BY x.ID_PTCHD, x.Ngay asc";
+            Select += "1=1 ORDER BY x.ID_PTCHD asc, x.Ngay asc";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
