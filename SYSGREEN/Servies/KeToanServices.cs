@@ -130,7 +130,7 @@ namespace Servies
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),x.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
             }
-            Select += "1=1 ORDER BY x.Ngay asc";
+            Select += "1=1 ORDER BY x.ID_PTCHD, x.Ngay asc";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
