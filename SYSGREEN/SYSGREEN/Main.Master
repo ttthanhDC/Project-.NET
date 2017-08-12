@@ -133,36 +133,10 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-                            <li class="active open">
-								<a runat="server" href="~/UserManger">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Thêm tài khoản
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
 							<li class="active open">
 								<a runat="server" href="~/C001_ListUser">
 									<i class="menu-icon fa fa-caret-right"></i>
 									C001 Danh sách tài khoản
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-                            <li class="active open">
-								<a runat="server" href="~/AddRole">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Thêm Nhóm quyền
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-                            <li class="active open">
-								<a runat="server" href="~/AddFunction">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Thêm function
 								</a>
 
 								<b class="arrow"></b>
@@ -244,22 +218,7 @@
 
 								<b class="arrow"></b>
 							</li>
-							<li class="">
-								<a runat="server" href="~/TheRightForUser">
-									<i class="menu-icon fa fa-caret-right"></i>
-									phân quyền
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-                            <li class="">
-								<a runat="server" href="~/AddUserToGorup">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Add user vào group role
-								</a>
-
-								<b class="arrow"></b>
-							</li>
+							
 						</ul>
 					</li>
 

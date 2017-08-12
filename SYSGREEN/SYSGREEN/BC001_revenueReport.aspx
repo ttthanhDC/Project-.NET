@@ -1,6 +1,78 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="BC001_revenueReport.aspx.cs" Inherits="SYSGREEN.BC001_revenueReport" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+     <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-5"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày"/>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-default" id="btPrint">In</button>
+                </div>
+            </div> 
+        </div> 
+        </div>
+    <div style ="margin-left:10px;margin-right:10px">
+         <table id="table" 
+       data-pagination="true"
+        data-page-list="[10, 25, 50, 100, ALL]" 
+        ></table>
+    </div>
+    <div style ="height:20px"></div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="sel1" class="col-md-7"></label>
+            <label for="sel1" class="col-md-2">Nội bộ</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" name="title" id="txt_noiBo" readOnly = 'true' />
+            </div>
+        </div> 
+    </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Tiền mặt</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Chuyển khoản</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_chuyenKhoan" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Nợ</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_no" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Tổng</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_tong" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+    
     <script>
         $(function () {
             // get data table
@@ -175,76 +247,5 @@
 
 
     </script>
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-5"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày"/>
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btPrint">In</button>
-                </div>
-            </div> 
-        </div> 
-        </div>
-    <div style ="margin-left:10px;margin-right:10px">
-         <table id="table" 
-       data-pagination="true"
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        ></table>
-    </div>
-    <div style ="height:20px"></div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="sel1" class="col-md-7"></label>
-            <label for="sel1" class="col-md-2">Nội bộ</label>
-            <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txt_noiBo" readOnly = 'true' />
-            </div>
-        </div> 
-    </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Tiền mặt</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Chuyển khoản</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_chuyenKhoan" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Nợ</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_no" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Tổng</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_tong" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-    
+   
     </asp:Content>

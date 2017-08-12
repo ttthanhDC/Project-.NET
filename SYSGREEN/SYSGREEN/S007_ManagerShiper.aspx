@@ -68,13 +68,7 @@
     </div>
 <script>
     $(document).ready(function () {
-        window.shipNo = "";
-        window.shipName = "";
-        window.adress = "";
-        window.date = "";
-        window.desc = "";
         window.id = 0;
-        window.phone = "";
 
         //alert("Data" + window.idParam);
         function getQueryVariable(variable) {
@@ -114,11 +108,29 @@
                 success: function (result) {
                     var obj = result[0];
                     $('#txt_shipname').val(obj.NAME);
-                    $('#txt_shipnumber').val(obj.NUMBER);
-                    $('#txt_date').val(obj.NgayTao);
+                    if (obj.NUMBER) {
+                        $('#txt_shipnumber').val(obj.NUMBER);
+                    } else {
+                        if (window.id < 10) {
+                            $('#txt_shipnumber').val("S00" + window.id);
+                        } else {
+                            $('#txt_shipnumber').val("S0" + window.id);
+                        }
+                    }
                     $('#txt_adsress').val(obj.DiaChi);
                     $('#txt_desc').val(obj.DESCRIPTION);
                     $('#txt_phone').val(obj.SoDienThoai);
+                    var data_ngay = obj.NgayTao;
+                    var z = "";
+                    if (data_ngay) {
+                        var x = data_ngay.substr(0, 10);
+                        var y = x.split("-");
+                        var y1 = y[0];
+                        var y2 = y[1];
+                        var y3 = y[2];
+                        z = y3 + "/" + y2 + "/" + y1;
+                    }
+                    $('#txt_date').val(z);
 
                 },
                 error: function (err) {
