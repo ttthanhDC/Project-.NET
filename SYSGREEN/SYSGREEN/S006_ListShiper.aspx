@@ -1,6 +1,19 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="S006_ListShiper.aspx.cs" Inherits="SYSGREEN.S006_ListShiper" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+    <div class="main-content-inner">
+          <div class="form-horizontal">
+            <div class="form-group">
+                 <label for="sel1" class="col-md-8"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_name" placeholder="Ship name"/>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+            </div> 
+        </div> 
+    </div>
     <div style ="margin-left:20px;margin-right:20px" id ="div_ListShip">
         <table id="table"></table>
     </div>
@@ -30,10 +43,11 @@
                         var obj = {};
                         obj.shipNo = objectData.NUMBER || "";
                         obj.shipName = objectData.NAME || "";
-                        obj.adress = "";
-                        obj.date = "";
+                        obj.adress = objectData.DiaChi || "";
+                        obj.date = objectData.NgayTao || "";
                         obj.desc = objectData.DESCRIPTION || "";
                         obj.id = objectData.SHIPER_ID;
+                        obj.phone = objectData.SoDienThoai || "";
                         arr.push(obj);
                     }
                 }
@@ -52,6 +66,11 @@
                     }, {
                         field: 'adress',
                         title: 'Địa chỉ',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'phone',
+                        title: 'SĐT',
                         align: 'center',
                         valign: 'middle',
                     }, {
@@ -94,7 +113,10 @@
             }
         });
     });
-
+    // 
+    $('#btSearch').on('click', function (e) {
+        alert("search");
+    });
 
     // function
     function userFormatter(data) {
@@ -124,7 +146,7 @@
 
     window.operateEventsEdit = {
         'click .edit': function (e, value, row, index) {
-            window.location = '/S007_ManagerShiper.aspx?id=' + row.id + '&shipNo=' + row.shipNo + '&shipName=' + row.shipName + '&adress=' + row.adress + '&date=' + row.date + '&desc=' + row.desc;
+            window.location = '/S007_ManagerShiper.aspx?id=' + row.id + '&shipNo=' + row.shipNo + '&shipName=' + row.shipName + '&adress=' + row.adress + '&date=' + row.date + '&desc=' + row.desc + '&phone=' + row.phone;
             
         }
     };
