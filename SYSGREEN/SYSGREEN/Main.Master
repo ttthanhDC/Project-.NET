@@ -74,8 +74,8 @@
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="assets/images/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>Welcome,</small>
-									Admin
+									<small>Chào bạn </small>
+									<span id="lblUser"></span>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -99,7 +99,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a runat="server" href="~/loginForm">
 										<i class="ace-icon fa fa-power-off"></i>
 										Logout
 									</a>
@@ -726,3 +726,32 @@
     </form>
 </body>
 </html>
+<script>
+    // Bootstrap Table
+    $(function () {
+        loadContent();
+        function loadContent() {
+
+            getLabelUserName();
+        };
+        function getLabelUserName() {
+            var formData = new FormData();
+            var obj = { 'id': 0 };
+            formData.append('type', 'getSessionUser');
+            formData.append('data', JSON.stringify(obj));
+            $.ajax({
+                url: "Configuation/HandlerSysMenu.ashx",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('#lblUser').text(result);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+    });
+ </script>

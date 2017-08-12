@@ -50,7 +50,6 @@
 															<input type="checkbox" class="ace" />
 															<span class="lbl"> Remember Me</span>
 														</label>
-
 														<button type="button" id="btnLogin" class="width-35 pull-right btn btn-sm btn-primary" >
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">Login</span>
@@ -292,7 +291,7 @@
 		            e.preventDefault();
 		        });
 
-		        // Event for Login Form
+		        /* Event for Login Form */
 		        $('#btnLogin').on('click', function (e) {
 		            var formData = new FormData();
 		            var user = $('#txtUserName').val();
@@ -315,7 +314,7 @@
 		                }
 		            });
 		        });
-
+                
 		    });
 		</script>
 </asp:Content>

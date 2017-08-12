@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for HandlerSysMenu
     /// </summary>
-    public class HandlerSysMenu : IHttpHandler
+    public class HandlerSysMenu : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -72,6 +73,22 @@ namespace SYSGREEN.Configuation
 
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getSessionUser")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    String UserName = HttpContext.Current.Session["UserName"].ToString();
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(UserName);
                 }
                 catch (Exception e)
                 {

@@ -59,6 +59,21 @@ namespace Servies
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+        public static DataTable CheckLogin(String UserName,String Password)
+        {
+            DataTable dt = new DataTable();
+            String Select = "Select *  from  SYS_USER Where UserName = @UserName And Password =@Password";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@UserName", UserName);
+            cmd.Parameters.AddWithValue("@Password", Password);
+            conn.Open();
+            dt.Load(cmd.ExecuteReader());
+            conn.Close();
+            return dt;
+        }
         public static List<DataObject.SysUser> GetDataEmail(string email)
         {
             List<DataObject.SysUser> lstSysUser = new List<DataObject.SysUser>();
