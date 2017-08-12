@@ -124,7 +124,7 @@ namespace Servies
         {
             DataTable table = new DataTable();
             String Select = "select x.ID_HD,x.TenKH_HD,x.Ngay,x.TongTien as TongTienGoi ,ctt.* from vHoaDonShiper x  ";
-            Select += " left join ChiTietThu ctt on x.Ngay = ctt.Ngay ";
+            Select += " left join ChiTietThu ctt on x.Ngay = ctt.Ngay Where ";
             Select += " HinhTHucThanhToan = N'Chuyển khoản' AND ";
             if (Ngay != null && Ngay != "")
             {
