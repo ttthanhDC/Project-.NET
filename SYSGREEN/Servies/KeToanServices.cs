@@ -160,6 +160,83 @@ namespace Servies
             return table;
         }
 
+        public static DateTime GetLastDayOfMonth(int iMonth)
+        {
+            DateTime dtResult = new DateTime(DateTime.Now.Year, iMonth, 1);
+            dtResult = dtResult.AddMonths(1);
+            dtResult = dtResult.AddDays(-(dtResult.Day));
+            return dtResult;
+        }
+
+        public static List<DataObject.KeToanTongHop> viewKeToanTongHopKy(int flag)
+        {
+            DataTable table = new DataTable();
+            String Insert = "Select * from NganHang";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            String startMonth = "";
+            String endMonth = "";
+            if (DateTime.Now.Month == 0)
+            {
+                if (flag == 0)
+                {
+                    startMonth = "1/12/" + (DateTime.Now.Year - 1);
+                    DateTime dtResult = new DateTime(DateTime.Now.Year - 1, 12, 1);
+                    dtResult = dtResult.AddMonths(1);
+                    dtResult = dtResult.AddDays(-(dtResult.Day));
+                    endMonth = dtResult.ToString();
+                }
+                else
+                {
+                    startMonth = "1/1/" + (DateTime.Now.Year);
+                    DateTime dtResult = new DateTime(DateTime.Now.Year,1, 1);
+                    dtResult = dtResult.AddMonths(1);
+                    dtResult = dtResult.AddDays(-(dtResult.Day));
+                    endMonth = dtResult.ToString();
+                }
+            }
+            else
+            {
+                if (flag == 0)
+                {
+                    startMonth = "01/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                    endMonth = GetLastDayOfMonth(DateTime.Now.Month).ToString();
+                }
+                else
+                {
+                    startMonth = "01/" + (DateTime.Now.Month + 1) + "/" + DateTime.Now.Year;
+                    endMonth = GetLastDayOfMonth(DateTime.Now.Month + 1).ToString();
+                }
+            }
+            
+            List<DataObject.KeToanTongHop> lst = new  List<DataObject.KeToanTongHop>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                DataTable dt = new DataTable();
+                DataObject.KeToanTongHop ktth = new DataObject.KeToanTongHop();
+                String Select = "Select * fKeToanTongHop("+ table.Rows[i][0]+",'"+ startMonth + "','"+ endMonth +"')";
+                SqlCommand cmdKTTH = new SqlCommand(Select);
+                cmdKTTH.CommandType = CommandType.Text;
+                cmdKTTH.Connection = conn;
+                conn.Open();
+                dt.Load(cmdKTTH.ExecuteReader());
+                conn.Close();
+                ktth.SoTienThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][0]) : "0";
+                ktth.SoTienChi = dt.Rows[0][1] != null ? Convert.ToString(dt.Rows[0][1]) : "0";
+                ktth.SoTienLuuChuyenThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][2]) : "0";
+                ktth.SoTienLuuChuyenChi = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][3]) : "0";
+                ktth.SoTienThu = "";
+                lst.Add(ktth);
+            }
+            return lst;
+           // return Convert.ToInt32(insertedID);
+        } 
+
         public static int InsertLoTrinhShipperReturnId(DataObject.LoTrinhShipper obj)
         {
             String Insert = "INSERT INTO LoTrinhShipper (MaLoTrinh,NgayTao,NguoiTao,TrangThai) VALUES (@MaLoTrinh,@NgayTao,@NguoiTao,@TrangThai);Select @@IDENTITY as newId";
