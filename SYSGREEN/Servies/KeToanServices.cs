@@ -52,6 +52,7 @@ namespace Servies
             conn.Open();
             object count = cmdSelect.ExecuteScalar();
             countId = Convert.ToInt16(count);
+            conn.Close();
             if (countId == 0)
             {
                 String Insert = "INSERT INTO ChiTietThu (Ngay,IdNgayHD,SoTien,MaNganHang,MaGiaoDich,TinhTrang,GhiChu,LoaiThu,NgayTao,NguoiTao,IdKeToan) VALUES (@Ngay,@IdNgayHD,@SoTien,@MaNganHang,@MaGiaoDich,@TinhTrang,@GhiChu,@LoaiThu,@NgayTao,@NguoiTao,@IdKeToan);Select @@IDENTITY as newId";
