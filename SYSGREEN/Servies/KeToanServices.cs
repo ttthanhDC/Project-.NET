@@ -16,7 +16,7 @@ namespace Servies
         {
             SqlConnection conn = Common.Connection.SqlConnect();
             int countId = 0;
-            String select = "Select count(*) from KeToan where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay.ToString() + "' , 103),103)";
+            String select = "Select count(*) from KeToan where convert(date,CONVERT(VARCHAR(10),Ngay , 101),101) = convert(date,CONVERT(VARCHAR(10),'" + Ngay.ToString() + "' , 101),101)";
             SqlCommand cmdSelect = new SqlCommand(select);
             cmdSelect.CommandType = CommandType.Text;
             cmdSelect.Connection = conn;
