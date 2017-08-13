@@ -386,7 +386,7 @@ namespace Servies
                 conn.Open();
                 dt.Load(cmdKTTH.ExecuteReader());
                 conn.Close();
-                ktth.TaiKhoan = table.Rows[i][0] != null ? Convert.ToString(table.Rows[i][2]) : "";
+                ktth.TaiKhoan = table.Rows[i][1] != null ? Convert.ToString(table.Rows[i][1]) : "";
                 ktth.SoTienThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][0]) : "0";
                 ktth.SoTienChi = dt.Rows[0][1] != null ? Convert.ToString(dt.Rows[0][1]) : "0";
                 ktth.SoTienLuuChuyenThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][2]) : "0";
