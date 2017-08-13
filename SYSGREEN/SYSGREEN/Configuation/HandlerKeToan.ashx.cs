@@ -41,7 +41,7 @@ namespace SYSGREEN.Configuation
                 {
                     String jsonData = context.Request.Form["data"].ToString();
                     String Ngay = context.Request.Form["Ngay"].ToString();
-                    int Id = Servies.KeToanServices.InsertKeToanReturnId(Convert.ToDateTime(Ngay != "" ? Ngay : DateTime.Now.ToShortDateString()));
+                    int Id = Servies.KeToanServices.InsertKeToanReturnId(Ngay);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(Id);
                 }

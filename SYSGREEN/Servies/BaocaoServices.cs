@@ -49,7 +49,7 @@ namespace Servies
             return table;
         }
 
-        public static DataTable getvBaoCao03(String tuNgay, String denNgay, Int16 LoaiDon)
+        public static List<DataObject.BaoCao03> getvBaoCao03(String tuNgay, String denNgay, Int16 LoaiDon)
         {
 
             List<DataObject.BaoCao03> lstDeptObject = new List<DataObject.BaoCao03>();
@@ -132,8 +132,7 @@ namespace Servies
                 }
 
             }
-            conn.Close();
-            return table;
+            return lstDeptObject;
         }
 
 

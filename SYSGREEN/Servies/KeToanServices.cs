@@ -12,7 +12,7 @@ namespace Servies
     {
 
         /************* Insert các bảng kế toán **********/
-        public static int InsertKeToanReturnId(DateTime Ngay)
+        public static int InsertKeToanReturnId(String Ngay)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
             int countId = 0;
@@ -31,7 +31,7 @@ namespace Servies
                 SqlCommand cmd = new SqlCommand(Insert);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
-                cmd.Parameters.AddWithValue("@Ngay", Ngay);
+                cmd.Parameters.AddWithValue("@Ngay", Convert.ToDateTime(Ngay));
                 conn.Open();
                 object insertedID = cmd.ExecuteScalar();
                 cmd.Connection.Close();
