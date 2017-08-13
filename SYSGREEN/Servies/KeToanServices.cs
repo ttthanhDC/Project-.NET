@@ -23,7 +23,7 @@ namespace Servies
             conn.Open();
             object count = cmdSelect.ExecuteScalar();
             conn.Close();
-            count = Convert.ToInt16(count);
+            countId = Convert.ToInt16(count);
             if (countId == 0)
             {
                 String Insert = "INSERT INTO KeToan (Ngay) VALUES (@Ngay);Select @@IDENTITY as newId";
