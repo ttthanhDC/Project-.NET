@@ -37,6 +37,22 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(dt));
                 }
+                if (type == "viewManHinhChi")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    DataTable dt = Servies.KeToanServices.viewManHinhChi(Ngay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                }
+                if (type == "viewManHinhLuuChuyenDongTien")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    DataTable dt = Servies.KeToanServices.viewManHinhLuuChuyenDongTien(Ngay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                }
                 if (type == "InsertKeToanReturnId")
                 {
                     String jsonData = context.Request.Form["data"].ToString();

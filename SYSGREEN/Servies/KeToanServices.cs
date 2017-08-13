@@ -142,6 +142,47 @@ namespace Servies
             return Convert.ToInt32(insertedID);
         }
 
+        public static DataTable viewManHinhLuuChuyenDongTien(String Ngay)
+        {
+            DataTable dt = new DataTable();
+            String Select = "Select * from LuuChuyenDongTien where ";
+            if (Ngay != null && Ngay != "")
+            {
+               Select += "convert(date,CONVERT(VARCHAR(10),x.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
+            }
+            Select += " 1 = 1";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            dt.Load(cmd.ExecuteReader());
+            cmd.Connection.Close();
+            conn.Close();
+            return dt;
+        }
+
+        public static DataTable viewManHinhChi(String Ngay)
+        {
+            DataTable dt = new DataTable();
+            String Select = "Select * from ChiTietChi where ";
+            if (Ngay != null && Ngay != "")
+            {
+                Select += "convert(date,CONVERT(VARCHAR(10),x.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
+            }
+            Select += " 1 = 1";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            dt.Load(cmd.ExecuteReader());
+            cmd.Connection.Close();
+            conn.Close();
+            return dt;
+        }
+
+
         /************* Update bảng kế toán **********/
         public static int UpdatteChiTietThuReturnId(DataObject.LuuChuyenDongTien obj)
         {
