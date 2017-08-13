@@ -386,11 +386,11 @@ namespace Servies
                 conn.Open();
                 dt.Load(cmdKTTH.ExecuteReader());
                 conn.Close();
+                ktth.TaiKhoan = table.Rows[i][0] != null ? Convert.ToString(table.Rows[i][2]) : "";
                 ktth.SoTienThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][0]) : "0";
                 ktth.SoTienChi = dt.Rows[0][1] != null ? Convert.ToString(dt.Rows[0][1]) : "0";
                 ktth.SoTienLuuChuyenThu = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][2]) : "0";
                 ktth.SoTienLuuChuyenChi = dt.Rows[0][0] != null ? Convert.ToString(dt.Rows[0][3]) : "0";
-                ktth.SoTienThu = "";
                 lst.Add(ktth);
             }
             return lst;
