@@ -100,46 +100,110 @@ namespace Servies
 
         public static int InsertChiTietChiReturnId(DataObject.ChiTietChi obj)
         {
-            String Insert = "INSERT INTO ChiTietChi (Ngay,NoiDungChi,SoTien,MaNganHang,GhiChu,NguoiTao,NgayTao,IdKeToan) VALUES (@Ngay,@NoiDungChi,@SoTien,@MaNganHang,@GhiChu,@NguoiTao,@NgayTao,@IdKeToan);Select @@IDENTITY as newId";
+
             SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(Insert);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
-            cmd.Parameters.AddWithValue("@NoiDungChi", obj.NoiDungChi);
-            cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
-            cmd.Parameters.AddWithValue("@MaNganHang", obj.MaNganHang);
-            cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
-            cmd.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
-            cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
-            cmd.Parameters.AddWithValue("@IdKeToan", obj.IdKeToan);
+            int countId = 0;
+            String select = "Select count(*) from ChiTietChi where ID = " + obj.ID;
+            SqlCommand cmdSelect = new SqlCommand(select);
+            cmdSelect.CommandType = CommandType.Text;
+            cmdSelect.Connection = conn;
             conn.Open();
-            object insertedID = cmd.ExecuteScalar();
-            cmd.Connection.Close();
+            object count = cmdSelect.ExecuteScalar();
+            countId = Convert.ToInt16(count);
             conn.Close();
-            return Convert.ToInt32(insertedID);
+            if (countId == 0)
+            {
+                String Insert = "INSERT INTO ChiTietChi (Ngay,NoiDungChi,SoTien,MaNganHang,GhiChu,NguoiTao,NgayTao,IdKeToan) VALUES (@Ngay,@NoiDungChi,@SoTien,@MaNganHang,@GhiChu,@NguoiTao,@NgayTao,@IdKeToan);Select @@IDENTITY as newId";
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmd.Parameters.AddWithValue("@NoiDungChi", obj.NoiDungChi);
+                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
+                cmd.Parameters.AddWithValue("@MaNganHang", obj.MaNganHang);
+                cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmd.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+                cmd.Parameters.AddWithValue("@IdKeToan", obj.IdKeToan);
+                conn.Open();
+                object insertedID = cmd.ExecuteScalar();
+                cmd.Connection.Close();
+                conn.Close();
+                return Convert.ToInt32(insertedID);
+            }
+            else
+            {
+                String Insert = "Update ChiTietChi SET Ngay = @Ngay ,NoiDungChi = @NoiDungChi ,SoTien = @SoTien ,MaNganHang = @MaNganHang ,GhiChu = @GhiChu where ID = @ID";
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmd.Parameters.AddWithValue("@NoiDungChi", obj.NoiDungChi);
+                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
+                cmd.Parameters.AddWithValue("@MaNganHang", obj.MaNganHang);
+                cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmd.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+                conn.Close();
+                return obj.ID;
+            }
+            
         }
 
         public static int InsertLuuChuyenDongTienReturnId(DataObject.LuuChuyenDongTien obj)
         {
-            String Insert = "INSERT INTO LuuChuyenDongTien (Ngay,SoTien,MaNganHangChi,MaNganHangThu,GhiChu,NguoiTao,NgayTao,IdKeToan) VALUES (@Ngay,@SoTien,@MaNganHangChi,@MaNganHangThu,@GhiChu,@NguoiTao,@NgayTao,@IdKeToan);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(Insert);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
-            cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
-            cmd.Parameters.AddWithValue("@MaNganHangChi", obj.MaNganHangChi);
-            cmd.Parameters.AddWithValue("@MaNganHangThu", obj.MaNganHangThu);
-            cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
-            cmd.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
-            cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
-            cmd.Parameters.AddWithValue("@IdKeToan", obj.IdKeToan);
+            int countId = 0;
+            String select = "Select count(*) from LuuChuyenDongTien where ID = " + obj.ID;
+            SqlCommand cmdSelect = new SqlCommand(select);
+            cmdSelect.CommandType = CommandType.Text;
+            cmdSelect.Connection = conn;
             conn.Open();
-            object insertedID = cmd.ExecuteScalar();
-            cmd.Connection.Close();
+            object count = cmdSelect.ExecuteScalar();
+            countId = Convert.ToInt16(count);
             conn.Close();
-            return Convert.ToInt32(insertedID);
+            if (countId == 0)
+            {
+                String Insert = "INSERT INTO LuuChuyenDongTien (Ngay,SoTien,MaNganHangChi,MaNganHangThu,GhiChu,NguoiTao,NgayTao,IdKeToan) VALUES (@Ngay,@SoTien,@MaNganHangChi,@MaNganHangThu,@GhiChu,@NguoiTao,@NgayTao,@IdKeToan);Select @@IDENTITY as newId";
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
+                cmd.Parameters.AddWithValue("@MaNganHangChi", obj.MaNganHangChi);
+                cmd.Parameters.AddWithValue("@MaNganHangThu", obj.MaNganHangThu);
+                cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmd.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                cmd.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+                cmd.Parameters.AddWithValue("@IdKeToan", obj.IdKeToan);
+                conn.Open();
+                object insertedID = cmd.ExecuteScalar();
+                cmd.Connection.Close();
+                conn.Close();
+                return Convert.ToInt32(insertedID);
+            }
+            else
+            {
+                String Insert = "Update LuuChuyenDongTien SET Ngay = @Ngay ,SoTien = @SoTien ,MaNganHangChi = @MaNganHangChi ,MaNganHangThu = @MaNganHangThu ,GhiChu = @GhiChu where ID = @ID";
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
+                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
+                cmd.Parameters.AddWithValue("@MaNganHangChi", obj.MaNganHangChi);
+                cmd.Parameters.AddWithValue("@MaNganHangThu", obj.MaNganHangThu);
+                cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmd.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+                conn.Close();
+                return obj.ID;
+            }
+            
         }
 
         public static DataTable viewManHinhLuuChuyenDongTien(String Ngay)
