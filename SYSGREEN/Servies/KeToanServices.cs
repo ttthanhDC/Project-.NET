@@ -14,17 +14,32 @@ namespace Servies
         /************* Insert các bảng kế toán **********/
         public static int InsertKeToanReturnId(DateTime Ngay)
         {
-            String Insert = "INSERT INTO KeToan (Ngay) VALUES (@Ngay);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(Insert);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@Ngay", Ngay);
+            int countId = 0;
+            String select = "Select count(*) from KeToan where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay.ToString() + "' , 103),103)";
+            SqlCommand cmdSelect = new SqlCommand(select);
+            cmdSelect.CommandType = CommandType.Text;
+            cmdSelect.Connection = conn;
             conn.Open();
-            object insertedID = cmd.ExecuteScalar();
-            cmd.Connection.Close();
+            object count = cmdSelect.ExecuteScalar();
             conn.Close();
-            return Convert.ToInt32(insertedID);
+            count = Convert.ToInt16(count);
+            if (countId == 0)
+            {
+                String Insert = "INSERT INTO KeToan (Ngay) VALUES (@Ngay);Select @@IDENTITY as newId";
+
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@Ngay", Ngay);
+                conn.Open();
+                object insertedID = cmd.ExecuteScalar();
+                cmd.Connection.Close();
+                conn.Close();
+                return Convert.ToInt32(insertedID);
+            }
+
+            return 0;
         }
         public static int InsertChiTietThuReturnId(DataObject.ChiTietThu obj)
         {
