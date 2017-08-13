@@ -78,7 +78,7 @@ namespace Servies
             }
             else
             {
-                String Insert = "Update ChiTietThu (Ngay = @Ngay ,SoTien = @SoTien ,MaNganHang = @MaNganHang ,MaGiaoDich = @MaGiaoDich ,TinhTrang = @TinhTrang ,GhiChu = @GhiChu where ID = @ID";
+                String Insert = "Update ChiTietThu (Ngay = @Ngay ,SoTien = @SoTien ,MaNganHang = @MaNganHang ,MaGiaoDich = @MaGiaoDich ,TinhTrang = @TinhTrang ,GhiChu = @GhiChu where IdNgayHD = @IdNgayHD";
                 SqlCommand cmd = new SqlCommand(Insert);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
@@ -88,7 +88,7 @@ namespace Servies
                 cmd.Parameters.AddWithValue("@MaGiaoDich", obj.MaGiaoDich);
                 cmd.Parameters.AddWithValue("@TinhTrang", obj.TinhTrang);
                 cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
-                cmd.Parameters.AddWithValue("@ID", obj.ID);
+                cmd.Parameters.AddWithValue("@IdNgayHD", obj.IdNgayHD);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
