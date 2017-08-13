@@ -135,11 +135,11 @@ namespace Servies
             return lstDeptObject;
         }
 
-        public static List<DataObject.BaoCao03> getvBaoCao03(String tuNgay, String denNgay)
+        public static List<DataObject.BaoCao04> getvBaoCao04(String tuNgay, String denNgay)
         {
 
-            List<DataObject.BaoCao03> lstDeptObject = new List<DataObject.BaoCao03>();
-            DataTable table = new DataTable();
+            List<DataObject.BaoCao04> lstDeptObject = new List<DataObject.BaoCao04>();
+            
             String Select = "select * from  SYS_SOURCE  ";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
@@ -154,12 +154,81 @@ namespace Servies
                     DataObject.BaoCao04 obj = new DataObject.BaoCao04();
                     obj.IdNguon = Int32.Parse(oReader["ID"].ToString());
                     obj.TenNguon = oReader["Source_Name"].ToString();
-                    
+                    DataTable table = new DataTable();
+                    String strSolanConLai = "select fBC004(" + obj.IdNguon + ",'"+tuNgay+"','"+denNgay+"')";
+                    SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
+                    cmdSoLanConLai.CommandType = CommandType.Text;
+                    cmdSoLanConLai.Connection = conn;
+                    conn.Open();
+                    table.Load(cmdSoLanConLai.ExecuteReader());
+                    conn.Close();
+                    obj.SoLuongDon = table.Rows[0][0] != null ? Convert.ToInt16(table.Rows[0][0]) : 0;
+                    obj.SoluongShip = table.Rows[0][1] != null ? Convert.ToInt16(table.Rows[0][1]) : 0;
+                    obj.DuKienThu = table.Rows[0][2] != null ? Convert.ToDecimal(table.Rows[0][2]) : 0;
+                    lstDeptObject.Add(obj);
                 }
 
             }
             return lstDeptObject;
         }
+
+        public static List<DataObject.BaoCao05> getvBaoCao05(String shipperName , String tuNgay, String denNgay)
+        {
+
+            List<DataObject.BaoCao05> lstDeptObject = new List<DataObject.BaoCao05>();
+
+            String Select = "select * from  vBC05 Where   ";
+            if (shipperName != null && shipperName != "")
+            {
+                Select += "NAME LIKE N'%" + shipperName + "%' AND ";
+            }
+            if (tuNgay != "" && denNgay == "")
+            {
+                Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) >= convert(date,CONVERT(VARCHAR(10),'" + tuNgay + "' , 103),103) AND ";
+            }
+            if (denNgay != "" && tuNgay == "")
+            {
+                Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) <= convert(date,CONVERT(VARCHAR(10),'" + denNgay + "' , 103),103) AND ";
+            }
+            if (denNgay != "" && tuNgay != "")
+            {
+                Select += "(convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) BETWEEN  convert(date,CONVERT(VARCHAR(10),'" + tuNgay + "' , 103),103) AND convert(date,CONVERT(VARCHAR(10),'" + denNgay + "' , 103),103)) AND ";
+            }
+            Select += " 1 = 1";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    conn.Close();
+                    DataObject.BaoCao05 obj = new DataObject.BaoCao05();
+                    obj.MaChuyenDi = Int32.Parse(oReader["MaLoTrinh"].ToString());
+                    obj.MaShipper = "S" + oReader["SHIPER_ID"].ToString();
+                    obj.HoTen = oReader["NAME"].ToString();
+                    DataTable table = new DataTable();
+                    String strSolanConLai = "select fBC005(" + obj.MaChuyenDi + ")";
+                    SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
+                    cmdSoLanConLai.CommandType = CommandType.Text;
+                    cmdSoLanConLai.Connection = conn;
+                    conn.Open();
+                    table.Load(cmdSoLanConLai.ExecuteReader());
+                    conn.Close();
+                    obj.Nhan = table.Rows[0][0] != null ? Convert.ToInt16(table.Rows[0][0]) : 0;
+                    obj.Di = table.Rows[0][1] != null ? Convert.ToInt16(table.Rows[0][1]) : 0;
+                    obj.Trave = table.Rows[0][3] != null ? Convert.ToInt16(table.Rows[0][2]) : 0;
+                    obj.DuKienThu = table.Rows[0][4] != null ? Convert.ToDecimal(table.Rows[0][3]) : 0;
+                    lstDeptObject.Add(obj);
+                }
+
+            }
+            return lstDeptObject;
+        }
+
+
 
         //public st
 
