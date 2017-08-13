@@ -355,7 +355,7 @@ namespace Servies
                     dtResult = dtResult.AddDays(-(dtResult.Day));
                     endMonth = dtResult.ToString();
                     String createDate = String.Format("{0:dd/MM/yyyy}", dtResult.ToString());
-                    endMonth = DateTime.Parse(createDate).ToString();
+                    endMonth = dtResult.Day + "/" + dtResult.Month + "/" + dtResult.Year;
                 }
             }
             else
@@ -363,12 +363,14 @@ namespace Servies
                 if (flag == 0)
                 {
                     startMonth = "01/" + (DateTime.Now.Month - 1) + "/" + DateTime.Now.Year;
-                    endMonth = GetLastDayOfMonth(DateTime.Now.Month).ToString();
+                    DateTime dtResult = GetLastDayOfMonth(DateTime.Now.Month - 1);
+                    endMonth = dtResult.Day + "/" + dtResult.Month + "/" + dtResult.Year;
                 }
                 else
                 {
                     startMonth = "01/" + (DateTime.Now.Month) + "/" + DateTime.Now.Year;
-                    endMonth = GetLastDayOfMonth(DateTime.Now.Month).ToString();
+                    DateTime dtResult = GetLastDayOfMonth(DateTime.Now.Month);
+                    endMonth = dtResult.Day + "/" + dtResult.Month + "/" + dtResult.Year;
                 }
             }
             
