@@ -318,7 +318,8 @@ namespace Servies
             DateTime dtResult = new DateTime(DateTime.Now.Year, iMonth, 1);
             dtResult = dtResult.AddMonths(1);
             dtResult = dtResult.AddDays(-(dtResult.Day));
-            return dtResult;
+            String createDate = String.Format("{0:dd/MM/yyyy}", dtResult.ToString());
+            return DateTime.Parse(createDate);
         }
 
         public static List<DataObject.KeToanTongHop> viewKeToanTongHopKy(int flag)
@@ -334,7 +335,7 @@ namespace Servies
             conn.Close();
             String startMonth = "";
             String endMonth = "";
-            if (DateTime.Now.Month == 0)
+            if (DateTime.Now.Month == 1)
             {
                 if (flag == 0)
                 {
@@ -343,6 +344,8 @@ namespace Servies
                     dtResult = dtResult.AddMonths(1);
                     dtResult = dtResult.AddDays(-(dtResult.Day));
                     endMonth = dtResult.ToString();
+                    String createDate = String.Format("{0:dd/MM/yyyy}", dtResult.ToString());
+                    endMonth = DateTime.Parse(createDate).ToString();
                 }
                 else
                 {
@@ -351,19 +354,21 @@ namespace Servies
                     dtResult = dtResult.AddMonths(1);
                     dtResult = dtResult.AddDays(-(dtResult.Day));
                     endMonth = dtResult.ToString();
+                    String createDate = String.Format("{0:dd/MM/yyyy}", dtResult.ToString());
+                    endMonth = DateTime.Parse(createDate).ToString();
                 }
             }
             else
             {
                 if (flag == 0)
                 {
-                    startMonth = "01/" + DateTime.Now.Month + "/" + DateTime.Now.Year;
+                    startMonth = "01/" + (DateTime.Now.Month - 1) + "/" + DateTime.Now.Year;
                     endMonth = GetLastDayOfMonth(DateTime.Now.Month).ToString();
                 }
                 else
                 {
-                    startMonth = "01/" + (DateTime.Now.Month + 1) + "/" + DateTime.Now.Year;
-                    endMonth = GetLastDayOfMonth(DateTime.Now.Month + 1).ToString();
+                    startMonth = "01/" + (DateTime.Now.Month) + "/" + DateTime.Now.Year;
+                    endMonth = GetLastDayOfMonth(DateTime.Now.Month).ToString();
                 }
             }
             
@@ -372,7 +377,7 @@ namespace Servies
             {
                 DataTable dt = new DataTable();
                 DataObject.KeToanTongHop ktth = new DataObject.KeToanTongHop();
-                String Select = "Select * fKeToanTongHop("+ table.Rows[i][0]+",'"+ startMonth + "','"+ endMonth +"')";
+                String Select = "Select * from fKeToanTongHop("+ table.Rows[i][0]+",'"+ startMonth + "','"+ endMonth.ToString() +"')";
                 SqlCommand cmdKTTH = new SqlCommand(Select);
                 cmdKTTH.CommandType = CommandType.Text;
                 cmdKTTH.Connection = conn;
