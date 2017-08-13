@@ -162,17 +162,27 @@
             } else {
                 // function update
                 var formDataSave = new FormData();
-                formDataSave.append('type', 'InsertShipperReturnId'); 
+                formDataSave.append('type', 'InsertLuuChuyenDongTienReturnId');
                 var json = { 'ID': 0 };
                 formDataSave.append('data', JSON.stringify(json));
-                formDataSave.append('NAME', $('#txt_ngay').val());
-                formDataSave.append('DiaChi', $('#txt_monny').val());
-                formDataSave.append('SoDienThoai', $('#txt_TkChi').val());
-                formDataSave.append('DESCRIPTION', $('#txt_TkThu').val());
-                formDataSave.append('DESCRIPTION', $('#txt_GhiChu').val());
+                var date = "";
+                if ($('#txt_ngay').val()) {
+                    var y = $('#txt_ngay').val().split("/");
+                    var y1 = y[0];
+                    var y2 = y[1];
+                    var y3 = y[2];
+                    date = y2 + "/" + y1 + "/" + y3;
+                }
+                formDataSave.append('Ngay', date);
+                //formDataSave.append('Ngay', $('#txt_ngay').val());
+                formDataSave.append('SoTien', $('#txt_monny').val());
+                formDataSave.append('MaNganHangThu', $('#txt_TkChi').val());
+                formDataSave.append('MaNganHangChi', $('#txt_TkThu').val());
+                formDataSave.append('GhiChu', $('#txt_GhiChu').val());
+                formDataSave.append('IdKeToan', "-1");
 
                 $.ajax({
-                    url: "Configuation/HandlerShipper.ashx",
+                    url: "Configuation/HandlerKeToan.ashx",
                     type: "POST",
                     data: formDataSave,
                     contentType: false,
