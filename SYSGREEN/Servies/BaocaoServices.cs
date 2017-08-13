@@ -14,7 +14,7 @@ namespace Servies
         {
 
             DataTable table = new DataTable();
-            String Select = "Select * from  vBC0102 Where TrangThai != 'Hủy Đơn' AND  ";
+            String Select = "Select * from  vBC0102 Where TrangThai != N'Hủy Đơn' AND  ";
             if (NgayTao != null &&  NgayTao != "")
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + NgayTao + "' , 103),103) AND ";
