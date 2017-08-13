@@ -120,6 +120,7 @@ namespace SYSGREEN.Configuation
                     ctt.NgayTao = DateTime.Now;
                     ctt.NguoiTao = "";
                     ctt.IdKeToan = Convert.ToInt32(IdKeToan);
+                    ctt.ID = Convert.ToInt32(IdKeToan);
                     int Id = Servies.KeToanServices.InsertChiTietChiReturnId(ctt);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(Id);
@@ -150,6 +151,7 @@ namespace SYSGREEN.Configuation
                     ctt.NgayTao = DateTime.Now;
                     ctt.NguoiTao = "";
                     ctt.IdKeToan = Convert.ToInt32(IdKeToan);
+                    ctt.ID = Convert.ToInt32(IdKeToan);
                     int Id = Servies.KeToanServices.InsertLuuChuyenDongTienReturnId(ctt);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(Id);

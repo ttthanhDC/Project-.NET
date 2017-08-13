@@ -14,6 +14,7 @@ namespace SYSGREEN
         ReportDocument rprt = new ReportDocument();  
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
             rprt.Load(Server.MapPath("~/CrystalReport2.rpt"));
 
             SqlConnection con = new SqlConnection(@"Data Source=(local);Initial Catalog=DB_SYS_GREEN;Persist Security Info=True;User ID=sa;Password=123456");
@@ -22,7 +23,7 @@ namespace SYSGREEN
             DataSet ds = new DataSet();
             sda.Fill(ds, "Test");
             rprt.SetDataSource(ds);
-            CrystalReportViewer1.ReportSource = rprt;  
+            CrystalReportViewer1.ReportSource = rprt;  */
         }
     }
 }

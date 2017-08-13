@@ -722,6 +722,7 @@
              <script src="Scripts/jquery.tmpl.js"></script>
              <script src="Scripts/jquery.tmpl.min.js"></script>
              <script src="Scripts/moment.js"></script>
+             <script src="Scripts/canvasjs.min.js"></script>
         </div>
     </form>
 </body>
