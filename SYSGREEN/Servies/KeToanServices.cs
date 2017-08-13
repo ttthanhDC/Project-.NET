@@ -78,7 +78,7 @@ namespace Servies
             }
             else
             {
-                String Insert = "Update ChiTietThu Ngay = @Ngay ,SoTien = @SoTien ,MaNganHang = @MaNganHang ,MaGiaoDich = @MaGiaoDich ,TinhTrang = @TinhTrang ,GhiChu = @GhiChu where IdNgayHD = @IdNgayHD";
+                String Insert = "Update ChiTietThu SET Ngay = @Ngay ,SoTien = @SoTien ,MaNganHang = @MaNganHang ,MaGiaoDich = @MaGiaoDich ,TinhTrang = @TinhTrang ,GhiChu = @GhiChu where IdNgayHD = @IdNgayHD";
                 SqlCommand cmd = new SqlCommand(Insert);
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = conn;
