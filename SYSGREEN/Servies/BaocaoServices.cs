@@ -135,6 +135,34 @@ namespace Servies
             return lstDeptObject;
         }
 
+        public static List<DataObject.BaoCao03> getvBaoCao03(String tuNgay, String denNgay)
+        {
+
+            List<DataObject.BaoCao03> lstDeptObject = new List<DataObject.BaoCao03>();
+            DataTable table = new DataTable();
+            String Select = "select * from  SYS_SOURCE  ";
+            SqlConnection conn = Common.Connection.SqlConnect();
+            SqlCommand cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmd.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    conn.Close();
+                    DataObject.BaoCao04 obj = new DataObject.BaoCao04();
+                    obj.IdNguon = Int32.Parse(oReader["ID"].ToString());
+                    obj.TenNguon = oReader["Source_Name"].ToString();
+                    
+                }
+
+            }
+            return lstDeptObject;
+        }
+
+        //public st
+
 
     }
 }

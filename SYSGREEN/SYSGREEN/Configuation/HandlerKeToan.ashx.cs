@@ -98,6 +98,7 @@ namespace SYSGREEN.Configuation
                     {
                         ctt.SoTien = Convert.ToDecimal("0");
                     }
+                    ctt.NoiDungChi = NoiDungChi;
                     ctt.MaNganHang = Convert.ToInt32(MaNganHang);
                     ctt.GhiChu = GhiChu;
                     ctt.NgayTao = DateTime.Now;
