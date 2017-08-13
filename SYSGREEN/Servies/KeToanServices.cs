@@ -192,7 +192,6 @@ namespace Servies
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
                 cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
-                cmd.Parameters.AddWithValue("@SoTien", obj.SoTien);
                 cmd.Parameters.AddWithValue("@MaNganHangChi", obj.MaNganHangChi);
                 cmd.Parameters.AddWithValue("@MaNganHangThu", obj.MaNganHangThu);
                 cmd.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
