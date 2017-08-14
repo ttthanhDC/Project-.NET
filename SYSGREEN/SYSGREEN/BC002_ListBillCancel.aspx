@@ -1,44 +1,128 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="BC002_ListBillCancel.aspx.cs" Inherits="SYSGREEN.BC002_ListBillCancel" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+      <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-5"></label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btPrint">In</button>
+                </div>
+            </div> 
+        </div> 
+        </div>
+    <div style ="margin-left:10px;margin-right:10px">
+         <table id="table" 
+        ></table>
+    </div>
+    <div style ="height:20px"></div>
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Tiền mặt</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+    <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Chuyển khoản</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_chuyenKhoan" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+          <div class="form-horizontal">
+            <div class="form-group">
+               <label for="sel1" class="col-md-7"></label>
+                <label for="sel1" class="col-md-2">Tổng</label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_tong" readOnly = 'true' />
+                </div>
+            </div> 
+        </div> 
+    
     <script>
         $(function () {
-            // get data table
-            //var data = [];
-            //var formDataListUser = new FormData();
-            //formDataListUser.append('type', 'getData');
-            //var json = { 'ID': 0 };
-            //formDataListUser.append('data', JSON.stringify(json));
-            //$.ajax({
-            //    url: "Configuation/HandlerSysUser.ashx",
-            //    type: "POST",
-            //    data: formDataListUser,
-            //    contentType: false,
-            //    processData: false,
-            //    success: function (result) {
-            //        var jsonData = result;
-            //        var arr = [];
-            //        if (jsonData && jsonData.length > 0) {
-            //            for (var i = 0; i < jsonData.length ; i++) {
-            //                var objectData = jsonData[i];
-            //                var obj = {};
-            //                obj.id = objectData.ID;
-            //                obj.customer = objectData.ID;
-            //                obj.bill = objectData.ID;
-            //                obj.reason = objectData.ID;
-            //                obj.user = objectData.ID;
-            //                obj.time = objectData.ID;
-            //                obj.total = objectData.ID;
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getvBaoCao02');
+            var json = { 'ID': 0 };
+            formDataListUser.append('data', JSON.stringify(json));
+            formDataListUser.append('Ngay', "");
+            $.ajax({
+                url: "Configuation/HandlerBaoCao.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    var tienMat = 0;
+                    var chuyenKhoan = 0;
+                    var total = 0;
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            if (objectData.Name) {
+                                obj.id = objectData.MaHD + "-" + objectData.Name;
+                            } else {
+                                obj.id = objectData.MaHD + "-Đơn lẻ";
+                            }
+                            obj.IDGoi = objectData.IDGoi;
+                            obj.ID_HD = objectData.ID_HD;
+                            obj.ID_PCTHD = objectData.ID_PCTHD;
+                            obj.customer = objectData.CustomerName || "";
+                            obj.reason = objectData.GhiChu || "";
+                            obj.typePay = objectData.HinhThucThanhToan || "";
+                            if (obj.typePay === "Chuyển khoản") {
+                                chuyenKhoan = chuyenKhoan + objectData.TongTien;
+                            } else if (obj.typePay === "Tiền mặt") {
+                                tienMat = tienMat + objectData.TongTien;
+                            }
+                            obj.user = objectData.NguoiTao || "";
+                            var data_ngay = objectData.NgayTao;
+                            var z = "";
+                            if (data_ngay) {
+                                var x = data_ngay.substr(0, 10);
+                                var y = x.split("-");
+                                var y1 = y[0];
+                                var y2 = y[1];
+                                var y3 = y[2];
+                                z = y3 + "/" + y2 + "/" + y1;
+                            }
+                            obj.time = z;
+                            obj.total = objectData.TongTien || "";
+                            arr.push(obj);
+                        }
+                    }
+                    total = tienMat + chuyenKhoan;
+                    $('#txt_TienMat').val(tienMat);
+                    $('#txt_chuyenKhoan').val(chuyenKhoan);
+                    $('#txt_tong').val(total);
+                    data = arr;
+                    getDataTable(data);
+                },
+                error: function (err) {
 
-            //                arr.push(obj);
-            //            }
-            //        }
-            //        // init table
-            //    },
-            //    error: function (err) {
-            //    }
-            //});
-            // format table
+                }
+            });
+            
+        });
+        var getDataTable = function (itemData) {
             $('#table').bootstrapTable({
                 columns: [{
                     field: 'id',
@@ -52,87 +136,111 @@
                     title: 'Khách đặt',
                     align: 'center',
                     valign: 'middle',
-                    //sortable: true,
-                    //editable: true,
-                }, {
-                    field: 'bill',
-                    title: 'Đơn',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    //editable: true,
-
                 }, {
                     field: 'reason',
                     title: 'Lý do',
                     align: 'center',
                     valign: 'middle',
-                    //sortable: true,
-                    // editable: true,
+                }, {
+                    field: 'typePay',
+                    title: 'Hình thức thanh toán',
+                    align: 'center',
+                    valign: 'middle',
                 }, {
                     field: 'user',
                     title: 'User',
                     align: 'center',
                     valign: 'middle',
-                    //sortable: true,
-                    //editable: false
                 }, {
                     field: 'time',
                     title: 'Time',
                     align: 'center',
                     valign: 'middle',
-                    //sortable: true,
-                    //editable: false
                 }, {
                     field: 'total',
                     title: 'Tổng',
                     align: 'center',
                     valign: 'middle',
-                    // sortable: true,
-                    //editable: false
                 }],
-                data: [{
-                    id: '1',
-                    customer: 'Trần ngọc duy',
-                    bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
-                    total: '3,000,000'
-                }, {
-                    id: '2',
-                    customer: 'Trần ngọc duy',
-                    bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
-                    total: '3,000,000'
-                }, {
-                    id: '3',
-                    customer: 'Trần ngọc duy',
-                    bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
-                    total: '3,000,000'
-                }, {
-                    id: '4',
-                    customer: 'Trần ngọc duy',
-                    bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 1',
-                    time: '14:00',
-                    total: '3,000,000'
-                }, {
-                    id: '5',
-                    customer: 'Trần ngọc duy',
-                    bill: 'Đơn 001. 002',
-                    reason: 'Khách hàng gọi điện hủy',
-                    user: 'Lễ tân 2',
-                    time: '14:00',
-                    total: '3,000,000'
-                }],
+                data: itemData
             });
+        };
+        $('#btSearch').on('click', function (e) {
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getvBaoCao02');
+            var json = { 'ID': 0 };
+            formDataListUser.append('data', JSON.stringify(json));
+            formDataListUser.append('Ngay', $('#txt_date').val());
+            $.ajax({
+                url: "Configuation/HandlerBaoCao.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var arr = [];
+                    if (result === "0") {
+
+                    } else {
+                        var jsonData = result;
+                        var arr = [];
+                        var tienMat = 0;
+                        var chuyenKhoan = 0;
+                        var total = 0;
+                        if (jsonData && jsonData.length > 0) {
+                            for (var i = 0; i < jsonData.length ; i++) {
+                                var objectData = jsonData[i];
+                                var obj = {};
+                                if (objectData.Name) {
+                                    obj.id = objectData.MaHD + "-" + objectData.Name;
+                                } else {
+                                    obj.id = objectData.MaHD + "-Đơn lẻ";
+                                }
+                                obj.IDGoi = objectData.IDGoi;
+                                obj.ID_HD = objectData.ID_HD;
+                                obj.ID_PCTHD = objectData.ID_PCTHD;
+                                obj.customer = objectData.CustomerName || "";
+                                obj.reason = objectData.GhiChu || "";
+                                obj.typePay = objectData.HinhThucThanhToan || "";
+                                if (obj.typePay === "Chuyển khoản") {
+                                    chuyenKhoan = chuyenKhoan + objectData.TongTien;
+                                } else if (obj.typePay === "Tiền mặt") {
+                                    tienMat = tienMat + objectData.TongTien;
+                                }
+                                obj.user = objectData.NguoiTao || "";
+                                var data_ngay = objectData.NgayTao;
+                                var z = "";
+                                if (data_ngay) {
+                                    var x = data_ngay.substr(0, 10);
+                                    var y = x.split("-");
+                                    var y1 = y[0];
+                                    var y2 = y[1];
+                                    var y3 = y[2];
+                                    z = y3 + "/" + y2 + "/" + y1;
+                                }
+                                obj.time = z;
+                                obj.total = objectData.TongTien || "";
+                                arr.push(obj);
+                            }
+                        }
+                    }
+                    
+                    total = tienMat + chuyenKhoan;
+                    $('#txt_TienMat').val(tienMat);
+                    $('#txt_chuyenKhoan').val(chuyenKhoan);
+                    $('#txt_tong').val(total);
+                    data = arr;
+                    var $table = $('#table');
+                    $table.bootstrapTable('load', data);
+                },
+                error: function (err) {
+
+                }
+            });
+        });
+        $('#btPrint').on('click', function (e) {
+            alert("IN")
         });
         // function
         function userFormatter(data) {
@@ -162,58 +270,5 @@
 
 
     </script>
-    <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-5"></label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Phòng ban"/>
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày" />
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Tìm kiếm</button>
-                </div>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btPrint">In</button>
-                </div>
-            </div> 
-        </div> 
-        </div>
-    <div style ="margin-left:10px;margin-right:10px">
-         <table id="table" 
-       data-pagination="true"
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        ></table>
-    </div>
-    <div style ="height:20px"></div>
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label for="sel1" class="col-md-7"></label>
-            <label for="sel1" class="col-md-2">Nội bộ</label>
-            <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txt_noiBo" readOnly = 'true' />
-            </div>
-        </div> 
-    </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Tiền mặt</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-7"></label>
-                <label for="sel1" class="col-md-2">Tổng</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_tong" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-    
+  
     </asp:Content>

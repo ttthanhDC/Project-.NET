@@ -1,7 +1,20 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KT001_ReceiveMoneyBank.aspx.cs" Inherits="SYSGREEN.KT001_ReceiveMoneyBank" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-
+ <div class="main-content-inner" style ="margin-left:30px;margin-right:30px" id ="div_LoTrinh">
+         <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel1" class="col-md-8"></label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_date"placeholder="ngày" />
+                </div>
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
+                </div>
+                
+            </div> 
+        </div> 
+    </div>
    <div style ="margin-left:20px;margin-right:20px">
         <table id="table"></table>
    </div>
@@ -36,7 +49,11 @@
                         if (!check && !check2) {
                             idCheck = objectData.ID_PTCHD;
                             obj.id = objectData.ID_PTCHD;
-                            obj.idKT = objectData.ID_PTCHD;// TODO
+                            obj.idKT = objectData.IdKeToan;// TODO 
+                            obj.IdNgayHD = objectData.IdNgayHD;
+                            obj.ID_NHD = objectData.ID_NHD;
+
+
                             obj.permission = true;
                             var data_ngay = objectData.Ngay;
                             var z = "";
@@ -66,7 +83,9 @@
                                 check2 = true;
                                 idCheck = objectData.ID_PTCHD;
                                 obj.id = objectData.ID_PTCHD;
-                                obj.idKT = objectData.ID_PTCHD;// TODO
+                                obj.idKT = objectData.IdKeToan;// TODO
+                                obj.IdNgayHD = objectData.IdNgayHD;
+                                obj.ID_NHD = objectData.ID_NHD;
                                 obj.permission = true;
                                 var data_ngay = objectData.Ngay;
                                 var z = "";
@@ -105,6 +124,212 @@
        
        
     });
+    // search
+    $('#btSearch').on('click', function (e) {
+        var data = [];
+        var formData = new FormData();
+        // var id = parseInt(row.id + "");
+        var json = { 'ID': "0" };
+        jQuery.ajaxSetup({ async: true });
+        formData.append('type', 'viewManHinhThuCK');
+        formData.append('data', json);
+        formData.append('Ngay', $('#txt_date').val());
+        $.ajax({
+            url: "Configuation/HandlerKeToan.ashx",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var arr = [];
+                if (result === "0") {
+
+                } else {
+                    var jsonData = result;
+                    if (jsonData && jsonData.length > 0) {
+                        var idCheck = 0;
+                        var check = false;
+                        var check2 = false;
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            if (!check && !check2) {
+                                idCheck = objectData.ID_PTCHD;
+                                obj.id = objectData.ID_PTCHD;
+                                obj.idKT = objectData.IdKeToan;// TODO
+                                obj.IdNgayHD = objectData.IdNgayHD;
+                                obj.ID_NHD = objectData.ID_NHD;
+                                obj.permission = true;
+                                var data_ngay = objectData.Ngay;
+                                var z = "";
+                                if (data_ngay) {
+                                    var x = data_ngay.substr(0, 10);
+                                    var y = x.split("-");
+                                    var y1 = y[0];
+                                    var y2 = y[1];
+                                    var y3 = y[2];
+                                    z = y3 + "/" + y2 + "/" + y1;
+                                }
+                                obj.date = z;
+                                obj.name = objectData.TenKH_HD || "";
+                                obj.money = objectData.TongTienGoi || "";
+
+                                obj.bank = objectData.MaNganHang || 0;
+                                obj.code = objectData.MaGiaoDich || "";
+                                obj.staus = objectData.TinhTrang || 0;
+                                obj.note = objectData.GhiChu;
+                                arr.push(obj);
+                                check = true;
+                                check2 = false;
+                            } else {
+                                if (idCheck === objectData.ID_PTCHD) {
+
+                                } else {
+                                    check2 = true;
+                                    idCheck = objectData.ID_PTCHD;
+                                    obj.id = objectData.ID_PTCHD;
+                                    obj.idKT = objectData.IdKeToan;// TODO
+                                    obj.IdNgayHD = objectData.IdNgayHD;
+                                    obj.ID_NHD = objectData.ID_NHD;
+                                    obj.permission = true;
+                                    var data_ngay = objectData.Ngay;
+                                    var z = "";
+                                    if (data_ngay) {
+                                        var x = data_ngay.substr(0, 10);
+                                        var y = x.split("-");
+                                        var y1 = y[0];
+                                        var y2 = y[1];
+                                        var y3 = y[2];
+                                        z = y3 + "/" + y2 + "/" + y1;
+                                    }
+                                    obj.date = z;
+                                    obj.name = objectData.TenKH_HD || "";
+                                    obj.money = objectData.TongTienGoi || "";
+
+                                    obj.bank = objectData.MaNganHang || 0;
+                                    obj.code = objectData.MaGiaoDich || "";
+                                    obj.staus = objectData.TinhTrang || 0;
+                                    obj.note = objectData.GhiChu;
+                                    arr.push(obj);
+                                    check = false;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                data = arr;
+                var $table = $('#table');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+                eventSearch();
+            }
+        });
+
+    });
+    // load all
+    var loadAllDataTable = function () {
+        var data = [];
+        var formData = new FormData();
+        // var id = parseInt(row.id + "");
+        var json = { 'ID': "0" };
+        jQuery.ajaxSetup({ async: true });
+        formData.append('type', 'viewManHinhThuCK');
+        formData.append('data', json);
+        formData.append('Ngay', "");
+        $.ajax({
+            url: "Configuation/HandlerKeToan.ashx",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    var idCheck = 0;
+                    var check = false;
+                    var check2 = false;
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        if (!check && !check2) {
+                            idCheck = objectData.ID_PTCHD;
+                            obj.id = objectData.ID_PTCHD;
+                            obj.idKT = objectData.IdKeToan;// TODO
+                            obj.IdNgayHD = objectData.IdNgayHD;
+                            obj.ID_NHD = objectData.ID_NHD;
+                            obj.permission = true;
+                            var data_ngay = objectData.Ngay;
+                            var z = "";
+                            if (data_ngay) {
+                                var x = data_ngay.substr(0, 10);
+                                var y = x.split("-");
+                                var y1 = y[0];
+                                var y2 = y[1];
+                                var y3 = y[2];
+                                z = y3 + "/" + y2 + "/" + y1;
+                            }
+                            obj.date = z;
+                            obj.name = objectData.TenKH_HD || "";
+                            obj.money = objectData.TongTienGoi || "";
+
+                            obj.bank = objectData.MaNganHang || 0;
+                            obj.code = objectData.MaGiaoDich || "";
+                            obj.staus = objectData.TinhTrang || 0;
+                            obj.note = objectData.GhiChu;
+                            arr.push(obj);
+                            check = true;
+                            check2 = false;
+                        } else {
+                            if (idCheck === objectData.ID_PTCHD) {
+
+                            } else {
+                                check2 = true;
+                                idCheck = objectData.ID_PTCHD;
+                                obj.id = objectData.ID_PTCHD;
+                                obj.idKT = objectData.IdKeToan;// TODO
+                                obj.IdNgayHD = objectData.IdNgayHD;
+                                obj.ID_NHD = objectData.ID_NHD;
+                                obj.permission = true;
+                                var data_ngay = objectData.Ngay;
+                                var z = "";
+                                if (data_ngay) {
+                                    var x = data_ngay.substr(0, 10);
+                                    var y = x.split("-");
+                                    var y1 = y[0];
+                                    var y2 = y[1];
+                                    var y3 = y[2];
+                                    z = y3 + "/" + y2 + "/" + y1;
+                                }
+                                obj.date = z;
+                                obj.name = objectData.TenKH_HD || "";
+                                obj.money = objectData.TongTienGoi || "";
+
+                                obj.bank = objectData.MaNganHang || 0;
+                                obj.code = objectData.MaGiaoDich || "";
+                                obj.staus = objectData.TinhTrang || 0;
+                                obj.note = objectData.GhiChu;
+                                arr.push(obj);
+                                check = false;
+                            }
+                        }
+                    }
+
+                }
+
+                data = arr;
+                var $table = $('#table');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+                eventSearch();
+            }
+        });
+
+    };
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
@@ -210,14 +435,22 @@
     window.operateEvents = {
         'click .save': function (e, value, row, index) {
             if(row.idKT){
-                eventUpdate();
+                eventUpdate("id",row, index);
             } else {
                 var formData = new FormData();
-                var id = parseInt(row.id + "");
-                var json = { 'ID': id };
+                //var id = parseInt(row.id + "");
+                var json = { 'ID': 0 };
                 jQuery.ajaxSetup({ async: true });
                 formData.append('type', 'InsertKeToanReturnId');
-                formData.append('Ngay', row.date);
+                var date = "";
+                if (row.date) {
+                    var y = row.date.split("/");
+                    var y1 = y[0];
+                    var y2 = y[1];
+                    var y3 = y[2];
+                    date = y2 + "/" + y1 + "/" + y3;
+                }
+                formData.append('Ngay', date);
                 formData.append('data', JSON.stringify(json));
                 $.ajax({
                     url: "Configuation/HandlerKeToan.ashx",
@@ -226,7 +459,7 @@
                     contentType: false,
                     processData: false,
                     success: function (result) {
-                        eventUpdate(result);
+                        eventUpdate(result, row, index);
                     },
                     error: function (err) {
                         
@@ -235,22 +468,40 @@
             }
         }
     };
-    var eventUpdate = function (id) {
+    var eventUpdate = function (id, row, index) {
         var formData = new FormData();
-        var id = parseInt(row.id + "");
-        var json = { 'ID': id };
+        if (row.idKT) {
+            id_KT = row.idKT;
+        } else {
+            id_KT = id;
+        }
+        //var id = parseInt(row.id + "");
+        var json = { 'ID': 0 };
         jQuery.ajaxSetup({ async: true });
         formData.append('type', 'InsertChiTietThuReturnId');
         formData.append('data', JSON.stringify(json));
-        formData.append('Ngay', row.date);
+        var date = "";
+        if (row.date) {
+            var y = row.date.split("/");
+            var y1 = y[0];
+            var y2 = y[1];
+            var y3 = y[2];
+            date = y2 + "/" + y1 + "/" + y3;
+        }
+        formData.append('Ngay', date);
         formData.append('SoTien', row.money);
-        formData.append('MaNganHang', row.bank);
-        formData.append('MaGiaoDich', row.rowcode);
-        formData.append('TinhTrang', row.status);
-        formData.append('LoaiThu', "");
+       
+        formData.append('MaGiaoDich', row.code);
+       
+        formData.append('LoaiThu', "0");
         formData.append('GhiChu', row.note);
-        formData.append('IdKeToan', id);
-
+        formData.append('IdKeToan', id_KT);
+        formData.append('IdNgayHD', row.ID_NHD);
+        var lst1 = $('#table select.select1 option:selected');
+        var lst2 = $('#table select.select2 option:selected');
+        formData.append('MaNganHang', lst1[index].value);
+        formData.append('TinhTrang', lst2[index].value);
+        
         $.ajax({
             url: "Configuation/HandlerKeToan.ashx",
             type: "POST",
@@ -259,6 +510,7 @@
             processData: false,
             success: function (result) {
                 alert("Lưu thành công");
+                loadAllDataTable();
             },
             error: function (err) {
             }
