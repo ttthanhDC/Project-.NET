@@ -387,7 +387,7 @@ namespace Servies
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
-            NguoiTao = "";
+            //NguoiTao = "";
             shiperId = -1;
             String updateLotrinh = "Update LoTrinhShipper Set ShipID = " + shiperId + ", NguoiTao = '" + NguoiTao + "' where ID = " + IdLotrinhShipper;
             SqlCommand cmd1 = new SqlCommand(updateLotrinh);
