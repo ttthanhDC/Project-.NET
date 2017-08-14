@@ -8,7 +8,8 @@ namespace DataObject
 {
     public class BaoCao05
     {
-        public int MaChuyenDi { set; get; }
+        public String MaChuyenDi { set; get; }
+        public int MaLoTrinhId { set; get; }
         public string MaShipper { set; get; }
         public string HoTen { set; get; }
         public int Nhan { set; get; }
