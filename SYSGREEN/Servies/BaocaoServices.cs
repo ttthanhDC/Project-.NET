@@ -221,8 +221,8 @@ namespace Servies
                     connStr.Close();
                     obj.Nhan = table.Rows[0][0] != null ? Convert.ToInt16(table.Rows[0][0]) : 0;
                     obj.Di = table.Rows[0][1] != null ? Convert.ToInt16(table.Rows[0][1]) : 0;
-                    obj.Trave = table.Rows[0][3] != null ? Convert.ToInt16(table.Rows[0][2]) : 0;
-                    obj.DuKienThu = table.Rows[0][4] != null ? Convert.ToDecimal(table.Rows[0][3]) : 0;
+                    obj.Trave = table.Rows[0][2] != null ? Convert.ToInt16(table.Rows[0][2]) : 0;
+                    obj.DuKienThu = table.Rows[0][3] != null ? Convert.ToDecimal(table.Rows[0][3]) : 0;
                     lstDeptObject.Add(obj);
                 }
 
