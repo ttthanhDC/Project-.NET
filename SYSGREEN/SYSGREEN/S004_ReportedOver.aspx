@@ -34,7 +34,7 @@
                <label for="sel1" class="col-md-7"></label>
                 <label for="sel1" class="col-md-2">Tiền mặt</label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />
+                    <input type="text" class="form-control" name="title" id="txt_TienMat" readOnly = 'true' />txt_TienMat,txt_chuyenKhoan,txt_tong
                 </div>
             </div> 
         </div> 
@@ -74,6 +74,9 @@
                 success: function (result) {
                     var jsonData = result;
                     var arr = [];
+                    var tienMat = 0;
+                    var chuyenKhoan = 0;
+                    var total = 0;
                     if (jsonData && jsonData.length > 0) {
                         for (var i = 0; i < jsonData.length ; i++) {
                             var objectData = jsonData[i];
@@ -97,8 +100,14 @@
                             arr.push(obj);
                         }
                     }
+
+                    total = tienMat + chuyenKhoan;
+                    $('#txt_TienMat').val(tienMat);
+                    $('#txt_chuyenKhoan').val(chuyenKhoan);
+                    $('#txt_tong').val(total);
                     data = arr;
                     getDataTable(data);
+                    txt_TienMat, txt_chuyenKhoan, txt_tong
                 },
                 error: function (err) {
                 }
