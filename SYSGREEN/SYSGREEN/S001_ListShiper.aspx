@@ -31,7 +31,10 @@
         </div> 
         <div class="form-horizontal">
             <div class="form-group">
-                 <label for="sel1" class="col-md-2"></label>
+                 <label for="sel1" class="col-md-1"></label>
+                 <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btback2">Quay lại</button>
+                </div>
                 <div class="col-md-2">
                     <asp:Button ID="btIn1" runat="server" AutoPostBack="false" class="btn btn-primary" Text="In hóa đơn vận chuyển" OnClick="InHoaDon_click" />
                     <!--<button   class="btn btn-primary" id="btIn" runat="server" >In hóa đơn vận chuyển</button> -->
@@ -65,11 +68,9 @@
     </div>
    <div style ="margin-left:20px;margin-right:20px;display:none" id="Div_tableSanPham">
        <table id="table"  ></table>
-       <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback1">Quay lại</button></div>
    </div> 
     <div style ="margin-left:20px;margin-right:20px" id="Div_tableTT">
        <table id="tableTT"  ></table>
-        <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback2">Quay lại</button></div>
    </div> 
     <div>
          <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="true" />
@@ -408,7 +409,7 @@
         }
         //alert(listNgayHoaDon);
         var shiper = $('#cbShip').val();
-        var user =1 ;//$('#userid').val(); TODO
+        var user = 0 ;//$('#userid').val(); TODO
         var IdLotrinh = window.idParam;
        
         var json = {

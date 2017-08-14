@@ -12,95 +12,30 @@
                     <input type="text" class="form-control" name="title" id="txt_EndDate" placeholder="Ngày kết thúc" />
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Xem</button>
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btPrint">In</button>
+                    <button type="button" class="btn btn-primary" id="btPrint">In</button>
                 </div>
             </div> 
         </div> 
-        </div>
-    <div style ="margin-left:10px;margin-right:10px;">
-       Show biểu đồ
     </div>
-      <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-1">Nguồn</label>
-                <label for="sel1" class="col-md-2">Số lượng đơn</label>
-                <label for="sel1" class="col-md-2">Số lượng ship</label>
-                <label for="sel1" class="col-md-2">Dự kiến thu</label>
-            </div> 
-        </div> 
-          <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-1">Khách cũ</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_kc_soDon" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_kc_soShip" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_kc_duKien" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-     <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-1">Facebook</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_fb_soDon" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_fb_soShip" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_fb_duKien" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-     <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-1">Website</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_WS_soDon" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_WS_soShip" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_WS_duKien" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-     <div class="form-horizontal">
-            <div class="form-group">
-               <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-1">Tổng</label>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_T_soDon" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_T_soShip" readOnly = 'true' />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_T_duKien" readOnly = 'true' />
-                </div>
-            </div> 
-        </div> 
-    
+       
+    <div style ="margin-left:50px;margin-right:50px">
+         <table id="table" 
+        ></table>
+    </div>
+    <div id="chartContainer" style="height: 400px; width: 100%;"></div>
     <script>
         $(function () {
             var data = [];
             var formDataListUser = new FormData();
-            formDataListUser.append('type', 'getvBaoCao02');
+            formDataListUser.append('type', 'getvBaoCao04');
             var json = { 'ID': 0 };
             formDataListUser.append('data', JSON.stringify(json));
-            formDataListUser.append('Ngay', "");
+            formDataListUser.append('tuNgay', "");
+            formDataListUser.append('denNgay', "");
+            
             $.ajax({
                 url: "Configuation/HandlerBaoCao.ashx",
                 type: "POST",
@@ -110,93 +45,164 @@
                 success: function (result) {
                     var jsonData = result;
                     var arr = [];
+                    var SoLuongDon = 0;
+                    var SoLuongShip = 0;
+                    var DuKienThu = 0;
+                  
                     if (jsonData && jsonData.length > 0) {
                         for (var i = 0; i < jsonData.length ; i++) {
                             var objectData = jsonData[i];
                             var obj = {};
-                            obj.id = objectData.ID;
-                            obj.customer = true;
-                            obj.reason = objectData.SoTien;
-                            obj.user = objectData.MaNganHang;
+                            obj.text1 = objectData.TenNguon;
+                            obj.text4 = objectData.DuKienThu;
+                            obj.text2 = objectData.SoLuongDon;
+                            obj.text3 = objectData.SoluongShip;
+                            SoLuongDon = SoLuongDon + objectData.SoLuongDon;
+                            SoLuongShip = SoLuongShip + objectData.SoluongShip;
+                            DuKienThu = DuKienThu + objectData.DuKienThu;
+                            arr.push(obj);
+                        }
+                        var obj1 = {};
+                        obj1.text1 = "Tổng";
+                        obj1.text4 = DuKienThu;
+                        obj1.text2 = SoLuongDon;
+                        obj1.text3 = SoLuongShip;
+                        arr.push(obj1);
 
-                            obj.user = objectData.GhiChu;
-                            var data_ngay = objectData.Ngay;
-                            var z = "";
-                            if (data_ngay) {
-                                var x = data_ngay.substr(0, 10);
-                                var y = x.split("-");
-                                var y1 = y[0];
-                                var y2 = y[1];
-                                var y3 = y[2];
-                                z = y3 + "/" + y2 + "/" + y1;
+                        data = arr;
+                        getDataTable(data);
+                        if (DuKienThu > 0) {
+                            var obj2 = {}
+                            var value = [];
+                            for (var j = 0; j < data.length ; j++) {
+                                if (data[j].text1 !== "Tổng") {
+                                    var sodu = data[j].text4 / DuKienThu;
+                                    obj2 = { y: sodu, indexLabel: data[j].text1, z: data[j].text4 }
+                                    value.push(obj2);
+                                }
                             }
-                            obj.time = z;
-                            obj.total = objectData.NoiDungChi;
+                            loadContent(value);
                         }
                     }
-                    data = arr;
-                    getDataTable(data);
                 },
                 error: function (err) {
 
                 }
             });
+
             
         });
-        var getDataTable = function (itemData) {
+        $('#btSearch').on('click', function (e) {
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getvBaoCao04');
+            var json = { 'ID': 0 };
+            formDataListUser.append('data', JSON.stringify(json));
+            formDataListUser.append('tuNgay', $('#txt_beginDate').val());
+            formDataListUser.append('denNgay', $('#txt_EndDate').val());
 
-        };
+            $.ajax({
+                url: "Configuation/HandlerBaoCao.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    var SoLuongDon = 0;
+                    var SoLuongShip = 0;
+                    var DuKienThu = 0;
 
-        // Build the chart
-        Highcharts.chart('container', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Browser market shares January, 2015 to May, 2015'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.text1 = objectData.TenNguon;
+                            obj.text4 = objectData.DuKienThu;
+                            obj.text2 = objectData.SoLuongDon;
+                            obj.text3 = objectData.SoluongShip;
+                            SoLuongDon = SoLuongDon + objectData.SoLuongDon;
+                            SoLuongShip = SoLuongShip + objectData.SoluongShip;
+                            DuKienThu = DuKienThu + objectData.DuKienThu;
+                            arr.push(obj);
+                        }
+                        var obj1 = {};
+                        obj1.text1 = "Tổng";
+                        obj1.text4 = DuKienThu;
+                        obj1.text2 = SoLuongDon;
+                        obj1.text3 = SoLuongShip;
+                        arr.push(obj1);
+
+                        data = arr;
+                        var $table = $('#table');
+                        $table.bootstrapTable('load', data);
+                        if (DuKienThu > 0) {
+                            var obj2 = {}
+                            var value = [];
+                            for (var j = 0; j < data.length ; j++) {
+                                if (data[j].text1 !== "Tổng") {
+                                    var sodu = data[j].text4 / DuKienThu;
+                                    obj2 = { y: sodu, indexLabel: data[j].text1, z: data[j].text4 }
+                                    value.push(obj2);
+                                }
+                            }
+                            loadContent(value);
+                        }
+                    }
+                },
+                error: function (err) {
+
                 }
-            },
-            series: [{
-                name: 'Brands',
-                colorByPoint: true,
-                data: [{
-                    name: 'Microsoft Internet Explorer',
-                    y: 56.33
+            });
+
+
+        });
+        var getDataTable = function (itemData) {
+            $('#table').bootstrapTable({
+                columns: [{
+                    field: 'text1',
+                    title: 'Nguồn',
+                    align: 'center',
+                    valign: 'middle',
                 }, {
-                    name: 'Chrome',
-                    y: 24.03,
-                    sliced: true,
-                    selected: true
+                    field: 'text2',
+                    title: 'Số lượng đơn',
+                    align: 'center',
+                    valign: 'middle',
                 }, {
-                    name: 'Firefox',
-                    y: 10.38
+                    field: 'text3',
+                    title: 'Số lượng ship',
+                    align: 'center',
+                    valign: 'middle',
                 }, {
-                    name: 'Safari',
-                    y: 4.77
-                }, {
-                    name: 'Opera',
-                    y: 0.91
-                }, {
-                    name: 'Proprietary or Undetectable',
-                    y: 0.2
-                }]
-            }]
-         });
+                    field: 'text4',
+                    title: 'Dự kiến thu',
+                    align: 'center',
+                    valign: 'middle',
+                }],
+                data: itemData
+            });
+        };
+        var loadContent = function (data) {
+            var chart = new CanvasJS.Chart("chartContainer",
+            {
+                theme: "theme2",
+                title: {
+                    text: "Xanh lá"
+                },
+                data: [
+                {
+                    type: "pie",
+                    showInLegend: true,
+                    toolTipContent: "{z} VNĐ - #percent %",
+                    legendText: "{indexLabel}",
+                    dataPoints: data
+                }
+                ]
+            });
+            chart.render();
+        };
     </script>
     
     </asp:Content>

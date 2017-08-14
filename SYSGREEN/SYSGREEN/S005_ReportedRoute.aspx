@@ -2,8 +2,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
    <div style ="margin-left:20px;margin-right:20px">
+       <button type="button" class="btn btn-primary" id="btback">Quay lại</button>
        <table id="table"></table>
-        <div style ="text-align:center;margin-top:20px"><button type="button" class="btn btn-primary" id="btback">Quay lại</button></div>
    </div> 
     <script>
         $(function () {

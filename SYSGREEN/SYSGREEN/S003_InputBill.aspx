@@ -4,17 +4,16 @@
      <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
           <div class="form-horizontal">
             <div class="form-group">
-                
-                 <label for="sel1" class="col-md-10"></label>
                 <div class="col-md-1">
-                   <button type="button" class="btn btn-primary" id="btSave">Lưu data</button>
+                    <button type="button" class="btn btn-primary" id="btback">Quay lại</button>
+                   
                 </div>
             </div> 
         </div> 
     </div>
    <div style ="margin-left:20px;margin-right:20px">
        <table id="table"></table>
-       <div style ="text-align:center; margin-top:20px"><button type="button" class="btn btn-primary" id="btback">Quay lại</button></div>
+       <div style ="text-align:right; margin-top:20px"><button type="button" class="btn btn-primary" id="btSave">Lưu data</button></div>
    </div> 
    
 <script>
@@ -79,7 +78,7 @@
                         obj.phone = objectData.SoDienThoai || "";
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
-                        obj.money = objectData.SoTienThu;
+                        obj.money = objectData.TongTien;
                         // obj.money = objectData.Create_User || "";// chua có
 
                         if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
@@ -88,14 +87,8 @@
                             obj.status = 2;
                         } else if (jsonData[i].TrangThaiNHD == "Hoàn thành") {
                             obj.status = 3;
-                        } else if (jsonData[i].TrangThaiNHD == "Chờ giao lại") {
-                            obj.status = 4;
                         } else if (jsonData[i].TrangThaiNHD == "Hủy") {
-                            obj.status = 5;
-                        } else if (jsonData[i].TrangThaiNHD == "Đang chuyển") {
-                            obj.status = 6;
-                        } else if (jsonData[i].TrangThaiNHD == "") {
-                            obj.status =1;
+                            obj.status = 4;
                         }
                         // hình thúc thanh toán
                         if (jsonData[i].HinhThucThanhToan == "Tiền mặt") {
@@ -153,8 +146,6 @@
                 } else {
                     alert("Lưu data không thành công");
                 }
-                data = jsonData;
-                getDataTable(data);
             },
             error: function (err) {
             }
@@ -201,18 +192,15 @@
                 valign: 'middle',
                 formatter: function (value, row, index) {
                     if (value === 1) {
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Hủy</option></select>'
                     } else if (value === 2) {
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1>Chưa xử lý</option><option value = 2 selected = true>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Hủy</option></select>'
                     } else if (value === 3) {
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3 selected = true>Hoàn thành</option><option value = 4>Hủy</option></select>'
                     } else if (value === 4) {
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                    } else if (value === 5) {
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5 selected = true>Hủy</option><option value = 6>Đang chuyển</option></select>'
-                    } else 
-                        return '<select class="select1" id="Bill' + index + '"><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4>Chờ giao lại</option><option value = 5>Hủy</option><option value = 6 selected = true>Đang chuyển</option></select>'
-                    } 
+                        return '<select class="select1" id="Bill' + index + '"><option value = 1>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option><option value = 4 selected = true>Hủy</option></select>'
+                    }
+                }
             }, {
                 field: 'httt',
                 title: 'Hình thức thanh toán',
@@ -270,7 +258,7 @@
 
     window.codeReserEvents = {
         'click .next': function (e, value, row, index) {
-            window.location = '/LT002_Demo3.aspx?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id;
+            window.location = '/LT002_Demo3.aspx?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id + '&idLoTrinh=' + window.idParam;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
