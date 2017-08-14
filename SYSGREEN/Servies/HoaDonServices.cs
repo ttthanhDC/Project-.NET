@@ -394,7 +394,7 @@ namespace Servies
             cmd1.CommandType = CommandType.Text;
             cmd1.Connection = conn;
             conn.Open();
-            cmd.ExecuteNonQuery();
+            cmd1.ExecuteNonQuery();
             conn.Close();
         }
         public static void updateNgayHoaDonToShiper(Int32 ngayHoaDonId, Int32 shiperId, Int32 userId, Int32 IdLotrinhShipper,String NguoiTao)
