@@ -211,7 +211,7 @@ namespace Servies
                     obj.MaShipper = "S" + oReader["SHIPER_ID"].ToString();
                     obj.HoTen = oReader["NAME"].ToString();
                     DataTable table = new DataTable();
-                    String strSolanConLai = "select fBC005(" + obj.MaChuyenDi + ")";
+                    String strSolanConLai = "select fBC005(" + obj.MaLoTrinhId + ")";
                     SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
                     cmdSoLanConLai.CommandType = CommandType.Text;
                     SqlConnection connStr = Common.Connection.SqlConnect();
