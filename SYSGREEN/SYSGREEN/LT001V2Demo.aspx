@@ -1354,7 +1354,7 @@
                         infoKH.ngaySinh = $('#txtNgaySinh1').val();
                         infoKH.soDienThoai = $('#txtSoDienThoai1').val();
                         infoKH.soDienThoai = document.getElementById('txtSoDienThoai1').value;
-                        infoKH.email = document.getElementById('txtEmailCustome1r').value;
+                        infoKH.email = document.getElementById('txtEmailCustomer1').value;
                         infoKH.diaChi = document.getElementById('txtDiaChiCustomer1').value;
                         infoKH.maquan = $('#cb_quan1').val();
                         infoKH.billId = 0;
@@ -1692,10 +1692,10 @@
                         var arr = [];
                         if (jsonData && jsonData.length > 0) {
                             var objectData = jsonData[0];
-                            var percent = Number(objectData.Promotion_Percent) / 100;
+                            var percent = Number(objectData.Amount_VND);
                             var total = $('#txtTotalTienGoi').val().toString().split('.').join('');
                             total = total == "" ? Number('0') : Number(total);
-                            $('#txtTotalTienGoi').val((total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                            $('#txtTotalTienGoi').val((total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
                         }
                     },
                     error: function (err) {
@@ -2001,10 +2001,10 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var percent = Number(objectData.Promotion_Percent) / 100;
+                                var percent = Number(objectData.Amount_VND);
                                 var total = row.total.toString().split('.').join('');
                                 total = total == "" ? Number('0') : Number(total);
-                                row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                row.total = (total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             }

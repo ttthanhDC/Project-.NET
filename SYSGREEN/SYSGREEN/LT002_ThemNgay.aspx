@@ -3,24 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
  
 <div id="contactHD">
-       <div class="form-horizontal" style="margin-left:20px">
-           <div class="form-group">
-                <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-2">Đơn dọc</label>
-                <div class="col-md-2">
-                   <select class="form-control" id="cb_DonDoc"></select>
-                </div>
-            </div> 
-        </div>
-        <div class="form-horizontal" style="margin-left:20px">
-           <div class="form-group">
-                <label for="sel1" class="col-md-3"></label>
-                <label for="sel1" class="col-md-2">Đơn</label>
-                <div class="col-md-2">
-                   <select class="form-control" id="cb_Don"></select>
-                </div>
-            </div> 
-        </div>
+       
         <div class="form-horizontal">
            <div class="form-group">
                 <label for="sel1" class="col-md-3"></label>
@@ -29,8 +12,8 @@
                      <input type="text" class="form-control" name="title" id="txt_Ngay" />
                 </div>
             </div> 
-    </div>
-    <div class="form-horizontal">
+        </div>
+         <div class="form-horizontal">
            <div class="form-group">
                 <label for="sel1" class="col-md-3"></label>
                 <label for="sel1" class="col-md-2">Thứ</label>
@@ -38,7 +21,25 @@
                      <input type="text" class="form-control" name="title" id="txt_Thu" disabled="disabled" />
                 </div>
             </div> 
-    </div>      
+        </div>  
+        <div class="form-horizontal" >
+           <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <label for="sel1" class="col-md-2">Đơn dọc</label>
+                <div class="col-md-2">
+                   <select class="form-control" id="cb_DonDoc"></select>
+                </div>
+            </div> 
+        </div>
+        <div class="form-horizontal">
+           <div class="form-group">
+                <label for="sel1" class="col-md-3"></label>
+                <label for="sel1" class="col-md-2">Đơn</label>
+                <div class="col-md-2">
+                   <select class="form-control" id="cb_Don"></select>
+                </div>
+            </div> 
+        </div>    
  </div>   
  <div style="text-align:center;display: table;margin-top: 10px;margin-left: 3%;">
     <button type="button" class="btn btn-primary" id="btnThem">Thêm mới sản phẩm</button>
@@ -84,7 +85,14 @@
 
         $('#txt_Ngay').on('change', function () {
             var dateNgaygiaoHangLe = this.value;
-            $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
+            var x = new Date();
+            if (dateNgaygiaoHangLe.split('/').length == 1) {
+
+            } else if (dateNgaygiaoHangLe.split('/').length == 2) {
+                dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
+                $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
+                $("#txt_Ngay").val(dateNgaygiaoHangLe);
+            }
         });
         function convertDateToDay(num) {
             var x = num;
@@ -414,11 +422,19 @@
                             valign: 'middle'
                         }, {
                             field: 'product',
-                            title: 'Sản phẩm',
+                            title: 'Mã Sản phẩm',
                             align: 'center',
                             valign: 'middle',
                             editable: true,
-                        }, {
+                        },
+                        {
+                            field: 'productName',
+                            title: 'Tên Sản phẩm',
+                            align: 'center',
+                            valign: 'middle',
+                            editable: true
+                        },
+                        {
                             field: 'quantity',
                             title: 'Số lượng',
                             align: 'center',
@@ -431,7 +447,7 @@
                             valign: 'middle'
                         }, {
                             field: 'sugar',
-                            title: 'Sugar',
+                            title: 'Đường',
                             align: 'center',
                             valign: 'middle',
                             formatter: function (value, row, index) {
@@ -449,7 +465,7 @@
                             valign: 'middle'
                         }, {
                             field: 'promotionCode',
-                            title: 'Promotion code',
+                            title: 'Mã Khuyến mại',
                             align: 'center',
                             valign: 'middle',
                         }, {
@@ -495,6 +511,7 @@
                                     if (jsonData && jsonData.length > 0) {
                                         var objectData = jsonData[0];
                                         var quantity = Number(objectData.Product_Unit);
+                                        row.productName = objectData.Product_Name;
                                         row.quantity = quantity;
                                         var price = objectData.Product_Amount.toString().split('.').join('');
                                         row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -502,6 +519,7 @@
                                         row.total = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                         $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                                     } else {
+                                        row.productName = "";
                                         row.quantity = "";
                                         row.price = "";
                                         row.money = "";
@@ -536,10 +554,10 @@
                                     var arr = [];
                                     if (jsonData && jsonData.length > 0) {
                                         var objectData = jsonData[0];
-                                        var percent = Number(objectData.Promotion_Percent) / 100;
+                                        var percent = Number(objectData.Amount_VND);
                                         var total = row.total.toString().split('.').join('');
                                         total = total == "" ? Number('0') : Number(total);
-                                        row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                        row.total = (total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
                                         $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                                     }
@@ -730,6 +748,7 @@
             processData: false,
             success: function (result) {
                 alert("Thêm mới ngày cho đơn hàng thành công");
+                window.location = '/LT002_Demo2.aspx?paramId=' + window.idHD;
             }
         });
     });

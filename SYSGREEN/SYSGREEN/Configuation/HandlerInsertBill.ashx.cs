@@ -8,6 +8,8 @@ using System.Web.Script.Serialization;
 using Excel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.SessionState;
+using System.Globalization;
 //using log4net;
 
 namespace SYSGREEN.Configuation
@@ -15,7 +17,7 @@ namespace SYSGREEN.Configuation
     /// <summary>
     /// Summary description for HandlerInsertBill
     /// </summary>
-    public class HandlerInsertBill : IHttpHandler
+    public class HandlerInsertBill : IHttpHandler, IRequiresSessionState
     {
        // private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -74,7 +76,7 @@ namespace SYSGREEN.Configuation
                     DataObject.HoaDon hoadon = new DataObject.HoaDon();
                     hoadon.IDKhachHang = IdKhachHang;
                     hoadon.IDNguon = Convert.ToInt32(sourceId);
-                    hoadon.NgayTao =  DateTime.Now;
+                    hoadon.NgayTao = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     hoadon.NguoiTao = "";
                     hoadon.TongSoNgay = Convert.ToInt32(songayconlai);
                     hoadon.TongTien = Convert.ToDecimal(tong != "" ? tong : "0");
@@ -278,7 +280,8 @@ namespace SYSGREEN.Configuation
                     for (int i = 0; i < lsthoadon.Count; i++)
                     {
                         DataObject.NgayHoaDon ngayhoadon = new DataObject.NgayHoaDon();
-                        ngayhoadon.Ngay = Convert.ToDateTime((String)lsthoadon[i].date);
+                        //ngayhoadon.Ngay = Convert.ToDateTime((String)lsthoadon[i].date);
+                        ngayhoadon.Ngay = DateTime.ParseExact((String)lsthoadon[i].date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                         var ghichu = (String)lsthoadon[i].ghichu;
                         ngayhoadon.GhiChu = ghichu != null ? ghichu : "";
                         ngayhoadon.TrangThai = (String)lsthoadon[i].status;
@@ -372,7 +375,7 @@ namespace SYSGREEN.Configuation
                     sysCustomer.Address = (String)infoKH.diaChi;
                     if (infoKH.ngaySinh != "")
                     {
-                        sysCustomer.BirthDay = DateTime.Parse((String)infoKH.ngaySinh);
+                        sysCustomer.BirthDay = DateTime.ParseExact((String)infoKH.ngaySinh, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     sysCustomer.CustomerName = (String)infoKH.hoTen;
                     sysCustomer.Email = (String)infoKH.email;
@@ -662,6 +665,28 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "UpdateTrangThaiNgayHoaDon")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getDataViewHoaDon(String MaHD,String TenKH,String TenSP)
+
+                    String ID = context.Request.Form["IdPCTHD"].ToString();
+                    String IDHD = context.Request.Form["idHD"].ToString();
+                    String TrangThai = "Hủy Đơn";
+                    Servies.HoaDonServices.UpdateTrangThaiNgayHoaDon(ID, TrangThai,IDHD);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(1);
+                    //log.Info(maxId);
+                }
+                catch (Exception e)
+                {
+                    //log.Error("Error function getMaxIdHoaDon ",e);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }//UpdateTrangThaiNgayHoaDon
             else
             {
                 context.Response.ContentType = "text/plain";
@@ -715,7 +740,7 @@ namespace SYSGREEN.Configuation
                 sysCustomer.MaQuan = maquan;
                 if (ngaySinh != "")
                 {
-                    sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
+                    sysCustomer.BirthDay = DateTime.ParseExact(ngaySinh, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 }
                 
                 IdKhachHang = Servies.SysCustomerServices.InsertDataReturnId(sysCustomer);
@@ -733,7 +758,7 @@ namespace SYSGREEN.Configuation
             sysCustomer.MaQuan = maquan;
             if (ngaySinh != "")
             {
-                sysCustomer.BirthDay = DateTime.Parse(ngaySinh);
+                sysCustomer.BirthDay = DateTime.ParseExact(ngaySinh, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             sysCustomer.NgayHoaDonId = NgayHoaDon;
             int IdKhachHang = Servies.SysCustomerServices.InsertDataKHNgayReturnId(sysCustomer);
@@ -802,10 +827,13 @@ namespace SYSGREEN.Configuation
             String deliveryDate = (String)data.deliveryDate;
             if (deliveryDate != "")
             {
-                deliveryDate = deliveryDate.Split('/')[1] + "/" + deliveryDate.Split('/')[0] + "/" + deliveryDate.Split('/')[2];
+               // deliveryDate = deliveryDate.Split('/')[1] + "/" + deliveryDate.Split('/')[0] + "/" + deliveryDate.Split('/')[2];
+                ngayHoaDon.Ngay = DateTime.ParseExact(deliveryDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
-
-            ngayHoaDon.Ngay = Convert.ToDateTime(deliveryDate != "" ? deliveryDate : DateTime.Now.ToShortDateString());
+            else
+            {
+                ngayHoaDon.Ngay = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
@@ -814,8 +842,8 @@ namespace SYSGREEN.Configuation
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
-            String createDate = String.Format("{0:dd/MM/yyyy}", ngayHD);
-            ngayHoaDon.Ngay = DateTime.Parse(createDate);
+            //String createDate = String.Format("{0:dd/MM/yyyy}", ngayHD);
+            ngayHoaDon.Ngay = DateTime.ParseExact(ngayHD, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
@@ -835,8 +863,9 @@ namespace SYSGREEN.Configuation
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
-            ngayHoaDonLe = ngayHoaDonLe.Split('/')[1] + "/" + ngayHoaDonLe.Split('/')[0] + "/" + ngayHoaDonLe.Split('/')[2];
-            ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
+            //ngayHoaDonLe = ngayHoaDonLe.Split('/')[1] + "/" + ngayHoaDonLe.Split('/')[0] + "/" + ngayHoaDonLe.Split('/')[2];
+            //ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
+            ngayHoaDon.Ngay = DateTime.ParseExact(ngayHoaDonLe, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;

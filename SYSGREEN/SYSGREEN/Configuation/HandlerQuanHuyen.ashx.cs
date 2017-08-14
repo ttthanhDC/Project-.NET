@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for HandlerQuanHuyen
     /// </summary>
-    public class HandlerQuanHuyen : IHttpHandler
+    public class HandlerQuanHuyen : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)

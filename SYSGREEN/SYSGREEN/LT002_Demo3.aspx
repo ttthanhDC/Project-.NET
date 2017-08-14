@@ -167,6 +167,7 @@
     $(function () {
         window.idKHParam = 0;
         window.idNgayHoaDonParam = 0;
+        window.idHD = 0;
         window.lstIdDelete = [];
         loadContent();
         function getQueryVariable(variable) {
@@ -183,6 +184,7 @@
         function loadContent() {
             window.idKHParam = getQueryVariable("idKHParam");
             window.idNgayHoaDonParam = getQueryVariable("idNgayHoaDonParam");
+            window.idHD = getQueryVariable("idHD");
             LoadComboBoxQH();
             FormatDate();
             loadThongTinKH();
@@ -805,6 +807,7 @@
             processData: false,
             success: function (result) {
                 alert("Cập nhật thông tin đơn hàng thành công");
+                window.location = '/LT002_Demo2.aspx?paramId=' + window.idHD;
             }
         });
     });

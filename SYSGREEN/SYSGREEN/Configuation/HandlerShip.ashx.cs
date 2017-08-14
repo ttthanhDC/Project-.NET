@@ -7,13 +7,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for HandlerSysMenu
     /// </summary>
-    public class HandlerShip : IHttpHandler
+    public class HandlerShip : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)

@@ -260,7 +260,7 @@
                             title: 'Ngày',
                             align: 'center',
                             valign: 'middle',
-                           // editable: true,
+                            // editable: true,
                         }, {
                             field: 'money',
                             title: 'Tiền',
@@ -272,7 +272,7 @@
                             align: 'center',
                             valign: 'middle',
                             //editable: true,
-                        },{
+                        }, {
                             field: 'sotienconlai',
                             title: 'Số tiền còn lại',
                             align: 'center',
@@ -284,7 +284,7 @@
                             align: 'center',
                             valign: 'middle'
                         },
-                        
+
                         {
                             field: 'ghichu',
                             title: 'Ghi chú',
@@ -305,7 +305,7 @@
                             title: 'Bill',
                             align: 'center',
                             valign: 'middle',
-                            events:operateEventsTachBill,
+                            events: operateEventsTachBill,
                             formatter: operateFormatterTachBill
                         }]
                     });
@@ -319,7 +319,7 @@
                     var totaTienThu = 0;
                     var totalTong = 0;
                     for (var i = 0 ; i < jsonData.length ; i++) {
-                        var index = i +1;
+                        var index = i + 1;
                         var obj = {
                             id: index,
                             IDHD: jsonData[i].ID,
@@ -343,9 +343,10 @@
                             sotienconlai: '0',
                             shipper: jsonData[i].tenShipper,
                             ghichu: jsonData[i].GhiChu,
+                            flag: 0
                         };
-                        
-                        var codeRever = 'HD' + (jsonData[i].ID < 10 ? '0' + jsonData[i].ID : jsonData[i].ID) + "-" + (jsonData[i].tabIndex < 10 ? '0' + jsonData[i].tabIndex : jsonData[i].tabIndex) ;
+
+                        var codeRever = 'HD' + (jsonData[i].ID < 10 ? '0' + jsonData[i].ID : jsonData[i].ID) + "-" + (jsonData[i].tabIndex < 10 ? '0' + jsonData[i].tabIndex : jsonData[i].tabIndex);
                         obj.codeReser = codeRever;
                         // Trạng thái
                         obj.status = jsonData[i].TrangThai;
@@ -366,15 +367,17 @@
                             obj.status = 0;
                         }*/
                         // Type BIll
-                        
+
                         if (jsonData[i].Loai == 1) {
                             obj.typeBill = jsonData[i].TenGoi;
                         } else if (jsonData[i].Loai == 2) {
                             obj.typeBill = "Đơn lẻ";
+                            obj.flag = 1;
                         }
 
                         loaiGoiTemp = jsonData[i].Loai;
                         if (i == 0) {
+                            obj.flag = 1;
                             totalTong = jsonData[i].TongTien;
                             if (jsonData[i].TrangThai != "Hoàn thành") {
                                 $("#txt_tientong").val(jsonData[i].TongTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -404,11 +407,12 @@
                             loaiGoi = jsonData[i].Loai;
                             tabIndex = jsonData[i].tabIndex;
                         }
-                        else{
-                            /*
-                            if (jsonData[i].Loai == 2) {
-                                obj.typeBill = "Đơn lẻ";
-                            }*/
+                        else {
+                            if (jsonData[i].Loai == jsonData[i - 1].Loai && jsonData[i].IdPCTHD == jsonData[i - 1].IdPCTHD) {
+                                obj.flag = 0;
+                            } else {
+                                obj.flag = 1;
+                            }
                             if (jsonData[i].Loai == loaiGoi && check) {
                                 // Không làm gì
                             } else {
@@ -423,7 +427,7 @@
                                     loaiGoi = jsonData[i].Loai;
                                 }
                                 if (jsonData[i].Loai == loaiGoi && jsonData[i].tabIndex != tabIndex) {
-                                    
+
                                     //obj.money = jsonData[i].ThanhTien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                     tabIndex = jsonData[i].tabIndex;
                                 }
@@ -436,7 +440,7 @@
                                         obj.sotienconlai = tienconlai.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         totalTienConLai = tienconlai;
                                     }
-                                   
+
                                 } else if (jsonData[i - 1].TrangThai == "Hoàn thành" && jsonData[i].TrangThai != "Hoàn thành") {
                                     if (totalTienConLai > 0) {
                                         obj.sotiendathu = '0';
@@ -449,8 +453,8 @@
                             }
                         }
 
-                        
-                        
+
+
                         //Đang chuyển
                         data.push(obj);
                     }
@@ -482,8 +486,8 @@
                 var data = $('#table1').bootstrapTable('getData');
                 var sotienthuduoc = 0;
                 var sotienconlai = 0;
-                for(var i = 0; i < data.length ; i++){
-                    sotienthuduoc+= parseInt(data[i].sotiendathu.toString().split('.').join('').split(',').join(''));
+                for (var i = 0; i < data.length ; i++) {
+                    sotienthuduoc += parseInt(data[i].sotiendathu.toString().split('.').join('').split(',').join(''));
                     sotienconlai += parseInt(data[i].sotienconlai.toString().split('.').join('').split(',').join(''));
                 }
                 $("#txt_tienconlai").val(sotienconlai.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -503,16 +507,20 @@
 
 
     function operateFormatterTachBill(value, row, index) {
-        if (row.typeBill != '') {
+        if (row.flag == 1) {
             return [
-           '<a class="product" href="javascript:void(0)" title="In Hóa đơn">',
-           'Tách Bill'
-                ].join('');
+           '<a class="product" href="javascript:void(0)" title="Tách gói">',
+           'Tách Bill',
+           '</a>  ', '|',
+           '<a class="remove" href="javascript:void(0)" title="Hủy gói">',
+           'Hủy Bill',
+           '</a>',
+
+            ].join('');
         } else {
             return '';
         }
-       
-        
+
     }
 
     function operateFormatter(value, row, index) {
@@ -561,6 +569,34 @@
                     loadContent();
                 }
             });
+        },
+
+
+        'click .remove': function (e, value, row, index) {
+            // window.location = '/UserManger.aspx?paramId=' + row.id;
+            //alert('TachBill');
+            var formSource = new FormData();
+            var json = { 'type': 0 };
+            formSource.append('type', 'UpdateTrangThaiNgayHoaDon');
+            formSource.append('data', JSON.stringify(json));
+            formSource.append('idHD', row.IDHD);
+            formSource.append('IdCTHD', row.IdCTHD);
+            formSource.append('IdPCTHD', row.IdPCTHD);
+            formSource.append('IdNgayHD', row.IdNgayHD);
+            formSource.append('ThanhTien', row.ThanhTien);
+            $.ajax({
+                url: "Configuation/HandlerInsertBill.ashx",
+                type: "POST",
+                data: formSource,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    //var hd = result < 10 ? "0" + result : result;
+                    alert("Hủy gói thành công");
+                    window.location = '/LT002_Demo2.aspx?paramId=' + window.idParam;
+                }
+            });
+
         }
     };
     window.operateEventsKH = {
@@ -606,7 +642,7 @@
                     $('#modalTableKH').modal('show');
                 }
             });
-            
+
         }
     };
     // action thêm gói
@@ -626,7 +662,7 @@
 
     window.codeReserEvents = {
         'click .next': function (e, value, row, index) {
-            window.location = '/LT002_Demo3.aspx?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.IdNgayHD;
+            window.location = '/LT002_Demo3.aspx?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.IdNgayHD + '&idHD=' + row.IDHD;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };

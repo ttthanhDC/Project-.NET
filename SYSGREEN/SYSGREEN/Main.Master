@@ -730,8 +730,8 @@
 <script>
     // Bootstrap Table
     $(function () {
-        loadContent();
-        function loadContent() {
+        loadContentMain();
+        function loadContentMain() {
 
             getLabelUserName();
         };

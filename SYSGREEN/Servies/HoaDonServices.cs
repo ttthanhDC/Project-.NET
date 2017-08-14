@@ -275,7 +275,7 @@ namespace Servies
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
             String Select = "Select * from vHoaDonStep2 where ID = " + ID + " AND ";
-            Select += " 1=1 ORDER BY IsMaster desc , IdNgayHD asc";
+            Select += " 1=1 ORDER BY IsMaster desc ,IdPCTHD asc, NgayHD asc";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
@@ -964,6 +964,45 @@ namespace Servies
             //F:\SysLaProject\GitHub\SYSGREEN\SYSGREEN\CrystalReport1.rpt
             return table;
         }
+
+        public static void UpdateTrangThaiNgayHoaDon(String ID,String trangthai,String IDHD)
+        {
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Update PackageChiTietHoaDon Set TrangThai = N'" + trangthai + "' Where ID = " + ID;
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            
+            String totalPCT = "Select ThanhTien from  PackageChiTietHoaDon  Where ID = " + ID;
+            SqlCommand cmdtotalPCT = new SqlCommand(totalPCT);
+            cmdtotalPCT.CommandType = CommandType.Text;
+            cmdtotalPCT.Connection = conn;
+            conn.Open();
+            object ototalPCT = cmdtotalPCT.ExecuteScalar();
+            conn.Close();
+
+            String totalHD = "Select TongTien from  HoaDon  Where ID = " + IDHD;
+            SqlCommand cmdtotalHD = new SqlCommand(totalHD);
+            cmdtotalHD.CommandType = CommandType.Text;
+            cmdtotalHD.Connection = conn;
+            conn.Open();
+            object ototalHD = cmdtotalHD.ExecuteScalar();
+            conn.Close();
+
+            Decimal total = Convert.ToDecimal(ototalHD) - Convert.ToDecimal(ototalPCT);
+
+            String SelectHD = "Update HoaDon Set TongTien = " + total + " Where ID = " + IDHD;
+            SqlCommand cmdHD = new SqlCommand(SelectHD);
+            cmdHD.CommandType = CommandType.Text;
+            cmdHD.Connection = conn;
+            conn.Open();
+            cmdHD.ExecuteNonQuery();
+            conn.Close();
+        } 
 
 
     } 

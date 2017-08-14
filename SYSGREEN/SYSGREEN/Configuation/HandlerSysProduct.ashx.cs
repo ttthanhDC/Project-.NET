@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.SessionState;
 
 namespace SYSGREEN
 {
     /// <summary>
     /// Summary description for HandlerSysProduct
     /// </summary>
-    public class HandlerSysProduct : IHttpHandler
+    public class HandlerSysProduct : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)

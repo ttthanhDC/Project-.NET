@@ -6,13 +6,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for HandlerKeToan
     /// </summary>
-    public class HandlerKeToan : IHttpHandler
+    public class HandlerKeToan : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)

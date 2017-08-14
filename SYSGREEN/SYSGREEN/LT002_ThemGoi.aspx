@@ -111,9 +111,7 @@
 
         </div> 
         
-    <div style ="text-align:center;display: table;margin: 0 auto;">
-       <button type="button" class="btn btn-primary" id="btnSave">Lưu đơn hàng</button>
-    </div>
+    
 </div>
     <div id="divTableGoi" style="width:100%;margin-left:30px;margin-top:10px;margin-right:30px;">
         
@@ -193,7 +191,9 @@
                             data-show-refresh="true">
                         </table>
     </div >
-   
+   <div style ="text-align:center;display: table; margin: 0 auto; ">
+       <button type="button" class="btn btn-primary" id="btnSave">Lưu đơn hàng</button>
+    </div>
     <script>
         $(function () {
 
@@ -710,7 +710,14 @@
                 },
                 {
                     field: 'product',
-                    title: 'Sản phẩm',
+                    title: 'Mã sản phẩm',
+                    align: 'center',
+                    valign: 'middle',
+                    editable: true
+                },
+                {
+                    field: 'productName',
+                    title: 'Tên Sản phẩm',
                     align: 'center',
                     valign: 'middle',
                     editable: true
@@ -788,7 +795,16 @@
                 next = $els.index($el) + 1;
                 if (field == "deliveryDate") {
                     var deliveryDate = row.deliveryDate;
-                    row.thugiaohang = convertDateToDay(deliveryDate);
+                    if (deliveryDate.split('/').length == 1) {
+
+                    } else if (deliveryDate.split('/').length == 2) {
+                        var x = new Date();
+                        deliveryDate = deliveryDate + "/" + x.getFullYear();
+                        row.thugiaohang = convertDateToDay(deliveryDate);
+                        row.deliveryDate = deliveryDate;
+                    }
+                    //var deliveryDate = row.deliveryDate;
+                    //row.thugiaohang = convertDateToDay(deliveryDate);
                     $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                     disableEditableTable();
                 }
@@ -813,6 +829,7 @@
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
                                 var quantity = Number(objectData.Product_Unit);
+                                row.productName = objectData.Product_Name;
                                 row.quantity = quantity;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
                                 row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -821,6 +838,7 @@
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                                 disableEditableTable();
                             } else {
+                                row.productName = "";
                                 row.quantity = "";
                                 row.price = "";
                                 row.money = "";
@@ -1215,8 +1233,11 @@
             $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
         });
         function convertDateToDay(num) {
-            var x = parseStringToDate(num);
+            var x = num;
+            x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
             var date = new Date(x);
+           // var x = parseStringToDate(num);
+            //var date = new Date(x);
             var day = date.getDay();
             var strDay = "";
             switch (day) {
@@ -1521,6 +1542,7 @@
                         $('#txtMaHD').val("HD" + (result < 0) ? ("0" + result) : result);
                         $("#btnSave").attr('disabled', true);
                         $("#btnAddBill").attr('disabled', true);
+                        window.location = '/LT002_Demo2.aspx?paramId=' + window.idHD;
                     },
                     error: function (err) {
 

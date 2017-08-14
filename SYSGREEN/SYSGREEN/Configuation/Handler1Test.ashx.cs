@@ -5,13 +5,14 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using DataObject;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for Handler1Test
     /// </summary>
-    public class Handler1Test : IHttpHandler
+    public class Handler1Test : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)

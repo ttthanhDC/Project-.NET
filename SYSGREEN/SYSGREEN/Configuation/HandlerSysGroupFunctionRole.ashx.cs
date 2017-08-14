@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.SessionState;
 
 namespace SYSGREEN
 {
     /// <summary>
     /// Summary description for HandlerSysGroupFunctionRole
     /// </summary>
-    public class HandlerSysGroupFunctionRole : IHttpHandler
+    public class HandlerSysGroupFunctionRole : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
