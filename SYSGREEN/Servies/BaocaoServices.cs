@@ -204,7 +204,7 @@ namespace Servies
             {
                 while (oReader.Read())
                 {
-                    conn.Close();
+                   
                     DataObject.BaoCao05 obj = new DataObject.BaoCao05();
                     obj.MaChuyenDi = Int32.Parse(oReader["MaLoTrinh"].ToString());
                     obj.MaShipper = "S" + oReader["SHIPER_ID"].ToString();
@@ -213,10 +213,11 @@ namespace Servies
                     String strSolanConLai = "select fBC005(" + obj.MaChuyenDi + ")";
                     SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
                     cmdSoLanConLai.CommandType = CommandType.Text;
-                    cmdSoLanConLai.Connection = conn;
-                    conn.Open();
+                    SqlConnection connStr = Common.Connection.SqlConnect();
+                    cmdSoLanConLai.Connection = connStr;
+                    connStr.Open();
                     table.Load(cmdSoLanConLai.ExecuteReader());
-                    conn.Close();
+                    connStr.Close();
                     obj.Nhan = table.Rows[0][0] != null ? Convert.ToInt16(table.Rows[0][0]) : 0;
                     obj.Di = table.Rows[0][1] != null ? Convert.ToInt16(table.Rows[0][1]) : 0;
                     obj.Trave = table.Rows[0][3] != null ? Convert.ToInt16(table.Rows[0][2]) : 0;
@@ -225,6 +226,7 @@ namespace Servies
                 }
 
             }
+            conn.Close();
             return lstDeptObject;
         }
 
