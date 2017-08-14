@@ -79,7 +79,7 @@ namespace SYSGREEN.Configuation
                 {
                     String jsonData = context.Request.Form["data"].ToString();
                     String IdLotrinhShipper = context.Request.Form["IdLotrinh"].ToString();
-                    String NguoiTao = context.Request.Form["NguoiTao"].ToString();
+                    String NguoiTao = HttpContext.Current.Session["UserName"].ToString();
 
                     String shiper = "";
                     String user = "";
