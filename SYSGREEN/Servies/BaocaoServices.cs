@@ -155,7 +155,7 @@ namespace Servies
                     obj.IdNguon = Int32.Parse(oReader["ID"].ToString());
                     obj.TenNguon = oReader["Source_Name"].ToString();
                     DataTable table = new DataTable();
-                    String strSolanConLai = "select fBC004(" + obj.IdNguon + ",'"+tuNgay+"','"+denNgay+"')";
+                    String strSolanConLai = "select * from fBC004(" + obj.IdNguon + ",'"+tuNgay+"','"+denNgay+"')";
                     SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
                     cmdSoLanConLai.CommandType = CommandType.Text;
                     cmdSoLanConLai.Connection = conn;
@@ -211,7 +211,7 @@ namespace Servies
                     obj.MaShipper = "S" + oReader["SHIPER_ID"].ToString();
                     obj.HoTen = oReader["NAME"].ToString();
                     DataTable table = new DataTable();
-                    String strSolanConLai = "select fBC005(" + obj.MaLoTrinhId + ")";
+                    String strSolanConLai = "select * from fBC005(" + obj.MaLoTrinhId + ")";
                     SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
                     cmdSoLanConLai.CommandType = CommandType.Text;
                     SqlConnection connStr = Common.Connection.SqlConnect();
