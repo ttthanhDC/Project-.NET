@@ -1,5 +1,52 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="UserManger.aspx.cs" Inherits="SYSGREEN.UserManger" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+     <div id="contactForm"  class="form-horizontal">
+    <div class="form-group">
+        <label class="col-md-3 control-label">UserName</label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="userName" id="txtUserName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Password</label>
+        <div class="col-md-9">
+            <input type="password" class="form-control" name="passWord" id="txtPassword" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Email</label>
+        <div class="col-md-9">
+            <input type="email" class="form-control" name="email" id="txtEmail" />
+        </div>
+    </div>
+   <div class="form-group">
+        <label class="col-md-3 control-label">Bộ phân</label>
+         <div class="col-md-9">
+             <select class="form-control" id="deptID"></select>
+           </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Cơ sở</label>
+         <div class="col-md-9">
+             <select class="form-control" id="orgID"></select>
+           </div>
+    </div>    
+    
+    <!-- #messages is where the messages are placed inside -->
+    <div class="form-group">
+        <div class="col-md-12 col-md-offset-3">
+            <div id="messages"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12 col-md-offset-3">
+            <button type="button" class="btn btn-primary" id="btnSave">Lưu</button> <button type="button" class="btn btn-primary" id="btnBack">Qyay lại</button>
+        </div>
+         <div class="col-md-12 col-md-offset-3">
+           
+        </div>
+    </div>
+</div>
    <script>
       
        $(document).ready(function () {
@@ -266,49 +313,9 @@
                }
            });
        });
+       $('#btnBack').on('click', function (e) {
+           window.location = '/C001_ListUser.aspx?paramId= 0';
+       });
    </script>
-    <div id="contactForm"  class="form-horizontal">
-    <div class="form-group">
-        <label class="col-md-3 control-label">UserName</label>
-        <div class="col-md-9">
-            <input type="text" class="form-control" name="userName" id="txtUserName" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">Password</label>
-        <div class="col-md-9">
-            <input type="password" class="form-control" name="passWord" id="txtPassword" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">Email</label>
-        <div class="col-md-9">
-            <input type="email" class="form-control" name="email" id="txtEmail" />
-        </div>
-    </div>
-   <div class="form-group">
-        <label class="col-md-3 control-label">Bộ phân</label>
-         <div class="col-md-9">
-             <select class="form-control" id="deptID"></select>
-           </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-3 control-label">Cơ sở</label>
-         <div class="col-md-9">
-             <select class="form-control" id="orgID"></select>
-           </div>
-    </div>    
-    
-    <!-- #messages is where the messages are placed inside -->
-    <div class="form-group">
-        <div class="col-md-12 col-md-offset-3">
-            <div id="messages"></div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12 col-md-offset-3">
-            <button type="button" class="btn btn-primary" id="btnSave">Lưu</button>
-        </div>
-    </div>
-</div>
+   
 </asp:Content>

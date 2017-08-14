@@ -4,28 +4,24 @@
      <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
           <div class="form-horizontal">
             <div class="form-group">
-               
+               <label for="sel1" class="col-md-2"></label>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Cơ sở" />
                 </div>
                 <div class="col-md-2">
-                    <input type="date" class="form-control" name="title" id="txt_beginDate" placeholder ="Ngày bắt đầu"  />
+                    <input type="text" class="form-control" name="title" id="txt_beginDate" placeholder ="Ngày bắt đầu"  />
                 </div>
                 <div class="col-md-2">
-                    <input type="date" class="form-control" name="title" id="txt_EndDate" placeholder= "Ngày kết thúc" />
-                </div>
-                <div class="col-md-1">
-                    <input type="text" class="form-control" name="title" id="txt_shiperCode" placeholder="Mã shiper" />
-                  
+                    <input type="text" class="form-control" name="title" id="txt_EndDate" placeholder= "Ngày kết thúc" />
                 </div>
                   <div class="col-md-2"> 
                     <input type="text" class="form-control" name="title" id="txt_NameShiper" placeholder="Tên Shiper"  />
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btSearch">Xem</button>
+                    <button type="button" class="btn btn-primary" id="btSearch">Tìm kiếm</button>
                 </div>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-default" id="btPrint">In</button>
+                    <button type="button" class="btn btn-primary" id="btPrint">In</button>
                 </div>
             </div> 
         </div> 
@@ -49,13 +45,13 @@
                <label for="sel1" class="col-md-3"></label>
                 <label for="sel1" class="col-md-1">Tổng</label>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_thu" readOnly = 'true' />
+                    <input type="text" class="form-control" name="title" id="txt_nhan" readOnly = 'true' />
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_tong" readOnly = 'true' />
+                    <input type="text" class="form-control" name="title" id="txt_di" readOnly = 'true' />
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_thieu" readOnly = 'true' />
+                    <input type="text" class="form-control" name="title" id="txt_traVe" readOnly = 'true' />
                 </div>
             </div> 
         </div> 
@@ -79,20 +75,40 @@
                 success: function (result) {
                     var jsonData = result;
                     var arr = [];
+                    var textDi = 0;
+                    var textNhan = 0;
+                    var textTraVe = 0;
                     if (jsonData && jsonData.length > 0) {
                         for (var i = 0; i < jsonData.length ; i++) {
                             var objectData = jsonData[i];
                             var obj = {};
-                            obj.id = objectData.ID;
-                            obj.isShiper = true;
-                            obj.name = objectData.SoTien;
-                            obj.take = objectData.MaNganHang;
-
-                            obj.go = objectData.GhiChu;
-                            obj._return = z;
-                            obj.noney = objectData.NoiDungChi;
+                            obj.id = objectData.MaLoTrinhId;
+                            obj.maCD = objectData.MaChuyenDi;
+                            // obj.isShiper = true;
+                            if (objectData.MaShipper) {
+                                if (parseInt(objectData.MaShipper) < 10) {
+                                    obj.shipmunber = "S00" + objectData.MaShipper;
+                                } else {
+                                    obj.shipmunber = "S0" + objectData.MaShipper;
+                                }
+                            } else {
+                                obj.shipmunber = "";
+                            }
+                           
+                            obj.name = objectData.HoTen;
+                            obj.take = objectData.Nhan;
+                            textNhan = textNhan + objectData.Nhan;
+                            obj.go = objectData.Di;
+                            textDi = textDi + objectData.Di;
+                            obj._return = objectData.Trave;
+                            textTraVe = textTraVe + objectData.Trave;
+                            obj.noney = objectData.DuKienThu;
+                            arr.push(obj);
                         }
                     }
+                    $('#txt_nhan').val(textNhan);
+                    $('#txt_di').val(textDi);
+                    $('#txt_traVe').val(textTraVe);
                     data = arr;
                     getDataTable(data);
                 },
@@ -109,14 +125,13 @@
                     title: 'Mã chuyến đi',
                     align: 'center',
                     valign: 'middle',
+                    events: reservationEvents,
+                    formatter: reservationFormatter
                 }, {
-                    field: 'isShiper',
+                    field: 'shipmunber',
                     title: 'Mã shiper',
                     align: 'center',
                     valign: 'middle',
-                    events: reservationEvents,
-                    formatter: reservationFormatter
-
                 }, {
                     field: 'name',
                     title: 'Họ tên',
@@ -146,7 +161,68 @@
                 data : itemData
                 });
         };
-     
+        $('#btSearch').on('click', function (e) {
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'getvBaoCao05');
+            var json = { 'ID': 0 };
+            formDataListUser.append('data', JSON.stringify(json));
+            formDataListUser.append('tuNgay', $('#txt_beginDate').val());
+            formDataListUser.append('denNgay', $('#txt_EndDate').val());
+            formDataListUser.append('shipperName', $('#txt_NameShiper').val());
+
+            $.ajax({
+                url: "Configuation/HandlerBaoCao.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    var textDi = 0;
+                    var textNhan = 0;
+                    var textTraVe = 0;
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.id = objectData.MaLoTrinhId;
+                            obj.maCD = objectData.MaChuyenDi;
+                            // obj.isShiper = true;
+                            if (objectData.MaShipper) {
+                                if (parseInt(objectData.MaShipper) < 10) {
+                                    obj.shipmunber = "S00" + objectData.MaShipper;
+                                } else {
+                                    obj.shipmunber = "S0" + objectData.MaShipper;
+                                }
+                            } else {
+                                obj.shipmunber = "";
+                            }
+
+                            obj.name = objectData.HoTen;
+                            obj.take = objectData.Nhan;
+                            textNhan = textNhan + objectData.Nhan;
+                            obj.go = objectData.Di;
+                            textDi = textDi + objectData.Di;
+                            obj._return = objectData.Trave;
+                            textTraVe = textTraVe + objectData.Trave;
+                            obj.noney = objectData.DuKienThu;
+                            arr.push(obj);
+                        }
+                    }
+                    $('#txt_nhan').val(textNhan);
+                    $('#txt_di').val(textDi);
+                    $('#txt_traVe').val(textTraVe);
+                    data = arr;
+                    var $table = $('#table');
+                    $table.bootstrapTable('load', data);
+                },
+                error: function (err) {
+
+                }
+            });
+        });
         // function
         function userFormatter(data) {
             return data.length;
@@ -154,7 +230,7 @@
         function reservationFormatter(value, row, index) {
             return [
                 '<a class="edit" href="javascript:void(0)" title="mã rỉevation">',
-                '' + row.id + '',
+                '' + row.maCD + '',
                 '</a>  ',
             ].join('');
         }
