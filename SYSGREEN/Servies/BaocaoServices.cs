@@ -206,7 +206,8 @@ namespace Servies
                 {
                    
                     DataObject.BaoCao05 obj = new DataObject.BaoCao05();
-                    obj.MaChuyenDi = Int32.Parse(oReader["MaLoTrinh"].ToString());
+                    obj.MaChuyenDi = oReader["MaLoTrinh"].ToString();
+                    obj.MaLoTrinhId = Convert.ToInt32(oReader["ID"].ToString());
                     obj.MaShipper = "S" + oReader["SHIPER_ID"].ToString();
                     obj.HoTen = oReader["NAME"].ToString();
                     DataTable table = new DataTable();
