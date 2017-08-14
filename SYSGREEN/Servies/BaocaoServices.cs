@@ -150,7 +150,7 @@ namespace Servies
             {
                 while (oReader.Read())
                 {
-                    conn.Close();
+                   
                     DataObject.BaoCao04 obj = new DataObject.BaoCao04();
                     obj.IdNguon = Int32.Parse(oReader["ID"].ToString());
                     obj.TenNguon = oReader["Source_Name"].ToString();
@@ -158,10 +158,11 @@ namespace Servies
                     String strSolanConLai = "select * from fBC004(" + obj.IdNguon + ",'"+tuNgay+"','"+denNgay+"')";
                     SqlCommand cmdSoLanConLai = new SqlCommand(strSolanConLai);
                     cmdSoLanConLai.CommandType = CommandType.Text;
-                    cmdSoLanConLai.Connection = conn;
-                    conn.Open();
+                    SqlConnection connStr = Common.Connection.SqlConnect();
+                    cmdSoLanConLai.Connection = connStr;
+                    connStr.Open();
                     table.Load(cmdSoLanConLai.ExecuteReader());
-                    conn.Close();
+                    connStr.Close();
                     obj.SoLuongDon = table.Rows[0][0] != null ? Convert.ToInt16(table.Rows[0][0]) : 0;
                     obj.SoluongShip = table.Rows[0][1] != null ? Convert.ToInt16(table.Rows[0][1]) : 0;
                     obj.DuKienThu = table.Rows[0][2] != null ? Convert.ToDecimal(table.Rows[0][2]) : 0;
@@ -169,6 +170,7 @@ namespace Servies
                 }
 
             }
+            conn.Close();
             return lstDeptObject;
         }
 
