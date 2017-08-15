@@ -163,18 +163,18 @@ namespace Servies
                 string[] words = NgayLotrinh.Split('/');
                 if (words.Length == 1)
                 {
-                    Select += "CONVERT(varchar(10), DAY(NgayTao)) = '" + words[0]  + "' AND ";
+                    Select += "CONVERT(varchar(10), DAY(lts.NgayTao)) = '" + words[0] + "' AND ";
                 }
                 else if (words.Length == 2)
                 {
-                    Select += "CONVERT(varchar(10), DAY(NgayTao)) + '/' + CONVERT(varchar(10), MONTH(NgayTao)) = '" + words[0] + "/" + words[1] + "' AND ";
+                    Select += "CONVERT(varchar(10), DAY(lts.NgayTao)) + '/' + CONVERT(varchar(10), MONTH(lts.NgayTao)) = '" + words[0] + "/" + words[1] + "' AND ";
                 }
                 else if (words.Length == 3)
                 {
-                    Select += "convert(date,CONVERT(VARCHAR(10),NgayTao , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + NgayLotrinh + "' , 103),103) AND ";
+                    Select += "convert(date,CONVERT(VARCHAR(10),lts.NgayTao , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + NgayLotrinh + "' , 103),103) AND ";
                 }
             }
-            Select += " 1=1 ORDER BY NgayTao desc";
+            Select += " 1=1 ORDER BY lts.NgayTao desc , lts.MaLoTrinh desc";
             //select *  from LoTrinhShipper where CONVERT(varchar(10), DAY(NgayTao)) + '/' + CONVERT(varchar(10), MONTH(NgayTao)) = '6/8'
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
