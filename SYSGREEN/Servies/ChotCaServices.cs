@@ -57,7 +57,7 @@ namespace Servies
             // 3 : Lưu thông tin không thành công trạng thái hoàn thành
             // 4  : Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý 
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Insert = "Update  ChotCa set  TienThuDuoc =" + obj.TienThuDuoc + " ,NguoiChot = N'" + obj.NguoiChot + " ,GioChot ='" + obj.GioChot + " where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
+            String Insert = "Update  ChotCa set  TienThuDuoc = " + obj.TienThuDuoc + " ,NguoiChot = N'" + obj.NguoiChot + "' ,GioChot ='" + obj.GioChot + "' where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
