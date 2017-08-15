@@ -14,7 +14,7 @@ namespace Servies
         {
             int check = 0;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String strCheck = "Select Top 1 ID ChotCa where where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
+            String strCheck = "Select Top 1 ID FROM ChotCa where  convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
             SqlCommand cmdCheck = new SqlCommand(strCheck);
             cmdCheck.CommandType = CommandType.Text;
             cmdCheck.Connection = conn;
