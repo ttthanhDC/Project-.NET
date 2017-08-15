@@ -705,6 +705,7 @@ namespace Servies
             SqlCommand cmd = null;
             SqlCommand cmd1 = null;
             SqlConnection conn = Common.Connection.SqlConnect();
+            
             String Select = "Update PackageChiTietHoaDon set HinhThucThanhToan = N'" + HinhThucThanhToan + "' where ID = " + ID_PTCHD;
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
@@ -718,14 +719,18 @@ namespace Servies
             cmd1 = new SqlCommand(Select1);
             cmd1.CommandType = CommandType.Text;
             cmd1.Connection = conn;
-            /*
-            cmd1.Parameters.AddWithValue("@TrangThai", status);
-            cmd1.Parameters.AddWithValue("@GhiChu", ghiChu);
-            cmd1.Parameters.AddWithValue("@SoTienThu", Convert.ToDecimal(tienthu));
-            cmd1.Parameters.AddWithValue("@ID", Convert.ToInt32(idNHD));*/
+            
             conn.Open();
             cmd1.ExecuteNonQuery();
             conn.Close();
+
+            conn.Open();
+            SqlCommand Pcmd = new SqlCommand("AutoUpdateStatusHD", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(new SqlParameter("@IDNHD", Convert.ToInt32(idNHD)));
+            cmd.ExecuteReader();
+            conn.Close();
+
         }
 
         public static int getTachBill(String idHD, String IdCTHD, String IdPCTHD, String IdNgayHD,String ThanhTien)
