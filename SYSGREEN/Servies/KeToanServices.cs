@@ -352,13 +352,13 @@ namespace Servies
         public static DataTable viewManHinhThuTM(String Ngay)
         {
             DataTable table = new DataTable();
-            String Select = "select x.ID as MaCa ,x.NgayChot,x.TienThuDuoc as TienThuDuoc,ctt.* from ChotCa x  ";
-            Select += " left join ChiTietThu ctt on x.ID = ctt.IdNgayHD Where ";
+            String Select = "select x.ID as MaCa ,x.NgayChot,x.TienThuDuoc as TienThuDuoc,ctt.* from  ChiTietThu ctt  ";
+            Select += " left join ChotCa x on x.ID = ctt.IdNgayHD Where ";
             if (Ngay != null && Ngay != "")
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),x.NgayChot , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
             }
-            Select += "1=1 ORDER BY x.ID desc, x.NgayChot desc";
+            Select += "1=1  AND LoaiThu = '1' ORDER BY x.ID desc, x.NgayChot desc";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
