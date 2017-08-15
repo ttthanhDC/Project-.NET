@@ -724,12 +724,13 @@ namespace Servies
             cmd1.ExecuteNonQuery();
             conn.Close();
 
-            conn.Open();
-            SqlCommand Pcmd = new SqlCommand("AutoUpdateStatusHD", conn);
+            SqlConnection Pconn = Common.Connection.SqlConnect();
+            Pconn.Open();
+            SqlCommand Pcmd = new SqlCommand("AutoUpdateStatusHD", Pconn);
             Pcmd.CommandType = CommandType.StoredProcedure;
             Pcmd.Parameters.Add(new SqlParameter("@IDNHD", Convert.ToInt32(idNHD)));
             Pcmd.ExecuteReader();
-            conn.Close();
+            Pconn.Close();
 
         }
 
