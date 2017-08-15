@@ -129,7 +129,7 @@ namespace SYSGREEN.Configuation
                     ctt.NgayTao = DateTime.Now;
                     ctt.NguoiTao = "";
                     ctt.IdKeToan = Convert.ToInt32(IdKeToan);
-                    int Id = Servies.KeToanServices.InsertChiTietThuReturnId(ctt);
+                    int Id = Servies.KeToanServices.InsertChiTietThuTMReturnId(ctt);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(Id);
                 }
