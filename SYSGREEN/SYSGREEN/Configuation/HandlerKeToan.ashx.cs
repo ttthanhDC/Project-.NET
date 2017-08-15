@@ -95,6 +95,44 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(Id);
                 }
+                if (type == "InsertChiTietThuTMReturnId")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    //Ngay,IdNgayHD,SoTien,MaNganHang,MaGiaoDich,TinhTrang,GhiChu,LoaiThu,NgayTao,NguoiTao,IdKeToan
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    String IdNgayHD = context.Request.Form["IdNgayHD"].ToString();
+                    String ID = context.Request.Form["ID"].ToString();
+                    String SoTien = context.Request.Form["SoTien"].ToString();
+                    String MaNganHang = context.Request.Form["MaNganHang"].ToString();
+                    String MaGiaoDich = context.Request.Form["MaGiaoDich"].ToString();
+                    String TinhTrang = context.Request.Form["TinhTrang"].ToString();
+                    String LoaiThu = context.Request.Form["LoaiThu"].ToString();
+                    String GhiChu = context.Request.Form["GhiChu"].ToString();
+                    String IdKeToan = context.Request.Form["IdKeToan"].ToString();
+                    DataObject.ChiTietThu ctt = new DataObject.ChiTietThu();
+                    ctt.Ngay = Convert.ToDateTime(Ngay != "" ? Ngay : DateTime.Now.ToShortDateString());
+                    ctt.IdNgayHD = Convert.ToInt32(IdNgayHD);
+                    ctt.ID = Convert.ToInt32(ID);
+                    if (SoTien != null && SoTien != "")
+                    {
+                        ctt.SoTien = Convert.ToDecimal(SoTien);
+                    }
+                    else
+                    {
+                        ctt.SoTien = Convert.ToDecimal("0");
+                    }
+                    ctt.MaNganHang = Convert.ToInt32(MaNganHang);
+                    ctt.MaGiaoDich = MaGiaoDich;
+                    ctt.TinhTrang = Convert.ToInt32(TinhTrang);
+                    ctt.LoaiThu = Convert.ToInt32(LoaiThu);
+                    ctt.GhiChu = GhiChu;
+                    ctt.NgayTao = DateTime.Now;
+                    ctt.NguoiTao = "";
+                    ctt.IdKeToan = Convert.ToInt32(IdKeToan);
+                    int Id = Servies.KeToanServices.InsertChiTietThuReturnId(ctt);
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write(Id);
+                }
                 if (type == "InsertChiTietChiReturnId")
                 {
                     String jsonData = context.Request.Form["data"].ToString();

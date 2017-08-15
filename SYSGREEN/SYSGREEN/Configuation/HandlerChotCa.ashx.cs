@@ -32,7 +32,7 @@ namespace SYSGREEN.Configuation
                     chotca.TienThuDuoc = TienThuDuoc != "" ? Convert.ToDecimal(TienThuDuoc) : 0;
                     chotca.NgayChot = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     chotca.NguoiChot = HttpContext.Current.Session["UserName"].ToString();
-                    chotca.GioChot = DateTime.Now.Hour + "/" + DateTime.Now.Minute + "/" + DateTime.Now.Second;
+                    chotca.GioChot = DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
                     int result = Servies.ChotCaServices.InsertChotCaReturnId(chotca,DateTime.Now.ToString("dd/MM/yyyy"));
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
