@@ -148,7 +148,7 @@ namespace Servies
             }
             if (ShipName != null && ShipName != "")
             {
-                Select += "ShipperName LIKE N'%" + ShipName + "%' AND ";
+                Select += "s.NAME LIKE N'%" + ShipName + "%' AND ";
             }
             if (ShipNumber != null && ShipNumber != "")
             {
