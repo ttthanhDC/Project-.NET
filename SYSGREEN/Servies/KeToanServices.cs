@@ -295,14 +295,13 @@ namespace Servies
         public static DataTable viewManHinhThuTM(String Ngay)
         {
             DataTable table = new DataTable();
-            String Select = "select x.ID_PTCHD,x.TenKH_HD,x.Ngay,x.TongTien as TongTienGoi,x.ID_NHD,ctt.* from vHoaDonShiper x  ";
-            Select += " left join ChiTietThu ctt on x.ID_NHD = ctt.IdNgayHD Where ";
-            Select += " HinhTHucThanhToan != N'Chuyển khoản' AND ";
+            String Select = "select x.ID as MaCa ,x.NgayChot,x.TienThuDuoc as TienThuDuoc,ctt.* from ChotCa x  ";
+            Select += " left join ChiTietThu ctt on x.ID = ctt.IdNgayHD Where ";
             if (Ngay != null && Ngay != "")
             {
-                Select += "convert(date,CONVERT(VARCHAR(10),x.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
+                Select += "convert(date,CONVERT(VARCHAR(10),x.NgayChot , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
             }
-            Select += "1=1 ORDER BY x.ID_PTCHD asc, x.Ngay asc";
+            Select += "1=1 ORDER BY x.ID desc, x.NgayChot desc";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
