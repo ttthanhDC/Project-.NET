@@ -102,7 +102,7 @@ namespace SYSGREEN.Configuation
                         for (int k = 0; k < dataHD.Count; k++)
                         {
                             int idPackageHD = InsertPackageChiTietHoaDonReturnId(dataHD[k], IdChiTietHoaHD);
-
+                            String hinhthucthanhtoan = (String)dataHD[k].fLoaiThanhToanId;
                             dynamic detailMaster = dataHD[k].detalMaster;
                             int idNgayHDLe = -1;
                             int idNgayHD = -1;
@@ -112,7 +112,7 @@ namespace SYSGREEN.Configuation
                                     
                                     if (detailMaster[j].deliveryDate != "")
                                     {
-                                        idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD);
+                                        idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD,hinhthucthanhtoan);
                                         InsertKhachHangNgay(idNgayHD, dataHD[k]);
                                     }
                                     else
@@ -126,7 +126,7 @@ namespace SYSGREEN.Configuation
                                 {
                                     if (j == 0)
                                     {
-                                        idNgayHDLe = InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, (String)dataHD[k].ngayGiaoHangLe);
+                                        idNgayHDLe = InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, (String)dataHD[k].ngayGiaoHangLe,hinhthucthanhtoan);
                                         InsertKhachHangNgay(idNgayHDLe, dataHD[k]);
                                         InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHDLe);
                                         //InsertNgayHoaDonLeReturnId(detailMaster[j], idPackageHD, dataHD[k].ngayGiaoHangLe);
@@ -616,7 +616,7 @@ namespace SYSGREEN.Configuation
                     Servies.HoaDonServices.updateTienHD(IdChiTietHoaHD, idPackageHD);
                     if ((String)data.NgayHD != "")
                     {
-                        int idNgayHDLe = InsertNgayHoaDonLeReturnId(data, idPackageHD, (String)data.NgayHD);
+                        int idNgayHDLe = InsertNgayHoaDonLeReturnId(data, idPackageHD, (String)data.NgayHD,(String) data.fLoaiThanhToanId);
                         InsertKhachHangNgay(idNgayHDLe, data);
                         for (int j = 0; j < dataHD.Count; j++)
                         {
@@ -629,7 +629,7 @@ namespace SYSGREEN.Configuation
                         {
                             int idNgayHD = -1;
                             if (dataHD[j].deliveryDate != ""){
-                                idNgayHD = InsertNgayHoaDonReturnId(dataHD[j], idPackageHD);
+                                idNgayHD = InsertNgayHoaDonReturnId(dataHD[j], idPackageHD, (String)data.fLoaiThanhToanId);
                                 InsertKhachHangNgay(idNgayHD, data);
                             }else{
                                 InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHD);
@@ -820,7 +820,7 @@ namespace SYSGREEN.Configuation
             return IdChiTietHoaHD;
         }
 
-        public int InsertNgayHoaDonReturnId(dynamic data, int idPackageHD)
+        public int InsertNgayHoaDonReturnId(dynamic data, int idPackageHD,String hinhthucthanhtoan)
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
@@ -835,6 +835,7 @@ namespace SYSGREEN.Configuation
                 ngayHoaDon.Ngay = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             ngayHoaDon.TrangThai = "Chưa xử lý";
+            ngayHoaDon.HinhThucThanhToan = hinhthucthanhtoan;
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
         }
@@ -859,7 +860,7 @@ namespace SYSGREEN.Configuation
             String maquan1 = data.infoKH.maquan;
             returnIdKHNgay(soDienThoai1, hoten1, email1, diaChi1, maquan1, ngaySinh1, idNgayHoaDon);
         }
-        public int InsertNgayHoaDonLeReturnId(dynamic data, int idPackageHD,String ngayHoaDonLe)
+        public int InsertNgayHoaDonLeReturnId(dynamic data, int idPackageHD,String ngayHoaDonLe,String hinhthucthanhtoan)
         {
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
@@ -867,6 +868,7 @@ namespace SYSGREEN.Configuation
             //ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
             ngayHoaDon.Ngay = DateTime.ParseExact(ngayHoaDonLe, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             ngayHoaDon.TrangThai = "Chưa xử lý";
+            ngayHoaDon.HinhThucThanhToan = hinhthucthanhtoan;
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
         }

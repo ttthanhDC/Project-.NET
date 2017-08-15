@@ -24,5 +24,7 @@ namespace DataObject
         public Decimal SoTienThu { set; get; }
 
         public Decimal SoTienConLai { set; get; }
+
+        public String HinhThucThanhToan { set; get;}
     }
 }

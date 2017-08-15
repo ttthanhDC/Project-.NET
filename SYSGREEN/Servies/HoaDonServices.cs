@@ -79,7 +79,7 @@ namespace Servies
 
         public static int InsertNgayHoaDonReturnId(DataObject.NgayHoaDon obj)
         {
-            String Insert = "INSERT INTO NgayHoaDon (IDPackageChitietHD,Ngay,TrangThai) VALUES (@IDPackageChitietHD,@Ngay,@TrangThai);Select @@IDENTITY as newId";
+            String Insert = "INSERT INTO NgayHoaDon (IDPackageChitietHD,Ngay,TrangThai,HinhThucThanhToan) VALUES (@IDPackageChitietHD,@Ngay,@TrangThai,@HinhThucThanhToan);Select @@IDENTITY as newId";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
@@ -87,6 +87,7 @@ namespace Servies
             cmd.Parameters.AddWithValue("@IDPackageChitietHD", obj.IDPackageChitietHD);
             cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
             cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+            cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
             conn.Open();
             object insertedID = cmd.ExecuteScalar();
             cmd.Connection.Close();
@@ -705,8 +706,8 @@ namespace Servies
             SqlCommand cmd = null;
             SqlCommand cmd1 = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            
-            String Select = "Update PackageChiTietHoaDon set HinhThucThanhToan = N'" + HinhThucThanhToan + "' where ID = " + ID_PTCHD;
+
+            String Select = "Update NgayHoaDon set HinhThucThanhToan = N'" + HinhThucThanhToan + "' where ID = " + Convert.ToInt32(idNHD);
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
