@@ -726,9 +726,9 @@ namespace Servies
 
             conn.Open();
             SqlCommand Pcmd = new SqlCommand("AutoUpdateStatusHD", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add(new SqlParameter("@IDNHD", Convert.ToInt32(idNHD)));
-            cmd.ExecuteReader();
+            Pcmd.CommandType = CommandType.StoredProcedure;
+            Pcmd.Parameters.Add(new SqlParameter("@IDNHD", Convert.ToInt32(idNHD)));
+            Pcmd.ExecuteReader();
             conn.Close();
 
         }
