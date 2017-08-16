@@ -24,9 +24,11 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    
+                    String menuId = context.Request.Form["menuId"].ToString();
+                    String ProductId = context.Request.Form["ProductId"].ToString();
+                    Servies.SysMenuServices.InsertData(Convert.ToInt16(menuId), Convert.ToInt16(ProductId));
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write("insert data success");
+                    context.Response.Write("1");
                 }
                 catch (Exception e)
                 {
@@ -52,8 +54,11 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
+                    String menuId = context.Request.Form["menuId"].ToString();
+                    String ProductId = context.Request.Form["ProductId"].ToString();
+                    Servies.SysMenuServices.DeleteData(Convert.ToInt16(menuId), Convert.ToInt16(ProductId));
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write("insert data success");
+                    context.Response.Write("1");
                 }
                 catch (Exception e)
                 {
@@ -67,7 +72,24 @@ namespace SYSGREEN.Configuation
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    DataTable lst = Servies.SysMenuServices.GetProductByIdMenu(obj.ID);
+                    String menuId = context.Request.Form["menuId"].ToString();
+                    DataTable lst = Servies.SysMenuServices.GetProductByIdMenu(Convert.ToInt16(menuId));
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getALLMenu")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record
+                    DataTable lst = Servies.SysMenuServices.GetAllMenu();
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
