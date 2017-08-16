@@ -27,17 +27,7 @@ namespace Servies
 
         public static void UpdateData(DataObject.SysMenu obj)
         {
-            SqlConnection conn = Common.Connection.SqlConnect();
-            String Update = "UPDATE SYS_MENU SET Code = @Code, PRODUCT_ID = @PRODUCT_ID Where ID = @ID";
-            SqlCommand cmd = new SqlCommand(Update);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@Code", obj.Code);
-            cmd.Parameters.AddWithValue("@PRODUCT_ID", obj.PRODUCT_ID);
-            cmd.Parameters.AddWithValue("@ID", obj.ID);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            
         }
 
         public static void DeleteData(int menuId, int ProductId)
