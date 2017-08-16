@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -23,7 +24,8 @@ namespace SYSGREEN
             {
                 try
                 {
-                    obj.Create_Date = DateTime.Now;
+                    obj.Create_Date = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    obj.Create_User = HttpContext.Current.Session["UserName"].ToString();
                     Insert(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
