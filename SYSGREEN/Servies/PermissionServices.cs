@@ -127,12 +127,10 @@ namespace Servies
         {
             DataTable dt = new DataTable();
             SqlConnection conn = Common.Connection.SqlConnect();
-            String select = "Select * from SYS_FUNCTION_ROLE a";
-            //"LEFT JOIN SYS_FUNCTION"
-            
-            
-            
-            //where ROLE_ID = @ROLE_ID";
+            String select = "Select * from SYS_FUNCTION_ROLE a ";
+            select += " LEFT JOIN SYS_FUNCTION b ON b.ID = a.FUNC_ID ";
+            select += " LEFT JOIN SYS_ROLE c ON c.ID = a.ROLE_ID ";
+            select += " where a.ROLE_ID = @ROLE_ID";
             SqlCommand cmdSelect = new SqlCommand(select);
             cmdSelect.CommandType = CommandType.Text;
             cmdSelect.Connection = conn;
