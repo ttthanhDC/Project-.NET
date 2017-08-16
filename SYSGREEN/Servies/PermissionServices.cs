@@ -44,7 +44,7 @@ namespace Servies
         {
             DataTable dt = new DataTable();
             SqlConnection conn = Common.Connection.SqlConnect();
-            String select = "Select a*, b.UserName , c.RoleName from SYS_GROUP_USER_ROLE a ";
+            String select = "Select a.*, b.UserName , c.RoleName from SYS_GROUP_USER_ROLE a ";
             select += "LEFT JOIN SYS_USER b ON b.ID = a.USER_ID " ;
             select += "LEFT JOIN SYS_ROLE c ON c.ID = a.ROLE_ID " ;
             select += " where a.ROLE_ID = @ROLE_ID ";
@@ -127,7 +127,12 @@ namespace Servies
         {
             DataTable dt = new DataTable();
             SqlConnection conn = Common.Connection.SqlConnect();
-            String select = "Select * from SYS_FUNCTION_ROLE where ROLE_ID = @ROLE_ID";
+            String select = "Select * from SYS_FUNCTION_ROLE a";
+            //"LEFT JOIN SYS_FUNCTION"
+            
+            
+            
+            //where ROLE_ID = @ROLE_ID";
             SqlCommand cmdSelect = new SqlCommand(select);
             cmdSelect.CommandType = CommandType.Text;
             cmdSelect.Connection = conn;
