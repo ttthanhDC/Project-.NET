@@ -23,6 +23,15 @@
        
     });
     var getTable1 = function (itemData) {
+        window.text1 = 0;
+        window.text2 = 0;
+        window.text3 = 0;
+        window.text4 = 0;
+        window.text5 = 0;
+        window.text6 = 0;
+        window.text7 = 0;
+        window.text8 = 0;
+        window.dataKT = [];
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'viewKeToanTongHopKy');
@@ -94,6 +103,35 @@
                 arr.push(obj1);
                 data = arr;
                 getDataTable1(data);
+               
+                for (j = 0 ; j < data.length; j++) {
+                    window.dataKT.push(data[j].surplus);
+                    /*if(j === 0){
+                        window.text1 = data[j].surplus;
+                        dataKT.push(window.text1);
+                    } else if (j === 1) {
+                        window.text2 = data[j].surplus;
+                        dataKT.push(window.text2);
+                    } else if (j === 2) {
+                        window.text1 = data[j].surplus;
+                        dataKT.push(window.text3);
+                    } else if (j === 3) {
+                        window.text3 = data[j].surplus;
+                        dataKT.push(window.text4);
+                    } else if (j === 4) {
+                        window.text4 = data[j].surplus;
+                        dataKT.push(window.text5);
+                    } else if (j === 5) {
+                        window.text5 = data[j].surplus;
+                        dataKT.push(window.text6);
+                    } else if (j === 6) {
+                        window.text6 = data[j].surplus;
+                        dataKT.push(window.text7);
+                    } else if (j === 7) {
+                        window.text7 = data[j].surplus;
+                        dataKT.push(window.text8);
+                    }*/
+                }
             },
             error: function (err) {
 
@@ -159,6 +197,8 @@
                             obj.surplus = x;
                             Num_SoDu = Num_SoDu + x;
                         }
+                        obj.surplus2 = 0;
+                        obj.surplus3 = 0;
                         arr.push(obj);
                     }
                 }
@@ -169,8 +209,26 @@
                 obj1.LCTo = (Num_SoTienLuuChuyenThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 obj1.LCFor = (Num_SoTienLuuChuyenChi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 obj1.surplus = (Num_SoDu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.surplus2 = 0;
+                obj1.surplus3 = 0;
                 arr.push(obj1);
                 data = arr;
+                for (var j = 0 ; j < data.length;j ++){
+                    for (var int = 0 ; int < window.dataKT.length; int++) {
+                        if(j === int){
+                            data[j].surplus2 = window.dataKT[int];
+                        }
+
+                    }
+                }
+                // tỏng số dư
+
+                for (var k = 0 ; k < data.length; k++) {
+                    var text1 = (data[k].surplus2 + "").replace(/,/g, '');
+                    var text2 = (data[k].surplus + "").replace(/,/g, '');
+                    data[k].surplus3 = ((parseInt(text1) + parseInt(text2))+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                }
+                
                 getDataTable2(data);
             },
             error: function (err) {
@@ -211,20 +269,6 @@
                 title: 'Số dư',
                 align: 'center',
                 valign: 'middle',
-                formatter: function (value, row, index) {
-                    if (row.LCTo && row.LCFor) {
-                        var x = parseInt(row.LCTo.replace(/,/g, '') + "");
-                        var y = parseInt(row.LCFor.replace(/,/g, '') + "");
-                        var z = x - y;
-                        return z;
-                    } else if (row.LCTo && !row.LCFor) {
-                        return row.LCTo;
-                    } else if (!row.LCTo && row.LCFor) {
-                        return row.LCFor;
-                    } else if (!row.LCTo && !row.LCFor) {
-                        return "";
-                    }
-                }
             }],
             data : itemData
         });
@@ -257,8 +301,18 @@
                 align: 'center',
                 valign: 'middle',
             }, {
+                field: 'surplus2',
+                title: 'Số dư kỳ trước',
+                align: 'center',
+                valign: 'middle',
+            }, {
                 field: 'surplus',
-                title: 'Số dư',
+                title: 'Số dư kỳ này',
+                align: 'center',
+                valign: 'middle',
+            }, {
+                field: 'surplus3',
+                title: 'Tổng số dư',
                 align: 'center',
                 valign: 'middle',
             }],

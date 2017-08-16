@@ -35,15 +35,19 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        //idCheck = objectData.ID_PTCHD;
-                        //obj.id = objectData.ID_PTCHD;
                         obj.idKT = objectData.IdKeToan;// TODO 
                         obj.IdNgayHD = objectData.IdNgayHD;
-                        //obj.ID_NHD = objectData.ID_NHD;
                         obj.ID = objectData.ID;
+                        obj.MaChotCa = objectData.MaCa;
                         obj.permission = true;
-                        var data_ngay = objectData.NgayChot;
+                        if (objectData.Ngay) {
+                            var data_ngay = objectData.Ngay;
+                        } else {
+                            var data_ngay = objectData.NgayChot;
+                        }
+                       // var data_ngay = objectData.NgayChot;
                         var z = "";
+                        var a = "";
                         if (data_ngay) {
                             var x = data_ngay.substr(0, 10);
                             var y = x.split("-");
@@ -51,8 +55,16 @@
                             var y2 = y[1];
                             var y3 = y[2];
                             z = y3 + "/" + y2 + "/" + y1;
+                            a = y3 + "" + y2 + "" + y1;
                         }
-                        obj.MaCa = objectData.MaCa
+                        if (objectData.MaCa) {
+                            obj.MaChotCa2 = "CHOTCA-" + a;
+                        } else {
+                            obj.MaChotCa2 = "";
+                        }
+                        
+                       // obj.MaChotCa = objectData.MaCa;
+                        obj.permission = true;
                         obj.date = z;
                         if (objectData.SoTien) {
                             //obj.money = objectData.SoTien;
@@ -110,15 +122,19 @@
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        //idCheck = objectData.ID_PTCHD;
-                        //obj.id = objectData.ID_PTCHD;
                         obj.idKT = objectData.IdKeToan;// TODO 
                         obj.IdNgayHD = objectData.IdNgayHD;
-                        //obj.ID_NHD = c.ID_NHD;
                         obj.ID = objectData.ID;
+                        obj.MaChotCa = objectData.MaCa;
                         obj.permission = true;
-                        var data_ngay = objectData.NgayChot;
+                        if (objectData.Ngay) {
+                            var data_ngay = objectData.Ngay;
+                        } else {
+                            var data_ngay = objectData.NgayChot;
+                        }
+                        //var data_ngay = objectData.NgayChot;
                         var z = "";
+                        var a = "";
                         if (data_ngay) {
                             var x = data_ngay.substr(0, 10);
                             var y = x.split("-");
@@ -126,8 +142,14 @@
                             var y2 = y[1];
                             var y3 = y[2];
                             z = y3 + "/" + y2 + "/" + y1;
+                            a = y3 + "" + y2 + "" + y1;
                         }
-                        obj.MaCa = objectData.MaCa
+                        if (objectData.MaCa) {
+                            obj.MaChotCa2 = "CHOTCA-" + a;
+                        } else {
+                            obj.MaChotCa2 = "";
+                        }
+                        obj.permission = true;
                         obj.date = z;
                         if (objectData.SoTien) {
                             //obj.money = objectData.SoTien;
@@ -163,6 +185,18 @@
     var getDataTable = function (itemData) {
         $('#table').bootstrapTable({
             columns: [{
+                field: 'MaChotCa2',
+                title: 'Mã chốt ca',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return '<label style = "color: blue;">' + value + '</label>';
+                    } else {
+                        return value;
+                    }
+                }
+            }, {
                 field: 'date',
                 title: 'Ngày',
                 align: 'center',

@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-1">
                     <button type="button" class="btn btn-primary" id="btGopDon">Gộp đơn </button>
-                    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+                    
                 </div>
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_loTrinhID" readOnly = 'true'/>

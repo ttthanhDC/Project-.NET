@@ -108,7 +108,8 @@
             var text = $('#txt_ChotCa').val();
             var x = text.split("/");
             var y = parseInt(x[1]);
-            var z = x[0] + "/" + y + "/" + x[2];
+            var a = parseInt(x[0]);
+            var z = a + "/" + y + "/" + x[2];
             if (z !== strDate) {
                 $('#Div_ChotCa')[0].style.display = "none";
             } else {

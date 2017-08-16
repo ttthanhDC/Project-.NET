@@ -123,7 +123,7 @@
                                 title: 'Trạng thái',
                                 align: 'center',
                                 valign: 'middle',
-                                formatter: function (value, row, index) {
+                               /* formatter: function (value, row, index) {
                                     if (value === 1) {
                                         return '<select class="form-control" id="KH' + index + '"> <option value = 0></option><option value = 1 selected = true>Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
                                     } else if (value === 2) {
@@ -133,7 +133,7 @@
                                     } else {
                                         return '<select class="form-control" id="KH' + index + '"> <option value = 0> selected = true</option><option value = 1 >Chưa xử lý</option><option value = 2>Đang xử lý</option><option value = 3>Hoàn thành</option></select>'
                                     }
-                                }
+                                }*/
                             }, {
                                 field: 'name',
                                 title: 'Họ tên',
@@ -173,13 +173,14 @@
                             address: jsonData[i].DiaChi,
                             idHoaDon: jsonData[i].ID
                         };
-                        if (jsonData[i].TrangThai == "Chưa xử lý") {
+                        obj.status = jsonData[i].TrangThai;
+                       /* if (jsonData[i].TrangThai == "Chưa xử lý") {
                             obj.status = 1;
                         } else if (jsonData[i].TrangThai == "Đang xử lý") {
                             obj.status = 2;
                         } else if (jsonData[i].TrangThai == "Hoàn thành") {
                             obj.status = 3;
-                        }
+                        }*/
                         data.push(obj);
                     }
 

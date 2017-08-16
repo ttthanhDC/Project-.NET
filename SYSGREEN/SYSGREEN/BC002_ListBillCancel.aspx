@@ -105,14 +105,19 @@
                                 z = y3 + "/" + y2 + "/" + y1;
                             }
                             obj.time = z;
-                            obj.total = objectData.TongTien || "";
+                            if (objectData.TongTien) {
+                                obj.total = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                                obj.total = "";
+                            }
                             arr.push(obj);
                         }
                     }
                     total = tienMat + chuyenKhoan;
-                    $('#txt_TienMat').val(tienMat);
-                    $('#txt_chuyenKhoan').val(chuyenKhoan);
-                    $('#txt_tong').val(total);
+                    $('#txt_TienMat').val((tienMat + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    $('#txt_chuyenKhoan').val((chuyenKhoan + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    $('#txt_tong').val((total + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    
                     data = arr;
                     getDataTable(data);
                 },
@@ -220,16 +225,20 @@
                                     z = y3 + "/" + y2 + "/" + y1;
                                 }
                                 obj.time = z;
-                                obj.total = objectData.TongTien || "";
+                                if (objectData.TongTien) {
+                                    obj.total = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                } else {
+                                    obj.total = "";
+                                }
                                 arr.push(obj);
                             }
                         }
                     }
                     
                     total = tienMat + chuyenKhoan;
-                    $('#txt_TienMat').val(tienMat);
-                    $('#txt_chuyenKhoan').val(chuyenKhoan);
-                    $('#txt_tong').val(total);
+                    $('#txt_TienMat').val((tienMat + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    $('#txt_chuyenKhoan').val((chuyenKhoan + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                    $('#txt_tong').val((total + "").replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     data = arr;
                     var $table = $('#table');
                     $table.bootstrapTable('load', data);

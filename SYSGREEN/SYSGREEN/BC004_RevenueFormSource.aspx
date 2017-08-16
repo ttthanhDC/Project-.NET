@@ -54,7 +54,7 @@
                             var objectData = jsonData[i];
                             var obj = {};
                             obj.text1 = objectData.TenNguon;
-                            obj.text4 = objectData.DuKienThu;
+                            obj.text4 = (objectData.DuKienThu+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             obj.text2 = objectData.SoLuongDon;
                             obj.text3 = objectData.SoluongShip;
                             SoLuongDon = SoLuongDon + objectData.SoLuongDon;
@@ -64,7 +64,7 @@
                         }
                         var obj1 = {};
                         obj1.text1 = "Tổng";
-                        obj1.text4 = DuKienThu;
+                        obj1.text4 = (DuKienThu+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         obj1.text2 = SoLuongDon;
                         obj1.text3 = SoLuongShip;
                         arr.push(obj1);
