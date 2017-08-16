@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -23,8 +24,7 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    obj.Create_Date = DateTime.Now;
-                    Insert(obj);
+                    
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
                 }
@@ -39,7 +39,6 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    Update(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
                 }
@@ -53,7 +52,6 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    DeleteData(obj.ID);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
                 }
@@ -69,8 +67,7 @@ namespace SYSGREEN.Configuation
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    List<DataObject.SysMenu> lst = GetData(obj.ID);
-
+                    DataTable lst = Servies.SysMenuServices.GetProductByIdMenu(obj.ID);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
@@ -111,23 +108,7 @@ namespace SYSGREEN.Configuation
             }
         }
 
-        public void Insert(DataObject.SysMenu obj)
-        {
-            Servies.SysMenuServices.InsertData(obj);
-        }
-        public void Update(DataObject.SysMenu obj)
-        {
-            Servies.SysMenuServices.InsertData(obj);
-        }
-        public static void DeleteData(Int32 Id)
-        {
-            Servies.SysMenuServices.DeleteData(Id);
-        }
 
-        public List<DataObject.SysMenu> GetData(Int32 Id)
-        {
-            List<DataObject.SysMenu> lst = Servies.SysMenuServices.GetData(Id);
-            return lst;
-        }
+      
     }
 }

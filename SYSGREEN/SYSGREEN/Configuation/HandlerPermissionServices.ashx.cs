@@ -152,6 +152,22 @@ namespace SYSGREEN.Configuation
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("Error");
                 }
+            }//removeFuntionInGroup
+            else if (type == "removeFuntionInGroup")
+            {
+                try
+                {
+                    String FUNC_ID = context.Request.Form["FUNC_ID"].ToString();
+                    String ROLE_ID = context.Request.Form["ROLE_ID"].ToString();
+                    Servies.PermissionServices.removeFuntionInGroup(Convert.ToInt16(FUNC_ID), Convert.ToInt16(ROLE_ID));
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("1");
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
             }
             else
             {

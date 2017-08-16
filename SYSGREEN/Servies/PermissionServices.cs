@@ -44,7 +44,10 @@ namespace Servies
         {
             DataTable dt = new DataTable();
             SqlConnection conn = Common.Connection.SqlConnect();
-            String select = "Select * from SYS_GROUP_USER_ROLE where ROLE_ID = @ROLE_ID ";
+            String select = "Select a*, b.UserName , c.RoleName from SYS_GROUP_USER_ROLE a ";
+            select += "LEFT JOIN SYS_USER b ON b.ID = a.USER_ID " ;
+            select += "LEFT JOIN SYS_ROLE c ON c.ID = a.ROLE_ID " ;
+            select += " where a.ROLE_ID = @ROLE_ID ";
             SqlCommand cmdSelect = new SqlCommand(select);
             cmdSelect.CommandType = CommandType.Text;
             cmdSelect.Connection = conn;
@@ -103,6 +106,21 @@ namespace Servies
             cmd.Connection.Close();
             conn.Close();
             return Convert.ToInt32(insertedID);
+        }
+
+        public static void removeFuntionInGroup(int FUNC_ID, int ROLE_ID)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Insert = "Delete FROM SYS_FUNCTION_ROLE WHERE FUNC_ID = @FUNC_ID AND ROLE_ID = @ROLE_ID)";
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@FUNC_ID", FUNC_ID);
+            cmd.Parameters.AddWithValue("@ROLE_ID", ROLE_ID);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
         }
 
         public static DataTable getFuntionByGroupId(int ROLE_ID)

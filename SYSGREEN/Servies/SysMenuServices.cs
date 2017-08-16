@@ -10,17 +10,15 @@ namespace Servies
 {
     public class SysMenuServices
     {
-        public static void InsertData(DataObject.SysMenu obj)
+        public static void InsertData(int menuId,int ProductId)
         {
-            String Insert = "INSERT INTO SYS_MENU (Code,PRODUCT_ID,Create_User,Create_Date) VALUES (@Code,@PRODUCT_ID,@Create_User,@Create_Date)";
+            String Insert = "INSERT INTO  SYS_PRODUCT_MENU (MenuId,ProductId) VALUES (@MenuId,@ProductId)";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@Dept_Name", obj.Code);
-            cmd.Parameters.AddWithValue("@Dept_Description", obj.PRODUCT_ID);
-            cmd.Parameters.AddWithValue("@Create_User", obj.Create_User);
-            cmd.Parameters.AddWithValue("@Create_Date", obj.Create_Date);
+            cmd.Parameters.AddWithValue("@MenuId", menuId);
+            cmd.Parameters.AddWithValue("@ProductId", ProductId);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
@@ -42,61 +40,35 @@ namespace Servies
             conn.Close();
         }
 
-        public static void DeleteData(Int32 Id)
+        public static void DeleteData(int menuId, int ProductId)
         {
-            String Delete = "Delete from  SYS_MENU Where ID = @ID";
+            String Delete = "Delete from  SYS_PRODUCT_MENU Where MenuId = @menuId AND ProductId = @ProductId";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Delete);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@ID", Id);
+            cmd.Parameters.AddWithValue("@menuId", menuId);
+            cmd.Parameters.AddWithValue("@ProductId", ProductId);
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
         }
 
-        public static List<DataObject.SysMenu> GetData(Int32 Id)
+        public static DataTable GetProductByIdMenu(Int32 menuId)
         {
-            List<DataObject.SysMenu> lstSysMenu = new List<DataObject.SysMenu>();
+            DataTable dt = new DataTable();
             String Select = "";
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
-            if (Id > 0)
-            {
-                Select = "Select * from SYS_MENU Where ID = @ID";
-
-                cmd = new SqlCommand(Select);
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = conn;
-                cmd.Parameters.AddWithValue("@ID", Id);
-            }
-            else
-            {
-                Select = "Select * from SYS_MENU";
-                cmd = new SqlCommand(Select);
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = conn;
-            }
+            Select = "Select * from SYS_PRODUCT_MENU Where MenuId = @menuId";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@menuId", menuId);
             conn.Open();
-            using (SqlDataReader oReader = cmd.ExecuteReader())
-            {
-                while (oReader.Read())
-                {
-                    DataObject.SysMenu obj = new DataObject.SysMenu();
-                    obj.ID = Int32.Parse(oReader["ID"].ToString());
-                    obj.Code = oReader["Code"].ToString();
-                    obj.PRODUCT_ID = Int32.Parse(oReader["PRODUCT_ID"].ToString());
-                    obj.Create_User = oReader["Create_User"].ToString();
-                    if (oReader["Create_Date"].ToString() != "" && oReader["Create_Date"].ToString() != null)
-                    {
-                        String createDate = String.Format("{0:dd/MM/yyyy}", oReader["Create_Date"].ToString());
-                        obj.Create_Date = DateTime.Parse(createDate);
-                    }
-                    lstSysMenu.Add(obj);
-                }
-            }
+            dt.Load(cmd.ExecuteReader());
             conn.Close();
-            return lstSysMenu;
+            return dt;
         }
     }
 }
