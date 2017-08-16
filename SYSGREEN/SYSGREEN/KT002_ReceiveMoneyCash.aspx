@@ -3,6 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
 
    <div style ="margin-left:10%;margin-right:10%">
+       <button type="button" class="btn btn-primary" id="btAdd">Thêm</button>
         <table id="table" 
        
         data-search="true" 
@@ -31,72 +32,47 @@
                 var jsonData = result;
                 var arr = [];
                 if (jsonData && jsonData.length > 0) {
-                    var idCheck = 0;
-                    var check = false;
-                    var check2 = false;
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        if (!check && !check2) {
-                            idCheck = objectData.ID_PTCHD;
-                            obj.id = objectData.ID_PTCHD;
-                            obj.idKT = objectData.IdKeToan;// TODO 
-                            obj.IdNgayHD = objectData.IdNgayHD;
-                            obj.ID_NHD = objectData.ID_NHD;
-                            obj.permission = true;
-                            var data_ngay = objectData.Ngay;
-                            var z = "";
-                            if (data_ngay) {
-                                var x = data_ngay.substr(0, 10);
-                                var y = x.split("-");
-                                var y1 = y[0];
-                                var y2 = y[1];
-                                var y3 = y[2];
-                                z = y3 + "/" + y2 + "/" + y1;
-                            }
-                            obj.date = z;
+                        //idCheck = objectData.ID_PTCHD;
+                        //obj.id = objectData.ID_PTCHD;
+                        obj.idKT = objectData.IdKeToan;// TODO 
+                        obj.IdNgayHD = objectData.IdNgayHD;
+                        //obj.ID_NHD = objectData.ID_NHD;
+                        obj.ID = objectData.ID;
+                        obj.permission = true;
+                        var data_ngay = objectData.NgayChot;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.MaCa = objectData.MaCa
+                        obj.date = z;
+                        if (objectData.SoTien) {
+                            //obj.money = objectData.SoTien;
                             if (objectData.SoTien) {
-                                obj.money = objectData.SoTien;
+                                obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             } else {
-                                obj.money = objectData.TongTienGoi;
+                                obj.money = "";
                             }
-                            obj.staus = objectData.TinhTrang || 0;
-                            obj.note = objectData.GhiChu;
-                            check = true;
-                            check2 = false;
                         } else {
-                            if (idCheck === objectData.ID_PTCHD) {
-
+                            // obj.money = objectData.TongTienGoi;
+                            if (objectData.TienThuDuoc) {
+                                obj.money = (objectData.TienThuDuoc + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             } else {
-                                check2 = true;
-                                idCheck = objectData.ID_PTCHD;
-                                obj.id = objectData.ID_PTCHD;
-                                obj.idKT = objectData.IdKeToan;// TODO
-                                obj.IdNgayHD = objectData.IdNgayHD;
-                                obj.ID_NHD = objectData.ID_NHD;
-                                obj.permission = true;
-                                var data_ngay = objectData.Ngay;
-                                var z = "";
-                                if (data_ngay) {
-                                    var x = data_ngay.substr(0, 10);
-                                    var y = x.split("-");
-                                    var y1 = y[0];
-                                    var y2 = y[1];
-                                    var y3 = y[2];
-                                    z = y3 + "/" + y2 + "/" + y1;
-                                }
-                                obj.date = z;
-                                if (objectData.SoTien) {
-                                    obj.money = objectData.SoTien;
-                                } else {
-                                    obj.money = objectData.TongTienGoi;
-                                }
-                                obj.staus = objectData.TinhTrang || 0;
-                                obj.note = objectData.GhiChu;
-                                arr.push(obj);
-                                check = false;
+                                obj.money = "";
                             }
                         }
+                        obj.staus = objectData.TinhTrang || 0;
+                        obj.note = objectData.GhiChu;
+                        arr.push(obj);
+                        
                     }
                 }
                 data = arr;
@@ -107,6 +83,9 @@
                 eventSearch();
             }
         });
+    });
+    $('#btAdd').on('click', function (e) {
+        window.location = '/KT002_Detail.aspx?id=' + "Add";
     });
     // load all
     var loadAllDataTable = function () {
@@ -128,72 +107,47 @@
                 var jsonData = result;
                 var arr = [];
                 if (jsonData && jsonData.length > 0) {
-                    var idCheck = 0;
-                    var check = false;
-                    var check2 = false;
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};
-                        if (!check && !check2) {
-                            idCheck = objectData.ID_PTCHD;
-                            obj.id = objectData.ID_PTCHD;
-                            obj.idKT = objectData.IdKeToan;// TODO 
-                            obj.IdNgayHD = objectData.IdNgayHD;
-                            obj.ID_NHD = objectData.ID_NHD;
-                            obj.permission = true;
-                            var data_ngay = objectData.Ngay;
-                            var z = "";
-                            if (data_ngay) {
-                                var x = data_ngay.substr(0, 10);
-                                var y = x.split("-");
-                                var y1 = y[0];
-                                var y2 = y[1];
-                                var y3 = y[2];
-                                z = y3 + "/" + y2 + "/" + y1;
-                            }
-                            obj.date = z;
+                        //idCheck = objectData.ID_PTCHD;
+                        //obj.id = objectData.ID_PTCHD;
+                        obj.idKT = objectData.IdKeToan;// TODO 
+                        obj.IdNgayHD = objectData.IdNgayHD;
+                        //obj.ID_NHD = c.ID_NHD;
+                        obj.ID = objectData.ID;
+                        obj.permission = true;
+                        var data_ngay = objectData.NgayChot;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.MaCa = objectData.MaCa
+                        obj.date = z;
+                        if (objectData.SoTien) {
+                            //obj.money = objectData.SoTien;
                             if (objectData.SoTien) {
-                                obj.money = objectData.SoTien;
+                                obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             } else {
-                                obj.money = objectData.TongTienGoi ;
+                                obj.money = "";
                             }
-                            obj.staus = objectData.TinhTrang || 0;
-                            obj.note = objectData.GhiChu;
-                            check = true;
-                            check2 = false;
                         } else {
-                            if (idCheck === objectData.ID_PTCHD) {
-
+                            // obj.money = objectData.TongTienGoi;
+                            if (objectData.TienThuDuoc) {
+                                obj.money = (objectData.TienThuDuoc + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             } else {
-                                check2 = true;
-                                idCheck = objectData.ID_PTCHD;
-                                obj.id = objectData.ID_PTCHD;
-                                obj.idKT = objectData.IdKeToan;// TODO
-                                obj.IdNgayHD = objectData.IdNgayHD;
-                                obj.ID_NHD = objectData.ID_NHD;
-                                obj.permission = true;
-                                var data_ngay = objectData.Ngay;
-                                var z = "";
-                                if (data_ngay) {
-                                    var x = data_ngay.substr(0, 10);
-                                    var y = x.split("-");
-                                    var y1 = y[0];
-                                    var y2 = y[1];
-                                    var y3 = y[2];
-                                    z = y3 + "/" + y2 + "/" + y1;
-                                }
-                                obj.date = z;
-                                if (objectData.SoTien) {
-                                    obj.money = objectData.SoTien;
-                                } else {
-                                    obj.money = objectData.TongTienGoi;
-                                }
-                                obj.staus = objectData.TinhTrang || 0;
-                                obj.note = objectData.GhiChu;
-                                arr.push(obj);
-                                check = false;
+                                obj.money = "";
                             }
                         }
+                        obj.staus = objectData.TinhTrang || 0;
+                        obj.note = objectData.GhiChu;
+                        arr.push(obj);
+
                     }
                 }
                 data = arr;
@@ -325,7 +279,7 @@
         //var id = parseInt(row.id + "");
         var json = { 'ID': 0 };
         jQuery.ajaxSetup({ async: true });
-        formData.append('type', 'InsertChiTietThuReturnId');
+        formData.append('type', 'InsertChiTietThuTMReturnId');
         formData.append('data', JSON.stringify(json));
         var date = "";
         if (row.date) {
@@ -337,17 +291,15 @@
         }
         formData.append('Ngay', date);
         formData.append('SoTien', row.money);
-
         formData.append('MaGiaoDich', "");
-
         formData.append('LoaiThu', "1");
         formData.append('GhiChu', row.note);
-        formData.append('IdKeToan', id_KT);
-        formData.append('IdNgayHD', row.ID_NHD);
-        //var lst1 = $('#table select.select1 option:selected');
+        formData.append('IdKeToan', "0");
+        formData.append('IdNgayHD', row.IdNgayHD ? row.IdNgayHD : row.MaCa);
         var lst2 = $('#table select.select2 option:selected');
-        formData.append('MaNganHang', '0');
+        formData.append('MaNganHang', '6');
         formData.append('TinhTrang', lst2[index].value);
+        formData.append('ID', row.ID);
 
         $.ajax({
             url: "Configuation/HandlerKeToan.ashx",

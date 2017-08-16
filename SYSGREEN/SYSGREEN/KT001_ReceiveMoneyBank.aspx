@@ -67,8 +67,12 @@
                             }
                             obj.date = z;
                             obj.name = objectData.TenKH_HD || "";
-                            obj.money = objectData.TongTienGoi || "";
-
+                            //obj.money = objectData.TongTienGoi || "";
+                            if (objectData.TongTienGoi) {
+                                obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                                obj.money = "";
+                            }
                             obj.bank = objectData.MaNganHang || 0;
                             obj.code = objectData.MaGiaoDich || "";
                             obj.staus = objectData.TinhTrang || 0;
@@ -99,7 +103,11 @@
                                 }
                                 obj.date = z;
                                 obj.name = objectData.TenKH_HD || "";
-                                obj.money = objectData.TongTienGoi || "";
+                                if (objectData.TongTienGoi) {
+                                    obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                } else {
+                                    obj.money = "";
+                                }
 
                                 obj.bank = objectData.MaNganHang || 0;
                                 obj.code = objectData.MaGiaoDich || "";
@@ -172,7 +180,11 @@
                                 }
                                 obj.date = z;
                                 obj.name = objectData.TenKH_HD || "";
-                                obj.money = objectData.TongTienGoi || "";
+                                if (objectData.TongTienGoi) {
+                                    obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                } else {
+                                    obj.money = "";
+                                }
 
                                 obj.bank = objectData.MaNganHang || 0;
                                 obj.code = objectData.MaGiaoDich || "";
@@ -204,7 +216,11 @@
                                     }
                                     obj.date = z;
                                     obj.name = objectData.TenKH_HD || "";
-                                    obj.money = objectData.TongTienGoi || "";
+                                    if (objectData.TongTienGoi) {
+                                        obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    } else {
+                                        obj.money = "";
+                                    }
 
                                     obj.bank = objectData.MaNganHang || 0;
                                     obj.code = objectData.MaGiaoDich || "";
@@ -274,7 +290,11 @@
                             }
                             obj.date = z;
                             obj.name = objectData.TenKH_HD || "";
-                            obj.money = objectData.TongTienGoi || "";
+                            if (objectData.TongTienGoi) {
+                                obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            } else {
+                                obj.money = "";
+                            }
 
                             obj.bank = objectData.MaNganHang || 0;
                             obj.code = objectData.MaGiaoDich || "";
@@ -306,7 +326,11 @@
                                 }
                                 obj.date = z;
                                 obj.name = objectData.TenKH_HD || "";
-                                obj.money = objectData.TongTienGoi || "";
+                                if (objectData.TongTienGoi) {
+                                    obj.money = (objectData.TongTienGoi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                } else {
+                                    obj.money = "";
+                                }
 
                                 obj.bank = objectData.MaNganHang || 0;
                                 obj.code = objectData.MaGiaoDich || "";
@@ -371,7 +395,7 @@
                     } else if (value === 5) {
                         return '<select class="select1" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4 >VP</option><option value = 5 selected = true>VPDN</option></select>'
                     } else {
-                        return '<select class="select1" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VP</option></select>'
+                        return '<select class="select1" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
                     }
                 }
             }, {

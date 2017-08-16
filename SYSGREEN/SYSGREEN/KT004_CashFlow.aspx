@@ -33,7 +33,11 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.permission = true;
-                        obj.money = objectData.SoTien;
+                        if (objectData.SoTien) {
+                            obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            obj.money = "";
+                        }
                         obj.accountFor = objectData.MaNganHangChi;
                         obj.accountTo = objectData.MaNganHangThu;
                         obj.note = objectData.GhiChu;
@@ -82,9 +86,14 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.permission = true;
-                        obj.money = objectData.SoTien;
-                        obj.accountFor = objectData.MaNganHangChi;
-                        obj.accountTo = objectData.MaNganHangThu;
+                        if (objectData.SoTien) {
+                            obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            obj.money = "";
+                        }
+                        //obj.money = objectData.SoTien.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        obj.accountFor = objectData.MaNganHangThu;
+                        obj.accountTo = objectData.MaNganHangChi;
                         obj.note = objectData.GhiChu;
                         var data_ngay = objectData.Ngay;
                         var z = "";
@@ -141,7 +150,7 @@
                     } else if (value === 5) {
                         return '<select class="select1" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4 >VP</option><option value = 5 selected = true>VPDN</option></select>'
                     } else {
-                        return '<select class="select1" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VP</option></select>'
+                        return '<select class="select1" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
                     }
                 }
             }, {
@@ -161,7 +170,7 @@
                     } else if (value === 5) {
                         return '<select class="select2" id="NH' + index + '"> <option value = 0></option><option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4 >VP</option><option value = 5 selected = true>VPDN</option></select>'
                     } else {
-                        return '<select class="select2" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VP</option></select>'
+                        return '<select class="select2" id="NH' + index + '"> <option value = 0 selected = true></option> <option value = 1 >VCB</option><option value = 2>BIDV</option><option value = 3>TCB</option><option value = 4>VP</option><option value = 5>VPDN</option></select>'
                     }
                 }
             }, {
@@ -188,7 +197,7 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
+            'Lưu',
             '</a>  '
         ].join('');
     }

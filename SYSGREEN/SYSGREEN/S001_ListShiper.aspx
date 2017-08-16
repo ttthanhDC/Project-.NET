@@ -67,6 +67,7 @@
         
     </div>
    <div style ="margin-left:20px;margin-right:20px;display:none" id="Div_tableSanPham">
+       <div id="div_checkAll" style="display:inline-block"><button type="button" class="btn btn-primary" id="btCheckAll" >Check All</button></div><div id="div_UnAll" style="display:none"><button type="button" class="btn btn-primary" id="btUnAll">Bỏ check All</button></div>
        <table id="table"  ></table>
    </div> 
     <div style ="margin-left:20px;margin-right:20px" id="Div_tableTT">
@@ -290,7 +291,193 @@
     });
     $('#btback2').on('click', function (e) {
         window.location = '/S002_Route.aspx?paramId= 0';
+    }); 
+    $('#btCheckAll').on('click', function (e) {
+        $('#div_checkAll')[0].style.display = "none";
+        $('#div_UnAll')[0].style.display = "inline-block";
+
+        var data1 = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
+        // thêm search theo hình thức ship
+        var hinhThucShip = $('#cbTime').val();
+        if ($('#cbTime').val() === "1" || $('#cbTime').val() === "") {
+            hinhThucShip = "Ship đi";
+        } else {
+            hinhThucShip = "Đến lấy";
+        }
+
+        var maReservation = $('#txt_reservation').val();
+        var ngayHoaDon = $('#txt_Date').val();
+        var quan = $('#txt_Distric').val();
+        // var soShiper = $('#txt_ShipNumber').val();
+        // var tenShiper = $('#txt_ShipName').val();
+        var trangThai = "";//$('#txt_status').val();
+
+        formDatasearch.append('maReservation', maReservation);
+        formDatasearch.append('ngayHoaDon', ngayHoaDon);
+        formDatasearch.append('quan', quan);
+        formDatasearch.append('soShiper', "");
+        formDatasearch.append('tenShiper', "");
+        formDatasearch.append('hinhThucShip', hinhThucShip);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation || "";
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User;// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+                        obj.user = objectData.userName || "";
+                        obj.check = 1;
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data1 = arr;
+                //getDataTable(data1);
+                var $table = $('#table');
+                $table.bootstrapTable('load', data1);
+            },
+            error: function (err) {
+            }
+        });
     });
+    $('#btUnAll').on('click', function (e) {
+        $('#div_checkAll')[0].style.display = "inline-block";
+        $('#div_UnAll')[0].style.display = "none";
+
+        var data1 = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getDataFilter');
+        // thêm search theo hình thức ship
+        var hinhThucShip = $('#cbTime').val();
+        if ($('#cbTime').val() === "1" || $('#cbTime').val() === "") {
+            hinhThucShip = "Ship đi";
+        } else {
+            hinhThucShip = "Đến lấy";
+        }
+
+        var maReservation = $('#txt_reservation').val();
+        var ngayHoaDon = $('#txt_Date').val();
+        var quan = $('#txt_Distric').val();
+        // var soShiper = $('#txt_ShipNumber').val();
+        // var tenShiper = $('#txt_ShipName').val();
+        var trangThai = "";//$('#txt_status').val();
+
+        formDatasearch.append('maReservation', maReservation);
+        formDatasearch.append('ngayHoaDon', ngayHoaDon);
+        formDatasearch.append('quan', quan);
+        formDatasearch.append('soShiper', "");
+        formDatasearch.append('tenShiper', "");
+        formDatasearch.append('hinhThucShip', hinhThucShip);
+        $.ajax({
+            url: "Configuation/Handler1Test.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID_NHD;
+
+                        obj.code = objectData.MaReservation || "";
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        obj.district = objectData.TenQuan || "";
+                        obj.status = objectData.TrangThaiNHD || "";
+                        obj.name = objectData.TenKH_HD || "";
+                        obj.sdt = objectData.SoDienThoai || "";
+                        obj.addres = objectData.DiaChi || "";
+                        if (objectData.TongTienConNo) {
+                            obj.money = objectData.TongTienConNo;
+                        } else {
+                            if (objectData.TongTien) {
+                                obj.money = objectData.TongTien;
+                            }
+                        }
+                        //obj.money = objectData.Create_User;// chua có
+                        obj.shipName = objectData.shipName || "";
+                        obj.shipNumber = objectData.shipNo || "";
+                        var TongTienConNo = objectData.TongTienConNo;
+                        if (TongTienConNo) {
+                            obj.detb = true;
+                        } else {
+                            obj.detb = false;
+                        }
+                        obj.check = false;
+                        obj.user = objectData.userName || "";
+                        obj.check = 0;
+                        // userName
+                        arr.push(obj);
+                    }
+                }
+                data1 = arr;
+                //getDataTable(data1);
+                var $table = $('#table');
+                $table.bootstrapTable('load', data1);
+            },
+            error: function (err) {
+            }
+        });
+    });
+
+
     $('#btSearch').on('click', function (e) {
         $('#Div_tableSanPham')[0].style.display = "block";
         $('#Div_tableTT')[0].style.display = "none";
@@ -439,24 +626,31 @@
     $('#btSua').on('click', function (e) {
         $('#Div_tableSanPham')[0].style.display = "block";
         $('#Div_tableTT')[0].style.display = "none";
+
         var data1 = [];
         var formDatasearch = new FormData();
         formDatasearch.append('type', 'getDataFilter');
+        // thêm search theo hình thức ship
+        var hinhThucShip = $('#cbTime').val();
+        if ($('#cbTime').val() === "1" || $('#cbTime').val() === "") {
+            hinhThucShip = "Ship đi";
+        } else {
+            hinhThucShip = "Đến lấy";
+        }
 
-        var maReservation = $('#txt_reservation').val();
+        var maReservation= $('#txt_reservation').val();
         var ngayHoaDon = $('#txt_Date').val();
         var quan = $('#txt_Distric').val();
-        var soShiper = $('#txt_ShipNumber').val();
+        // var soShiper = $('#txt_ShipNumber').val();
         // var tenShiper = $('#txt_ShipName').val();
         var trangThai = "";//$('#txt_status').val();
-
 
         formDatasearch.append('maReservation', maReservation);
         formDatasearch.append('ngayHoaDon', ngayHoaDon);
         formDatasearch.append('quan', quan);
         formDatasearch.append('soShiper', "");
-        formDatasearch.append('tenShiper', "");
-        formDatasearch.append('trangThai', trangThai);
+        formDatasearch.append('tenShiper',"");
+        formDatasearch.append('hinhThucShip', hinhThucShip);
         $.ajax({
             url: "Configuation/Handler1Test.ashx",
             type: "POST",
@@ -472,8 +666,8 @@
                         var obj = {};
                         obj.id = objectData.ID_NHD;
 
-                        obj.code = objectData.MaReservation;
-                        var data_ngay = objectData.Ngay;
+                        obj.code = objectData.MaReservation || "";
+                        var data_ngay = objectData.Ngay ;
                         var z = "";
                         if (data_ngay) {
                             var x = data_ngay.substr(0, 10);
@@ -496,7 +690,7 @@
                                 obj.money = objectData.TongTien;
                             }
                         }
-                        //obj.money = objectData.Create_User || "";// chua có
+                        //obj.money = objectData.Create_User;// chua có
                         obj.shipName = objectData.shipName || "";
                         obj.shipNumber = objectData.shipNo || "";
                         var TongTienConNo = objectData.TongTienConNo;
@@ -506,7 +700,6 @@
                             obj.detb = false;
                         }
                         obj.check = false;
-
                         obj.user = objectData.userName || "";
                         if (objectData.IdLotrinhShipper + "" === window.idParam + "") {
                             obj.check = 1;
@@ -526,82 +719,6 @@
             }
         });
 
-
-
-
-        /*var dataSearch = [];
-        var formDataSearchAll = new FormData();
-        formDataSearchAll.append('type', 'getALLData');
-        var json = { 'ID': 0 };
-        formDataSearchAll.append('data', JSON.stringify(json));
-        $.ajax({
-            url: "Configuation/Handler1Test.ashx",
-            type: "POST",
-            data: formDataSearchAll,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                var jsonData = result;
-                var arr = [];
-                if (jsonData && jsonData.length > 0) {
-                    for (var i = 0; i < jsonData.length ; i++) {
-                        var objectData = jsonData[i];
-                        var obj = {};
-                        obj.id = objectData.ID_NHD;
-
-                        obj.code = objectData.MaReservation;
-                        var data_ngay = objectData.Ngay;
-                        var z = "";
-                        if (data_ngay) {
-                            var x = data_ngay.substr(0, 10);
-                            var y = x.split("-");
-                            var y1 = y[0];
-                            var y2 = y[1];
-                            var y3 = y[2];
-                            z = y3 + "/" + y2 + "/" + y1;
-                        }
-                        obj.date = z;
-                        obj.district = objectData.TenQuan || "";
-                        obj.status = objectData.TrangThaiNHD || "";
-                        obj.name = objectData.TenKH_HD || "";
-                        obj.sdt = objectData.SoDienThoai || "";
-                        obj.addres = objectData.DiaChi || "";
-                        if (objectData.TongTienConNo) {
-                            obj.money = objectData.TongTienConNo;
-                        } else {
-                            if (objectData.TongTien) {
-                                obj.money = objectData.TongTien;
-                            }
-                        }
-                        //obj.money = objectData.Create_User || "";// chua có
-                        obj.shipName = objectData.shipName || "";
-                        obj.shipNumber = objectData.shipNo || "";
-                        var TongTienConNo = objectData.TongTienConNo;
-                        if (TongTienConNo) {
-                            obj.detb = true;
-                        } else {
-                            obj.detb = false;
-                        }
-                        obj.check = false;
-
-                        obj.user = objectData.userName || "";
-                        if (objectData.IdLotrinhShipper + "" === window.idParam + "") {
-                            obj.check = 1;
-                        } else {
-                            obj.check = 0;
-                        }
-                        // userName
-                        arr.push(obj);
-                    }
-                }
-                dataSearch = arr;
-                getDataTable(dataSearch);
-                //var $tableSearch = $('#table');
-               // $tableSearch.bootstrapTable('load', dataSearch);
-            },
-            error: function (err) {
-            }
-        });*/
     });
     var loadDataByID = function () { 
         var data = [];

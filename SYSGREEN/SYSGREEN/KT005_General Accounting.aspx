@@ -49,32 +49,32 @@
                         var obj = {};
                         obj.account = objectData.TaiKhoan;
                         if (objectData.SoTienThu) {
-                            obj.moneyTo = parseInt(objectData.SoTienThu);
+                            obj.moneyTo = (objectData.SoTienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienThu = Num_SoTienThu + parseInt(objectData.SoTienThu);
                         }
                         if (objectData.SoTienChi) {
-                            obj.moneyFor = parseInt(objectData.SoTienChi);
+                            obj.moneyFor = (objectData.SoTienChi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienChi = Num_SoTienChi + parseInt(objectData.SoTienChi);
                         }
                         if (objectData.SoTienLuuChuyenThu) {
-                            obj.LCTo = parseInt(objectData.SoTienLuuChuyenThu);
+                            obj.LCTo = (objectData.SoTienLuuChuyenThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienLuuChuyenThu = Num_SoTienLuuChuyenThu + parseInt(objectData.SoTienLuuChuyenThu);
                         }
                         if (objectData.SoTienLuuChuyenChi) {
-                            obj.LCFor = parseInt(objectData.SoTienLuuChuyenChi);
+                            obj.LCFor = (objectData.SoTienLuuChuyenChi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienLuuChuyenChi = Num_SoTienLuuChuyenChi + parseInt(objectData.SoTienLuuChuyenChi);
                         }
                         if (objectData.SoTienThu && objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienThu) - parseInt(objectData.SoTienChi);
-                            obj.surplus = x;
+                            obj.surplus = (x + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                             Num_SoDu = Num_SoDu + x;
                         } else if (objectData.SoTienThu && !objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienThu);
-                            obj.surplus = x;
+                            obj.surplus = (objectData.SoTienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoDu = Num_SoDu + x;
                         } else if (!objectData.SoTienThu && objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienChi);
-                            obj.surplus = x;
+                            obj.surplus = (objectData.SoTienChi+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoDu = Num_SoDu + x;
                         } else {
                             var x = 0;
@@ -86,11 +86,11 @@
                 }
                 var obj1 = {};
                 obj1.account = "Tổng";
-                obj1.moneyTo = Num_SoTienThu;
-                obj1.moneyFor = Num_SoTienChi;
-                obj1.LCTo = Num_SoTienLuuChuyenThu;
-                obj1.LCFor = Num_SoTienLuuChuyenChi;
-                obj1.surplus = Num_SoDu;
+                obj1.moneyTo = (Num_SoTienThu+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.moneyFor = (Num_SoTienChi+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.LCTo = (Num_SoTienLuuChuyenThu+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.LCFor = (Num_SoTienLuuChuyenChi+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.surplus = (Num_SoDu+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 arr.push(obj1);
                 data = arr;
                 getDataTable1(data);
@@ -127,32 +127,32 @@
                         var obj = {};
                         obj.account = objectData.TaiKhoan;
                         if (objectData.SoTienThu) {
-                            obj.moneyTo = parseInt(objectData.SoTienThu);
+                            obj.moneyTo = (parseInt(objectData.SoTienThu) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienThu = Num_SoTienThu + parseInt(objectData.SoTienThu);
                         }
-                        if(objectData.SoTienChi){
-                            obj.moneyFor = parseInt(objectData.SoTienChi);
+                        if (objectData.SoTienChi) {
+                            obj.moneyFor = (parseInt(objectData.SoTienChi) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienChi = Num_SoTienChi + parseInt(objectData.SoTienChi);
                         }
-                        if(objectData.SoTienLuuChuyenThu){
-                            obj.LCTo = parseInt(objectData.SoTienLuuChuyenThu);
+                        if (objectData.SoTienLuuChuyenThu) {
+                            obj.LCTo = (parseInt(objectData.SoTienLuuChuyenThu) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienLuuChuyenThu = Num_SoTienLuuChuyenThu + parseInt(objectData.SoTienLuuChuyenThu);
                         }
-                        if(objectData.SoTienLuuChuyenChi){
-                            obj.LCFor = parseInt(objectData.SoTienLuuChuyenChi);
+                        if (objectData.SoTienLuuChuyenChi) {
+                            obj.LCFor = (parseInt(objectData.SoTienLuuChuyenChi )+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoTienLuuChuyenChi = Num_SoTienLuuChuyenChi + parseInt(objectData.SoTienLuuChuyenChi);
                         }
                         if (objectData.SoTienThu && objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienThu) - parseInt(objectData.SoTienChi);
-                            obj.surplus = x;
+                            obj.surplus = (x + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                             Num_SoDu = Num_SoDu + x;
                         } else if (objectData.SoTienThu && !objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienThu);
-                            obj.surplus = x;
+                            obj.surplus = (parseInt(objectData.SoTienThu)+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoDu = Num_SoDu + x;
                         } else if (!objectData.SoTienThu && objectData.SoTienChi) {
                             var x = parseInt(objectData.SoTienChi);
-                            obj.surplus = x;
+                            obj.surplus = (parseInt(objectData.SoTienChi) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             Num_SoDu = Num_SoDu + x;
                         } else {
                             var x = 0;
@@ -164,11 +164,11 @@
                 }
                 var obj1 = {};
                 obj1.account = "Tổng";
-                obj1.moneyTo = Num_SoTienThu;
-                obj1.moneyFor = Num_SoTienChi;
-                obj1.LCTo = Num_SoTienLuuChuyenThu;
-                obj1.LCFor = Num_SoTienLuuChuyenChi;
-                obj1.surplus = Num_SoDu;
+                obj1.moneyTo = (Num_SoTienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.moneyFor = (Num_SoTienChi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.LCTo = (Num_SoTienLuuChuyenThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.LCFor = (Num_SoTienLuuChuyenChi + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                obj1.surplus = (Num_SoDu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 arr.push(obj1);
                 data = arr;
                 getDataTable2(data);

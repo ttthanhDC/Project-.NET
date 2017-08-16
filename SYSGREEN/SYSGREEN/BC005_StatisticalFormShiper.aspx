@@ -4,15 +4,12 @@
      <div class="main-content-inner" style ="margin-left:30px;margin-right:30px">
           <div class="form-horizontal">
             <div class="form-group">
-               <label for="sel1" class="col-md-2"></label>
+               <label for="sel1" class="col-md-4"></label>
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_dept" placeholder="Cơ sở" />
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_beginDate" placeholder ="Ngày bắt đầu"  />
-                </div>
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_EndDate" placeholder= "Ngày kết thúc" />
+                    <input type="text" class="form-control" name="title" id="txt_beginDate" placeholder ="Ngày"  />
                 </div>
                   <div class="col-md-2"> 
                     <input type="text" class="form-control" name="title" id="txt_NameShiper" placeholder="Tên Shiper"  />
@@ -102,7 +99,7 @@
                             textDi = textDi + objectData.Di;
                             obj._return = objectData.Trave;
                             textTraVe = textTraVe + objectData.Trave;
-                            obj.noney = objectData.DuKienThu;
+                            obj.noney = (objectData.DuKienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             arr.push(obj);
                         }
                     }
@@ -168,7 +165,7 @@
             var json = { 'ID': 0 };
             formDataListUser.append('data', JSON.stringify(json));
             formDataListUser.append('tuNgay', $('#txt_beginDate').val());
-            formDataListUser.append('denNgay', $('#txt_EndDate').val());
+            formDataListUser.append('denNgay', "");
             formDataListUser.append('shipperName', $('#txt_NameShiper').val());
 
             $.ajax({
@@ -207,7 +204,7 @@
                             textDi = textDi + objectData.Di;
                             obj._return = objectData.Trave;
                             textTraVe = textTraVe + objectData.Trave;
-                            obj.noney = objectData.DuKienThu;
+                            obj.noney = (objectData.DuKienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             arr.push(obj);
                         }
                     }

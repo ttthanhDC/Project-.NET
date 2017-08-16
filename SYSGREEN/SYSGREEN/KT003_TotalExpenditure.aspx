@@ -33,7 +33,12 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.permission = true;
-                        obj.money = objectData.SoTien;
+                        //obj.money = objectData.SoTien;
+                        if (objectData.SoTien) {
+                            obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            obj.money = "";
+                        }
                         obj.accountFor = objectData.MaNganHang;
                         /*if(objectData.MaNganHang === 1){
                             obj.accountFor = "VCB";
@@ -99,7 +104,12 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.permission = true;
-                        obj.money = objectData.SoTien;
+                        //obj.money = objectData.SoTien;
+                        if (objectData.SoTien) {
+                            obj.money = (objectData.SoTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            obj.money = "";
+                        }
                         obj.accountFor = objectData.MaNganHang;
                         /*if(objectData.MaNganHang === 1){
                             obj.accountFor = "VCB";
@@ -208,7 +218,7 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
+            'Lưu',
             '</a>  '
         ].join('');
     }

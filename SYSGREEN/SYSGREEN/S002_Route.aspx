@@ -4,6 +4,9 @@
          <div class="form-horizontal">
             <div class="form-group">
                 <div class="col-md-2">
+                    
+                </div>
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_ngayTT" placeholder="Ngày"/>
                 </div>
                 <div class="col-md-2">
@@ -12,9 +15,7 @@
                 <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_shipNameTT" placeholder="Ship name"/>
                 </div>
-                 <div class="col-md-2">
-                    <input type="text" class="form-control" name="title" id="txt_ShipNumberTT"placeholder="Shiper number" />
-                </div>
+                 
                   <div class="col-md-2">
                     <input type="text" class="form-control" name="title" id="txt_ttLoTrinh"placeholder="Trạng thái Lộ trình" />
                 </div>
@@ -49,13 +50,13 @@
         var NgayLotrinh = $('#txt_ngayTT').val();
         var MaLoTrinh = $('#txt_IDLoTinh').val();
         var ShipName = $('#txt_shipNameTT').val();
-        var ShipNumber = $('#txt_ShipNumberTT').val();
+        //var ShipNumber = $('#txt_ShipNumberTT').val();
         var TrangThai = $('#txt_ttLoTrinh').val();
 
         formDatasearch.append('NgayLotrinh', NgayLotrinh);
         formDatasearch.append('MaLoTrinh', MaLoTrinh);
         formDatasearch.append('ShipName', ShipName);
-        formDatasearch.append('ShipNumber', ShipNumber);
+        formDatasearch.append('ShipNumber', "");
         formDatasearch.append('TrangThai', TrangThai);
         var json = { 'ID': 0 };
         formDatasearch.append('data', JSON.stringify(json));
@@ -68,7 +69,9 @@
             success: function (result) {
                 var jsonData = result;
                 var arr = [];
-                if (jsonData && jsonData.length > 0) {
+                if (jsonData === "0") {
+
+                }else if (jsonData && jsonData.length > 0) {
                     for (var i = 0; i < jsonData.length ; i++) {
                         var objectData = jsonData[i];
                         var obj = {};

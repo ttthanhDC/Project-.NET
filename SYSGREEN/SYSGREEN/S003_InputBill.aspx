@@ -100,7 +100,7 @@
                         }
 
 
-                        obj.httt = objectData.HinhThucThanhToan;
+                        //obj.httt = objectData.HinhThucThanhToan;
                         obj.note = objectData.GhiChu;
                         obj.moneyPay = objectData.SoTienThu || "";
 
