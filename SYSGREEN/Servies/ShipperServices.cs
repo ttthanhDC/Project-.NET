@@ -77,6 +77,25 @@ namespace Servies
                 cmdUpdateNHD.ExecuteNonQuery();
                 cmdUpdateNHD.Connection.Close();
                 conn.Close();
+
+                String strSelect = "Select Top 1 ID NgayHoaDon  where IdlotrinhShipper = @ID";
+                SqlCommand cmdStrSelect = new SqlCommand(strSelect);
+                cmdStrSelect.CommandType = CommandType.Text;
+                cmdStrSelect.Connection = conn;
+                cmdUpdateNHD.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                object insertedID = cmdUpdateNHD.ExecuteScalar();
+                cmdUpdateNHD.Connection.Close();
+                conn.Close();
+
+                SqlConnection Pconn = Common.Connection.SqlConnect();
+                Pconn.Open();
+                SqlCommand Pcmd = new SqlCommand("AutoUpdateStatusHD", Pconn);
+                Pcmd.CommandType = CommandType.StoredProcedure;
+                Pcmd.Parameters.Add(new SqlParameter("@IDNHD", Convert.ToInt32(insertedID)));
+                Pcmd.ExecuteReader();
+                Pconn.Close();
+
             }
             else if (statusLT == "Đang xử lý" && obj.TrangThai == "Hoàn thành")
             {
