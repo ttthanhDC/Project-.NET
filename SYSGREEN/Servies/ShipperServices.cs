@@ -82,10 +82,10 @@ namespace Servies
                 SqlCommand cmdStrSelect = new SqlCommand(strSelect);
                 cmdStrSelect.CommandType = CommandType.Text;
                 cmdStrSelect.Connection = conn;
-                cmdUpdateNHD.Parameters.AddWithValue("@ID", obj.ID);
+                cmdStrSelect.Parameters.AddWithValue("@ID", obj.ID);
                 conn.Open();
-                object insertedID = cmdUpdateNHD.ExecuteScalar();
-                cmdUpdateNHD.Connection.Close();
+                object insertedID = cmdStrSelect.ExecuteScalar();
+                cmdStrSelect.Connection.Close();
                 conn.Close();
 
                 SqlConnection Pconn = Common.Connection.SqlConnect();
