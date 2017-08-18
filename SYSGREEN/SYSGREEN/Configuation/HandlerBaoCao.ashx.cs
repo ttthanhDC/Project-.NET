@@ -70,6 +70,15 @@ namespace SYSGREEN.Configuation
                     List<DataObject.BaoCao05> dt = Servies.BaocaoServices.getvBaoCao05(shipperName, tuNgay, denNgay);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(dt));
+                }//
+                if (type == "getvBaoCaoChotCa")
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    String tuNgay = context.Request.Form["tuNgay"].ToString();
+                    String shipperName = context.Request.Form["shipperName"].ToString();
+                    List<DataObject.BaoCao05> dt = Servies.BaocaoServices.getvBaoCaoChotCa(shipperName, tuNgay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
                 }
             }
             catch (Exception e)
