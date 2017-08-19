@@ -118,7 +118,7 @@
         });
         // function
         $('#btadd').on('click', function (e) {
-            window.location = '/managerPoromotion.aspx?';
+            window.location = '/C009_Detail.aspx?';
         });
         function userFormatter(data) {
             return data.length;
@@ -135,7 +135,7 @@
         }
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
-                window.location = '/managerPoromotion.aspx?paramId=' + row.id;
+                window.location = '/C009_Detail.aspx?paramId=' + row.id;
             },
             'click .remove': function (e, value, row, index) {
                 var formData = new FormData();

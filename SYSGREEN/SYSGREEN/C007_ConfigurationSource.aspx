@@ -1,6 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="C007_ConfigurationSource.aspx.cs" Inherits="SYSGREEN.C007_ConfigurationSource" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
+    <div style="margin-right:30px;margin-left:30px">
+        <table id="table" 
+        data-search="true" 
+        ></table>
+    </div>
+
+     
     <script>
         $(function () {
             var data = [];
@@ -21,6 +28,7 @@
                         for (var i = 0; i < jsonData.length ; i++) {
                             var objectData = jsonData[i];
                             var obj = {};
+                            obj.stt = i+1;
                             obj.id = objectData.ID;
                             obj.department = objectData.RoleName;
                             obj.dateCreate = objectData.Create_Date;
@@ -32,15 +40,15 @@
 
                     $('#table').bootstrapTable({
                         columns: [{
-                            field: 'id',
-                            title: 'ID',
+                            field: 'stt',
+                            title: 'STT',
                             align: 'center',
                             valign: 'middle',
                             // sortable: true,
                             // editable: true,
                         }, {
-                            field: 'department',
-                            title: 'Bộ phận',
+                            field: 'nguon',
+                            title: 'Tên nguồn',
                             align: 'center',
                             valign: 'middle',
                             // sortable: true,
@@ -76,79 +84,9 @@
 
                 }
             });
-                data: [{
-                    id: 1,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 2,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 3,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 4,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 5,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 6,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 7,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 8,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 9,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 10,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 11,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 12,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 13,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }, {
-                    id: 14,
-                    department: 'sele',
-                    dateCreate: '20/5/2017',
-                    user: 'Duytn4'
-                }]
-            });
+               
         });
+        
         // function
         function userFormatter(data) {
             return data.length;
@@ -181,14 +119,6 @@
         };
 
     </script>
-    <table id="table" 
-        data-pagination="true"
-        data-search="true" 
-        data-show-refresh="true" 
-        data-show-toggle="true" data-show-columns="true" 
-        data-show-pagination-switch="true"
-        data-page-list="[10, 25, 50, 100, ALL]" 
-        data-show-footer="false" 
-        ></table>
+   
     </asp:Content>
 

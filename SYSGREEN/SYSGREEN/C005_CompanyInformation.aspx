@@ -82,7 +82,7 @@
                <div class="col-md-12">
                    <div style ="height:40px"></div>
                    <div style ="text-align:center;display: table;margin: 0 auto;">
-                        <button type="submit" class="btn btn-default" id="btSave">Lưu</button>
+                        <button type="button" class="btn btn-primary" id="btSave">Lưu</button>
                    </div>
                 </div>
            </div>

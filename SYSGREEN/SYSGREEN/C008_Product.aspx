@@ -89,7 +89,7 @@
         });
     });
     $('#btnAdd').on('click', function (e) {
-        window.location = '/managerProduct.aspx?';
+        window.location = '/C008_Detail.aspx?';
     });
     function userFormatter(data) {
         return data.length;
@@ -106,7 +106,7 @@
     }
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
-            window.location = '/managerProduct.aspx?paramId=' + row.id;
+            window.location = '/C008_Detail.aspx?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         },
         'click .remove': function (e, value, row, index) {

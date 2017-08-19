@@ -28,16 +28,14 @@
         $(function () {
             var data = [];
             var formDataListUser = new FormData();
-            formDataListUser.append('type', 'getvBaoCao05');
+            formDataListUser.append('type', 'getvBaoCaoChotCa');
             var json = { 'ID': 0 };
             formDataListUser.append('data', JSON.stringify(json));
-            formDataListUser.append('denNgay', "");
-            formDataListUser.append('shipperName',"");
 
             var d = new Date();
             var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
             formDataListUser.append('tuNgay', strDate);
-
+            formDataListUser.append('shipperName', "");
             $.ajax({
                 url: "Configuation/HandlerBaoCao.ashx",
                 type: "POST",
@@ -57,7 +55,7 @@
                             var objectData = jsonData[i];
                             var obj = {};
                             obj.id = objectData.MaLoTrinhId;
-                            obj.maCD = objectData.MaChuyenDi;
+                            obj.MaCD = objectData.MaChuyenDi;
                             obj.checkTong = false;
                             // obj.isShiper = true;
                             if (objectData.MaShipper) {
@@ -84,7 +82,7 @@
                     }
                     var obj1 = {};
                     obj1.checkTong = true;
-                    obj1.id = "Tổng";
+                    obj1.MaCD = "Tổng";
                     obj1.shipmunber = "";
                     obj1.name = "";
                     obj1.take = textNhan;
@@ -120,7 +118,7 @@
         var getDataTable = function (itemData) {
             $('#table').bootstrapTable({
                 columns: [{
-                    field: 'id',
+                    field: 'MaCD',
                     title: 'Mã chuyến đi',
                     align: 'center',
                     valign: 'middle',
@@ -199,11 +197,16 @@
         $('#btSearch').on('click', function (e) {
             var data = [];
             var formDataListUser = new FormData();
-            formDataListUser.append('type', 'getvBaoCao05');
+            formDataListUser.append('type', 'getvBaoCaoChotCa');
             var json = { 'ID': 0 };
             formDataListUser.append('data', JSON.stringify(json));
-            formDataListUser.append('tuNgay', $('#txt_ChotCa').val());
-            formDataListUser.append('denNgay', "");
+            if ($('#txt_ChotCa').val() === "") {
+                var d = new Date();
+                var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+                formDataListUser.append('tuNgay', "");
+            } else {
+                formDataListUser.append('tuNgay', $('#txt_ChotCa').val());
+            }
             formDataListUser.append('shipperName', "");
 
             $.ajax({
@@ -225,7 +228,7 @@
                             var objectData = jsonData[i];
                             var obj = {};
                             obj.id = objectData.MaLoTrinhId;
-                            obj.maCD = objectData.MaChuyenDi;
+                            obj.MaCD = objectData.MaChuyenDi;
                             obj.checkTong = false;
                             // obj.isShiper = true;
                             if (objectData.MaShipper) {
@@ -252,7 +255,7 @@
                     }
                     var obj1 = {};
                     obj1.checkTong = true;
-                    obj1.id = "Tổng";
+                    obj1.MaCD = "Tổng";
                     obj1.shipmunber = "";
                     obj1.name = "";
                     obj1.take = textNhan;

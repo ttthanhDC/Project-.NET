@@ -1,192 +1,251 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeFile="C010_ConfigMenu.aspx.cs" Inherits="SYSGREEN.C010_ConfigMenu" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-   <div class="table-responsive" >
-       <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th style ="text-align:center">Thứ</th>
-                <th style ="text-align:center">Món</th>
-                <th style ="text-align:center"></th>
-            </tr>
-            </thead>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 2</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add1" class ="tbl_add1" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel1" style ="width:100%">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="1" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 3</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add2" class ="tbl_add2" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel2">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="2" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 4</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add3" class ="tbl_add3" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel3">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="3" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 5</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add4" class ="tbl_add4" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel4">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="4" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 6</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add5" class ="tbl_add5" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel5">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="5" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Thứ 7</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add6" class ="tbl_add6" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel6">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="6" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-           <tr>
-               <td style ="text-align:center"><label> Chủ nhật</label> </td>
-               <td style ="text-align:center">
-                   <table id ="tbl_add7" class ="tbl_add7" style ="width:100%;border:none">
-                       <tr style ="width:100%">
-                           <td style ="width:100%">
-                               <div class="form-group">
-                                  <select class="form-control" id="sel7">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                                </div>
-                           </td>
-                       </tr>
-                   </table>
-                   
-               </td>
-               <td style ="text-align:center"><button type="button" data-id="7" class="btn btn-default editButton">Thêm</button></td>
-           </tr>
-       </table>
-   </div> 
-    <script>
-        var count3 = 0;
-        $('.editButton').on('click', function () {
-            var id = $(this).attr('data-id');
-            alert('click button add 1' + id);
-            // create cell in table
-            var table = null;
-            if (id + "" === "1") {
-                table = $('#tbl_add1');
-            }
+    <div class="main-content-inner" style ="margin-right:20px;margin-left:20px">
+          <div class="form-horizontal">
+            
+              <label for="sel1" class="col-md-1"> Sản phẩm</label>
+               <div class="col-md-2">
+                    <div class="form-group">
+                          <select class="form-control" id="cbSanPham">
+                          </select>
+                        </div>
+                </div>
+              <label for="sel1" class="col-md-1"> Thứ</label>
+               <div class="col-md-2">
+                    <div class="form-group">
+                          <select class="form-control" id="cbThu">
+                              <option value ="0"></option>
+                              <option value ="1"> Thứ hai</option>
+                               <option value ="2"> Thứ ba</option>
+                               <option value ="3"> Thứ tư</option>
+                               <option value ="4"> Thứ năm</option>
+                               <option value ="5"> Thứ sáu</option>
+                               <option value ="6"> Thứ bẩy</option>
+                               <option value ="7"> Chủ nhật</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btAdd">Thêm</button>
+                </div>
+            </div> 
+    </div>
+    <div style ="margin-right:20px;margin-left:20px;margin-top:20px">
+    <table id="table"></table>
+   </div>
+<script>
+    // Bootstrap Table
+    $(function () {
+        var data = [];
+        loadDataTable()
+        getAllData();
 
-           // table.append('<tr> <td style ="width:100%"><div class="form-group" style ="width:100%"><select class="form-control" id="sel1" style ="width:100%"><option>1</option><option>2</option><option>3</option><option>4</option></select> </div></td></tr>');
+        // Load Data user
+        var formDataShip = new FormData();
+        formDataShip.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataShip.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysProduct.ashx",
+            type: "POST",
+            data: formDataShip,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.name = objectData.Product_Code;
+                        obj.link = objectData.ID;
+                        obj.sub = null;
+                        arr.push(obj);
+                    }
+                }
+                var data = { menu: arr };
+                var $menu = $("#cbSanPham");
+                $.each(data.menu, function () {
+                    $menu.append(
+                        getShip(this)
+                    );
+                });
+            },
+            error: function (err) {
 
-
-
-            // var table = this.tbl_add;
-             var rowCount = table.rows.length;
-            var row = table.insertRow(rowCount);
-            var newId = count3++;
-            row.id = newId;
-            row.setAttribute('class', 'Tr');
-            var value = "";
-            for (var i = 0; i < 1; i++) {
-            if(i === 0){
-             alert('click input 2' + i);
-            }
             }
         });
-     </script>
-</asp:Content>
+        // select box shiper  
+        var getShip = function (itemData) {
+            var item = $("<option value='" + itemData.link + "'>")
+                .append(itemData.name);
+            return item;
+        };
+
+
+    });
+    $('#btAdd').on('click', function (e) {
+        if ($('#cbThu').val() === "0") {
+            alert("Vui lòng chọn thứ.");
+        } else {
+            alert("action save.");
+        }
+    });
+    var getAllData = function () {
+        var data = [];
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataListUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "Configuation/HandlerSysRole.ashx",
+            type: "POST",
+            data: formDataListUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.stt = i + 1;
+                        obj.id = objectData.ID;
+                        obj.name = objectData.RoleName;
+                        //obj.dateCreate = objectData.Create_Date;
+                        var data_ngay = objectData.Create_Date;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.dateCreate = z;
+                        obj.Des = objectData.Create_User;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $tableSearch = $('#table');
+                $tableSearch.bootstrapTable('load', data);
+            },
+            error: function (err) {
+
+            }
+        });
+    };
+    var loadDataTable = function (data) {
+        $('#table').bootstrapTable({
+            columns: [{
+                field: 'stt',
+                title: 'STT',
+                align: 'center',
+                valign: 'middle',
+                //sortable: true,
+                ///editable: true,
+            }, {
+                field: 'thu',
+                title: 'Thứ',
+                align: 'center',
+                valign: 'middle',
+                // sortable: true,
+                // editable: true,
+
+            }, {
+                field: 'mon',
+                title: 'Món',
+                align: 'center',
+                valign: 'middle',
+                //sortable: true,
+            }, {
+                field: 'operate',
+                title: 'Thao tác',
+                align: 'center',
+                valign: 'middle',
+                events: operateEvents,
+                formatter: operateFormatter
+            }],
+            data: data
+        });
+    };
+    // function
+
+    $('#btSave').on('click', function (e) {
+        if ($('#txt_GroupName').val() === "") {
+            alert("Vui lòng nhập Group name");
+        } else {
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'insert');
+            var json = { 'ID': 0, 'RoleName': $('#txt_GroupName').val(), 'Create_User': $('#txt_des').val() };
+
+            formDataListUser.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysRole.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    getAllData();
+                    $('#txt_GroupName').val("");
+                    $('#txt_des').val("");
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+    });
+    function userFormatter(data) {
+        return data.length;
+    }
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
+            'Thêm user',
+            '</a>', '|',
+            '<a class="remove" href="javascript:void(0)" title="Xoá">',
+            'Xóa',
+            '</a>',
+
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .right': function (e, value, row, index) {
+            window.location = '/C002_GroupUser.aspx?id=' + row.id;
+        },
+        'click .remove': function (e, value, row, index) {
+            var data = [];
+            var formDataListUser = new FormData();
+            formDataListUser.append('type', 'delete');
+            var json = { 'ID': row.id };
+
+            formDataListUser.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "Configuation/HandlerSysRole.ashx",
+                type: "POST",
+                data: formDataListUser,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    alert('Xóa thành công');
+                    getAllData();
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+    };
+
+</script>
+    </asp:Content>
 

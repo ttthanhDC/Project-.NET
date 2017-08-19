@@ -155,14 +155,6 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
-								<a runat="server" href="~/C001_ListUser">
-									<i class="menu-icon fa fa-caret-right"></i>
-									C006 Cấu hình
-								</a>
-
-								<b class="arrow"></b>
-							</li>
                             <li class="">
 								<a runat="server" href="~/C007_ConfigurationSource">
 									<i class="menu-icon fa fa-caret-right"></i>

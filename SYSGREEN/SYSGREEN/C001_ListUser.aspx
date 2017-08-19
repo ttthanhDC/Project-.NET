@@ -31,7 +31,17 @@
                             obj.email = objectData.Email;
                             obj.department = objectData.DeptId;
                             obj.local = objectData.OrgId;
-                            obj.dateCreate = objectData.Create_Date;
+                            var Date_Start = objectData.Create_Date;
+                            var a = "";
+                            if (Date_Start) {
+                                var x = Date_Start.substr(0, 10);
+                                var y = x.split("-");
+                                var y1 = y[0];
+                                var y2 = y[1];
+                                var y3 = y[2];
+                                a = y3 + "/" + y2 + "/" + y1;
+                            }
+                            obj.dateCreate = a;
                             obj.user = objectData.UserName;
                             arr.push(obj);
                         }
@@ -103,7 +113,7 @@
 
         window.operateEvents = {
             'click .edit': function (e, value, row, index) {
-                window.location = '/UserManger.aspx?paramId='+ row.id;
+                window.location = '/C001_Detail.aspx?paramId='+ row.id;
                 //alert('You click like action, row: ' + JSON.stringify(row));
             },
             'click .remove': function (e, value, row, index) {
