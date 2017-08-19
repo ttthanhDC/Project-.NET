@@ -11,7 +11,7 @@ namespace SYSGREEN
 {
     public partial class wfTestRP : System.Web.UI.Page
     {
-        ReportDocument rprt = new ReportDocument();  
+        //ReportDocument rprt = new ReportDocument();  
         protected void Page_Load(object sender, EventArgs e)
         {
             /*
