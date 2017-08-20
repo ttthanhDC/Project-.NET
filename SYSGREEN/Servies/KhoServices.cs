@@ -29,7 +29,7 @@ namespace Servies
                     DataObject.Kho001 obj = new DataObject.Kho001();
                     obj.LoaiSua = oReader["Product_Name"].ToString();
                     String productCode = oReader["Product_Code"].ToString();
-                    String strCheck = "SELECT dbo.fK001('" + productCode + "','" + Ngay + "') AS MyResult";
+                    String strCheck = "SELECT fK001('" + productCode + "','" + Ngay + "') AS MyResult";
                     DataTable dt = new DataTable();
                     SqlConnection connF = Common.Connection.SqlConnect();
                     SqlCommand cmdCheck = new SqlCommand(strCheck);
