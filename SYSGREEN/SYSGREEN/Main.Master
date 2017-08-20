@@ -360,7 +360,7 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/K003_DiscountInvoice">
+								<a runat="server" href="~/KD003_DiscountInvoice">
 									<i class="menu-icon fa fa-caret-right"></i>
 									KD003 DS Bill giảm giá
 								</a>
