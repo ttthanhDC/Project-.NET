@@ -92,7 +92,7 @@
 
        });
        $('#btnBack').on('click', function (e) {
-           window.location = '/K003_ExportHat.aspx?paramId= 0';
+           window.location = '/K005_ExpectedToBuy.aspx?paramId= 0';
        });
        // Event Thêm mới
        $('#btnSave').on('click', function (e) {
