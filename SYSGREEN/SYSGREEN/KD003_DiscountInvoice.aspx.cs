@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SYSGREEN
 {
-    public partial class K007_QuantitativeProducts : System.Web.UI.Page
+    public partial class K003_DiscountInvoice : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SYSGREEN
 {
-    public partial class K004_ListSupplier : System.Web.UI.Page
+    public partial class K004_ImPortHat : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

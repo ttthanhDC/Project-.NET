@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SYSGREEN
 {
-    public partial class K006_ProductByPurpose : System.Web.UI.Page
+    public partial class K003_ExportHat : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

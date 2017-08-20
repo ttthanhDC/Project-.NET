@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SYSGREEN
 {
-    public partial class K005_ProductStore : System.Web.UI.Page
+    public partial class K006_Supplier : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

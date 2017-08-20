@@ -74,7 +74,7 @@
 					<ul class="nav ace-nav">
                         <li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="assets/images/avatars/logo.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="assets/images/avatars/logo.jpg" alt="xanh lá image" />
 								<span class="user-info">
 									<small>Chào bạn </small>
 									<span id="lblUser"></span>
@@ -82,7 +82,7 @@
 							</a>
 						</li>
                         <li class="light-blue dropdown-modal">
-                            <a runat="server" href="~/Login">
+                            <a runat="server" href="~/loginForm">
 								<span >Đăng xuất</span>
 							</a>
 						</li>
@@ -332,7 +332,7 @@
 					</li>
 
 					<li class="">
-						<a runat="server" href="~/wfTestRP" >
+						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-tag"></i>
 							<span class="menu-text"> Kinh doanh 
 							</span>
@@ -344,7 +344,7 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="profile.html">
+								<a runat="server" href="~/KD001_ListCustomer">
 									<i class="menu-icon fa fa-caret-right"></i>
 									KD001 Danh sách Khách hàng
 								</a>
@@ -353,54 +353,27 @@
 							</li>
 
 							<li class="">
-								<a href="inbox.html">
+								<a runat="server" href="~/KD002_HistoryBuy">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD002 Danh sách gói
+									KD002 Lịch sử mua hàng
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="pricing.html">
+								<a runat="server" href="~/KD003_DiscountInvoice">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD003 Danh sách lẻ
+									KD003 DS Bill giảm giá
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="invoice.html">
+								<a runat="server" href="~/KD004_Produce">
 									<i class="menu-icon fa fa-caret-right"></i>
-									KD004 Lịch sử mua hàng
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="timeline.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									KD005 Danh sách sắp sinh nhật
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="search.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									KD006 Danh sách bill giảm giá
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="email.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									KD007 Sản xuất
+									KD004 Sản xuất
 								</a>
 
 								<b class="arrow"></b>
@@ -424,61 +397,69 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="faq.html">
+								<a runat="server" href="~/K001_ProductByDate">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K001 Xuất kho
+									K001 Sản phẩm xuất kho theo ngày
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="error-404.html">
+								<a runat="server" href="~/K002_ToTalByDate">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K002 Nhập kho
+									K002 Thống kê số lượng và thể tích bán sữa theo từng ngày
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="error-500.html">
+								<a runat="server" href="~/K003_ExportHat">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K003 Dự kiến mua
+									K003 Xuất kho (dành cho xuất hạt)
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="grid.html">
+								<a runat="server" href="~/K004_ImPortHat">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K004 Danh sách nhà cung cấp
+									K004 Nhập kho (dành cho nhập hạt)
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K005_ExpectedToBuy">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K005 Sản phẩm kho
+									K005 Dự kiến mua (dành cho hạt)
 								</a> 
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K006_Supplier">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K006 Sản phẩm hỏng
+									K006 Danh sách nhà cung cấp
 								</a>
 
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K001_inputStore">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K007 Định lượng sản phẩm
+									K008 Định lượng sản phẩm
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+                            <li class="">
+								<a runat="server" href="~/K001_inputStore">
+									<i class="menu-icon fa fa-caret-right"></i>
+									K009 Báo cáo nhập xuất tồn
 								</a>
 
 								<b class="arrow"></b>
