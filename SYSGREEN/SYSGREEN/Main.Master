@@ -449,7 +449,7 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/K001_inputStore">
+								<a runat="server" href="~/K004_ImPortHat">
 									<i class="menu-icon fa fa-caret-right"></i>
 									K004 Nhập kho (dành cho nhập hạt)
 								</a>
@@ -458,9 +458,9 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/K001_inputStore">
+								<a runat="server" href="~/K005_ExpectedToBuy">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K005 Sản phẩm kho
+									K005 Dự kiến mua (dành cho hạt)
 								</a> 
 
 								<b class="arrow"></b>
