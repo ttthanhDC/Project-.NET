@@ -78,6 +78,22 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "viewK002")
+            {
+                try
+                {
+                    String TuNgay = context.Request.Form["TuNgay"].ToString();
+                    String DenNgay = context.Request.Form["DenNgay"].ToString();
+                    List<DataObject.Kho002> lst = Servies.KhoServices.viewK002(TuNgay, DenNgay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";

@@ -134,6 +134,41 @@ namespace Servies
             conn.Close();
             return dt;
         }
+        public static List<DataObject.Kho002> viewK002(String TuNgay, String DenNgay)
+        {
+
+            List<DataObject.Kho002> lst = new List<DataObject.Kho002>();
+            DateTime tNgay = DateTime.ParseExact(TuNgay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime dNgay = DateTime.ParseExact(DenNgay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            string[] dates = Enumerable.Range(0, 1 + dNgay.Subtract(tNgay).Days)
+           .Select(i => tNgay.AddDays(i).ToString("dd/MM/yyyy"))
+           .ToArray();
+            for (int i = 0; i < dates.Length; i++)
+            {
+                DataObject.Kho002 obj = new DataObject.Kho002();
+                obj.Ngay = dates[i];
+                String strCheck = "SELECT * FROM fK002 ('" + dates[i] + "') AS MyResult";
+                DataTable dt = new DataTable();
+                SqlConnection connF = Common.Connection.SqlConnect();
+                SqlCommand cmdCheck = new SqlCommand(strCheck);
+                cmdCheck.CommandType = CommandType.Text;
+                cmdCheck.Connection = connF;
+                connF.Open();
+                dt.Load(cmdCheck.ExecuteReader());
+                connF.Close();
+                if (dt.Rows.Count > 0)
+                {
+                    obj.SoLuongChai325 = dt.Rows[0][0].ToString() != "" ? Int32.Parse(dt.Rows[0][0].ToString()) : 0;
+                    obj.SoLuongChai550 = dt.Rows[0][1].ToString() != "" ? Int32.Parse(dt.Rows[0][1].ToString()) : 0;
+                    obj.SoLuongChai1000 = dt.Rows[0][2].ToString() != "" ? Int32.Parse(dt.Rows[0][2].ToString()) : 0;
+                    obj.TheTich = (obj.SoLuongChai325 * 325) + (obj.SoLuongChai550 * 550) + (obj.SoLuongChai1000 * 1000);
+                    lst.Add(obj);
+                }
+
+            }
+
+            return lst;
+        }
 
     }
 }
