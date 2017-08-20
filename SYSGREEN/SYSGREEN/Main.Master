@@ -330,7 +330,7 @@
 					</li>
 
 					<li class="">
-						<a runat="server" href="~/wfTestRP" >
+						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-tag"></i>
 							<span class="menu-text"> Kinh doanh 
 							</span>
