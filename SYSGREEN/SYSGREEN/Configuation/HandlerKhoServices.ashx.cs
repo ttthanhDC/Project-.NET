@@ -24,8 +24,8 @@ namespace SYSGREEN.Configuation
                     String Ngay = context.Request.Form["Ngay"].ToString();
                     String thu = context.Request.Form["thu"].ToString();
                     List<DataObject.Kho001> result = Servies.KhoServices.viewK001P1(Ngay, thu);
-                    context.Response.ContentType = "text/plain";
-                    context.Response.Write(result);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(result));
                 }
                 catch (Exception e)
                 {
