@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="KD003_DiscountInvoice.aspx.cs" Inherits="SYSGREEN.K002_Buy" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="KD003_DiscountInvoice.aspx.cs" Inherits="SYSGREEN.KD003_DiscountInvoice" %>
 
 <!DOCTYPE html>
 

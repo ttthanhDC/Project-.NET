@@ -10,7 +10,7 @@
 namespace SYSGREEN {
     
     
-    public partial class K002_Buy {
+    public partial class KD003_DiscountInvoice {
         
         /// <summary>
         /// form1 control.

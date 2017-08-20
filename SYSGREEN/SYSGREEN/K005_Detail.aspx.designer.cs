@@ -10,6 +10,6 @@
 namespace SYSGREEN {
     
     
-    public partial class K002_Buy {
+    public partial class K005_Detail {
     }
 }
