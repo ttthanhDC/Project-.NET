@@ -21,7 +21,7 @@
         </div>
     </div>
    <div class="form-group">
-        <label class="col-md-3 control-label">Đơn vị</label>
+        <label class="col-md-3 control-label">Thể tích</label>
          <div class="col-md-9">
              <input type="text" class="form-control" name="Don vi" id="txt_donVi" />
            </div>
@@ -32,17 +32,11 @@
          <input type="text" class="form-control" name="gia" id="txt_gia" />
              </div>
     </div> 
-    <div class="form-group">
-        <label class="col-md-3 control-label">User tạo</label>
-         <div class="col-md-9">
-             <select class="form-control" id="userid"></select>
-           </div>
-    </div>     
     
     <div class="form-group">
         <div class="col-md-12 col-md-offset-3">
             <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnSave">Lưu</button></div>
-            <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnBack">Quya lại</button></div>
+            <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnBack">Quay lại</button></div>
         </div>
     </div>
 </div>
@@ -138,41 +132,7 @@
            };
 
            // Load Data user
-           var formDataUser = new FormData();
-           formDataUser.append('type', 'getData');
-           var json = { 'ID': 0 };
-           formDataUser.append('data', JSON.stringify(json));
-           $.ajax({
-               url: "Configuation/HandlerSysUser.ashx",
-               type: "POST",
-               data: formDataUser,
-               contentType: false,
-               processData: false,
-               success: function (result) {
-                   var jsonData = result;
-                   var arr = [];
-                   if (jsonData && jsonData.length > 0) {
-                       for (var i = 0; i < jsonData.length ; i++) {
-                           var objectData = jsonData[i];
-                           var obj = {};
-                           obj.name = objectData.UserName;
-                           obj.link = objectData.ID;
-                           obj.sub = null;
-                           arr.push(obj);
-                       }
-                   }
-                   var data = { menu: arr };
-                   var $menu = $("#userid");
-                   $.each(data.menu, function () {
-                       $menu.append(
-                           getUser(this)
-                       );
-                   });
-               },
-               error: function (err) {
-
-               }
-           });
+           
 
            // select box user  
            var getUser = function (itemData) {

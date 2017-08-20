@@ -88,31 +88,18 @@
                 title: 'STT',
                 align: 'center',
                 valign: 'middle',
-                //sortable: true,
-                ///editable: true,
             }, {
                 field: 'name',
-                title: 'Group name',
+                title: 'Nhóm quyền',
                 align: 'center',
                 valign: 'middle',
-                // sortable: true,
-                // editable: true,
 
             }, {
                 field: 'dateCreate',
                 title: 'Ngày tạo',
                 align: 'center',
                 valign: 'middle',
-                //sortable: true,
-                //  editable: true,
-            }, {
-                field: 'Des',
-                title: 'Mô tả',
-                align: 'center',
-                valign: 'middle',
-                //sortable: true,
-                    
-            }, {
+            },  {
                 field: 'operate',
                 title: 'Thao tác',
                 align: 'center',
@@ -164,11 +151,16 @@
     }
     function operateFormatter(value, row, index) {
         return [
-            '<a class="right" href="javascript:void(0)" title="Phân quyền">',
-            'Thêm user',
-            '</a>', '|',
+            '<a class="right" href="javascript:void(0)" title="Thêm User">',
+            '<i class="glyphicon glyphicon-plus-sign"></i>',
+            '</a>',
+            ' ',
+             '<a class="right" href="javascript:void(0)" title="Sửa">',
+            '<i class="glyphicon glyphicon-pencil"></i>',
+            '</a>',
+            ' ',
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
+            '<i class="glyphicon glyphicon-remove"></i>',
             '</a>',
 
         ].join('');

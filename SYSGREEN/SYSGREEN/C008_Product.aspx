@@ -37,6 +37,7 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.branch = objectData.ORG_ID;
+                        obj.orgName = objectData.OrgName;
                         obj.codeProduct = objectData.Product_Code;
                         obj.nameProduct = objectData.Product_Name;
                         obj.unitProduct = objectData.Product_Unit;
@@ -48,7 +49,7 @@
 
                 $('#table').bootstrapTable({
                     columns: [{
-                        field: 'branch',
+                        field: 'orgName',
                         title: 'Cơ sở',
                         align: 'center',
                         valign: 'middle',
@@ -64,7 +65,7 @@
                         valign: 'middle',
                     }, {
                         field: 'unitProduct',
-                        title: 'Đơn vị',
+                        title: 'Thể tích',
                         align: 'center',
                         valign: 'middle',
                     }, {

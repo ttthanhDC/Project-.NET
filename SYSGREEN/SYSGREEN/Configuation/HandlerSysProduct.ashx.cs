@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -24,6 +25,7 @@ namespace SYSGREEN
                 try
                 {
                     obj.Create_Date = DateTime.Now;
+                    obj.Create_User = HttpContext.Current.Session["UserName"].ToString();
                     Insert(obj);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
@@ -69,7 +71,7 @@ namespace SYSGREEN
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    List<DataObject.SysProduct> lst = GetData(obj.ID);
+                    DataTable lst = Servies.SysProductServices.GetData(obj.ID);
 
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
@@ -125,10 +127,5 @@ namespace SYSGREEN
             Servies.SysProductServices.DeleteData(Id);
         }
 
-        public List<DataObject.SysProduct> GetData(Int32 Id)
-        {
-            List<DataObject.SysProduct> lst = Servies.SysProductServices.GetData(Id);
-            return lst;
-        }
     }
 }

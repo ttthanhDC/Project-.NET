@@ -24,11 +24,11 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    String menuId = context.Request.Form["menuId"].ToString();
+                    String Code = context.Request.Form["Code"].ToString();
                     String ProductId = context.Request.Form["ProductId"].ToString();
-                    Servies.SysMenuServices.InsertData(Convert.ToInt16(menuId), Convert.ToInt16(ProductId));
+                    int result = Servies.SysMenuServices.InsertData(Convert.ToInt16(Code), Convert.ToInt16(ProductId));
                     context.Response.ContentType = "text/plain";
-                    context.Response.Write("1");
+                    context.Response.Write(result);
                 }
                 catch (Exception e)
                 {
@@ -54,9 +54,9 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    String menuId = context.Request.Form["menuId"].ToString();
+                    String Code = context.Request.Form["Code"].ToString();
                     String ProductId = context.Request.Form["ProductId"].ToString();
-                    Servies.SysMenuServices.DeleteData(Convert.ToInt16(menuId), Convert.ToInt16(ProductId));
+                    Servies.SysMenuServices.DeleteData(Convert.ToInt16(Code), Convert.ToInt16(ProductId));
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("1");
                 }
@@ -72,8 +72,8 @@ namespace SYSGREEN.Configuation
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record
-                    String menuId = context.Request.Form["menuId"].ToString();
-                    DataTable lst = Servies.SysMenuServices.GetProductByIdMenu(Convert.ToInt16(menuId));
+                    String Code = context.Request.Form["Code"].ToString();
+                    DataTable lst = Servies.SysMenuServices.GetProductByIdCode(Convert.ToInt16(Code));
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }

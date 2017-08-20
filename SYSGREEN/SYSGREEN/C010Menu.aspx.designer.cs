@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SYSGREEN
+namespace SYSGREEN.Page.CauHinh
 {
 
 
-    public partial class Contact
+    public partial class C010Menu
     {
     }
 }

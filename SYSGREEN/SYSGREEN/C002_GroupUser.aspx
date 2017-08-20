@@ -14,7 +14,7 @@
                         </div>
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" id="btAdd">Thêm Use</button>
+                    <button type="button" class="btn btn-primary" id="btAdd">Thêm Người dùng</button>
                 </div>
             </div> 
     </div>
@@ -145,7 +145,7 @@
                 ///editable: true,
             }, {
                 field: 'user',
-                title: 'User name',
+                title: 'Tên người dùng',
                 align: 'center',
                 valign: 'middle',
                 // sortable: true,
@@ -157,13 +157,6 @@
                 valign: 'middle',
                 // sortable: true,
                 // editable: true,
-            }, {
-                field: 'dateCreate',
-                title: 'Ngày tạo',
-                align: 'center',
-                valign: 'middle',
-                //sortable: true,
-                //  editable: true,
             }, {
                 field: 'coSo',
                 title: 'Cơ sở',
@@ -204,8 +197,11 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                getAllData();
-
+                if (result == "-1") {
+                    alert("Người dùng đã được add vào trong group");
+                } else {
+                    getAllData();
+                }
             },
             error: function (err) {
 
@@ -218,7 +214,7 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
+            '<i class="glyphicon glyphicon-remove"></i>',
             '</a>',
 
         ].join('');

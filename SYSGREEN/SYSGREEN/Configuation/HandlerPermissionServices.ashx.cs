@@ -73,7 +73,8 @@ namespace SYSGREEN.Configuation
                 {
                     // Case ID > 0 -> Result = 1 record
                     // Case ID = 0; -> Result = All Record getUserInGroup(String MaHD,String TenKH,String TenSP)
-                    DataTable lst = Servies.PermissionServices.getAllFunction();
+                    String roleId = context.Request.Form["roleId"].ToString();
+                    DataTable lst = Servies.PermissionServices.getAllFunction(roleId);
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
@@ -108,9 +109,15 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    String FUNC_ID = context.Request.Form["FUNC_ID"].ToString();
-                    String ROLE_ID = context.Request.Form["ROLE_ID"].ToString();
-                    int result = Servies.PermissionServices.addFuntionToGroupReturnId(Convert.ToInt16(FUNC_ID), Convert.ToInt16(ROLE_ID));
+                    String jsonData = context.Request.Form["data"].ToString();
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    Servies.PermissionServices.removeFuntionInGroup(Convert.ToInt16((String)data[0].FUNC_ID), Convert.ToInt16((String)data[0].ROLE_ID));
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                        Servies.PermissionServices.addFuntionToGroupReturnId(Convert.ToInt16((String)data[i].FUNC_ID), Convert.ToInt16((String)data[i].ROLE_ID),
+                            Convert.ToInt16((String)data[i].IsCreate), Convert.ToInt16((String)data[i].IsEdit), Convert.ToInt16((String)data[i].IsDelete), Convert.ToInt16((String)data[i].IsView));
+                    }
+                    int result = 1;
                     context.Response.ContentType = "text/plain";
                     context.Response.Write(result);
                 }
@@ -162,6 +169,22 @@ namespace SYSGREEN.Configuation
                     Servies.PermissionServices.removeFuntionInGroup(Convert.ToInt16(FUNC_ID), Convert.ToInt16(ROLE_ID));
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("1");
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "getAllRole")
+            {
+                try
+                {
+                    // Case ID > 0 -> Result = 1 record
+                    // Case ID = 0; -> Result = All Record getUserInGroup(String MaHD,String TenKH,String TenSP)
+                    DataTable lst = Servies.PermissionServices.getAllRole();
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
                 catch (Exception e)
                 {
