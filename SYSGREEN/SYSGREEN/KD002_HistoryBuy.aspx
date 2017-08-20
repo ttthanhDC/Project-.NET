@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KD002_HistoryBuy.aspx.cs" Inherits="SYSGREEN.K002_Buy" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KD002_HistoryBuy.aspx.cs" Inherits="SYSGREEN.KD002_HistoryBuy" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
        <div id="contactForm"  class="form-horizontal">

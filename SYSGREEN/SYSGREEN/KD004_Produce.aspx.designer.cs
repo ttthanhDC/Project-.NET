@@ -10,7 +10,7 @@
 namespace SYSGREEN {
     
     
-    public partial class K002_Buy {
+    public partial class KD004_Produce {
         
         /// <summary>
         /// form1 control.
@@ -19,6 +19,6 @@ namespace SYSGREEN {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        //protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
     }
 }
