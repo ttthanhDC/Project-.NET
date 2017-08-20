@@ -1,13 +1,35 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="KD002_HistoryBuy.aspx.cs" Inherits="SYSGREEN.K002_Buy" %>
-
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="K004_Detail.aspx.cs" Inherits="SYSGREEN.K002_Buy" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Main.Master" CodeBehind="KD002_HistoryBuy.aspx.cs" Inherits="SYSGREEN.K002_Buy" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
        <div id="contactForm"  class="form-horizontal">
     <div class="form-group">
         <label class="col-md-3 control-label">mã Khách hàng</label>
-        <div class="col-md-9">
+        <div class="col-md-4">
             <input type="text" class="form-control" name="tile" id="txt_maKH" />
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary" id="btnView">View</button>
+        </div>
+        <div class="col-md-1">
+           <button type="button" class="btn btn-primary" id="btnIn">In</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Tên khách hàng</label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="tile" id="txt_nameKH" />
+        </div>
+    </div>
+     <div class="form-group">
+        <label class="col-md-3 control-label">SĐT</label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="tile" id="txt_sdt" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Địa chỉ</label>
+        <div class="col-md-9">
+            <textarea class="form-control"  id="txt_diaChi"></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -35,17 +57,12 @@
     <div style ="margin-left:20px;margin-right:20px" id ="div_Table1">
         <table id="table1"></table>
     </div>
-    <div class="form-group">
-        <div class="col-md-12 col-md-offset-3">
-            <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnSave">Lưu</button></div>
-            <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnBack">Quay lại</button></div>
-        </div>
-    </div>
+  
    <script>
        $(function () {
            var itemData = [];
            getDataTable1(itemData);
-           // eventSearch1();
+           eventSearch1();
 
            var idParam = getQueryVariable("paramId");
            function getQueryVariable(variable) {
@@ -93,6 +110,14 @@
 
 
 
+       });
+
+       $('#btnView').on('click', function (e) {
+           window.location = '/LT002_demo2.aspx?paramId= 0';
+       });
+
+       $('#btnIn').on('click', function (e) {
+           window.location = '/K004_ImPortHat.aspx?paramId= 0';
        });
        $('#btnBack').on('click', function (e) {
            window.location = '/K004_ImPortHat.aspx?paramId= 0';
@@ -157,54 +182,30 @@
                });
            }
        });
-       /* var eventSearch1 = function () {
-            var data = [{
-                stt: '1',
-                maSp: 'PX-20082018',
-                tenSp: 'Kho A',
-                soLuong: '20/08/2018',
-                donvi: '150',
-                hanSuDung: 'duytn ',
-                gia: 'duytn ',
-                chuyenToiKho: 'duytn ',
-            }]
-            data = data;
-            var $table1 = $('#table1');
-            $table1.bootstrapTable('load', data);
-        };*/
-
-       $('#btnAdd').on('click', function (e) {
-           var data = [];
-           var datatable = $('#table1').bootstrapTable('getData');
-           if (datatable) {
-               var x = datatable.length;
-               var obj = {};
-               obj.stt = x + 1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
-               obj.chuyenToiKho = '';
-               datatable.push(obj);
-           } else {
-               var obj = {};
-               obj.stt = 1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
-               obj.chuyenToiKho = '';
-               datatable.push(obj);
-           }
-           data = datatable;
+       var eventSearch1 = function () {
+           var data = [{
+               stt: '1',
+               maReser: 'PX-20082018',
+               maDon: 'Trần ngọc duy',
+               hoTen: '20/08/2018',
+               sdt: 'Khách gói',
+               quan: '0989485398 ',
+               diaChi: 'duytn@123',
+               trangThai: 'Ba đình ',
+           }, {
+               stt: '2',
+               maReser: 'PX-20082018',
+               maDon: 'Trần ngọc duy',
+               hoTen: '20/08/2018',
+               sdt: 'Khách gói',
+               quan: '0989485398 ',
+               diaChi: 'duytn@123',
+               trangThai: 'Ba đình ',
+           }]
+           data = data;
            var $table1 = $('#table1');
            $table1.bootstrapTable('load', data);
-       });
-
+       };
 
        // getdata table lộ trình
        var getDataTable1 = function (itemData) {
@@ -216,54 +217,40 @@
                        align: 'center',
                        valign: 'middle',
                    }, {
-                       field: 'maSp',
-                       title: 'Mã sản phẩm',
+                       field: 'maReser',
+                       title: 'Mã reservation',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'tenSp',
-                       title: 'Tên sản phẩm',
+                       field: 'maDon',
+                       title: 'Mã đơn',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'soLuong',
-                       title: 'Số lượng',
+                       field: 'hoTen',
+                       title: 'Họ tên',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'donvi',
-                       title: 'Đơn vị',
+                       field: 'sdt',
+                       title: 'SĐT',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'hanSuDung',
-                       title: 'Hạn sử dụng',
+                       field: 'quan',
+                       title: 'Quận',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'gia',
-                       title: 'Giá',
+                       field: 'diaChi',
+                       title: 'Dịa Chỉ',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
                    }, {
-                       field: 'chuyenToiKho',
-                       title: 'Chuyển tới kho',
+                       field: 'trangThai',
+                       title: 'Trạng thái',
                        align: 'center',
                        valign: 'middle',
-                       editable: true
-                   }, {
-                       field: 'operate',
-                       title: 'Xóa',
-                       align: 'center',
-                       valign: 'middle',
-                       events: operateEvents,
-                       formatter: operateFormatter
                    }],
 
                data: itemData

@@ -98,12 +98,15 @@
                     title: 'STT',
                     align: 'center',
                     valign: 'middle',
+                   
                 }, {
                     field: 'ma',
                     title: 'Mã khách',
                     align: 'center',
                     valign: 'middle',
                     sortable: true,
+                    events: operateEvents,
+                    formatter: operateFormatter
                 }, {
                     field: 'name',
                     title: 'Họ tên khách',
@@ -149,6 +152,19 @@
 
             data: itemData
         });
+    };
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="view" href="javascript:void(0)" title="link">',
+            value,
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .view': function (e, value, row, index) {
+            window.location = '/KD002_HistoryBuy.aspx?paramId= 0';
+        }
     };
 </script>
     </asp:Content>
