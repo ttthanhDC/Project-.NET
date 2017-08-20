@@ -23,7 +23,9 @@
 		<![endif]-->
 		<link rel="stylesheet" href="assets/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
-
+        
+         
+		<script src="assets/js/bootstrap-tag.min.js"></script> 
 		<!--[if lte IE 9]>
 		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
 		<![endif]-->
@@ -182,7 +184,7 @@
 							</li>
 
 							<li class="">
-								<a runat="server" href="~/C010_ConfigMenu">
+								<a runat="server" href="~/C010Menu">
 									<i class="menu-icon fa fa-caret-right"></i>
 									C010 Cấu hình menu
 								</a>
@@ -690,10 +692,15 @@
             <script src="Scripts/bootstrap-editable.js"></script>
             <script src="Scripts/Validator/bootstrap-table-editable.js"></script>
             <link href="Content/bootstrap-editable.css" rel="stylesheet" />
+             <link href="Content/Validator/bootstrap-select.css" rel="stylesheet" />
+             <link href="Content/Validator/bootstrap-select.min.css" rel="stylesheet" />
              <script src="Scripts/jquery.tmpl.js"></script>
              <script src="Scripts/jquery.tmpl.min.js"></script>
              <script src="Scripts/moment.js"></script>
              <script src="Scripts/canvasjs.min.js"></script>
+            <script src="assets/js/chosen.jquery.min.js"></script>
+             <link rel="stylesheet" href="assets/css/chosen.min.css" />
+
         </div>
     </form>
 </body>
