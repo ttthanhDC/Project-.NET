@@ -40,7 +40,7 @@ namespace Servies
                     connF.Close();
                     if (dt.Rows.Count > 0)
                     {
-                        if (dt.Rows[0][0] != null)
+                        if (dt.Rows[0][0].ToString() != "")
                         {
                             obj.SoLuongChai = Int32.Parse(dt.Rows[0][0].ToString());
                         }
@@ -48,7 +48,7 @@ namespace Servies
                         {
                             obj.SoLuongChai = 0;
                         }
-                        if (dt.Rows[0][1] != null)
+                        if (dt.Rows[0][1].ToString() != "")
                         {
                             obj.TheTich = Int32.Parse(dt.Rows[0][1].ToString());
                         }
@@ -56,7 +56,7 @@ namespace Servies
                         {
                             obj.TheTich = 0;
                         }
-                        if (dt.Rows[0][2] != null)
+                        if (dt.Rows[0][2].ToString() != "")
                         {
                             obj.sugar = Int32.Parse(dt.Rows[0][2].ToString()) > 0 ? 1 : 0;
                         }
