@@ -422,43 +422,43 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="faq.html">
+								<a runat="server" href="~/K001_ProductByDate">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K001 Xuất kho
+									K001 Sản phẩm xuất kho theo ngày
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="error-404.html">
+								<a runat="server" href="~/K002_ToTalByDate">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K002 Nhập kho
+									K002 Thống kê số lượng và thể tích bán sữa theo từng ngày
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="error-500.html">
+								<a runat="server" href="~/K003_ExportHat">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K003 Dự kiến mua
+									K003 Xuất kho (dành cho xuất hạt)
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="grid.html">
+								<a runat="server" href="~/K001_inputStore">
 									<i class="menu-icon fa fa-caret-right"></i>
-									K004 Danh sách nhà cung cấp
+									K004 Nhập kho (dành cho nhập hạt)
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K001_inputStore">
 									<i class="menu-icon fa fa-caret-right"></i>
 									K005 Sản phẩm kho
 								</a> 
@@ -466,7 +466,7 @@
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K001_inputStore">
 									<i class="menu-icon fa fa-caret-right"></i>
 									K006 Sản phẩm hỏng
 								</a>
@@ -474,7 +474,7 @@
 								<b class="arrow"></b>
 							</li>
                             <li class="">
-								<a href="blank.html">
+								<a runat="server" href="~/K001_inputStore">
 									<i class="menu-icon fa fa-caret-right"></i>
 									K007 Định lượng sản phẩm
 								</a>
