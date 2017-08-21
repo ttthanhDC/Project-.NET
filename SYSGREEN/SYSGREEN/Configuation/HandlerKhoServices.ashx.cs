@@ -185,6 +185,24 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "viewNhapXuatKho")
+            {
+                try
+                {
+                    String Type = context.Request.Form["Type"].ToString();
+                    String Ma = context.Request.Form["Ma"].ToString();
+                    String KhoId = context.Request.Form["KhoId"].ToString();
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    DataTable lst = Servies.KhoServices.viewNhapXuatKho(Convert.ToInt16(Type), Ma, Convert.ToInt16(KhoId), Ngay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
