@@ -140,8 +140,11 @@ namespace SYSGREEN.Configuation
                         DataObject.KhoNhapXuatDetail detail = new DataObject.KhoNhapXuatDetail();
                         detail.Type = Convert.ToInt16(dataDetail[i].Type);
                         detail.ID = Convert.ToInt16(dataDetail[i].ID);
-                        detail.NhapKhoId = Convert.ToInt16(dataDetail[i].NhapKhoId);
-                        detail.XuatKhoId = Convert.ToInt16(dataDetail[i].XuatKhoId);
+                        if(detail.Type == 0){
+                            detail.NhapKhoId = result;
+                        }else{
+                            detail.XuatKhoId = result;
+                        }
                         detail.Product_Code = (String)dataDetail[i].Product_Code;
                         detail.Product_Name = (String)dataDetail[i].Product_Name;
                         detail.SoLuong = Convert.ToInt16(dataDetail[i].SoLuong);
