@@ -145,7 +145,7 @@ namespace SYSGREEN.Configuation
                         detail.Product_Code = (String)dataDetail[i].Product_Code;
                         detail.Product_Name = (String)dataDetail[i].Product_Name;
                         detail.SoLuong = Convert.ToInt16(dataDetail[i].SoLuong);
-                        detail.DonVi = Convert.ToInt16(dataDetail[i].DonVi);
+                        detail.DonVi =(String)dataDetail[i].DonVi;
                         detail.HanSuDung = DateTime.ParseExact((String)dataDetail[i].HanSuDung, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                         detail.Gia = (String)dataDetail[i].Gia;
                         detail.Kho = Convert.ToInt16(dataDetail[i].Kho);
