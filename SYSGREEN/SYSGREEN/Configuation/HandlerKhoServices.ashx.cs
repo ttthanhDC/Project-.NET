@@ -33,6 +33,22 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            if (type == "viewSPCL")
+            {
+                try
+                {
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    String thu = context.Request.Form["thu"].ToString();
+                    List<DataObject.Kho001> result = Servies.KhoServices.viewSPCL(Ngay, thu);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(result));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else if (type == "insertOrUpdateViewK001")
             {
                 try

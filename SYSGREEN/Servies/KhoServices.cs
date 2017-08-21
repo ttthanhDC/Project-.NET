@@ -49,15 +49,21 @@ namespace Servies
 
             }
             conn.Close();
+            return lst;
+        }
 
+        public static List<DataObject.Kho001> viewSPCL(String Ngay, String thu)
+        {
             /*** Get Sữa Tồn ngày hôm trước *****/
+            List<DataObject.Kho001> lst = new List<DataObject.Kho001>();
+            SqlConnection conn = Common.Connection.SqlConnect();
             DateTime d = DateTime.ParseExact(Ngay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime ngayHomTruoc = d.AddDays(-1);
             String strNgayHomTruoc = ngayHomTruoc.ToString("dd/MM/yyyy");
             int dayOfWeek = Convert.ToInt32(ngayHomTruoc.DayOfWeek);
             String strDay = "Select k.*,sp.Product_Name,sp.Product_Code  from Kho001 k ";
-            checkStr += "LEFT JOIN SYS_PRODUCT sp ON sp.ID = k.Product_ID ";
-            checkStr += " where convert(date,CONVERT(VARCHAR(10),k.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + strNgayHomTruoc + ", 103),103)";
+            strDay += "LEFT JOIN SYS_PRODUCT sp ON sp.ID = k.Product_ID ";
+            strDay += " where convert(date,CONVERT(VARCHAR(10),k.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + strNgayHomTruoc + ", 103),103)";
             SqlCommand cmdDay = new SqlCommand(strDay);
             cmdDay.CommandType = CommandType.Text;
             cmdDay.Connection = conn;
@@ -84,14 +90,16 @@ namespace Servies
                         obj.SoLuongChai = 0;
                         obj.TheTich = dt.Rows[0][1].ToString() != "" ? (thetich - Int32.Parse(dt.Rows[0][1].ToString())) : 0;
                         obj.sugar = 0;
-                    }else {
+                    }
+                    else
+                    {
                         obj.TheTich = 0;
                     }
                     if (obj.TheTich > 0)
                     {
                         lst.Add(obj);
                     }
-                    
+
                 }
             }
             conn.Close();
