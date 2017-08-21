@@ -133,7 +133,7 @@ namespace Servies
 
         public static void insertOrUpdateViewK001(String Ngay, String ID,String productName,String ProductId,String productUnit,String productUnit_DK,String productUnit_CL)
         {
-            String select = "Select count(*) from Kho001 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + Ngay + ", 103),103) ";
+            String select = "Select count(*) from Kho001 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "', 103),103) ";
             int check = 0;
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(select);
@@ -224,6 +224,59 @@ namespace Servies
             }
 
             return lst;
+        }
+
+        public static int InsertKho003ReturnID(DataObject.Kho003 obj)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            int check = 0;
+            String select = "Select count(*) Kho003 where ID = " + obj.ID;
+            SqlCommand cmd = new SqlCommand(select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object count = cmd.ExecuteScalar();
+            conn.Close();
+            check = Convert.ToInt16(count);
+            if (check > 0)
+            {
+                String insert = "Update Kho003 SET  NhaCungCap = @NhaCungCap,Ten = @Ten ,SoDT = @SoDT ,DiaChi = @DiaChi ,Ngay = @Ngay ,Kho = @Kho,GhiChu = @GhiChu where ID = @ID";
+                SqlCommand cmdInsert = new SqlCommand(insert);
+                cmdInsert.CommandType = CommandType.Text;
+                cmdInsert.Connection = conn;
+                cmdInsert.Parameters.AddWithValue("@NhaCungCap", obj.NhaCungCap);
+                cmdInsert.Parameters.AddWithValue("@Ten", obj.Ten);
+                cmdInsert.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                cmdInsert.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                cmdInsert.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmdInsert.Parameters.AddWithValue("@Kho", obj.Kho);
+                cmdInsert.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmdInsert.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmdInsert.ExecuteNonQuery();
+                conn.Close();
+                return obj.ID;
+            }
+            else
+            {
+                String insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao);Select @@IDENTITY as newId";
+                SqlCommand cmdInsert = new SqlCommand(insert);
+                cmdInsert.CommandType = CommandType.Text;
+                cmdInsert.Connection = conn;
+                cmdInsert.Parameters.AddWithValue("@NhaCungCap",obj.NhaCungCap);
+                cmdInsert.Parameters.AddWithValue("@Ten", obj.Ten);
+                cmdInsert.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                cmdInsert.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                cmdInsert.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmdInsert.Parameters.AddWithValue("@Kho", obj.Kho);
+                cmdInsert.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmdInsert.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+                cmdInsert.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                conn.Open();
+                object Id = cmdInsert.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt16(Id);
+            }
         }
 
     }

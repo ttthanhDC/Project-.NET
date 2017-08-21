@@ -1602,7 +1602,7 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var quantity = Number(objectData.Product_Unit);
+                                var quantity = 1;
                                 row.quantity = 1;
                                 row.productName = objectData.Product_Name;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
@@ -1945,8 +1945,8 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var quantity = Number(objectData.Product_Unit);
-                                row.quantity = quantity;
+                                var quantity = 1;
+                                row.quantity = 1;
                                 row.productName = objectData.Product_Name;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
                                 row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");

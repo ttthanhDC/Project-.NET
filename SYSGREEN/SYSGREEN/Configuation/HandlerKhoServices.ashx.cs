@@ -110,6 +110,35 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "InsertKho003ReturnID")
+            {
+                try
+                {
+                    String jsonData = context.Request.Form["data"].ToString();
+                    dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                    
+                    String ID = data.ID;
+                    String NhaCungCap = (String)data.NhaCungCap;
+                    String Ten = data.productName;
+                    String SoDT = data.ProductId;
+                    String DiaChi = data.productUnit;
+                    String Ngay = data.productUnit_DK;
+                    String Kho = data.productUnit_CL;
+                    String GhiChu = data.productUnit_CL;
+                    String NgayTao = data.productUnit_CL;
+                    String NguoiTao = data.productUnit_CL;
+                    for (int i = 0; i < data.Count; i++)
+                    {
+                       
+                        Servies.KhoServices.insertOrUpdateViewK001(Ngay, ID, productName, ProductId, productUnit, productUnit_DK, productUnit_CL);
+                    }
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
