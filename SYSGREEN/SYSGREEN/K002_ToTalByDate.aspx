@@ -27,35 +27,53 @@
     $(function () {
         var itemData = [];
         getDataTable1(itemData);
-        eventSearch1();
+        //eventSearch1();
     });
 
-    $('#btTKLoTrinh').on('click', function (e) {
-        eventSearch();
-    });
-    var eventSearch1 = function () {
-        var data = [{
-            stt: '1',
-            ngay: '20/08/2018',
-            SoLuong1: '50',
-            SoLuong2: '250',
-            SoLuong3: '150',
-            theTich: '10500',
-        }, {
-            stt: '1',
-            ngay: '21/08/2018',
-            SoLuong1: '50',
-            SoLuong2: '250',
-            SoLuong3: '150',
-            theTich: '10500',
-        }]
-        data = data;
-        var $table1 = $('#table1');
-        $table1.bootstrapTable('load', data);
-    };
-    
-    $('#btTaoLoTrinh').on('click', function (e) {
+    $('#btSearh').on('click', function (e) {
+        if ($('#txt_todate').val() === "") {
+            alert('Vui lòng nhập từ ngày.');
+        } else if ($('#txt_fromdate').val() === "") {
+            alert('Vui lòng nhập đến ngày.');
+        } else {
+            var data = [];
+            var formDatasearch = new FormData();
+            formDatasearch.append('type', 'viewK002');
 
+            formDatasearch.append('TuNgay', $('#txt_todate').val());
+            formDatasearch.append('DenNgay', $('#txt_fromdate').val());
+            $.ajax({
+                url: "Configuation/HandlerKhoServices.ashx",
+                type: "POST",
+                data: formDatasearch,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+
+                            obj.stt = i + 1;
+                            obj.ngay = objectData.Ngay;
+                            obj.SoLuong1 = objectData.SoLuongChai325;
+                            obj.SoLuong2 = objectData.SoLuongChai550;
+                            obj.SoLuong3 = objectData.SoLuongChai1000;
+                            obj.theTich = (objectData.TheTich+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                            arr.push(obj);
+                        }
+                    }
+
+                    data = arr;
+                    var $table = $('#table1');
+                    $table.bootstrapTable('load', data);
+                },
+                error: function (err) {
+                }
+            });
+        }
     });
 
 
