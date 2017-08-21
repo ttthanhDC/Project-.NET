@@ -249,7 +249,16 @@ namespace Servies
             }
             else
             {
-                String insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao);Select @@IDENTITY as newId";
+                String insert = "";
+                if (obj.Type == 0)
+                {
+                    insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao,MaPhieuNhap,Type) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao,@MaPhieuNhap,@Type);Select @@IDENTITY as newId";
+                }
+                else
+                {
+                    insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao,MaPhieuXuat,Type) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao,@MaPhieuXuat,@Type);Select @@IDENTITY as newId";
+                }
+                
                 SqlCommand cmdInsert = new SqlCommand(insert);
                 cmdInsert.CommandType = CommandType.Text;
                 cmdInsert.Connection = conn;
@@ -262,6 +271,13 @@ namespace Servies
                 cmdInsert.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
                 cmdInsert.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
                 cmdInsert.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                if (obj.Type == 0)
+                {
+                    cmdInsert.Parameters.AddWithValue("@MaPhieuNhap", obj.MaPhieuNhap);
+                }else{
+                    cmdInsert.Parameters.AddWithValue("@MaPhieuXuat", obj.MaPhieuXuat);
+                }
+                cmdInsert.Parameters.AddWithValue("@Type", obj.Type);
                 conn.Open();
                 object Id = cmdInsert.ExecuteScalar();
                 conn.Close();
@@ -269,5 +285,143 @@ namespace Servies
             }
         }
 
+        public static int InsertKhoNhapXuatDetailReturnID(DataObject.KhoNhapXuatDetail obj)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            int check = 0;
+            String select = "Select count(*) KhoNhapXuatDetail where ID = " + obj.ID;
+            SqlCommand cmd = new SqlCommand(select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            object count = cmd.ExecuteScalar();
+            conn.Close();
+            check = Convert.ToInt16(count);
+            if (check > 0)
+            {
+                String insert = "Update KhoNhapXuatDetail SET  Product_Code = @Product_Code,Product_Name = @Product_Name ,SoLuong = @SoLuong ,DonVi = @DonVi ,HanSuDung = @HanSuDung ,Gia = @Gia,Kho = @Kho where ID = @ID";
+                SqlCommand cmdInsert = new SqlCommand(insert);
+                cmdInsert.CommandType = CommandType.Text;
+                cmdInsert.Connection = conn;
+                cmdInsert.Parameters.AddWithValue("@Product_Code", obj.Product_Code);
+                cmdInsert.Parameters.AddWithValue("@Product_Name", obj.Product_Name);
+                cmdInsert.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
+                cmdInsert.Parameters.AddWithValue("@DonVi", obj.DonVi);
+                cmdInsert.Parameters.AddWithValue("@HanSuDung", obj.HanSuDung);
+                cmdInsert.Parameters.AddWithValue("@Gia", obj.Gia);
+                cmdInsert.Parameters.AddWithValue("@Kho", obj.Kho);
+                cmdInsert.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmdInsert.ExecuteNonQuery();
+                conn.Close();
+                return obj.ID;
+            }
+            else
+            {
+                String insert = "";
+                if (obj.Type == 0)
+                {
+                    insert = "Insert into Kho003 (Type,NhapKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@NhapKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
+                }
+                else
+                {
+                    insert = "Insert into Kho003 (Type,XuatKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@XuatKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
+                }
+                
+                SqlCommand cmdInsert = new SqlCommand(insert);
+                cmdInsert.CommandType = CommandType.Text;
+                cmdInsert.Connection = conn;
+                cmdInsert.Parameters.AddWithValue("@Type", obj.Type);
+                if (obj.Type == 0)
+                {
+                    cmdInsert.Parameters.AddWithValue("@NhapKhoId", obj.NhapKhoId);
+                }
+                else
+                {
+                    cmdInsert.Parameters.AddWithValue("@XuatKhoId", obj.XuatKhoId);
+                }
+                cmdInsert.Parameters.AddWithValue("@Product_Code", obj.Product_Code);
+                cmdInsert.Parameters.AddWithValue("@Product_Name", obj.Product_Name);
+                cmdInsert.Parameters.AddWithValue("@SoLuong", obj.SoLuong);
+                cmdInsert.Parameters.AddWithValue("@DonVi", obj.DonVi);
+                cmdInsert.Parameters.AddWithValue("@HanSuDung", obj.HanSuDung);
+                cmdInsert.Parameters.AddWithValue("@Gia", obj.Gia);
+                cmdInsert.Parameters.AddWithValue("@Kho", obj.Kho);
+                conn.Open();
+                object Id = cmdInsert.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt16(Id);
+            }
+        }
+
+        public static DataTable viewNhapXuatKho(int Type, String Ma, int KhoId,String Ngay)
+        {
+            DataTable dt = new DataTable();
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String select = "Select * From  Kho003 Where Type = " + Type + " AND ";
+            if (Ma != "")
+            {
+                if (Type == 0)
+                {
+                    select += "MaPhieuNhap LIKE N'%" + Ma + "%' AND ";
+                }
+                else
+                {
+                    select += "MaPhieuXuat LIKE N'%" + Ma + "%' AND ";
+                }
+                
+            }
+            if (KhoId > 0)
+            {
+                select += "Kho = " + KhoId + " AND ";
+            }
+            if (Ngay != "")
+            {
+                select += "convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
+            }
+            select += "1 = 1 ";
+            SqlCommand cmd = new SqlCommand(select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            dt.Load(cmd.ExecuteReader());
+            conn.Close();
+            return dt;
+        }
+
+        public static List<DataTable> viewDetailNhapXuatKho(int Type, int IdNhapXuat)
+        {
+            List<DataTable> lst = new List<DataTable>();
+            SqlConnection conn = Common.Connection.SqlConnect();
+            DataTable dtView = new DataTable();
+            String select1 = "Select * From  Kho003 Where ID = " + IdNhapXuat;
+            SqlCommand cmd = new SqlCommand(select1);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            dtView.Load(cmd.ExecuteReader());
+            conn.Close();
+            lst.Add(dtView);
+
+            DataTable dt = new DataTable();
+            String select = "Select * From  KhoNhapXuatDetail Where Type = " + Type + " AND ";
+            if (Type  == 0)
+            {
+                select += "NhapKhoId = " + IdNhapXuat;
+            }
+            else if (Type == 1)
+            {
+                select += "XuatKhoId = " + IdNhapXuat;
+            }
+            
+            SqlCommand cmd1 = new SqlCommand(select);
+            cmd1.CommandType = CommandType.Text;
+            cmd1.Connection = conn;
+            conn.Open();
+            dt.Load(cmd1.ExecuteReader());
+            conn.Close();
+            lst.Add(dt);
+            return lst;
+        }
     }
 }

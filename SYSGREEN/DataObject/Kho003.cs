@@ -18,5 +18,8 @@ namespace DataObject
         public int Kho { set; get; }
         public string GhiChu { set; get; }
         public string NguoiTao { set; get; }
+        public string MaPhieuXuat { set; get; }
+        public string MaPhieuNhap { set; get; }
+        public int Type { set; get; }
     }
 }

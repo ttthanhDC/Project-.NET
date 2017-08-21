@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 
 namespace SYSGREEN.Configuation
 {
     /// <summary>
     /// Summary description for HandlerKhoServices
     /// </summary>
-    public class HandlerKhoServices : IHttpHandler
+    public class HandlerKhoServices : IHttpHandler, IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -116,22 +118,66 @@ namespace SYSGREEN.Configuation
                 {
                     String jsonData = context.Request.Form["data"].ToString();
                     dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
-                    
-                    String ID = data.ID;
-                    String NhaCungCap = (String)data.NhaCungCap;
-                    String Ten = data.productName;
-                    String SoDT = data.ProductId;
-                    String DiaChi = data.productUnit;
-                    String Ngay = data.productUnit_DK;
-                    String Kho = data.productUnit_CL;
-                    String GhiChu = data.productUnit_CL;
-                    String NgayTao = data.productUnit_CL;
-                    String NguoiTao = data.productUnit_CL;
-                    for (int i = 0; i < data.Count; i++)
+                    DataObject.Kho003 obj = new DataObject.Kho003();
+                    dynamic dataPX = data.PX;
+                    obj.ID = Convert.ToInt16(dataPX.ID);
+                    obj.NhaCungCap = (String)dataPX.NhaCungCap;
+                    obj.Ten = (String)dataPX.Ten;
+                    obj.SoDT = (String)dataPX.SoDT;
+                    obj.DiaChi = (String)dataPX.DiaChi;
+                    obj.Ngay = DateTime.ParseExact((String)dataPX.Ngay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    obj.Kho = Convert.ToInt16(dataPX.Kho);
+                    obj.GhiChu = (String)dataPX.GhiChu;
+                    obj.NgayTao = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    obj.NguoiTao = HttpContext.Current.Session["UserName"].ToString();
+                    obj.MaPhieuNhap = "PN-" + DateTime.Now.ToString("ddMMyy") + DateTime.Now.ToString("tt") + DateTime.Now.ToString("hh");
+                    obj.MaPhieuXuat = "PX-" + DateTime.Now.ToString("ddMMyy") + DateTime.Now.ToString("tt") + DateTime.Now.ToString("hh");
+                    obj.Type = Convert.ToInt16(dataPX.Type);
+                    int result = Servies.KhoServices.InsertKho003ReturnID(obj);
+                    dynamic dataDetail = data.Detail;
+                    for (int i = 0; i < dataDetail.Count; i++)
                     {
-                       
-                        //Servies.KhoServices.insertOrUpdateViewK001(Ngay, ID, productName, ProductId, productUnit, productUnit_DK, productUnit_CL);
+                        DataObject.KhoNhapXuatDetail detail = new DataObject.KhoNhapXuatDetail();
+                        detail.Type = Convert.ToInt16(dataDetail[i].Type);
+                        detail.ID = Convert.ToInt16(dataDetail[i].ID);
+                        detail.NhapKhoId = Convert.ToInt16(dataDetail[i].NhapKhoId);
+                        detail.XuatKhoId = Convert.ToInt16(dataDetail[i].XuatKhoId);
+                        detail.Product_Code = (String)dataDetail[i].Product_Code;
+                        detail.Product_Name = (String)dataDetail[i].Product_Name;
+                        detail.SoLuong = Convert.ToInt16(dataDetail[i].SoLuong);
+                        detail.DonVi = Convert.ToInt16(dataDetail[i].DonVi);
+                        detail.HanSuDung = DateTime.ParseExact((String)dataDetail[i].HanSuDung, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        detail.Gia = (String)dataDetail[i].Gia;
+                        detail.Kho = Convert.ToInt16(dataDetail[i].Kho);
+                        Servies.KhoServices.InsertKhoNhapXuatDetailReturnID(detail);
                     }
+                    context.Response.ContentType = "text/plain";
+                    if (obj.Type == 0)
+                    {
+                        context.Response.Write(obj.MaPhieuNhap);
+                    }
+                    else
+                    {
+                        context.Response.Write(obj.MaPhieuXuat);
+                    }
+                    
+                }
+
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
+            else if (type == "viewDetailNhapXuatKho")
+            {
+                try
+                {
+                    String Type = context.Request.Form["Type"].ToString();
+                    String IdNhapXuat = context.Request.Form["IdNhapXuat"].ToString();
+                    List<DataTable> lst = Servies.KhoServices.viewDetailNhapXuatKho(Convert.ToInt16(Type), Convert.ToInt16(IdNhapXuat));
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(lst));
                 }
                 catch (Exception e)
                 {
