@@ -130,7 +130,7 @@ namespace SYSGREEN.Configuation
                     for (int i = 0; i < data.Count; i++)
                     {
                        
-                        Servies.KhoServices.insertOrUpdateViewK001(Ngay, ID, productName, ProductId, productUnit, productUnit_DK, productUnit_CL);
+                        //Servies.KhoServices.insertOrUpdateViewK001(Ngay, ID, productName, ProductId, productUnit, productUnit_DK, productUnit_CL);
                     }
                 }
                 catch (Exception e)

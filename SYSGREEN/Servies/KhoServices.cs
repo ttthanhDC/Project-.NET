@@ -168,7 +168,6 @@ namespace Servies
                 cmdUpdate.Parameters.AddWithValue("@Product_Unit", Convert.ToInt16(productUnit));
                 cmdUpdate.Parameters.AddWithValue("@Product_Unit_DK", Convert.ToInt16(productUnit_DK));
                 cmdUpdate.Parameters.AddWithValue("@Product_Unit_CL", Convert.ToInt16(productUnit_CL));
-                cmdUpdate.Parameters.AddWithValue("@Product_Unit_CL", Convert.ToInt16(productUnit_CL));
                 cmdUpdate.Parameters.AddWithValue("@Ngay", DateTime.ParseExact(Ngay, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                 conn.Open();
                 cmdUpdate.ExecuteNonQuery();
