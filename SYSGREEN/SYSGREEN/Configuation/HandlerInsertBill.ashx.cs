@@ -883,7 +883,7 @@ namespace SYSGREEN.Configuation
             }
             ngayHoaDon.money = Convert.ToDecimal(money.Replace(".", ""));
             ngayHoaDon.product = data.product;
-            ngayHoaDon.sugar = data.sugar;
+            ngayHoaDon.sugar = Convert.ToBoolean(data.sugar) ? 1 : 0;
             ngayHoaDon.quantity = data.quantity;
             String price = (String)data.price;
             if (price == "")

@@ -27,10 +27,16 @@ namespace Servies
                 while (oReader.Read())
                 {
                     DataObject.Kho001 obj = new DataObject.Kho001();
+                    DataObject.Kho001 obj1 = new DataObject.Kho001();
                     obj.LoaiSua = oReader["Product_Name"].ToString();
                     obj.ProductId = Convert.ToInt16(oReader["PRODUCT_ID"].ToString());
+
+                    obj1.LoaiSua = oReader["Product_Name"].ToString();
+                    obj1.ProductId = Convert.ToInt16(oReader["PRODUCT_ID"].ToString());
                     String productCode = oReader["Product_Code"].ToString();
-                    String strCheck = "SELECT * FROM fK001 ('" + productCode + "','" + Ngay + "') AS MyResult";
+                    
+                    /*** Không đường ****/
+                    String strCheck = "SELECT * FROM fK001 ('" + productCode + "','" + Ngay + "',0) AS MyResult";
                     DataTable dt = new DataTable();
                     SqlConnection connF = Common.Connection.SqlConnect();
                     SqlCommand cmdCheck = new SqlCommand(strCheck);
@@ -45,7 +51,25 @@ namespace Servies
                         obj.TheTich = dt.Rows[0][1].ToString() != "" ? Int32.Parse(dt.Rows[0][1].ToString()) : 0;
                         obj.sugar = dt.Rows[0][2].ToString() != "" ? (Int32.Parse(dt.Rows[0][2].ToString()) > 0 ? 1 : 0) : 0;
                     }
+                    /*** Có đường ****/
+
+                    String strSurgar = "SELECT * FROM fK001 ('" + productCode + "','" + Ngay + "',1) AS MyResult";
+                    DataTable dtSurgar = new DataTable();
+                    SqlConnection connSurgar = Common.Connection.SqlConnect();
+                    SqlCommand cmdSurgar = new SqlCommand(strSurgar);
+                    cmdSurgar.CommandType = CommandType.Text;
+                    cmdSurgar.Connection = connSurgar;
+                    connSurgar.Open();
+                    dtSurgar.Load(cmdSurgar.ExecuteReader());
+                    connSurgar.Close();
+                    if (dtSurgar.Rows.Count > 0)
+                    {
+                        obj1.SoLuongChai = dtSurgar.Rows[0][0].ToString() != "" ? Int32.Parse(dtSurgar.Rows[0][0].ToString()) : 0;
+                        obj1.TheTich = dtSurgar.Rows[0][1].ToString() != "" ? Int32.Parse(dtSurgar.Rows[0][1].ToString()) : 0;
+                        obj1.sugar = dtSurgar.Rows[0][2].ToString() != "" ? (Int32.Parse(dtSurgar.Rows[0][2].ToString()) > 0 ? 1 : 0) : 0;
+                    }
                     lst.Add(obj);
+                    lst.Add(obj1);
                 }
 
             }

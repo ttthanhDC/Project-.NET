@@ -389,6 +389,7 @@
         window.totalTienGoi = 0;
         window.indexGoi = -1;
         window.isMasterTab = 0;
+        window.hidden = false;
         window.TempTab = [{ 'txtHoTen': '', 'txtNgaySinh': '', 'txtSoDienThoai': '', 'txtEmailCustomer': '', 'txtDiaChiCustomer': '', 'cb_quan': '' }];
         /************************************************
         ******** Load Content Form
@@ -1406,7 +1407,7 @@
                         obj.deliveryDate = '';
                         obj.product = '';
                         obj.productName = '';
-                        obj.sugar = 1;
+                        obj.sugar = true;
                         obj.quantity = '';
                         obj.price = '';
                         obj.money = '';
@@ -1543,26 +1544,7 @@
                     title: 'Sugar',
                     align: 'center',
                     valign: 'middle',
-                    checkbox: function (value, row, index) {
-                        if (row.operate == -1) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    },
-                    /*
-                    formatter: function (value, row, index) {
-                        if (row.operate == "1") {
-                            return "<label></label>";
-                        } else {
-                            if (row.sugar == "1") {
-                                return '<input type="checkbox"  checked="checked" />';
-                            } else {
-                                return '<input type="checkbox"  />';
-                            }
-                            
-                        }
-                    }*/
+                    checkbox: true
                 },
                 {
                     field: 'operate',
@@ -1621,7 +1603,7 @@
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
                                 var quantity = Number(objectData.Product_Unit);
-                                row.quantity = quantity;
+                                row.quantity = 1;
                                 row.productName = objectData.Product_Name;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
                                 row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1718,11 +1700,15 @@
             $tableRows = $table.find('tbody tr');
             tableData = $table.bootstrapTable('getData', true);
             var x = $('#tablePopup input[type=checkbox]');
-            x[0].style.display = 'none';
+            if (!window.hidden) {
+                x[0].style.display = 'none';
+                x[0].parentElement.innerText = "Đường";
+                window.hidden = true;
+            }
             $.each(tableData, function (i, row) {
                 //that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
                 if (row.operate == "1") {
-                    x[i+1].style.display = 'none';
+                    x[i].style.display = 'none';
                     $tableRows.eq(i).find('a[data-name="' + 'product' + '"]').editable('toggleDisabled');
                     $tableRows.eq(i).find('a[data-name="' + 'quantity' + '"]').editable('toggleDisabled');
                     //$tableRows.eq(i).find('a[data-name="' + 'promotionCode' + '"]').editable('toggleDisabled');
@@ -1751,7 +1737,7 @@
                 }
                 var obj = {};
                 obj.id = -1; obj.parent = false; obj.deliveryDate = ''; obj.product = ''; obj.productName = '';
-                obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
+                obj.sugar = false; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
                 obj.parentBillId = parentBillId; obj.parentId = parendId + 1;
                 obj.thugiaohang = ''; obj.note = '';
@@ -1895,14 +1881,7 @@
                     title: 'Đường',
                     align: 'center',
                     valign: 'middle',
-                    formatter: function (value, row, index) {
-                        if (value) {
-                            return '<input type="checkbox" value="" checked></label>';
-                        } else {
-                            return '<input type="checkbox" value=""></label>';
-                        }
-
-                    }
+                    checkbox: true
                 },
                 {
                     field: 'money',
@@ -1943,8 +1922,9 @@
                 data: []
             });
 
-
-
+            var x = $('#tablePopupSingle input[type=checkbox]');
+            x[0].style.display = 'none';
+            x[0].parentElement.innerText = "Đường";
             $table.on('editable-save.bs.table', function (e, field, row, old, $el) {
                 var $els = $table.find('.editable');
                 next = $els.index($el) + 1;
@@ -2094,7 +2074,7 @@
             obj.deliveryDate = '';
             obj.productName = '';
             obj.product = '';
-            obj.sugar = 1;
+            obj.sugar = false;
             obj.quantity = '';
             obj.price = '';
             obj.money = '';
@@ -2189,7 +2169,7 @@
                             obj.deliveryDate = formatDateTime(result[i].Column1);
                             obj.thugiaohang = convertDateToDay(formatDateTime(result[i].Column1));
                             obj.product = '';
-                            obj.sugar = 0;
+                            obj.sugar = false;
                             obj.quantity = '';
                             obj.price = '';
                             obj.money = '';
@@ -2207,7 +2187,7 @@
                             obj.deliveryDate = "";
                             obj.thugiaohang = "";
                             obj.product = result[i].Column3;
-                            obj.sugar = result[i].Column6 ? result[i].Column6 : 0 ;
+                            obj.sugar = result[i].Column6 ? true : false ;
                             obj.quantity = result[i].Column4;
                             obj.price = '0';
                             obj.money = '0';
