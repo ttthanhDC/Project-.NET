@@ -147,7 +147,7 @@ namespace Servies
         public static DataTable viewK001P2(String Ngay)
         {
             DataTable dt = new DataTable();
-            String select = "Select * from Kho001 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + Ngay + ", 103),103) ";
+            String select = "Select * from Kho001 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "', 103),103) ";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(select);
             cmd.CommandType = CommandType.Text;
