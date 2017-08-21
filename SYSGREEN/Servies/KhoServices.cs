@@ -63,7 +63,7 @@ namespace Servies
             int dayOfWeek = Convert.ToInt32(ngayHomTruoc.DayOfWeek);
             String strDay = "Select k.*,sp.Product_Name,sp.Product_Code  from Kho001 k ";
             strDay += "LEFT JOIN SYS_PRODUCT sp ON sp.ID = k.Product_ID ";
-            strDay += " where convert(date,CONVERT(VARCHAR(10),k.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + strNgayHomTruoc + ", 103),103)";
+            strDay += " where convert(date,CONVERT(VARCHAR(10),k.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + strNgayHomTruoc + "', 103),103)";
             SqlCommand cmdDay = new SqlCommand(strDay);
             cmdDay.CommandType = CommandType.Text;
             cmdDay.Connection = conn;
