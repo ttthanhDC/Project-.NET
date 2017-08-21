@@ -423,5 +423,95 @@ namespace Servies
             lst.Add(dt);
             return lst;
         }
+
+        public static void insertOrUpdateNhaCungCap(DataObject.NhaCungCap obj)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            if (obj.ID > 0)
+            {
+                String update = "Update NhaCungCap Set MaNCC = @MaNCC , TenNCC = @TenNCC , SoDT = @SoDT, Tinh = @Tinh, DiaChi = @DiaChi, LoaiDichVu = @LoaiDichVu, GhiChu = @GhiChu where ID = @ID";
+                SqlCommand cmdUpdate = new SqlCommand(update);
+                cmdUpdate.CommandType = CommandType.Text;
+                cmdUpdate.Connection = conn;
+                cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
+                cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
+                cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
+                cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
+                cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmdUpdate.Parameters.AddWithValue("@ID", obj.ID);
+                conn.Open();
+                cmdUpdate.ExecuteNonQuery();
+                conn.Close();
+            }
+            else
+            {
+                String update = "Insert INTO  NhaCungCap (MaNCC,TenNCC,SoDT,Tinh,DiaChi,LoaiDichVu,GhiChu,NgayTao,NguoiTao)VALUES (@MaNCC,@TenNCC,@SoDT,@Tinh,@DiaChi,@LoaiDichVu,@GhiChu,@NgayTao,@NguoiTao)";
+                SqlCommand cmdUpdate = new SqlCommand(update);
+                cmdUpdate.CommandType = CommandType.Text;
+                cmdUpdate.Connection = conn;
+                cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
+                cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
+                cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
+                cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
+                cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                cmdUpdate.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+                cmdUpdate.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                conn.Open();
+                cmdUpdate.ExecuteNonQuery();
+                conn.Close();
+            }
+
+        }
+
+        public static void DeleteNhaCungCap(int ID)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String delete = "Delete from NhaCungCap where ID = " + ID;
+            SqlCommand cmdUpdate = new SqlCommand(delete);
+            cmdUpdate.CommandType = CommandType.Text;
+            cmdUpdate.Connection = conn;
+            conn.Open();
+            cmdUpdate.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public static DataTable viewNhaCungCap(String MaNCC, String TenNCC, String SoDT, String Tinh, String LoaiDichVu)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String select = "Select * from NhaCungCap where ";
+            if (MaNCC != "")
+            {
+                select += "MaNCC LIKE N'%" + MaNCC + "%' AND ";
+            }
+            if (TenNCC != "")
+            {
+                select += "TenNCC LIKE N'%" + TenNCC + "%' AND ";
+            }
+            if (SoDT != "")
+            {
+                select += "SoDT LIKE N'%" + SoDT + "%' AND ";
+            }
+            if (Tinh != "")
+            {
+                select += "Tinh LIKE N'%" + Tinh + "%' AND ";
+            }
+            if (LoaiDichVu != "")
+            {
+                select += "LoaiDichVu LIKE N'%" + LoaiDichVu + "%' AND ";
+            }
+            select += " 1 = 1";
+            DataTable dt = new DataTable();
+            SqlCommand cmdUpdate = new SqlCommand(select);
+            cmdUpdate.CommandType = CommandType.Text;
+            cmdUpdate.Connection = conn;
+            conn.Open();
+            dt.Load(cmdUpdate.ExecuteReader());
+            conn.Close();
+            return dt;
+        }
     }
 }

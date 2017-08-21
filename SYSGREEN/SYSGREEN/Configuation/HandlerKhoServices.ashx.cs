@@ -203,6 +203,44 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "insertOrUpdateNhaCungCap")
+            {
+                String jsonData = context.Request.Form["data"].ToString();
+                dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonData);
+                DataObject.NhaCungCap obj = new DataObject.NhaCungCap();
+                obj.ID = Convert.ToInt16(data.ID);
+                obj.MaNCC = (String)data.MaNCC;
+                obj.TenNCC = (String)data.TenNCC;
+                obj.SoDT = (String)data.SoDT;
+                obj.Tinh = (String)data.Tinh;
+                obj.DiaChi = (String)data.DiaChi;
+                obj.LoaiDichVu = (String)data.LoaiDichVu;
+                obj.GhiChu = (String)data.GhiChu;
+                obj.NgayTao = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                obj.NguoiTao = HttpContext.Current.Session["UserName"].ToString();
+                Servies.KhoServices.insertOrUpdateNhaCungCap(obj);
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("1");
+            }
+            else if (type == "DeleteNhaCungCap")
+            {
+                int ID = Convert.ToInt16(context.Request.Form["ID"].ToString());
+                Servies.KhoServices.DeleteNhaCungCap(ID);
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("1");
+            }
+            else if (type == "viewNhaCungCap")
+            {
+                //viewNhaCungCap(String MaNCC, String TenNCC, String SoDT, String Tinh, String LoaiDichVu)
+                String MaNCC = context.Request.Form["MaNCC"].ToString();
+                String TenNCC = context.Request.Form["TenNCC"].ToString();
+                String SoDT = context.Request.Form["SoDT"].ToString();
+                String Tinh = context.Request.Form["Tinh"].ToString();
+                String LoaiDichVu = context.Request.Form["LoaiDichVu"].ToString();
+                DataTable dt = Servies.KhoServices.viewNhaCungCap(MaNCC, TenNCC, SoDT, Tinh, LoaiDichVu);
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("1");
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
