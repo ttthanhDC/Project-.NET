@@ -33,7 +33,7 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
-            if (type == "viewSPCL")
+            else if (type == "viewSPCL")
             {
                 try
                 {
