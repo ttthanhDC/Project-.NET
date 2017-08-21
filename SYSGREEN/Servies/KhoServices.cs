@@ -40,36 +40,59 @@ namespace Servies
                     connF.Close();
                     if (dt.Rows.Count > 0)
                     {
-                        if (dt.Rows[0][0].ToString() != "")
-                        {
-                            obj.SoLuongChai = Int32.Parse(dt.Rows[0][0].ToString());
-                        }
-                        else
-                        {
-                            obj.SoLuongChai = 0;
-                        }
-                        if (dt.Rows[0][1].ToString() != "")
-                        {
-                            obj.TheTich = Int32.Parse(dt.Rows[0][1].ToString());
-                        }
-                        else
-                        {
-                            obj.TheTich = 0;
-                        }
-                        if (dt.Rows[0][2].ToString() != "")
-                        {
-                            obj.sugar = Int32.Parse(dt.Rows[0][2].ToString()) > 0 ? 1 : 0;
-                        }
-                        else
-                        {
-                            obj.sugar = 0;
-                        }
-                        
-                        
+                        obj.SoLuongChai = dt.Rows[0][0].ToString() != "" ? Int32.Parse(dt.Rows[0][0].ToString()) : 0;
+                        obj.TheTich = dt.Rows[0][1].ToString() != "" ? Int32.Parse(dt.Rows[0][1].ToString()) : 0;
+                        obj.sugar = dt.Rows[0][2].ToString() != "" ? (Int32.Parse(dt.Rows[0][2].ToString()) > 0 ? 1 : 0) : 0;
                     }
                     lst.Add(obj);
                 }
 
+            }
+            conn.Close();
+
+            /*** Get Sữa Tồn ngày hôm trước *****/
+            DateTime d = DateTime.ParseExact(Ngay, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            DateTime ngayHomTruoc = d.AddDays(-1);
+            String strNgayHomTruoc = ngayHomTruoc.ToString("dd/MM/yyyy");
+            int dayOfWeek = Convert.ToInt32(ngayHomTruoc.DayOfWeek);
+            String strDay = "Select k.*,sp.Product_Name,sp.Product_Code  from Kho001 k ";
+            checkStr += "LEFT JOIN SYS_PRODUCT sp ON sp.ID = k.Product_ID ";
+            checkStr += " where convert(date,CONVERT(VARCHAR(10),k.Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10)," + strNgayHomTruoc + ", 103),103)";
+            SqlCommand cmdDay = new SqlCommand(strDay);
+            cmdDay.CommandType = CommandType.Text;
+            cmdDay.Connection = conn;
+            conn.Open();
+            using (SqlDataReader oReader = cmdDay.ExecuteReader())
+            {
+                while (oReader.Read())
+                {
+                    DataObject.Kho001 obj = new DataObject.Kho001();
+                    obj.LoaiSua = oReader["Product_Name"].ToString();
+                    String productCode = oReader["Product_Code"].ToString();
+                    String strCheck = "SELECT * FROM fK001P1 ('" + productCode + "','" + strDay + "') AS MyResult";
+                    DataTable dt = new DataTable();
+                    SqlConnection connF = Common.Connection.SqlConnect();
+                    SqlCommand cmdCheck = new SqlCommand(strCheck);
+                    cmdCheck.CommandType = CommandType.Text;
+                    cmdCheck.Connection = connF;
+                    connF.Open();
+                    dt.Load(cmdCheck.ExecuteReader());
+                    connF.Close();
+                    int thetich = Convert.ToInt16(oReader["Product_Unit"].ToString());
+                    if (dt.Rows.Count > 0)
+                    {
+                        obj.SoLuongChai = 0;
+                        obj.TheTich = dt.Rows[0][1].ToString() != "" ? (thetich - Int32.Parse(dt.Rows[0][1].ToString())) : 0;
+                        obj.sugar = 0;
+                    }else {
+                        obj.TheTich = 0;
+                    }
+                    if (obj.TheTich > 0)
+                    {
+                        lst.Add(obj);
+                    }
+                    
+                }
             }
             conn.Close();
             return lst;
