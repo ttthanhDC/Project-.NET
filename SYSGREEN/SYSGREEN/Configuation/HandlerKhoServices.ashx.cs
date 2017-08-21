@@ -176,7 +176,7 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    String Type = context.Request.Form["Type"].ToString();
+                    String Type = context.Request.Form["TypeXNK"].ToString();
                     String IdNhapXuat = context.Request.Form["IdNhapXuat"].ToString();
                     List<DataTable> lst = Servies.KhoServices.viewDetailNhapXuatKho(Convert.ToInt16(Type), Convert.ToInt16(IdNhapXuat));
                     context.Response.ContentType = "application/json";
@@ -192,7 +192,7 @@ namespace SYSGREEN.Configuation
             {
                 try
                 {
-                    String Type = context.Request.Form["Type"].ToString();
+                    String Type = context.Request.Form["TypeXNK"].ToString();
                     String Ma = context.Request.Form["Ma"].ToString();
                     String KhoId = context.Request.Form["KhoId"].ToString();
                     String Ngay = context.Request.Form["Ngay"].ToString();
