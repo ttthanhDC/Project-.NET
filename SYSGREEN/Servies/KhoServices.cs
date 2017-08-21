@@ -321,11 +321,11 @@ namespace Servies
                 String insert = "";
                 if (obj.Type == 0)
                 {
-                    insert = "Insert into Kho003 (Type,NhapKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@NhapKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
+                    insert = "Insert into KhoNhapXuatDetail (Type,NhapKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@NhapKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
                 }
                 else
                 {
-                    insert = "Insert into Kho003 (Type,XuatKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@XuatKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
+                    insert = "Insert into KhoNhapXuatDetail (Type,XuatKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@XuatKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
                 }
                 
                 SqlCommand cmdInsert = new SqlCommand(insert);
