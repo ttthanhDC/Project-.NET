@@ -1543,6 +1543,14 @@
                     title: 'Sugar',
                     align: 'center',
                     valign: 'middle',
+                    checkbox: function (value, row, index) {
+                        if (row.operate == -1) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    },
+                    /*
                     formatter: function (value, row, index) {
                         if (row.operate == "1") {
                             return "<label></label>";
@@ -1554,7 +1562,7 @@
                             }
                             
                         }
-                    }
+                    }*/
                 },
                 {
                     field: 'operate',
@@ -1709,9 +1717,12 @@
             var $table = $('#tablePopup');
             $tableRows = $table.find('tbody tr');
             tableData = $table.bootstrapTable('getData', true);
+            var x = $('#tablePopup input[type=checkbox]');
+            x[0].style.display = 'none';
             $.each(tableData, function (i, row) {
                 //that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
                 if (row.operate == "1") {
+                    x[i+1].style.display = 'none';
                     $tableRows.eq(i).find('a[data-name="' + 'product' + '"]').editable('toggleDisabled');
                     $tableRows.eq(i).find('a[data-name="' + 'quantity' + '"]').editable('toggleDisabled');
                     //$tableRows.eq(i).find('a[data-name="' + 'promotionCode' + '"]').editable('toggleDisabled');

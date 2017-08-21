@@ -28,6 +28,7 @@ namespace Servies
                 {
                     DataObject.Kho001 obj = new DataObject.Kho001();
                     obj.LoaiSua = oReader["Product_Name"].ToString();
+                    obj.ProductId = Convert.ToInt16(oReader["PRODUCT_ID"].ToString());
                     String productCode = oReader["Product_Code"].ToString();
                     String strCheck = "SELECT * FROM fK001 ('" + productCode + "','" + Ngay + "') AS MyResult";
                     DataTable dt = new DataTable();

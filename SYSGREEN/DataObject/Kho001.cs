@@ -12,5 +12,6 @@ namespace DataObject
         public int sugar { set; get; }
         public int SoLuongChai { set; get; }
         public int TheTich { set; get; }
+        public int ProductId { set; get; }
     }
 }
