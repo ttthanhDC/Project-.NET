@@ -36,8 +36,61 @@
     $('#btTKLoTrinh').on('click', function (e) {
         eventSearch();
     });
+
+
+
     var eventSearch1 = function () {
-        var data = [{
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewK001P1');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+            var thu = convertDateToDay(formDatasearch);
+            formDatasearch.append('thu', thu);
+        } else {
+            var d = new Date();
+            var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            formDatasearch.append('Ngay', strDate);
+            var thu = convertDateToDay(strDate);
+            formDatasearch.append('thu', thu);
+        }
+       
+        $.ajax({
+            url: "Configuation/HandlerKhoServices.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+
+                        obj.stt = i + 1;
+                        obj.loaiSua = objectData.LoaiSua;
+                        obj.duong = objectData.sugar;
+                        obj.SoLuong = objectData.SoLuongChai;
+                        obj.theTich = objectData.TheTich;
+                        arr.push(obj);
+                    }
+                } 
+                
+                data = arr;
+                var $table = $('#table1');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
+
+
+
+       /* var data = [{
             stt: '1',
             loaiSua: 'Hạt điều',
             duong: '1',
@@ -52,10 +105,51 @@
         }]
         data = data;
         var $table1 = $('#table1');
-        $table1.bootstrapTable('load', data);
+        $table1.bootstrapTable('load', data);*/
     };
     var eventSearch2 = function () {
-        var data = [{
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewK001P2');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+        } else {
+            var d = new Date();
+            var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            formDatasearch.append('Ngay', strDate);
+        }
+
+        $.ajax({
+            url: "Configuation/HandlerKhoServices.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        
+                        obj.stt = objectData.ID_NHD;
+                        obj.id = objectData.ID_NHD;
+                        obj.id = objectData.ID_NHD;
+                        obj.id = objectData.ID_NHD;
+                        obj.id = objectData.ID_NHD;
+                    }
+                }
+                // data = arr;
+                //var $table = $('#tableLoTrinh');
+                //$table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
+        /*var data = [{
             stt: '1',
             viSua: 'Hạt điều',
             theTich: '5000',
@@ -70,7 +164,7 @@
         }]
         data = data;
         var $table2 = $('#table2');
-        $table2.bootstrapTable('load', data);
+        $table2.bootstrapTable('load', data);*/
     };
     $('#btTaoLoTrinh').on('click', function (e) {
 
@@ -153,6 +247,14 @@
             data: itemData
         });
     };
+    function convertDateToDay(num) {
+        // var x = parseStringToDate(num);
+        var x = num;
+        x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+        var date = new Date(x);
+        var day = date.getDay();
+        return day
+    }
 
 </script>
     </asp:Content>
