@@ -220,7 +220,7 @@ namespace Servies
         {
             SqlConnection conn = Common.Connection.SqlConnect();
             int check = 0;
-            String select = "Select count(*) Kho003 where ID = " + obj.ID;
+            String select = "Select count(*) FROM Kho003 where ID = " + obj.ID;
             SqlCommand cmd = new SqlCommand(select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
@@ -289,7 +289,7 @@ namespace Servies
         {
             SqlConnection conn = Common.Connection.SqlConnect();
             int check = 0;
-            String select = "Select count(*) KhoNhapXuatDetail where ID = " + obj.ID;
+            String select = "Select count(*) FROM KhoNhapXuatDetail where ID = " + obj.ID;
             SqlCommand cmd = new SqlCommand(select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
