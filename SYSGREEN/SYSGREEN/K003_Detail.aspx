@@ -63,11 +63,13 @@
     </div>
    <script>
        $(function () {
+           window.id = 0;
+           window.idParam = 0;
            var itemData = [];
            getDataTable1(itemData);
           // eventSearch1();
 
-           var idParam = getQueryVariable("paramId");
+           window.idParam = getQueryVariable("paramId");
            function getQueryVariable(variable) {
                var query = window.location.search.substring(1);
                var vars = query.split("&");
@@ -79,13 +81,13 @@
                }
                //alert('Query Variable ' + variable + ' not found');
            }
-           if (idParam === "ADD") {
+           if (window.idParam === "ADD") {
 
            } else {
                var formDataListUser = new FormData();
-               formDataListUser.append('type', 'getData');
-               var json = { 'ID': parseInt(idParam) };
-               formDataListUser.append('data', JSON.stringify(json));
+               formDataListUser.append('type', 'viewDetailNhapXuatKho');
+               formDataListUser.append('Type', 1);
+               formDataListUser.append('IdNhapXuat', "");
                $.ajax({
                    url: "Configuation/HandlerSysProduct.ashx",
                    type: "POST",
@@ -97,11 +99,13 @@
                        if (jsonData && jsonData.length > 0) {
                            for (var i = 0; i < jsonData.length ; i++) {
                                var objectData = jsonData[i];
-                               $('#txt_gia').val(objectData.Product_Amount);
-                               $('#txt_donVi').val(objectData.Product_Unit);
-                               $('#txt_productName').val(objectData.Product_Name);
-                               $('#txt_productCode').val(objectData.Product_Code);
-                               $('#orgId').val(objectData.ORG_ID);
+                               $('#txt_productCode').val(objectData.Product_Amount);
+                               $('#txt_ten').val(objectData.Product_Unit);
+                               $('#txt_sdt').val(objectData.Product_Name);
+                               $('#txt_DiaChi').val(objectData.Product_Code);
+                               $('#txt_date').val(objectData.Product_Code);
+                               $('#kho').val(objectData.Product_Code);
+                               $('#txt_ghiChu').val(objectData.Product_Code);
                            }
                        }
                    },
@@ -119,57 +123,63 @@
        });
        // Event Thêm mới
        $('#btnSave').on('click', function (e) {
-           var idParam = getQueryVariable("paramId");
            // funtion get
-           if (idParam === "ADD") {
+           if (window.idParam === "ADD") {
                // update
                var formData = new FormData();
-               var json = {
-                   'ID': parseInt(idParam + ""),
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
+               var obj  = {'ID': 0,
+                           'NhaCungCap': $('#txt_productCode').val(),
+                           'Ten': $('#txt_ten').val(),
+                           'SoDT': $('#txt_sdt').val(),
+                           'DiaChi': $('#txt_DiaChi').val(),
+                           'Ngay': $('#txt_date').val(),
+                           'Kho': $('#kho').val(),
+                           'GhiChu': $('#txt_ghiChu').val(),
+                           'Type': 1
                };
+               var datatable = $('#table1').bootstrapTable('getData');
+               var json = { 'PX': obj,'Detail': datatable};
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'update');
+               formData.append('type', 'InsertKho003ReturnID');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
                        alert(result);
+                       window.idParam == result;
+                           // update
                    },
                    error: function (err) {
-
                    }
                });
            } else {
-               // insert
                var formData = new FormData();
                var json = {
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
-                   'Create_User': parseInt($('#userid').val() + ""),
+                   'ID': 0,
+                   'NhaCungCap': $('#txt_productCode').val(),
+                   'Ten': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'DiaChi': $('#txt_DiaChi').val(),
+                   'Ngay': $('#txt_date').val(),
+                   'Kho': $('#kho').val(),
+                   'GhiChu': $('#txt_ghiChu').val()
                };
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'insert');
+               formData.append('type', 'InsertKho003ReturnID');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
                        alert(result);
+                       window.idParam == result;
                    },
                    error: function (err) {
 
@@ -177,22 +187,7 @@
                });
            }
        });
-      /* var eventSearch1 = function () {
-           var data = [{
-               stt: '1',
-               maSp: 'PX-20082018',
-               tenSp: 'Kho A',
-               soLuong: '20/08/2018',
-               donvi: '150',
-               hanSuDung: 'duytn ',
-               gia: 'duytn ',
-               chuyenToiKho: 'duytn ',
-           }]
-           data = data;
-           var $table1 = $('#table1');
-           $table1.bootstrapTable('load', data);
-       };*/
-
+      
        $('#btnAdd').on('click', function (e) {
            var data = [];
            var datatable = $('#table1').bootstrapTable('getData');
@@ -200,24 +195,34 @@
                var x =  datatable.length;
                var obj = {};
                obj.stt = x +1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
-               obj.chuyenToiKho = '';
+               obj.Product_Code = '';
+               obj.Product_Name = '';
+               obj.SoLuong = '';
+               obj.DonVi = '';
+               obj.HanSuDung = '';
+               obj.Gia = '';
+               obj.Kho = '';
+               //
+               obj.Type = 1;
+               obj.ID = 0;
+               obj.NhapKhoId = 0;
+               obj.XuatKhoId = 0;
                datatable.push(obj);
            }else{
                var obj = {};
                obj.stt = 1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
-               obj.chuyenToiKho = '';
+               obj.Product_Code = '';
+               obj.Product_Name = '';
+               obj.SoLuong = '';
+               obj.DonVi = '';
+               obj.HanSuDung = '';
+               obj.Gia = '';
+               obj.Kho = '';
+               //
+               obj.Type = 1;
+               obj.ID = 0;
+               obj.NhapKhoId = 0;
+               obj.XuatKhoId = 0;
                datatable.push(obj);
            }
            data = datatable;
@@ -236,43 +241,43 @@
                        align: 'center',
                        valign: 'middle',
                    }, {
-                       field: 'maSp',
+                       field: 'Product_Code',
                        title: 'Mã sản phẩm',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'tenSp',
+                       field: 'Product_Name',
                        title: 'Tên sản phẩm',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'soLuong',
+                       field: 'SoLuong',
                        title: 'Số lượng',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'donvi',
+                       field: 'DonVi',
                        title: 'Đơn vị',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'hanSuDung',
+                       field: 'HanSuDung',
                        title: 'Hạn sử dụng',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'gia',
+                       field: 'Gia',
                        title: 'Giá',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'chuyenToiKho',
+                       field: 'Kho',
                        title: 'Chuyển tới kho',
                        align: 'center',
                        valign: 'middle',

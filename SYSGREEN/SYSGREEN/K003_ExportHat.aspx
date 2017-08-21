@@ -41,32 +41,60 @@
         eventSearch1();
     });
 
-    $('#btTKLoTrinh').on('click', function (e) {
-        eventSearch();
+    $('#btSearh').on('click', function (e) {
+        eventSearch1();
     });
     var eventSearch1 = function () {
-        var data = [{
-            stt: '1',
-            phieuXuat: 'PX-20082018',
-            kho: 'Kho A',
-            date: '20/08/2018',
-            taiKhoan: '150',
-            ghiChu: 'duytn ',
-        }, {
-            stt: '1',
-            phieuXuat: 'PX-21082018',
-            kho: 'Kho A',
-            date: '21/08/2018',
-            taiKhoan: '150',
-            ghiChu: 'duytn ',
-        }]
-        data = data;
-        var $table1 = $('#table1');
-        $table1.bootstrapTable('load', data);
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewNhapXuatKho');
+
+        formDatasearch.append('TypeXNK', 1);
+        formDatasearch.append('Ma', $('#txt_phieuXuat').val());
+        formDatasearch.append('Ngay', $('#txt_date').val());
+        formDatasearch.append('KhoId', $('#cbKho').val());
+
+        $.ajax({
+            url: "Configuation/HandlerKhoServices.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                alert(result);
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+
+                        obj.stt = i + 1;
+                        //ID
+                        //MaPhieuNhap
+                        //MaPhieuXuat
+                        //SoDT
+                        //Ten
+                        obj.id = objectData.ID;
+                        obj.phieuXuat = objectData.MaPhieuXuat;
+                        obj.kho = objectData.LoaiSua;
+                        obj.date = objectData.Ngay;
+                        obj.taiKhoan = objectData.NguoiTao;
+                        obj.ghiChu = objectData.GhiChu;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $table1 = $('#table1');
+                $table1.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
     };
 
     $('#btAdd').on('click', function (e) {
-        window.location = '/K003_Detail.aspx?paramId= ADD';
+        window.location = '/K003_Detail.aspx?paramId=ADD';
     });
 
 
@@ -127,7 +155,7 @@
 
     window.operateEvents = {
         'click .view': function (e, value, row, index) {
-            window.location = '/K003_Detail.aspx?paramId=' + row.id;
+            window.location = '/K003_Detail.aspx?paramId='+ row.id;
         }
     };
 </script>
