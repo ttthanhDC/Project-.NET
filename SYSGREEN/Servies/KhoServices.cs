@@ -133,17 +133,8 @@ namespace Servies
 
         public static void insertOrUpdateViewK001(String Ngay, String ID,String productName,String ProductId,String productUnit,String productUnit_DK,String productUnit_CL)
         {
-            String select = "Select count(*) from Kho001 where convert(date,CONVERT(VARCHAR(10),Ngay , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "', 103),103) ";
-            int check = 0;
             SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(select);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            conn.Open();
-            object count = cmd.ExecuteScalar();
-            conn.Close();
-            check = Convert.ToInt16(count);
-            if (check > 0)
+            if (ID != "")
             {
                 String update = "Update Kho001 Set Product_Unit = @productUnit , Product_Unit_DK = @productUnit_DK , Product_Unit_CL = @productUnit_CL  where ID = @ID";
                 SqlCommand cmdUpdate = new SqlCommand(update);
