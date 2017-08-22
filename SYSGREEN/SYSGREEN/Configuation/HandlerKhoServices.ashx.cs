@@ -241,8 +241,8 @@ namespace SYSGREEN.Configuation
                 String Tinh = context.Request.Form["Tinh"].ToString();
                 String LoaiDichVu = context.Request.Form["LoaiDichVu"].ToString();
                 DataTable dt = Servies.KhoServices.viewNhaCungCap(MaNCC, TenNCC, SoDT, Tinh, LoaiDichVu);
-                context.Response.ContentType = "text/plain";
-                context.Response.Write("1");
+                context.Response.ContentType = "application/json";
+                context.Response.Write(JsonConvert.SerializeObject(dt));
             }
             else
             {
