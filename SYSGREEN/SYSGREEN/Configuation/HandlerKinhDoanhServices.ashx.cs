@@ -52,6 +52,21 @@ namespace SYSGREEN.Configuation
                     context.Response.Write("Error");
                 }
             }
+            else if (type == "getvDetailKD003")
+            {
+                try
+                {
+                    String Ngay = context.Request.Form["Ngay"].ToString();
+                    DataTable dt = Servies.KinhDoanhSV.getvDetailKD003(Ngay);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(JsonConvert.SerializeObject(dt));
+                }
+                catch (Exception e)
+                {
+                    context.Response.ContentType = "text/plain";
+                    context.Response.Write("Error");
+                }
+            }
             else
             {
                 context.Response.ContentType = "text/plain";
