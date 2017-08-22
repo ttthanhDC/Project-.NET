@@ -5,7 +5,8 @@
     <div class="form-group">
         <label class="col-md-3 control-label">Nhà cung cấp</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" name="tile" id="txt_productCode" />
+            <select class="form-control" id="txt_productCode">
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -57,6 +58,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-12 col-md-offset-3">
+            <div style="margin-top:20px"></div>
             <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnSave">Lưu</button></div>
             <div style="display:inline-block"><button type="button" class="btn btn-primary" id="btnBack">Quay lại</button></div>
         </div>
@@ -81,32 +83,127 @@
                }
                //alert('Query Variable ' + variable + ' not found');
            }
+           // 
+
+           var formDatasearch = new FormData();
+           formDatasearch.append('type', 'viewNhaCungCap');
+
+           formDatasearch.append('MaNCC', "");
+           formDatasearch.append('TenNCC', "");
+           formDatasearch.append('SoDT',"");
+           formDatasearch.append('Tinh',"");
+           formDatasearch.append('LoaiDichVu', "");
+
+           $.ajax({
+               url: "Configuation/HandlerKhoServices.ashx",
+               type: "POST",
+               data: formDatasearch,
+               contentType: false,
+               processData: false,
+               success: function (result) {
+                   var jsonData = result;
+                   var arr = [];
+                   if (jsonData && jsonData.length > 0) {
+                       for (var i = 0; i < jsonData.length ; i++) {
+                           var objectData = jsonData[i];
+                           var obj = {};
+                           obj.name = objectData.MaNCC + " : " + objectData.TenNCC;
+                           obj.link = objectData.ID;
+                           obj.sub = null;
+                           arr.push(obj);
+                       }
+                   }
+                   var data = { menu: arr };
+                   var $menu = $("#txt_productCode");
+                   $.each(data.menu, function () {
+                       $menu.append(
+                           getNCC(this)
+                       );
+                   });
+               },
+               error: function (err) {
+
+               }
+           });
+           // select box shiper  
+           var getNCC = function (itemData) {
+               var item = $("<option value='" + itemData.link + "'>")
+                   .append(itemData.name);
+               return item;
+           };
+           ///
            if (window.idParam === "ADD") {
 
            } else {
                var formDataListUser = new FormData();
                formDataListUser.append('type', 'viewDetailNhapXuatKho');
-               formDataListUser.append('Type', 1);
-               formDataListUser.append('IdNhapXuat', "");
+               formDataListUser.append('TypeXNK', 1);
+               formDataListUser.append('IdNhapXuat', window.idParam);
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formDataListUser,
                    contentType: false,
                    processData: false,
                    success: function (result) {
+                       //alert(result);
+                       var arr = [];
+                       var k = 0;
                        var jsonData = result;
                        if (jsonData && jsonData.length > 0) {
-                           for (var i = 0; i < jsonData.length ; i++) {
-                               var objectData = jsonData[i];
-                               $('#txt_productCode').val(objectData.Product_Amount);
-                               $('#txt_ten').val(objectData.Product_Unit);
-                               $('#txt_sdt').val(objectData.Product_Name);
-                               $('#txt_DiaChi').val(objectData.Product_Code);
-                               $('#txt_date').val(objectData.Product_Code);
-                               $('#kho').val(objectData.Product_Code);
-                               $('#txt_ghiChu').val(objectData.Product_Code);
+                           var data1 = jsonData[0];
+                           var dataOBJ = data1[0];
+                           $('#txt_productCode').val(dataOBJ.NhaCungCap);
+                           $('#txt_ten').val(dataOBJ.Ten);
+                           $('#txt_sdt').val(dataOBJ.SoDT);
+                           $('#txt_DiaChi').val(dataOBJ.DiaChi);
+                          
+                           $('#kho').val(dataOBJ.Kho);
+                           $('#txt_ghiChu').val(dataOBJ.GhiChu);
+                           var data_ngay = dataOBJ.NgayTao;
+                           var z = "";
+                           if (data_ngay) {
+                               var x = data_ngay.substr(0, 10);
+                               var y = x.split("-");
+                               var y1 = y[0];
+                               var y2 = y[1];
+                               var y3 = y[2];
+                               z = y3 + "/" + y2 + "/" + y1;
                            }
+                           $('#txt_date').val(z);
+                           for (var i = 0; i < jsonData[1].length ; i++) {
+                               var data2 = jsonData[1];
+                               var objectData = data2[i];
+                               var obj = {};
+                               obj.stt = k + 1;
+                               obj.DonVi = objectData.DonVi;
+                               obj.Gia = objectData.Gia;
+                              
+                               obj.ID = objectData.ID;
+                               obj.Kho = objectData.Kho;
+                               obj.NhapKhoId = objectData.NhapKhoId;
+                               obj.Product_Code = objectData.Product_Code;
+                               obj.Product_Name = objectData.Product_Name;
+                               obj.SoLuong = objectData.SoLuong;
+                               obj.Type = objectData.Type;
+                               obj.XuatKhoId = objectData.XuatKhoId;
+                               var data_ngay = objectData.HanSuDung;
+                               var z = "";
+                               if (data_ngay) {
+                                   var x = data_ngay.substr(0, 10);
+                                   var y = x.split("-");
+                                   var y1 = y[0];
+                                   var y2 = y[1];
+                                   var y3 = y[2];
+                                   z = y3 + "/" + y2 + "/" + y1;
+                               }
+                               obj.HanSuDung = z;
+                               arr.push(obj);
+                           }
+
+                           data = arr;
+                           var $table1 = $('#table1');
+                           $table1.bootstrapTable('load', data);
                        }
                    },
                    error: function (err) {
@@ -114,9 +211,6 @@
                    }
                });
            }
-         
-
-
        });
        $('#btnBack').on('click', function (e) {
            window.location = '/K003_ExportHat.aspx?paramId= 0';
@@ -127,38 +221,8 @@
            if (window.idParam === "ADD") {
                // update
                var formData = new FormData();
-               var obj  = {'ID': 0,
-                           'NhaCungCap': $('#txt_productCode').val(),
-                           'Ten': $('#txt_ten').val(),
-                           'SoDT': $('#txt_sdt').val(),
-                           'DiaChi': $('#txt_DiaChi').val(),
-                           'Ngay': $('#txt_date').val(),
-                           'Kho': $('#kho').val(),
-                           'GhiChu': $('#txt_ghiChu').val(),
-                           'Type': 1
-               };
-               var datatable = $('#table1').bootstrapTable('getData');
-               var json = { 'PX': obj,'Detail': datatable};
-               jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'InsertKho003ReturnID');
-               formData.append('data', JSON.stringify(json));
-               $.ajax({
-                   url: "Configuation/HandlerKhoServices.ashx",
-                   type: "POST",
-                   data: formData,
-                   contentType: false,
-                   processData: false,
-                   success: function (result) {
-                       alert(result);
-                       window.idParam == result;
-                           // update
-                   },
-                   error: function (err) {
-                   }
-               });
-           } else {
-               var formData = new FormData();
-               var json = {
+               
+               var obj = {
                    'ID': 0,
                    'NhaCungCap': $('#txt_productCode').val(),
                    'Ten': $('#txt_ten').val(),
@@ -166,8 +230,11 @@
                    'DiaChi': $('#txt_DiaChi').val(),
                    'Ngay': $('#txt_date').val(),
                    'Kho': $('#kho').val(),
-                   'GhiChu': $('#txt_ghiChu').val()
+                   'GhiChu': $('#txt_ghiChu').val(),
+                   'Type': 1
                };
+               var datatable = $('#table1').bootstrapTable('getData');
+               var json = { 'PX': obj, 'Detail': datatable };
                jQuery.ajaxSetup({ async: true });
                formData.append('type', 'InsertKho003ReturnID');
                formData.append('data', JSON.stringify(json));
@@ -178,11 +245,49 @@
                    contentType: false,
                    processData: false,
                    success: function (result) {
-                       alert(result);
-                       window.idParam == result;
+                       $('#btnSave')[0].disabled = true;
+                       alert("Lưu thành công.");
+                       // update
                    },
                    error: function (err) {
-
+                   }
+               });
+           } else {
+               var formData = new FormData();
+               var id = 0;
+               if (window.idParam === "ADD") {
+                   id = 0;
+               } else {
+                   id = window.idParam;
+               }
+               var obj = {
+                   'ID': id,
+                   'NhaCungCap': $('#txt_productCode').val(),
+                   'Ten': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'DiaChi': $('#txt_DiaChi').val(),
+                   'Ngay': $('#txt_date').val(),
+                   'Kho': $('#kho').val(),
+                   'GhiChu': $('#txt_ghiChu').val(),
+                   'Type': 1
+               };
+               var datatable = $('#table1').bootstrapTable('getData');
+               var json = { 'PX': obj, 'Detail': datatable };
+               jQuery.ajaxSetup({ async: true });
+               formData.append('type', 'InsertKho003ReturnID');
+               formData.append('data', JSON.stringify(json));
+               $.ajax({
+                   url: "Configuation/HandlerKhoServices.ashx",
+                   type: "POST",
+                   data: formData,
+                   contentType: false,
+                   processData: false,
+                   success: function (result) {
+                       alert("Sửa thành công.");
+                       window.idParam == result;
+                       // update
+                   },
+                   error: function (err) {
                    }
                });
            }

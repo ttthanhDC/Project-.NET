@@ -45,17 +45,22 @@
              <textarea class="form-control"  id="txt_ghiChu"></textarea>
          </div>
     </div>
-    <div class="form-group" id="div_ngay">
-        <label class="col-md-3 control-label">Ngày tạo</label>
-        <div class="col-md-9">
-            <input type="text" class="form-control" name="tile" id="txt_ngay" />
+    <div class="form-group">
+        <div id="div_ngay">
+            <label class="col-md-3 control-label">Ngày tạo</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="tile" id="txt_ngay" disabled ="disabled"/>
+            </div>
         </div>
    </div>
     <div class="form-group">
-        <label class="col-md-3 control-label">Ngày tạo</label>
-        <div class="col-md-9">
-           <select class="form-control" id="cbUser"> </select>
+        <div id="div_user">
+            <label class="col-md-3 control-label">Người tạo</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="tile" id="cbUser" disabled ="disabled" />
+            </div>
         </div>
+        
    </div>
  </div> 
     <div class="form-group">
@@ -66,7 +71,9 @@
     </div>
    <script>
        $(function () {
-           var idParam = getQueryVariable("paramId");
+           window.id = 0;
+           window.idParam = 0;
+           window.idParam = getQueryVariable("paramId");
            function getQueryVariable(variable) {
                var query = window.location.search.substring(1);
                var vars = query.split("&");
@@ -79,115 +86,98 @@
                //alert('Query Variable ' + variable + ' not found');
            }
 
-           var formDataUser = new FormData();
-           formDataUser.append('type', 'getData');
-           var json = { 'ID': 0 };
-           formDataUser.append('data', JSON.stringify(json));
-           $.ajax({
-               url: "Configuation/HandlerSysUser.ashx",
-               type: "POST",
-               data: formDataUser,
-               contentType: false,
-               processData: false,
-               success: function (result) {
-                   var jsonData = result;
-                   var arr = [];
-                   if (jsonData && jsonData.length > 0) {
-                       for (var i = 0; i < jsonData.length ; i++) {
-                           var objectData = jsonData[i];
-                           var obj = {};
-                           obj.name = objectData.UserName;
-                           obj.link = objectData.ID;
-                           obj.sub = null;
-                           arr.push(obj);
-                       }
-                   }
-                   var data = { menu: arr };
-                   var $menu = $("#cbUser");
-                   $.each(data.menu, function () {
-                       $menu.append(
-                           getUser(this)
-                       );
-                   });
-               },
-               error: function (err) {
-
-               }
-           });
-           // select box shiper  
-           var getUser = function (itemData) {
-               var item = $("<option value='" + itemData.link + "'>")
-                   .append(itemData.name);
-               return item;
-           };
-
-
-
-           if (idParam === "ADD") {
+           if (window.idParam === "ADD") {
                $('#div_ngay')[0].style.display = "none";
+               $('#div_user')[0].style.display = "none";
            } else {
                $('#div_ngay')[0].style.display = "block";
-               var formDataListUser = new FormData();
-               formDataListUser.append('type', 'getData');
-               var json = { 'ID': parseInt(idParam) };
-               formDataListUser.append('data', JSON.stringify(json));
+               $('#div_user')[0].style.display = "block";
+               $('#txt_ma')[0].disabled = true;
+               var data = [];
+               var formDatasearch = new FormData();
+               formDatasearch.append('type', 'viewNhaCungCap');
+
+               formDatasearch.append('MaNCC', window.idParam);
+               formDatasearch.append('TenNCC', "");
+               formDatasearch.append('SoDT',"");
+               formDatasearch.append('Tinh',"");
+               formDatasearch.append('LoaiDichVu',"");
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
-                   data: formDataListUser,
+                   data: formDatasearch,
                    contentType: false,
                    processData: false,
                    success: function (result) {
+                       
                        var jsonData = result;
+                       var arr = [];
                        if (jsonData && jsonData.length > 0) {
                            for (var i = 0; i < jsonData.length ; i++) {
                                var objectData = jsonData[i];
-                               $('#txt_gia').val(objectData.Product_Amount);
-                               $('#txt_donVi').val(objectData.Product_Unit);
-                               $('#txt_productName').val(objectData.Product_Name);
-                               $('#txt_productCode').val(objectData.Product_Code);
-                               $('#orgId').val(objectData.ORG_ID);
+                               window.id = objectData.ID;
+                               $('#txt_ma').val(objectData.MaNCC);
+                               $('#txt_ten').val(objectData.TenNCC);
+                               $('#txt_sdt').val(objectData.SoDT);
+                               $('#txt_tinh').val(objectData.Tinh);
+                               $('#txt_diaChi').val(objectData.DiaChi);
+                               $('#txt_loai').val(objectData.LoaiDichVu);
+                               $('#txt_ghiChu').val(objectData.GhiChu);
+                               var data_ngay = objectData.NgayTao;
+                               var z = "";
+                               if (data_ngay) {
+                                   var x = data_ngay.substr(0, 10);
+                                   var y = x.split("-");
+                                   var y1 = y[0];
+                                   var y2 = y[1];
+                                   var y3 = y[2];
+                                   z = y3 + "/" + y2 + "/" + y1;
+                               }
+                               $('#txt_ngay').val(z);
+                               //$('#txt_ngay').val(objectData.NgayTao);
+                               $('#cbUser').val(objectData.NguoiTao);
                            }
                        }
                    },
                    error: function (err) {
-
                    }
                });
            }
-
-
-
        });
        $('#btnBack').on('click', function (e) {
            window.location = '/K006_Supplier.aspx?paramId= 0';
        });
        // Event Thêm mới
        $('#btnSave').on('click', function (e) {
-           var idParam = getQueryVariable("paramId");
-           // funtion get
-           if (idParam === "ADD") {
+           if (window.idParam === "ADD") {
                // update
                var formData = new FormData();
                var json = {
-                   'ID': parseInt(idParam + ""),
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
+                   'ID': 0,
+                   'MaNCC': $('#txt_ma').val(),
+                   'TenNCC': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'Tinh': $('#txt_tinh').val(),
+                   'DiaChi': $('#txt_diaChi').val(),
+                   'LoaiDichVu': $('#txt_loai').val(),
+                   'GhiChu': $('#txt_ghiChu').val(),
                };
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'update');
+               formData.append('type', 'insertOrUpdateNhaCungCap');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
-                       alert(result);
+                       if (result === -1 || result === (-1)) {
+                           alert("Mã nhà cung cấp đã tồn tại trên hệ thống. Vui lòng nhập mã nhà cung cấp khác.");
+                       } else {
+                           alert("Lưu thành công.");
+                           $('#btnSave')[0].disabled = true;
+                       }
                    },
                    error: function (err) {
 
@@ -195,26 +185,29 @@
                });
            } else {
                // insert
+              
                var formData = new FormData();
                var json = {
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
-                   'Create_User': parseInt($('#userid').val() + ""),
+                   'ID': window.id,
+                   'MaNCC': $('#txt_ma').val(),
+                   'TenNCC': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'Tinh': $('#txt_tinh').val(),
+                   'DiaChi': $('#txt_diaChi').val(),
+                   'LoaiDichVu': $('#txt_loai').val(),
+                   'GhiChu': $('#txt_ghiChu').val(),
                };
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'insert');
+               formData.append('type', 'insertOrUpdateNhaCungCap');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
-                       alert(result);
+                       alert("Sửa thành công.");
                    },
                    error: function (err) {
 
