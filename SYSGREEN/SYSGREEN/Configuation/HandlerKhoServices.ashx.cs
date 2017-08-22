@@ -221,9 +221,9 @@ namespace SYSGREEN.Configuation
                 obj.GhiChu = (String)data.GhiChu;
                 obj.NgayTao = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 obj.NguoiTao = HttpContext.Current.Session["UserName"].ToString();
-                Servies.KhoServices.insertOrUpdateNhaCungCap(obj);
+                int kq = Servies.KhoServices.insertOrUpdateNhaCungCap(obj);
                 context.Response.ContentType = "text/plain";
-                context.Response.Write("1");
+                context.Response.Write(kq);
             }
             else if (type == "DeleteNhaCungCap")
             {

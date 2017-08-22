@@ -424,46 +424,63 @@ namespace Servies
             return lst;
         }
 
-        public static void insertOrUpdateNhaCungCap(DataObject.NhaCungCap obj)
+        public static int insertOrUpdateNhaCungCap(DataObject.NhaCungCap obj)
         {
             SqlConnection conn = Common.Connection.SqlConnect();
-            if (obj.ID > 0)
+            string check = "select Count(*) FROM NhaCungCap where MaNCC = N'" + obj.MaNCC + "'";
+            SqlCommand cmdcheck = new SqlCommand(check);
+            cmdcheck.CommandType = CommandType.Text;
+            cmdcheck.Connection = conn;
+            conn.Open();
+            object count = cmdcheck.ExecuteScalar();
+            conn.Close();
+            if (Convert.ToInt16(count) > 0)
             {
-                String update = "Update NhaCungCap Set MaNCC = @MaNCC , TenNCC = @TenNCC , SoDT = @SoDT, Tinh = @Tinh, DiaChi = @DiaChi, LoaiDichVu = @LoaiDichVu, GhiChu = @GhiChu where ID = @ID";
-                SqlCommand cmdUpdate = new SqlCommand(update);
-                cmdUpdate.CommandType = CommandType.Text;
-                cmdUpdate.Connection = conn;
-                cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
-                cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
-                cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
-                cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
-                cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
-                cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
-                cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
-                cmdUpdate.Parameters.AddWithValue("@ID", obj.ID);
-                conn.Open();
-                cmdUpdate.ExecuteNonQuery();
-                conn.Close();
+                return -1;
             }
             else
             {
-                String update = "Insert INTO  NhaCungCap (MaNCC,TenNCC,SoDT,Tinh,DiaChi,LoaiDichVu,GhiChu,NgayTao,NguoiTao)VALUES (@MaNCC,@TenNCC,@SoDT,@Tinh,@DiaChi,@LoaiDichVu,@GhiChu,@NgayTao,@NguoiTao)";
-                SqlCommand cmdUpdate = new SqlCommand(update);
-                cmdUpdate.CommandType = CommandType.Text;
-                cmdUpdate.Connection = conn;
-                cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
-                cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
-                cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
-                cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
-                cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
-                cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
-                cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
-                cmdUpdate.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
-                cmdUpdate.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
-                conn.Open();
-                cmdUpdate.ExecuteNonQuery();
-                conn.Close();
+                if (obj.ID > 0)
+                {
+                    String update = "Update NhaCungCap Set MaNCC = @MaNCC , TenNCC = @TenNCC , SoDT = @SoDT, Tinh = @Tinh, DiaChi = @DiaChi, LoaiDichVu = @LoaiDichVu, GhiChu = @GhiChu where ID = @ID";
+                    SqlCommand cmdUpdate = new SqlCommand(update);
+                    cmdUpdate.CommandType = CommandType.Text;
+                    cmdUpdate.Connection = conn;
+                    cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
+                    cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
+                    cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                    cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
+                    cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                    cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
+                    cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                    cmdUpdate.Parameters.AddWithValue("@ID", obj.ID);
+                    conn.Open();
+                    cmdUpdate.ExecuteNonQuery();
+                    conn.Close();
+                    return 1;
+                }
+                else
+                {
+                    String update = "Insert INTO  NhaCungCap (MaNCC,TenNCC,SoDT,Tinh,DiaChi,LoaiDichVu,GhiChu,NgayTao,NguoiTao)VALUES (@MaNCC,@TenNCC,@SoDT,@Tinh,@DiaChi,@LoaiDichVu,@GhiChu,@NgayTao,@NguoiTao)";
+                    SqlCommand cmdUpdate = new SqlCommand(update);
+                    cmdUpdate.CommandType = CommandType.Text;
+                    cmdUpdate.Connection = conn;
+                    cmdUpdate.Parameters.AddWithValue("@MaNCC", obj.MaNCC);
+                    cmdUpdate.Parameters.AddWithValue("@TenNCC", obj.TenNCC);
+                    cmdUpdate.Parameters.AddWithValue("@SoDT", obj.SoDT);
+                    cmdUpdate.Parameters.AddWithValue("@Tinh", obj.Tinh);
+                    cmdUpdate.Parameters.AddWithValue("@DiaChi", obj.DiaChi);
+                    cmdUpdate.Parameters.AddWithValue("@LoaiDichVu", obj.LoaiDichVu);
+                    cmdUpdate.Parameters.AddWithValue("@GhiChu", obj.GhiChu);
+                    cmdUpdate.Parameters.AddWithValue("@NgayTao", obj.NgayTao);
+                    cmdUpdate.Parameters.AddWithValue("@NguoiTao", obj.NguoiTao);
+                    conn.Open();
+                    cmdUpdate.ExecuteNonQuery();
+                    conn.Close();
+                    return 1;
+                }
             }
+            
 
         }
 
