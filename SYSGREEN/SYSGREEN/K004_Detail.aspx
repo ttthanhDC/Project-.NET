@@ -174,7 +174,8 @@
                                var data2 = jsonData[1];
                                var objectData = data2[i];
                                var obj = {};
-                               obj.stt = k + 1;
+                               k = k + 1;
+                               obj.stt = k;
                                obj.DonVi = objectData.DonVi;
                                obj.Gia = objectData.Gia;
                               

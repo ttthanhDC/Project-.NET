@@ -43,33 +43,71 @@
     });
 
     $('#btTKLoTrinh').on('click', function (e) {
-        eventSearch();
+        eventSearch1();
     });
     var eventSearch1 = function () {
-        var data = [{
-            stt: '1',
-            phieuNhap: 'PX-20082018',
-            coSo: 'Cơ sở A',
-            date: '20/08/2018',
-            nguoiDeXuat: 'Duytn4',
-            toi: 'Đã mua ',
-            ghiChu: 'duytn ',
-        }, {
-            stt: '2',
-            phieuNhap: 'PX-20082018',
-            coSo: 'Cơ sở B',
-            date: '20/08/2018',
-            nguoiDeXuat: 'ThanhDC7',
-            toi: 'Đã mua ',
-            ghiChu: 'duytn ',
-        }]
-        data = data;
-        var $table1 = $('#table1');
-        $table1.bootstrapTable('load', data);
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewNhapXuatKho');
+
+        formDatasearch.append('TypeXNK', 2);
+        formDatasearch.append('Ma', $('#txt_phieuNhap').val());
+        formDatasearch.append('Ngay', $('#txt_date').val());
+        formDatasearch.append('KhoId', 0);
+        
+        $.ajax({
+            url: "Configuation/HandlerKhoServices.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                // alert(result);
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+
+                        obj.stt = i + 1;
+                        //ID
+                        //MaPhieuNhap
+                        //MaPhieuXuat
+                        //SoDT
+                        //Ten
+                        obj.id = objectData.ID;
+                        obj.phieuNhap = objectData.MaPhieuNhap;
+                        obj.coSo = "";// TODO
+                        obj.toi = objectData.Kho;
+                        // obj.date = objectData.Ngay;
+                        obj.nguoiDeXuat = objectData.NguoiTao;
+                        obj.ghiChu = objectData.GhiChu;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $table1 = $('#table1');
+                $table1.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
     };
 
     $('#btAdd').on('click', function (e) {
-        window.location = '/K005_Detail.aspx?paramId= ADD';
+        window.location = '/K005_Detail.aspx?paramId=ADD';
     });
 
 
@@ -88,8 +126,8 @@
                     align: 'center',
                     valign: 'middle',
                 }, {
-                    field: 'Cơ sở',
-                    title: 'coSo',
+                    field: 'coSo',
+                    title: 'Cơ sở',
                     align: 'center',
                     valign: 'middle',
                 }, {
@@ -104,7 +142,7 @@
                     valign: 'middle',
                 }, {
                     field: 'toi',
-                    title: 'Tới',
+                    title: 'Tới kho',
                     align: 'center',
                     valign: 'middle',
                 }, {
@@ -119,6 +157,13 @@
                     valign: 'middle',
                     events: operateEvents,
                     formatter: operateFormatter
+                }, {
+                    field: 'operate2',
+                    title: 'Duyệt',
+                    align: 'center',
+                    valign: 'middle',
+                    events: operateEvents1,
+                    formatter: operateFormatter1
                 }],
 
             data: itemData
@@ -136,6 +181,19 @@
     window.operateEvents = {
         'click .view': function (e, value, row, index) {
             window.location = '/K005_Detail.aspx?paramId=' + row.id;
+        }
+    };
+    function operateFormatter1(value, row, index) {
+        return [
+            '<a class="duyet" href="javascript:void(0)" title="Duyet">',
+            'Duyet',
+            '</a>  '
+        ].join('');
+    }
+
+    window.operateEvents1 = {
+        'click .view': function (e, value, row, index) {
+           // window.location = '/K005_Detail.aspx?paramId=' + row.id;
         }
     };
 </script>
