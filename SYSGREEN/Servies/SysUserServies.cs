@@ -47,6 +47,20 @@ namespace Servies
             conn.Close();
         }
 
+        public static void UpdatePasswordByEmail(String Email,String Password)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Update = "UPDATE SYS_USER SET Password = @Password Where Email = @Email";
+            SqlCommand cmd = new SqlCommand(Update);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@Password", Password);
+            cmd.Parameters.AddWithValue("@Email", Email);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
         public static void DeleteData(Int32 Id)
         {
             String Delete = "Delete from  SYS_USER Where ID = @ID";
