@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="LT001V2Demo.aspx.cs" Inherits="SYSGREEN.LT001V2Demo" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
-    <div class="main-content-inner">
       <div id="contactForm" style="margin-left: 5px;">
       <div class="form-horizontal">
         <div class="form-group">
@@ -2249,8 +2248,15 @@
                 data: formBill,
                 contentType: false,
                 processData: false,
+                beforeSend: function () {
+                    $.LoadingOverlay("show");
+                },
                 success: function (result) {
-                    alert("Thêm mới đơn hàng thành công");
+                    $.LoadingOverlay("hide");
+                    bootbox.alert({
+                        message: "Thêm mới đơn hàng thành công",
+                        size: 'small'
+                    });
                     $('#txtMaHD').val("HD" + (result < 0) ? ("0" + result) : result);
                     $("#btnSave").attr('disabled', true);
                     $("#btnAddBill").attr('disabled', true);

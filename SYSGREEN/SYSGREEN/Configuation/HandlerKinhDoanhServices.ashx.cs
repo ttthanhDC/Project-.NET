@@ -58,6 +58,7 @@ namespace SYSGREEN.Configuation
                 {
                     String Ngay = context.Request.Form["Ngay"].ToString();
                     DataTable dt = Servies.KinhDoanhSV.getvDetailKD003(Ngay);
+
                     context.Response.ContentType = "application/json";
                     context.Response.Write(JsonConvert.SerializeObject(dt));
                 }

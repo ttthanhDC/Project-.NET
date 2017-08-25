@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SYSGREEN._Default" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-		<div class="main-container">
+   <style>
+       .bootbox-body{
+           font-family: sans-serif;
+       }
+   </style>
+     <div class="main-container">
 			<div class="main-content">
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
@@ -30,14 +35,14 @@
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="text" id="txtUserName"  class="form-control" placeholder="Username" />
-															<i class="ace-icon fa fa-user"></i>
+															<i class="ace-icon fa fa-user" style="right: 15px"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="password" id="txtPassword" class="form-control" placeholder="Password" />
-															<i class="ace-icon fa fa-lock"></i>
+															<i class="ace-icon fa fa-lock" style="right: 15px"></i>
 														</span>
 													</label>
 
@@ -101,13 +106,13 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
-															<i class="ace-icon fa fa-envelope"></i>
+															<input type="email" class="form-control" id="txtEmail" placeholder="Email" />
+															<i class="ace-icon fa fa-envelope" style="right:15px"></i>
 														</span>
 													</label>
 
 													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+														<button type="button" id="btnSendMe" class="width-35 pull-right btn btn-sm btn-danger">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
 															<span class="bigger-110">Send Me!</span>
 														</button>
@@ -227,31 +232,9 @@
 			</div><!-- /.main-content -->
 		</div><!-- /.main-container -->
         
-		<!-- basic scripts -->
-
-		<!--[if !IE]> -->
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-<script src="assets/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
-        
-		<script src="assets/js/bootstrap.min.js"></script>
-
-		<!-- page specific plugin scripts -->
-		<script src="assets/js/jquery-ui.min.js"></script>
-		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-
-		<!-- ace scripts -->
-		<script src="assets/js/ace-elements.min.js"></script>
-		<script src="assets/js/ace.min.js"></script>
-
 		<script type="text/javascript">
 		    if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
 		</script>
-
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
 		    jQuery(function ($) {
@@ -267,6 +250,8 @@
 
 		    //you don't need this, just used for changing background
 		    jQuery(function ($) {
+		        
+
 		        $('#btn-login-dark').on('click', function (e) {
 		            $('body').attr('class', 'login-layout');
 		            $('#id-text2').attr('class', 'white');
@@ -294,6 +279,19 @@
 		            var formData = new FormData();
 		            var user = $('#txtUserName').val();
 		            var pass = $('#txtPassword').val();
+		            if (user == "") {
+		                bootbox.alert({
+		                    message: "Bạn chưa nhập tên đăng nhập!",
+		                    size: 'small'
+		                });
+		                return;
+		            } else if (pass == "") {
+		                bootbox.alert({
+		                    message: "Bạn chưa nhập mật khẩu!",
+		                    size: 'small'
+		                });
+		                return;
+		            }
 		            formData.append('userName', user);
 		            formData.append('Password', pass);
 		            $.ajax({
@@ -302,9 +300,18 @@
 		                data: formData,
 		                contentType: false,
 		                processData: false,
+		                beforeSend: function () {
+		                    $.LoadingOverlay("show");
+		                },
 		                success: function (result) {
+		                    $.LoadingOverlay("hide");
 		                    if (result == "1") {
 		                        window.location = '/Main.aspx'
+		                    } else {
+		                        bootbox.alert({
+		                            message: "Tên đăng nhập hoặc mật khẩu của bạn không đúng",
+		                            size: 'small'
+		                        });
 		                    }
 		                },
 		                error: function (err) {
@@ -313,6 +320,43 @@
 		            });
 		        });
 
+		        //id="btnSendMe"
+		        $('#btnSendMe').on('click', function (e) {
+		            var formData = new FormData();
+		            var email = $('#txtEmail').val();
+		            if (email == "") {
+		                bootbox.alert({
+		                    message: "Bạn chưa nhập địa chỉ Email!",
+		                    size: 'small'
+		                });
+		                return;
+		            }
+		            formData.append('email', email);
+		            $.ajax({
+		                url: "Configuation/HandlerSendEmail.ashx",
+		                type: "POST",
+		                data: formData,
+		                contentType: false,
+		                processData: false,
+		                beforeSend: function(){
+		                    $.LoadingOverlay("show");
+		                },
+		                success: function (result) {
+		                    $.LoadingOverlay("hide");
+		                    bootbox.alert({
+		                        message: result,
+		                        size: 'small'
+		                    });
+		                },
+		                error: function (err) {
+
+		                }
+		            });
+		        });
+
 		    });
+
+		    
+
 		</script>
 </asp:Content>
