@@ -40,36 +40,60 @@
         eventSearch1();
     });
 
-    $('#btTKLoTrinh').on('click', function (e) {
-        eventSearch();
+    $('#btSearh').on('click', function (e) {
+        eventSearch1();
     });
     var eventSearch1 = function () {
-        var data = [{
-            stt: '1',
-            ma: 'PX-20082018',
-            ten: 'Cơ sở A',
-            sdt: '20/08/2018',
-            tinh: 'Duytn4',
-            diaChi: 'Đã mua ',
-            loai: 'Đã mua ',
-            ghiChu: 'duytn ',
-        }, {
-            stt: '2',
-            ma: 'PX-20082018',
-            ten: 'Cơ sở A',
-            sdt: '20/08/2018',
-            tinh: 'Duytn4',
-            diaChi: 'Đã mua ',
-            loai: 'Đã mua ',
-            ghiChu: 'duytn ',
-        }]
-        data = data;
-        var $table1 = $('#table1');
-        $table1.bootstrapTable('load', data);
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewNhaCungCap');
+
+        formDatasearch.append('MaNCC', $('#txt_ma').val());
+        formDatasearch.append('TenNCC', $('#txt_ten').val());
+        formDatasearch.append('SoDT', $('#txt_sdt').val());
+        formDatasearch.append('Tinh', $('#txt_tinh').val());
+        formDatasearch.append('LoaiDichVu', $('#txt_loai').val());
+        $.ajax({
+            url: "Configuation/HandlerKhoServices.ashx",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                //alert(result);
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.stt = i + 1;
+                        obj.id = objectData.ID;
+                        obj.ma = objectData.MaNCC;
+                        obj.ten = objectData.TenNCC;
+                        obj.sdt = objectData.SoDT;
+                        obj.tinh = objectData.Tinh;
+                        obj.diaChi = objectData.DiaChi;
+                        obj.loai = objectData.LoaiDichVu;
+                        obj.ghiChu = objectData.GhiChu;
+
+                        //
+                        obj.NgayTao = objectData.NgayTao;
+                        obj.NguoiTao = objectData.NguoiTao;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $table1 = $('#table1');
+                $table1.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
     };
 
     $('#btAdd').on('click', function (e) {
-        window.location = '/K006_Detail.aspx?paramId= ADD';
+        window.location = '/K006_Detail.aspx?paramId=ADD';
     });
 
 
@@ -119,7 +143,7 @@
                     valign: 'middle',
                 }, {
                     field: 'operate',
-                    title: 'Xem',
+                    title: 'Sửa',
                     align: 'center',
                     valign: 'middle',
                     events: operateEvents,
@@ -139,15 +163,15 @@
 
     function operateFormatter(value, row, index) {
         return [
-            '<a class="view" href="javascript:void(0)" title="view">',
-            'Xem',
+            '<a class="view" href="javascript:void(0)" title="sửa">',
+            'Sửa',
             '</a>  '
         ].join('');
     }
 
     window.operateEvents = {
         'click .view': function (e, value, row, index) {
-            window.location = '/K006_Detail.aspx?paramId=' + row.id;
+            window.location = '/K006_Detail.aspx?paramId=' + row.ma;
         }
     };
     ///
@@ -161,11 +185,29 @@
 
     window.operateEvents2 = {
         'click .edit': function (e, value, row, index) {
-            $('#table1').bootstrapTable('remove', {
-                field: 'stt',
-                values: [row.stt]
+            var data = [];
+            var formDatasearch = new FormData();
+            formDatasearch.append('type', 'DeleteNhaCungCap');
+
+            formDatasearch.append('ID', row.id);
+            $.ajax({
+                url: "Configuation/HandlerKhoServices.ashx",
+                type: "POST",
+                data: formDatasearch,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    alert("Xóa thành công.");
+                    $('#table1').bootstrapTable('remove', {
+                        field: 'stt',
+                        values: [row.stt]
+                    });
+                    sortData();
+                },
+                error: function (err) {
+                }
             });
-            sortData();
+            
         }
     };
     var sortData = function () {

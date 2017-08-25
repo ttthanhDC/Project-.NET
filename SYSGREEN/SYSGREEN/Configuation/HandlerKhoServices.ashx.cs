@@ -142,8 +142,14 @@ namespace SYSGREEN.Configuation
                         detail.ID = Convert.ToInt16(dataDetail[i].ID);
                         if(detail.Type == 0){
                             detail.NhapKhoId = result;
-                        }else{
+                        }
+                        else if (detail.Type == 1)
+                        {
                             detail.XuatKhoId = result;
+                        }
+                        else if (detail.Type == 2)
+                        {
+                            detail.NhapKhoId = result;
                         }
                         detail.Product_Code = (String)dataDetail[i].Product_Code;
                         detail.Product_Name = (String)dataDetail[i].Product_Name;
@@ -159,9 +165,13 @@ namespace SYSGREEN.Configuation
                     {
                         context.Response.Write(obj.MaPhieuNhap);
                     }
-                    else
+                    else if (obj.Type == 1)
                     {
                         context.Response.Write(obj.MaPhieuXuat);
+                    }
+                    else if (obj.Type == 2)
+                    {
+                        context.Response.Write(obj.MaPhieuNhap);
                     }
                     
                 }

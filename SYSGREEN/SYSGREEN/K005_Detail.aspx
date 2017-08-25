@@ -2,6 +2,31 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="ContentPlaceHolderMenu2" runat="server">
        <div id="contactForm"  class="form-horizontal">
+           <div class="form-group">
+        <label class="col-md-3 control-label">Nhà cung cấp</label>
+        <div class="col-md-9">
+            <select class="form-control" id="txt_productCode">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Tên</label>
+        <div class="col-md-9">
+            <input type="text" class="form-control" name="tile" id="txt_ten" />
+        </div>
+    </div>
+   <div class="form-group">
+        <label class="col-md-3 control-label">SĐT</label>
+         <div class="col-md-9">
+             <input type="text" class="form-control" name="tile" id="txt_sdt" />
+           </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">Địa chỉ</label>
+         <div class="col-md-9">
+              <textarea class="form-control"  id="txt_DiaChi"></textarea>
+             </div>
+    </div> 
     
            <div class="form-group">
         <label class="col-md-3 control-label">Ngày</label>
@@ -42,9 +67,11 @@
        $(function () {
            var itemData = [];
            getDataTable1(itemData);
+           window.id = 0;
+           window.idParam = 0;
            // eventSearch1();
 
-           var idParam = getQueryVariable("paramId");
+           window.idParam = getQueryVariable("paramId");
            function getQueryVariable(variable) {
                var query = window.location.search.substring(1);
                var vars = query.split("&");
@@ -56,30 +83,127 @@
                }
                //alert('Query Variable ' + variable + ' not found');
            }
-           if (idParam === "ADD") {
+           //
+           var formDatasearch = new FormData();
+           formDatasearch.append('type', 'viewNhaCungCap');
+
+           formDatasearch.append('MaNCC', "");
+           formDatasearch.append('TenNCC', "");
+           formDatasearch.append('SoDT', "");
+           formDatasearch.append('Tinh', "");
+           formDatasearch.append('LoaiDichVu', "");
+
+           $.ajax({
+               url: "Configuation/HandlerKhoServices.ashx",
+               type: "POST",
+               data: formDatasearch,
+               contentType: false,
+               processData: false,
+               success: function (result) {
+                   var jsonData = result;
+                   var arr = [];
+                   if (jsonData && jsonData.length > 0) {
+                       for (var i = 0; i < jsonData.length ; i++) {
+                           var objectData = jsonData[i];
+                           var obj = {};
+                           obj.name = objectData.MaNCC + " : " + objectData.TenNCC;
+                           obj.link = objectData.ID;
+                           obj.sub = null;
+                           arr.push(obj);
+                       }
+                   }
+                   var data = { menu: arr };
+                   var $menu = $("#txt_productCode");
+                   $.each(data.menu, function () {
+                       $menu.append(
+                           getNCC(this)
+                       );
+                   });
+               },
+               error: function (err) {
+
+               }
+           });
+           ///
+           var getNCC = function (itemData) {
+               var item = $("<option value='" + itemData.link + "'>")
+                   .append(itemData.name);
+               return item;
+           };
+           //
+           if (window.idParam === "ADD") {
 
            } else {
                var formDataListUser = new FormData();
-               formDataListUser.append('type', 'getData');
-               var json = { 'ID': parseInt(idParam) };
-               formDataListUser.append('data', JSON.stringify(json));
+               formDataListUser.append('type', 'viewDetailNhapXuatKho');
+               formDataListUser.append('TypeXNK', 2);
+               formDataListUser.append('IdNhapXuat', window.idParam);
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formDataListUser,
                    contentType: false,
                    processData: false,
                    success: function (result) {
+                       //alert(result);
+                       var arr = [];
+                       var k = 0;
                        var jsonData = result;
                        if (jsonData && jsonData.length > 0) {
-                           for (var i = 0; i < jsonData.length ; i++) {
-                               var objectData = jsonData[i];
-                               $('#txt_gia').val(objectData.Product_Amount);
-                               $('#txt_donVi').val(objectData.Product_Unit);
-                               $('#txt_productName').val(objectData.Product_Name);
-                               $('#txt_productCode').val(objectData.Product_Code);
-                               $('#orgId').val(objectData.ORG_ID);
+                           var data1 = jsonData[0];
+                           var dataOBJ = data1[0];
+                           $('#txt_productCode').val(dataOBJ.NhaCungCap);
+                           $('#txt_ten').val(dataOBJ.Ten);
+                           $('#txt_sdt').val(dataOBJ.SoDT);
+                           $('#txt_DiaChi').val(dataOBJ.DiaChi);
+
+                           $('#kho').val(dataOBJ.Kho);
+                           $('#txt_ghiChu').val(dataOBJ.GhiChu);
+                           var data_ngay = dataOBJ.NgayTao;
+                           var z = "";
+                           if (data_ngay) {
+                               var x = data_ngay.substr(0, 10);
+                               var y = x.split("-");
+                               var y1 = y[0];
+                               var y2 = y[1];
+                               var y3 = y[2];
+                               z = y3 + "/" + y2 + "/" + y1;
                            }
+                           $('#txt_date').val(z);
+                           for (var i = 0; i < jsonData[1].length ; i++) {
+                               var data2 = jsonData[1];
+                               var objectData = data2[i];
+                               var obj = {};
+                               k = k + 1;
+                               obj.stt = k;
+                               obj.DonVi = objectData.DonVi;
+                               obj.Gia = objectData.Gia;
+
+                               obj.ID = objectData.ID;
+                               obj.Kho = 0;
+                               obj.NhapKhoId = objectData.NhapKhoId;
+                               obj.Product_Code = objectData.Product_Code;
+                               obj.Product_Name = objectData.Product_Name;
+                               obj.SoLuong = objectData.SoLuong;
+                               obj.Type = objectData.Type;
+                               obj.XuatKhoId = objectData.XuatKhoId;
+                               var data_ngay = objectData.HanSuDung;
+                               var z = "";
+                               if (data_ngay) {
+                                   var x = data_ngay.substr(0, 10);
+                                   var y = x.split("-");
+                                   var y1 = y[0];
+                                   var y2 = y[1];
+                                   var y3 = y[2];
+                                   z = y3 + "/" + y2 + "/" + y1;
+                               }
+                               obj.HanSuDung = z;
+                               arr.push(obj);
+                           }
+
+                           data = arr;
+                           var $table1 = $('#table1');
+                           $table1.bootstrapTable('load', data);
                        }
                    },
                    error: function (err) {
@@ -87,88 +211,87 @@
                    }
                });
            }
-
-
-
        });
        $('#btnBack').on('click', function (e) {
            window.location = '/K005_ExpectedToBuy.aspx?paramId= 0';
        });
        // Event Thêm mới
        $('#btnSave').on('click', function (e) {
-           var idParam = getQueryVariable("paramId");
            // funtion get
-           if (idParam === "ADD") {
+           if (window.idParam === "ADD") {
                // update
                var formData = new FormData();
-               var json = {
-                   'ID': parseInt(idParam + ""),
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
+               var obj = {
+                   'ID': 0,
+                   'NhaCungCap': $('#txt_productCode').val(),
+                   'Ten': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'DiaChi': $('#txt_DiaChi').val(),
+                   'Ngay': $('#txt_date').val(),
+                   'Kho': $('#kho').val(),
+                   'GhiChu': $('#txt_ghiChu').val(),
+                   'Type': 2
                };
+               var datatable = $('#table1').bootstrapTable('getData');
+               var json = { 'PX': obj, 'Detail': datatable };
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'update');
+               formData.append('type', 'InsertKho003ReturnID');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
-                       alert(result);
+                       $('#btnSave')[0].disabled = true;
+                       alert("Lưu thành công.");
+                       //window.idParam == result;
+                       // update
                    },
                    error: function (err) {
-
                    }
                });
            } else {
-               // insert
                var formData = new FormData();
-               var json = {
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
-                   'Create_User': parseInt($('#userid').val() + ""),
+               var id = 0;
+               if (window.idParam === "ADD") {
+                   id = 0;
+               } else {
+                   id = window.idParam;
+               }
+               var obj = {
+                   'ID': id,
+                   'NhaCungCap': $('#txt_productCode').val(),
+                   'Ten': $('#txt_ten').val(),
+                   'SoDT': $('#txt_sdt').val(),
+                   'DiaChi': $('#txt_DiaChi').val(),
+                   'Ngay': $('#txt_date').val(),
+                   'Kho': $('#kho').val(),
+                   'GhiChu': $('#txt_ghiChu').val(),
+                   'Type': 2
                };
+               var datatable = $('#table1').bootstrapTable('getData');
+               var json = { 'PX': obj, 'Detail': datatable };
                jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'insert');
+               formData.append('type', 'InsertKho003ReturnID');
                formData.append('data', JSON.stringify(json));
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "Configuation/HandlerKhoServices.ashx",
                    type: "POST",
                    data: formData,
                    contentType: false,
                    processData: false,
                    success: function (result) {
-                       alert(result);
+                       alert("sửa thành công.");
+                       window.idParam == result;
+                       // update
                    },
                    error: function (err) {
-
                    }
                });
            }
        });
-       /* var eventSearch1 = function () {
-            var data = [{
-                stt: '1',
-                maSp: 'PX-20082018',
-                tenSp: 'Kho A',
-                soLuong: '20/08/2018',
-                donvi: '150',
-                hanSuDung: 'duytn ',
-                gia: 'duytn ',
-                chuyenToiKho: 'duytn ',
-            }]
-            data = data;
-            var $table1 = $('#table1');
-            $table1.bootstrapTable('load', data);
-        };*/
 
        $('#btnAdd').on('click', function (e) {
            var data = [];
@@ -177,22 +300,34 @@
                var x = datatable.length;
                var obj = {};
                obj.stt = x + 1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
+               obj.Product_Code = '';
+               obj.Product_Name = '';
+               obj.SoLuong = '';
+               obj.DonVi = '';
+               obj.HanSuDung = '';
+               obj.Gia = '';
+               obj.Kho = 0;
+               //
+               obj.Type = 2;
+               obj.ID = 0;
+               obj.NhapKhoId = 0;
+               obj.XuatKhoId = 0;
                datatable.push(obj);
            } else {
                var obj = {};
                obj.stt = 1;
-               obj.maSp = '';
-               obj.tenSp = '';
-               obj.soLuong = '';
-               obj.donvi = '';
-               obj.hanSuDung = '';
-               obj.gia = '';
+               obj.Product_Code = '';
+               obj.Product_Name = '';
+               obj.SoLuong = '';
+               obj.DonVi = '';
+               obj.HanSuDung = '';
+               obj.Gia = '';
+               obj.Kho = 0;
+               //
+               obj.Type = 2;
+               obj.ID = 0;
+               obj.NhapKhoId = 0;
+               obj.XuatKhoId = 0;
                datatable.push(obj);
            }
            data = datatable;
@@ -211,37 +346,37 @@
                        align: 'center',
                        valign: 'middle',
                    }, {
-                       field: 'maSp',
+                       field: 'Product_Code',
                        title: 'Mã sản phẩm',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'tenSp',
+                       field: 'Product_Name',
                        title: 'Tên sản phẩm',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'soLuong',
+                       field: 'SoLuong',
                        title: 'Số lượng',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'donvi',
+                       field: 'DonVi',
                        title: 'Đơn vị',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'hanSuDung',
+                       field: 'HanSuDung',
                        title: 'Hạn sử dụng',
                        align: 'center',
                        valign: 'middle',
                        editable: true
                    }, {
-                       field: 'gia',
+                       field: 'Gia',
                        title: 'Giá',
                        align: 'center',
                        valign: 'middle',
@@ -260,14 +395,14 @@
        };
        function operateFormatter(value, row, index) {
            return [
-               '<a class="view" href="javascript:void(0)" title="xóa">',
+               '<a class="xoa" href="javascript:void(0)" title="xóa">',
                'Xóa',
                '</a>  '
            ].join('');
        }
 
        window.operateEvents = {
-           'click .view': function (e, value, row, index) {
+           'click .xoa': function (e, value, row, index) {
                if (row.id) {
 
                } else {

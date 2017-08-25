@@ -254,9 +254,13 @@ namespace Servies
                 {
                     insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao,MaPhieuNhap,Type) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao,@MaPhieuNhap,@Type);Select @@IDENTITY as newId";
                 }
-                else
+                else if (obj.Type == 1)
                 {
                     insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao,MaPhieuXuat,Type) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao,@MaPhieuXuat,@Type);Select @@IDENTITY as newId";
+                }
+                else if (obj.Type == 2)
+                {
+                    insert = "Insert into Kho003 (NhaCungCap,Ten,SoDT,DiaChi,Ngay,Kho,GhiChu,NgayTao,NguoiTao,MaPhieuNhap,Type) Values(@NhaCungCap,@Ten,@SoDT,@DiaChi,@Ngay,@Kho,@GhiChu,@NgayTao,@NguoiTao,@MaPhieuNhap,@Type);Select @@IDENTITY as newId";
                 }
                 
                 SqlCommand cmdInsert = new SqlCommand(insert);
@@ -274,8 +278,14 @@ namespace Servies
                 if (obj.Type == 0)
                 {
                     cmdInsert.Parameters.AddWithValue("@MaPhieuNhap", obj.MaPhieuNhap);
-                }else{
+                }
+                else if (obj.Type == 1)
+                {
                     cmdInsert.Parameters.AddWithValue("@MaPhieuXuat", obj.MaPhieuXuat);
+                }
+                else if (obj.Type == 2)
+                {
+                    cmdInsert.Parameters.AddWithValue("@MaPhieuNhap", obj.MaPhieuNhap);
                 }
                 cmdInsert.Parameters.AddWithValue("@Type", obj.Type);
                 conn.Open();
@@ -323,9 +333,13 @@ namespace Servies
                 {
                     insert = "Insert into KhoNhapXuatDetail (Type,NhapKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@NhapKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
                 }
-                else
+                else if (obj.Type == 1)
                 {
                     insert = "Insert into KhoNhapXuatDetail (Type,XuatKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@XuatKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
+                }
+                else if (obj.Type == 2)
+                {
+                    insert = "Insert into KhoNhapXuatDetail (Type,NhapKhoId,Product_Code,Product_Name,SoLuong,DonVi,HanSuDung,Gia,Kho) Values(@Type,@NhapKhoId,@Product_Code,@Product_Name,@SoLuong,@DonVi,@HanSuDung,@Gia,@Kho);Select @@IDENTITY as newId";
                 }
                 
                 SqlCommand cmdInsert = new SqlCommand(insert);
@@ -336,9 +350,13 @@ namespace Servies
                 {
                     cmdInsert.Parameters.AddWithValue("@NhapKhoId", obj.NhapKhoId);
                 }
-                else
+                else if (obj.Type == 1)
                 {
                     cmdInsert.Parameters.AddWithValue("@XuatKhoId", obj.XuatKhoId);
+                }
+                else if (obj.Type == 2)
+                {
+                    cmdInsert.Parameters.AddWithValue("@NhapKhoId", obj.NhapKhoId);
                 }
                 cmdInsert.Parameters.AddWithValue("@Product_Code", obj.Product_Code);
                 cmdInsert.Parameters.AddWithValue("@Product_Name", obj.Product_Name);
@@ -365,9 +383,13 @@ namespace Servies
                 {
                     select += "MaPhieuNhap LIKE N'%" + Ma + "%' AND ";
                 }
-                else
+                else if(Type == 1)
                 {
                     select += "MaPhieuXuat LIKE N'%" + Ma + "%' AND ";
+                }
+                else if (Type == 2)
+                {
+                    select += "MaPhieuNhap LIKE N'%" + Ma + "%' AND ";
                 }
                 
             }
@@ -412,6 +434,10 @@ namespace Servies
             else if (Type == 1)
             {
                 select += "XuatKhoId = " + IdNhapXuat;
+            }
+            else if (Type == 2)
+            {
+                select += "NhapKhoId = " + IdNhapXuat;
             }
             
             SqlCommand cmd1 = new SqlCommand(select);

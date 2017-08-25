@@ -61,7 +61,7 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                alert(result);
+               // alert(result);
                 var jsonData = result;
                 var arr = [];
                 if (jsonData && jsonData.length > 0) {
@@ -77,10 +77,21 @@
                         //Ten
                         obj.id = objectData.ID;
                         obj.phieuXuat = objectData.MaPhieuXuat;
-                        obj.kho = objectData.LoaiSua;
-                        obj.date = objectData.Ngay;
-                        obj.taiKhoan = objectData.NguoiTao;
+                        obj.kho = objectData.Kho;
+                       // obj.date = objectData.Ngay;
+                       obj.taiKhoan = objectData.NguoiTao;
                         obj.ghiChu = objectData.GhiChu;
+                        var data_ngay = objectData.Ngay;
+                        var z = "";
+                        if (data_ngay) {
+                            var x = data_ngay.substr(0, 10);
+                            var y = x.split("-");
+                            var y1 = y[0];
+                            var y2 = y[1];
+                            var y3 = y[2];
+                            z = y3 + "/" + y2 + "/" + y1;
+                        }
+                        obj.date = z;
                         arr.push(obj);
                     }
                 }
