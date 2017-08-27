@@ -1,0 +1,537 @@
+﻿@{
+    ViewBag.Title = "K001_ProductByDate";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div class="main-content-inner" style="margin-left:30px;margin-right:30px" id="div_LoTrinh">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_date" placeholder="Ngày" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearh">Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left:20px;margin-right:20px" id="div_Table1">
+        <label>Sữa dự kiến bán</label>
+        <table id="table1"></table>
+    </div>
+    <div style="margin-left:20px;margin-right:20px;margin-top :30px" id="div_Table3">
+        <label>Sữa còn lại từ ngày hôm trước </label>
+        <table id="table3"></table>
+    </div>
+    <div style="height:30px"></div>
+    <div style="margin-left:20px;margin-right:20px" id="div_Table2">
+        <label>Sữa dự kiến sản xuất </label>
+        <table id="table2"></table>
+        <div style="text-align:center;margin-top:20px"><button type="button" class="btn btn-primary" id="btadd">Lưu</button></div>
+
+    </div>
+
+    <script>
+    // Bootstrap Table
+    $(function () {
+        var itemData = [];
+        getDataTable1(itemData);
+        var itemData2 = [];
+        getDataTable2(itemData2);
+        var itemData3 = [];
+        getDataTable3(itemData3);
+        eventSearch1();
+        eventSearch2();
+        eventSearch3();
+    });
+
+    $('#btSearh').on('click', function (e) {
+        eventSearch1();
+        eventSearch2();
+        eventSearch3();
+    });
+    $('#btadd').on('click', function (e) {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'insertOrUpdateViewK001');
+        var datatable = $('#table2').bootstrapTable('getData');
+        if (datatable[0].Ngay === "") {
+            var Ngay = "";
+            var NgayLotrinh = $('#txt_date').val();
+            if (NgayLotrinh !== "") {
+                Ngay = NgayLotrinh;
+            } else {
+                var d = new Date();
+
+                var x = d.getDate();
+                if ((x + "").length === 1) {
+                    x = "0" + x;
+                }
+                var y = d.getMonth() + 1;
+                if ((y + "").length === 1) {
+                    y = "0" + y;
+                }
+                var strDate = x + "/" + y + "/" + d.getFullYear();
+                Ngay = strDate;
+            }
+
+            if (datatable.length > 0) {
+                for (var i = 0; i < datatable.length; i++) {
+                    var obj = {};
+                    obj.Ngay = Ngay;
+                    obj.ProductId = datatable[i].ProductId;
+                    obj.ID = datatable[i].ID;
+                    obj.productName = datatable[i].productName;
+                    obj.productUnit = parseInt((datatable[i].productUnit + "").replace(/,/g, ""));
+                    obj.productUnit_DK = parseInt((datatable[i].productUnit_DK + "").replace(/,/g, ""));
+                    obj.productUnit_CL = parseInt((datatable[i].productUnit_CL + "").replace(/,/g, ""));
+                    datatable[i] = obj;
+                }
+            }
+        } else {
+            if (datatable.length > 0) {
+                for (var i = 0; i < datatable.length; i++) {
+                    var obj = {};
+                    obj.Ngay = datatable[i].Ngay;
+                    obj.ProductId = datatable[i].ProductId;
+                    obj.ID = datatable[i].ID;
+                    obj.productName = datatable[i].productName;
+                    obj.productUnit = parseInt((datatable[i].productUnit + "").replace(/,/g, ""));
+                    obj.productUnit_DK = parseInt((datatable[i].productUnit_DK + "").replace(/,/g, ""));
+                    obj.productUnit_CL = parseInt((datatable[i].productUnit_CL + "").replace(/,/g, ""));
+                    datatable[i] = obj;
+                }
+            }
+        }
+
+        formDatasearch.append('data', JSON.stringify(datatable));
+        $.ajax({
+            url: "Kho/insertOrUpdateViewK001",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                eventSearch2();
+            },
+            error: function (err) {
+            }
+        });
+    });
+
+
+
+    var eventSearch1 = function () {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewK001P1');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+            var thu = convertDateToDay(NgayLotrinh);
+            formDatasearch.append('thu', thu);
+        } else {
+            var d = new Date();
+            var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            formDatasearch.append('Ngay', strDate);
+            var thu = convertDateToDay(strDate);
+            formDatasearch.append('thu', thu);
+        }
+
+        $.ajax({
+            url: "/Kho/viewK001P1",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                var total = 0;
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+
+                        obj.stt = i + 1;
+                        obj.ProductId = objectData.ProductId;
+                        obj.loaiSua = objectData.LoaiSua;
+                        obj.duong = objectData.sugar;
+                        obj.SoLuong = objectData.SoLuongChai;
+                        obj.theTich = (objectData.TheTich + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        total = total + (objectData.TheTich)
+                        arr.push(obj);
+                    }
+                }
+                var obj2 = {};
+                obj2.stt = arr.length;
+                obj2.ProductId = -1;
+                obj2.loaiSua = "Tổng";
+                obj2.duong = "";
+                obj2.SoLuong = "";
+                obj2.theTich = (total+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                arr.push(obj2);
+                data = arr;
+                var $table = $('#table1');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
+
+    };
+    var eventSearch3 = function () {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewSPCL');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+            var thu = convertDateToDay(NgayLotrinh);
+            formDatasearch.append('thu', thu);
+        } else {
+            var d = new Date();
+
+            var x = d.getDate();
+            if((x+ "").length === 1){
+                x = "0"+x;
+            }
+            var y = d.getMonth() + 1;
+            if((y+ "").length === 1){
+                y = "0"+y;
+            }
+            var strDate = x + "/" + y + "/" + d.getFullYear();
+
+            formDatasearch.append('Ngay', strDate);
+            var thu = convertDateToDay(strDate);
+            formDatasearch.append('thu', thu);
+        }
+
+        $.ajax({
+            url: "/Kho/viewSPCL",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+
+                        obj.stt = i + 1;
+                        obj.ProductId =  objectData.ProductId;
+                        obj.loaiSua = objectData.LoaiSua;
+                        obj.duong = objectData.sugar;
+                        obj.SoLuong = objectData.SoLuongChai;
+                        obj.theTich = (objectData.TheTich + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        arr.push(obj);
+                    }
+                }
+
+                data = arr;
+                var $table = $('#table3');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
+
+    };
+    ///
+    var eventSearch4= function () {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewK001P1');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+            var thu = convertDateToDay(NgayLotrinh);
+            formDatasearch.append('thu', thu);
+        } else {
+            var d = new Date();
+            var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            formDatasearch.append('Ngay', strDate);
+            var thu = convertDateToDay(strDate);
+            formDatasearch.append('thu', thu);
+        }
+
+        $.ajax({
+            url: "/Kho/viewK001P1",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                var checkID = 0;
+                var sl = 0;
+                var tt = 0;
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        if (objectData.ProductId !== checkID) {
+                            obj.ProductId = objectData.ProductId;
+                            checkID = objectData.ProductId;
+                            sl = objectData.TheTich;
+                        } else {
+                            tt = tt + 1;
+                            obj.stt = tt;
+                            obj.ProductId = objectData.ProductId;
+                            checkID = objectData.ProductId;
+                            obj.ID = "";
+
+                            obj.productName = objectData.LoaiSua;
+                            obj.productUnit = "";
+                            obj.productUnit_DK = ((sl + objectData.TheTich) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            obj.productUnit_CL = (0 - (sl + objectData.TheTich) + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            sl = 0
+                            arr.push(obj);
+                        }
+
+                    }
+                }
+
+                data = arr;
+                var $table = $('#table2');
+                $table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
+    };
+    var eventSearch2 = function () {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'viewK001P2');
+
+        var NgayLotrinh = $('#txt_date').val();
+        if (NgayLotrinh !== "") {
+            formDatasearch.append('Ngay', NgayLotrinh);
+        } else {
+            var d = new Date();
+            var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+            formDatasearch.append('Ngay', strDate);
+        }
+
+        $.ajax({
+            url: "/Kho/viewK001P2",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result.length > 0) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+                            obj.stt = i + 1;
+                            obj.ProductId = objectData.Product_ID;
+                            obj.ID = objectData.ID;
+                            obj.Ngay = objectData.Ngay;
+                            obj.productName = objectData.Product_Name;
+                            obj.productUnit = objectData.Product_Unit;
+                            obj.productUnit_DK = (objectData.Product_Unit_DK + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            obj.productUnit_CL = objectData.Product_Unit_CL;
+                            arr.push(obj);
+                        }
+                    }
+                    data = arr;
+                    var $table = $('#table2');
+                    $table.bootstrapTable('load', data);
+                }else{
+                    eventSearch4();
+                }
+
+            },
+            error: function (err) {
+            }
+        });
+    };
+
+    // getdata table lộ trình
+    var getDataTable1 = function (itemData) {
+        $('#table1').bootstrapTable({
+            columns: [
+                {
+                    field: 'stt',
+                    title: 'STT',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'loaiSua',
+                    title: 'Loại sữa',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'duong',
+                    title: 'Đường',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (value, row, index) {
+                        if (value === 1 || value === "1") {
+                            return '<input type="checkbox" class="check"  checked="checked" />';
+                        } else if (value === 0|| value === "0") {
+                            return '<input type="checkbox" class="check" />';
+                        } else {
+                            return "";
+                        }
+                    }
+                }, {
+                    field: 'SoLuong',
+                    title: 'Số lượng (Chai)',
+                    align: 'center',
+                    valign: 'middle',
+
+                }, {
+                    field: 'theTich',
+                    title: 'Thể tích (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }],
+
+            data: itemData
+        });
+    };
+    var getDataTable2 = function (itemData) {
+        var $table = $('#table2');
+        $('#table2').bootstrapTable({
+            columns: [
+                {
+                    field: 'stt',
+                    title: 'STT',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'productName',
+                    title: 'Vị sữa',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'productUnit',
+                    title: 'Thể tích (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                    editable: true,
+                    formatter: function (value, row, index) {
+                        if (value) {
+                            var y = (value + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return y;
+                        } else {
+                            return value;
+                        }
+                    }
+                }, {
+                    field: 'productUnit_DK',
+                    title: 'Thể tích dự kiến (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'productUnit_CL',
+                    title: 'Còn lại (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (value, row, index) {
+                        if (value) {
+                            var y = (value + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return y;
+                        } else {
+                            return value;
+                        }
+                    }
+                }],
+
+            data: itemData
+        });
+
+        $table.on('editable-save.bs.table', function (e, field, row, old, $el) {
+            var $els = $table.find('.editable');
+            next = $els.index($el) + 1;
+
+            if (field == "productUnit") {
+                if (row.productUnit === "") {
+                    var x = 0 - parseInt((row.productUnit_DK).replace(/,/g, ""));
+                    var y = (x + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    row.productUnit_CL = y;
+                } else {
+                    var a = parseInt(((row.productUnit) + "").replace(/,/g, ""));
+                    var b = parseInt(((row.productUnit_DK) + "").replace(/,/g, ""));
+                    x = a - b;
+                    var y = (x + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    row.productUnit_CL = y;
+                }
+                $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
+            }
+        });
+    };
+
+    var getDataTable3 = function (itemData) {
+        $('#table3').bootstrapTable({
+            columns: [
+                {
+                    field: 'stt',
+                    title: 'STT',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'loaiSua',
+                    title: 'Loại sữa',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'duong',
+                    title: 'Đường',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: function (value, row, index) {
+                        if (value === 1 || value === "1") {
+                            return '<input type="checkbox" class="check"  checked="checked" />';
+                        } else {
+                            return '<input type="checkbox" class="check" />';
+                        }
+                    }
+                }, {
+                    field: 'SoLuong',
+                    title: 'Số lượng (Chai)',
+                    align: 'center',
+                    valign: 'middle',
+
+                }, {
+                    field: 'theTich',
+                    title: 'Thể tích (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }],
+
+            data: itemData
+        });
+    };
+
+    function convertDateToDay(num) {
+        // var x = parseStringToDate(num);
+        var x = num;
+        x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+        var date = new Date(x);
+        var day = date.getDay();
+        return day
+    }
+
+
+
+    </script>
+
+
+
+
