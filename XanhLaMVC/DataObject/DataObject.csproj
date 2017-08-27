@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7104F0FF-4FA5-48C5-A4F4-BA91CEBDC1DE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataObject</RootNamespace>
+    <AssemblyName>DataObject</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaoCao03.cs" />
+    <Compile Include="BaoCao04.cs" />
+    <Compile Include="BaoCao05.cs" />
+    <Compile Include="BillGridMaster.cs" />
+    <Compile Include="BillGridMasterDB.cs" />
+    <Compile Include="ChiTietChi.cs" />
+    <Compile Include="ChiTietHoaDon.cs" />
+    <Compile Include="ChiTietThu.cs" />
+    <Compile Include="ChotCa.cs" />
+    <Compile Include="DeptObject.cs" />
+    <Compile Include="DetailMasterGrid.cs" />
+    <Compile Include="HoaDon.cs" />
+    <Compile Include="HoaDonSanPham.cs" />
+    <Compile Include="KeToan.cs" />
+    <Compile Include="KeToanTongHop.cs" />
+    <Compile Include="KhachHangNgay.cs" />
+    <Compile Include="Kho001.cs" />
+    <Compile Include="Kho002.cs" />
+    <Compile Include="Kho003.cs" />
+    <Compile Include="KhoNhapXuatDetail.cs" />
+    <Compile Include="LoTrinhShipper.cs" />
+    <Compile Include="LuuChuyenDongTien.cs" />
+    <Compile Include="NgayHoaDon.cs" />
+    <Compile Include="NhaCungCap.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="PackageChiTietHoaDon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanHuyen.cs" />
+    <Compile Include="Shiper.cs" />
+    <Compile Include="SysBillDetailHozinal.cs" />
+    <Compile Include="SysBillDetailVertical.cs" />
+    <Compile Include="SysBillMaster.cs" />
+    <Compile Include="SysBillMasterHozinal.cs" />
+    <Compile Include="SysBillMasterVertical.cs" />
+    <Compile Include="SysCompany.cs" />
+    <Compile Include="SysCustomer.cs" />
+    <Compile Include="SysFunction.cs" />
+    <Compile Include="SysGroupFunctionRole.cs" />
+    <Compile Include="SysGroupUserRole.cs" />
+    <Compile Include="SysMenu.cs" />
+    <Compile Include="SysOrg.cs" />
+    <Compile Include="SysProduct.cs" />
+    <Compile Include="SysPromotion.cs" />
+    <Compile Include="SysRole.cs" />
+    <Compile Include="SysSource.cs" />
+    <Compile Include="SysUser.cs" />
+    <Compile Include="SysValidate.cs" />
+    <Compile Include="viewBillTemp.cs" />
+    <Compile Include="viewCustomerPopUp.cs" />
+    <Compile Include="viewCustomerTemp.cs" />
+    <Compile Include="ViewSysUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\DataObject.dll" />
+    <Content Include="bin\Debug\DataObject.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

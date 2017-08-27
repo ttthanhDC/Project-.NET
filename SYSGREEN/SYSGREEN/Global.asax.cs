@@ -6,7 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
-
+using System.Web.Http;
 namespace SYSGREEN
 {
     public class Global : HttpApplication
@@ -16,7 +16,10 @@ namespace SYSGREEN
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           // log4net.Config.XmlConfigurator.Configure();
+            System.Web.Http.GlobalConfiguration.Configuration.Routes.MapHttpRoute(
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{action}/{id}",
+               defaults: new { id = RouteParameter.Optional });
         }
     }
 }

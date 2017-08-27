@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5909D0B4-0903-4FB1-AF96-4BB063118763}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Servies</RootNamespace>
+    <AssemblyName>Servies</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaocaoServices.cs" />
+    <Compile Include="ChotCaServices.cs" />
+    <Compile Include="DeptObjectServices.cs" />
+    <Compile Include="HoaDonSanPhamServices.cs" />
+    <Compile Include="HoaDonServices.cs" />
+    <Compile Include="KeToanServices.cs" />
+    <Compile Include="KhoServices.cs" />
+    <Compile Include="KinhDoanhServices.cs" />
+    <Compile Include="KinhDoanhSV.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="PermissionServices.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiesSysGroupFunctionRole.cs" />
+    <Compile Include="ServiesSysGroupUserRole.cs" />
+    <Compile Include="ShipperServices.cs" />
+    <Compile Include="SysBillDetailHozinalServices.cs" />
+    <Compile Include="SysBillDetailVerticalServices.cs" />
+    <Compile Include="SysBillMasterHozinalServices.cs" />
+    <Compile Include="SysBillMasterServices.cs" />
+    <Compile Include="SysBillMasterVerticalServices.cs" />
+    <Compile Include="SysCompanyServices.cs" />
+    <Compile Include="SysCustomerServices.cs" />
+    <Compile Include="SysFunctionServices.cs" />
+    <Compile Include="SysMenuServices.cs" />
+    <Compile Include="SysOrgServies.cs" />
+    <Compile Include="SysProductServices.cs" />
+    <Compile Include="SysPromotionServices.cs" />
+    <Compile Include="SysRoleServices.cs" />
+    <Compile Include="SysSourceServices.cs" />
+    <Compile Include="SysUserServies.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Common.dll" />
+    <Content Include="bin\Debug\Common.pdb" />
+    <Content Include="bin\Debug\DataObject.dll" />
+    <Content Include="bin\Debug\DataObject.pdb" />
+    <Content Include="bin\Debug\Servies.dll" />
+    <Content Include="bin\Debug\Servies.pdb" />
+    <Content Include="obj\Debug\Servies.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Servies.dll" />
+    <Content Include="obj\Debug\Servies.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\Servies.csprojResolveAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{e8cc6e03-5f33-49c6-86ca-e1ff16e7b621}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataObject\DataObject.csproj">
+      <Project>{7104f0ff-4fa5-48c5-a4f4-ba91cebdc1de}</Project>
+      <Name>DataObject</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
