@@ -1,0 +1,92 @@
+﻿.img6 {
+    background: url('../content/images/dashboard_img/Diagram_Builder.png');
+}
+
+.img7 {
+    background: url('../content/images/dashboard_img/Airline_reservation.png');
+}
+
+.img9 {
+    background: url('../content/images/dashboard_img/sales-summary.png');
+}
+
+.img10 {
+    background: url('../content/images/dashboard_img/invoiceDemo.png');
+}
+
+.rptimg1
+{
+    background: url('../content/images/dashboard_img/ogrid.png');
+}
+
+.rptdimg1
+{
+    background: url('../content/images/dashboard_img/odgrid.png');
+}
+
+.qrcode .qrimage.qrsalessummary{
+   background: url('../content/images/qrcode/sales-summary.png');
+}
+
+.qrcode .qrimage.qrinvoicedemo 
+    {background: url("../content/images/qrcode/invoiceDemo.png") no-repeat !important;}
+
+.darktheme .listsampleimage .img9
+{
+    background: url("../content/images/dashboard_img/dark-theme-sales-summary.png");
+}
+
+.darktheme .listsampleimage .img10
+{
+    background: url("../content/images/dashboard_img/dark-theme-invoiceDemo.png");
+}
+
+.imgstyle
+{
+    cursor: pointer;
+    min-width: 316px;
+    min-height: 344px;
+    background-repeat:no-repeat;
+}
+.samplebutton
+{
+    background: none repeat scroll 0 0 #66C1DC;
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font-size: 13px;
+    font-weight: 600;
+    height: 25px;
+    line-height: 23px;
+    margin-left: 20px;
+    margin-top: -43px;
+    padding-left: 10px;
+    position: relative;
+    vertical-align: middle;
+    width: 97px;
+}
+
+.olitext
+{
+    position:relative;
+    display:inline-block;
+    float:left;
+    margin-top:-128px;
+    margin-left:20px;   
+    margin-right:20px;     
+    height:auto;
+    color:#838383;
+    text-align:justify; 
+}
+.litext > a, .olitext > a
+{
+    color:#4F4F4C;
+    font-size: 13px;
+    font-weight: 800;
+}
+.litext > p, .olitext > p
+{
+    margin-top:6px;
+    font-size: 12px;
+}

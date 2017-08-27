@@ -1,0 +1,937 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/font-awesome/4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="~/assets/css/jquery.gritter.min.css" />
+    <link rel="stylesheet" href="~/assets/fonts/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="~/assets/css/ace.min.css" class="ace-main-stylesheet" />
+    <script src="~/assets/js/ace-extra.min.js"></script>
+    <script src="~/assets/js/jquery.2.1.1.min.js"></script>
+    <link href="~/Content/Validator/bootstrapValidator.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/assets/js/bootstrap-tag.min.js"></script>
+    <script src="~/Scripts/Validator/bootstrapValidator.min.js"></script>
+    <script src="~/Scripts/Validator/loadingoverlay.min.js"></script>
+    <script src="~/Scripts/Validator/loadingoverlay_progress.min.js"></script>
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src="~/Scripts/bootstrap-table-vi-VN.js"></script>
+    <script src="~/Scripts/Validator/bootstrapValidator.min.js"></script>
+    <script src="~/Scripts/bootstrap-editable.js"></script>
+    <script src="~/Scripts/Validator/bootstrap-table-editable.js"></script>
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/Validator/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Validator/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.tmpl.js"></script>
+    <script src="~/Scripts/jquery.tmpl.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/canvasjs.min.js"></script>
+    <script src="~/assets/js/chosen.jquery.min.js"></script>
+    <link rel="stylesheet" href="~/assets/css/chosen.min.css" />
+    <link rel="stylesheet" href="~/assets/css/bootstrap-datepicker3.min.css" />
+    <script src="~/assets/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Lib ACCE -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/ace-elements.min.js"></script>
+    <script src="~/assets/js/ace.min.js"></script>
+    <script src="~/Scripts/Validator/bootbox.min.js"></script>
+    <style>
+        /* some elements used in demo only */
+        .spinner-preview {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .dropdown-preview {
+            margin: 0 5px;
+            display: inline-block;
+        }
+
+            .dropdown-preview > .dropdown-menu {
+                display: block;
+                position: static;
+                margin-bottom: 5px;
+            }
+    </style>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+</head>
+<body class="no-skin" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">
+    <form id="form1" runat="server">
+        <div id="navbar" class="navbar navbar-default">
+            <script type="text/javascript">
+                try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+            </script>
+            <div class="navbar-container" id="navbar-container">
+                <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                    <span class="sr-only">Toggle sidebar</span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand">
+                        <small>
+                            <i class="fa fa-leaf" style="color: green"></i>
+                            Xanh lá
+                        </small>
+                    </a>
+                </div>
+
+                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <img class="nav-user-photo" src="~/assets/images/avatars/logo.jpg" alt="xanh lá image" />
+                                <span class="user-info">
+                                    <small>Welcome,</small>
+                                    <span id="lblUser"></span>
+                                </span>
+
+                                <i class="ace-icon fa fa-caret-down"></i>
+                            </a>
+
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a href="Default">
+                                        <i class="ace-icon fa fa-power-off"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.navbar-container -->
+        </div>
+
+        <div class="main-container ace-save-state" id="main-container">
+            <script type="text/javascript">
+                try { ace.settings.loadState('main-container') } catch (e) { }
+            </script>
+
+            <div id="sidebar" class="sidebar responsive">
+                <script type="text/javascript">
+                    try { ace.settings.loadState('sidebar') } catch (e) { }
+                </script>
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="ace-icon fa fa-signal"></i>
+                        </button>
+
+                        <button class="btn btn-info">
+                            <i class="ace-icon fa fa-pencil"></i>
+                        </button>
+
+                        <button class="btn btn-warning">
+                            <i class="ace-icon fa fa-users"></i>
+                        </button>
+
+                        <button class="btn btn-danger">
+                            <i class="ace-icon fa fa-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+
+                        <span class="btn btn-info"></span>
+
+                        <span class="btn btn-warning"></span>
+
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div><!-- /.sidebar-shortcuts -->
+                <ul class="nav nav-list">
+                    <li class="">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> Module </span>
+                        <b class="arrow"></b>
+                    </li>
+                    <li class="">
+                        <a href="@Url.Action("C001_ListUser", "Configuration")" class="dropdown-toggle">
+                            <i class="menu-icon fa fa fa-cog"></i>
+                            <span class="menu-text"> Cấu hình </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="@Url.Action("C001_ListUser", "Configuration")" id="aC001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C001 Danh sách tài khoản
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="@Url.Action("C002_Right", "Configuration")" id="aC002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C002 Nhóm quyền
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a href="@Url.Action("C003_Depasment", "Configuration")" id="aC003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C003 Bộ phận
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a href="@Url.Action("TheRightForUser", "Configuration")" id="aC004">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C004 Phân quyền
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/C005_CompanyInformation" id="aC005">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C005 Thông tin công ty
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/C007_ConfigurationSource" id="aC006">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C007 Cấu hình nguồn
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/C008_Product" id="aC007">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C008 Cấu hình sản phẩm
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/C009_TotalBill" id="aC008">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C009 Cấu hình khuyến mại sản phẩm
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/C010Menu" id="aC009">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    C010 Cấu hình menu
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a runat="server" href="~/C001_ListUser" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text"> Lễ tân </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+
+                            <li class="">
+                                <a runat="server" href="~/LT001V2Demo" id="aLT001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    <!-- ~/LT001b_createReservation -->
+                                    LT001 Nhập reservation
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/LT002_demo" id="aLT002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    LT002 DS reservation
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/LT003_booking" id="aLT003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    LT003
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text"> Báo cáo </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a runat="server" href="~/BC001_revenueReport" id="aBC001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    BC001 Báo cáo doanh thu
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/BC002_ListBillCancel" id="aBC002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    BC002 Danh sách hóa dơn bị hủy
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/BC003_Debt" id="aBC003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    BC003 Công nợ
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/BC004_RevenueFormSource" id="aBC004">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    BC004 Thống kê doanh thu theo nguồn
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/BC005_StatisticalFormShiper" id="aBC005">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    BC005 Thống kê shiper
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text"> Ship </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a runat="server" href="~/S002_Route" id="aS001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    S001 Lộ trình ship
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/S004_ReportedOver" id="aS002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    S002 Báo cáo hết ca
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/S006_ListShiper" id="aS003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    S003 List Shiper
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+                            <span class="menu-text">
+                                Kinh doanh
+                            </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a runat="server" href="~/KD001_ListCustomer" id="aKD001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    KD001 Danh sách Khách hàng
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KD002_HistoryBuy" id="aKD002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    KD002 Lịch sử mua hàng
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KD003_DiscountInvoice" id="aKD003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    KD003 DS Bill giảm giá
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KD004_Produce" id="aKD004">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    KD004 Sản xuất
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+
+                            <span class="menu-text">
+                                Kho
+                            </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a runat="server" href="~/K001_ProductByDate" id="aK001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K001 Sản phẩm xuất kho theo ngày
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/K002_ToTalByDate" id="aK002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K002 Thống kê số lượng và thể tích bán sữa theo từng ngày
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/K003_ExportHat" id="aK003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K003 Xuất kho (dành cho xuất hạt)
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/K004_ImPortHat" id="aK004">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K004 Nhập kho (dành cho nhập hạt)
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/K005_ExpectedToBuy" id="aK005">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K005 Dự kiến mua (dành cho hạt)
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/K006_Supplier" id="aK006">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K006 Danh sách nhà cung cấp
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/K001_inputStore" id="aK007">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K008 Định lượng sản phẩm
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                            <li class="">
+                                <a runat="server" href="~/K001_inputStore" id="aK008">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    K009 Báo cáo nhập xuất tồn
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-tag"></i>
+
+                            <span class="menu-text">
+                                Kế toán
+                            </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a runat="server" href="~/KT001_ReceiveMoneyBank" id="aKT001">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Kế toán nhận tiền từ các tài khoản ngân hàng
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KT002_ReceiveMoneyCash" id="aKT002">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Kế toán nhận tiền là tiền mặt
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <<a runat="server" href="~/KT003_TotalExpenditure" id="aKT003">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Hiển thị tất cả các khoản chi
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KT004_CashFlow" id="aKT004">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Lưu chuyển dòng tiền
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="">
+                                <a runat="server" href="~/KT005_General Accounting" id="aKT005">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Kế toán tổng hợp
+                                </a>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul><!-- /.nav-list -->
+                <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                    <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+            <div class="main-content">
+                <div class="main-content-inner">
+                    <div class="breadcrumbs" id="breadcrumbs">
+                        <script type="text/javascript">
+                            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                        </script>
+
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">Home</a>
+                            </li>
+
+                            <li>
+                                <a href="#"><span id="lv2"></span></a>
+                            </li>
+                            <li class="active"><span id="lv3"></span></li>
+                        </ul><!-- /.breadcrumb -->
+
+                    </div>
+
+
+
+
+                    <div class="page-content">
+                        <div class="ace-settings-container" id="ace-settings-container">
+                            <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+                                <i class="ace-icon fa fa-cog bigger-130"></i>
+                            </div>
+
+                            <div class="ace-settings-box clearfix" id="ace-settings-box">
+                                <div class="pull-left width-50">
+                                    <div class="ace-settings-item">
+                                        <div class="pull-left">
+                                            <select id="skin-colorpicker" class="hide">
+                                                <option data-skin="no-skin" value="#438EB9">#438EB9</option>
+                                                <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                                                <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                                                <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                                            </select>
+                                        </div>
+                                        <span>&nbsp; Choose Skin</span>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-add-container">
+                                            Inside
+                                            <b>.container</b>
+                                        </label>
+                                    </div>
+                                </div><!-- /.pull-left -->
+
+                                <div class="pull-left width-50">
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+                                    </div>
+
+                                    <div class="ace-settings-item">
+                                        <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
+                                        <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+                                    </div>
+                                </div><!-- /.pull-left -->
+                            </div><!-- /.ace-settings-box -->
+                        </div><!-- /.ace-settings-container -->
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT BEGINS -->
+                                @RenderBody()
+                                <!-- PAGE CONTENT ENDS -->
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+                </div>
+            </div><!-- /.main-content -->
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+        <div class="footer" style="display:none">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue bolder">Xanh lá</span>
+                        &copy; 2016
+                    </span>
+
+                    &nbsp; &nbsp;
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script>
+    // Bootstrap Table
+    $(function () {
+        window.lv2 = ["Cấu hình", "Lễ tân", "Báo cáo", "Shipp", "Kinh Doanh", "Kho", "Kế Toán"];
+        window.lv3 = [["Danh sách tài khoản", "Nhóm quyền", "Bộ phận", "Phân quyền", "Thông tin công ty", "Cấu hình nguồn", "Cấu hình sản phẩm", "Cấu hình khuyến mại SP", "Cấu hình menu"],
+                      ["Nhập Reservation", "Danh sách Reservation"],
+                      ["Báo cáo doanh thu", "Danh sách Đơn bị hủy", "Công nợ", "Thống kê doanh thu theo nguồn", "Thống kê Shipper"],
+                      ["Lộ trình shipper", "Báo cáo hết ca", "Danh sách Shipper"], ["Danh sách khách hàng", "Lịch sử mua hàng", "Danh sách Bill giảm giá", "Sản xuất"],
+                      ["Sản phẩm xuất kho theo ngày", "Thống kê số lượng và thể tích bán sữa theo từng ngày", "Xuất kho(Dành cho hạt)", "Nhập kho (Dành cho hạt)", "Dự kiến mua", "Danh sách nhà cung cấp", "Định lượng sản phẩm", "Báo cáo nhập xuất tồn"],
+                      ["Kế toán nhận tiền từ các tài khoản ngân hàng", "Kế toán nhận tiền là tiền mặt", "Hiển thị tất các khoản chi", "Lưu chuyển dòng tiền", "Kế toán tổng hợp"]];
+        window.tempLV2 = "";
+        window.tempLV3 = "";
+        loadContentMain();
+        function loadContentMain() {
+            $('#lv2').text(sessionStorage.getItem('lvl2'));
+            $('#lv3').text(sessionStorage.getItem('lvl3'));
+            /*
+            var liDiv = sessionStorage.getItem('li');
+            if (liDiv) {
+                if (liDiv[0].parentElement.className == "nav nav-list") {
+                    liDiv.addClass('active open');
+                } else {
+                    liDiv.addClass('active');
+                    liDiv[0].parentElement.parentElement.classList.add("active open");
+                }
+            }*/
+            getLabelUserName();
+        };
+        function getLabelUserName() {
+            var formData = new FormData();
+            var obj = { 'id': 0 };
+            formData.append('type', 'getSessionUser');
+            formData.append('data', JSON.stringify(obj));
+            $.ajax({
+                url: "/Home/getSessionUser",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('#lblUser').text(result);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+
+        function aC001() {
+
+        };
+        /*** a Click Menu *****/
+        $('#aC001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][0]);
+        });
+        $('#aC002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][1]);
+        });
+        $('#aC003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][2]);
+        });
+        $('#aC004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][3]);
+        });
+        $('#aC005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][4]);
+        });
+        $('#aC006').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][5]);
+        });
+        $('#aC007').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][6]);
+        });
+        $('#aC008').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][7]);
+        });
+        $('#aC009').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][8]);
+        });
+        $('#aLT001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[1]);
+            sessionStorage.setItem('lvl3', window.lv3[1][0]);
+        });
+        $('#aLT002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[1]);
+            sessionStorage.setItem('lvl3', window.lv3[1][1]);
+        });
+        $('#aBC001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][0]);
+        });
+        $('#aBC002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][1]);
+        });
+        $('#aBC003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][2]);
+        });
+        $('#aBC004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][3]);
+        });
+        $('#aBC005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][4]);
+        });
+        $('#aS001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][0]);
+        });
+        $('#aS002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][1]);
+        });
+        $('#aS003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][2]);
+        });
+        $('#aKD001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][0]);
+        });
+        $('#aKD002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][1]);
+        });
+        $('#aKD003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][2]);
+        });
+        $('#aKD004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][3]);
+        });
+        $('#aK001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][0]);
+        });
+        $('#aK002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][1]);
+        });
+        $('#aK003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][2]);
+        });
+        $('#aK004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][3]);
+        });
+        $('#aK005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][4]);
+        });
+        $('#aK006').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][5]);
+        });
+        $('#aK007').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][6]);
+        });
+        $('#aK008').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][7]);
+        });
+        $('#aK009').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][8]);
+        });
+        $('#aKT001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][0]);
+        });
+        $('#aKT002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][1]);
+        });
+        $('#aKT003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][2]);
+        });
+        $('#aKT004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][3]);
+        });
+        $('#aKT005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][4]);
+        })
+        /** Active Li auto
+        $('.nav-list').on('click', 'li', function () {
+            $('.nav-list li.active').removeClass('active');
+            $('.nav-list li.open').removeClass('open');
+            if ($(this)[0].parentElement.className == "nav nav-list") {
+                $(this).addClass('active open');
+            } else {
+                $(this).addClass('active');
+                $(this)[0].parentElement.parentElement.classList.add("active open");
+            }
+            sessionStorage.setItem('li', $(this));
+        });**/
+    });
+</script>
