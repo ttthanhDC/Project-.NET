@@ -132,7 +132,7 @@
                 var maLT = result;
                 var y = maLT.split(",")
                 var x = parseInt(y[0]);
-                window.location = '/Configuration/S001_ListShiper?paramId=' + x + '&MaLoTrinh=' + y[1];
+                window.location = '/Shipper/S001_ListShiper?paramId=' + x + '&MaLoTrinh=' + y[1];
             },
             error: function (err) {
             }
@@ -312,7 +312,7 @@
 
     window.operateEventsBill = {
         'click .bill': function (e, value, row, index) {
-            window.location = '/Configuration/S003_InputBill?paramId=' + row.id;
+            window.location = '/Shipper/S003_InputBill?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
@@ -327,7 +327,7 @@
 
     window.operateEventsView = {
         'click .view': function (e, value, row, index) {
-            window.location = '/Configuration/S005_ReportedRoute?paramId=' + row.id;
+            window.location = '/Shipper/S005_ReportedRoute?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
@@ -397,7 +397,7 @@
 
     window.operateEventsEdit = {
         'click .chiTiet': function (e, value, row, index) {
-            window.location = '/Configuration/S001_ListShiper?paramId=' + row.id + '&MaLoTrinh=' + row.MaLoTrinh;
+            window.location = '/Shipper/S001_ListShiper?paramId=' + row.id + '&MaLoTrinh=' + row.MaLoTrinh;
             //alert('You click like action, row: ' + JSON.stringify(row));
         },
     };

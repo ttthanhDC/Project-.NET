@@ -144,7 +144,7 @@
         });
     });
     $('#btAdd').on('click', function (e) {
-        window.location = '/Configuration/S007_ManagerShiper?id=' + "Add";
+        window.location = '/Shipper/S007_ManagerShiper?id=' + "Add";
     });
     // load table
     var getDataTable = function (itemData) {
@@ -213,7 +213,7 @@
 
     window.operateEventsEdit = {
         'click .edit': function (e, value, row, index) {
-            window.location = '/Configuration/S007_ManagerShiper?id=' + row.id;
+            window.location = '/Shipper/S007_ManagerShiper?id=' + row.id;
 
         }
     };

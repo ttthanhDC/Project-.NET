@@ -109,7 +109,7 @@
     };
 
     $('#btAdd').on('click', function (e) {
-        window.location = '/Configuration/K005_Detail?paramId=ADD';
+        window.location = '/Kho/K005_Detail?paramId=ADD';
     });
 
 
@@ -182,7 +182,7 @@
 
     window.operateEvents = {
         'click .view': function (e, value, row, index) {
-            window.location = '/Configuration/K005_Detail?paramId=' + row.id;
+            window.location = '/Kho/K005_Detail?paramId=' + row.id;
         }
     };
     function operateFormatter1(value, row, index) {

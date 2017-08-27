@@ -308,7 +308,7 @@
 
                         <ul class="submenu">
                             <li class="">
-                                <a runat="server" href="~/BC001_revenueReport" id="aBC001">
+                                  <a href="@Url.Action("BC001_revenueReport", "BaoCao")" id="aBC001">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     BC001 Báo cáo doanh thu
                                 </a>
@@ -317,7 +317,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/BC002_ListBillCancel" id="aBC002">
+                                  <a href="@Url.Action("BC002_ListBillCancel", "BaoCao")" id="aBC002">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     BC002 Danh sách hóa dơn bị hủy
                                 </a>
@@ -325,7 +325,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/BC003_Debt" id="aBC003">
+                                  <a href="@Url.Action("BC003_Debt", "BaoCao")" id="aBC003">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     BC003 Công nợ
                                 </a>
@@ -334,7 +334,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/BC004_RevenueFormSource" id="aBC004">
+                                  <a href="@Url.Action("BC004_RevenueFormSource", "BaoCao")" id="aBC004">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     BC004 Thống kê doanh thu theo nguồn
                                 </a>
@@ -342,7 +342,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/BC005_StatisticalFormShiper" id="aBC005">
+                                  <a href="@Url.Action("BC005_StatisticalFormShiper", "BaoCao")" id="aBC005">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     BC005 Thống kê shiper
                                 </a>
@@ -365,7 +365,7 @@
 
                         <ul class="submenu">
                             <li class="">
-                                <a runat="server" href="~/S002_Route" id="aS001">
+                                 <a href="@Url.Action("S002_Route", "Shipper")" id="aS001">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     S001 Lộ trình ship
                                 </a>
@@ -374,7 +374,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/S004_ReportedOver" id="aS002">
+                                 <a href="@Url.Action("S004_ReportedOver", "Shipper")" id="aS002">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     S002 Báo cáo hết ca
                                 </a>
@@ -383,7 +383,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/S006_ListShiper" id="aS003">
+                                 <a href="@Url.Action("S006_ListShiper", "Shipper")" id="aS003">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     S003 List Shiper
                                 </a>
@@ -460,7 +460,7 @@
 
                         <ul class="submenu">
                             <li class="">
-                                <a runat="server" href="~/K001_ProductByDate" id="aK001">
+                                <a href="@Url.Action("K001_ProductByDate", "Kho")" id="aK001">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K001 Sản phẩm xuất kho theo ngày
                                 </a>
@@ -469,7 +469,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/K002_ToTalByDate" id="aK002">
+                                <a href="@Url.Action("K002_ToTalByDate", "Kho")" id="aK002">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K002 Thống kê số lượng và thể tích bán sữa theo từng ngày
                                 </a>
@@ -478,7 +478,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/K003_ExportHat" id="aK003">
+                                <a href="@Url.Action("K003_ExportHat", "Kho")" id="aK003">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K003 Xuất kho (dành cho xuất hạt)
                                 </a>
@@ -487,7 +487,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/K004_ImPortHat" id="aK004">
+                                <a href="@Url.Action("K004_ImPortHat", "Kho")" id="aK004">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K004 Nhập kho (dành cho nhập hạt)
                                 </a>
@@ -496,7 +496,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/K005_ExpectedToBuy" id="aK005">
+                                <a href="@Url.Action("K005_ExpectedToBuy", "Kho")" id="aK005">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K005 Dự kiến mua (dành cho hạt)
                                 </a>
@@ -504,7 +504,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/K006_Supplier" id="aK006">
+                                <a href="@Url.Action("K006_Supplier", "Kho")" id="aK006">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K006 Danh sách nhà cung cấp
                                 </a>
@@ -512,7 +512,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/K001_inputStore" id="aK007">
+                                <a href="@Url.Action("K001_inputStore", "Kho")" id="aK007">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K008 Định lượng sản phẩm
                                 </a>
@@ -520,7 +520,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/K001_inputStore" id="aK008">
+                                <a href="@Url.Action("K001_inputStore", "Kho")" id="aK008">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     K009 Báo cáo nhập xuất tồn
                                 </a>
@@ -545,7 +545,7 @@
 
                         <ul class="submenu">
                             <li class="">
-                                <a runat="server" href="~/KT001_ReceiveMoneyBank" id="aKT001">
+                                <a href="@Url.Action("KT001_ReceiveMoneyBank", "KeToan")" id="aKT001">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Kế toán nhận tiền từ các tài khoản ngân hàng
                                 </a>
@@ -554,7 +554,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/KT002_ReceiveMoneyCash" id="aKT002">
+                                <a href="@Url.Action("KT002_ReceiveMoneyCash", "KeToan")" id="aKT002">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Kế toán nhận tiền là tiền mặt
                                 </a>
@@ -563,7 +563,7 @@
                             </li>
 
                             <li class="">
-                                <<a runat="server" href="~/KT003_TotalExpenditure" id="aKT003">
+                                <a href="@Url.Action("KT003_TotalExpenditure", "KeToan")" id="aKT003">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Hiển thị tất cả các khoản chi
                                 </a>
@@ -572,7 +572,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/KT004_CashFlow" id="aKT004">
+                                <a href="@Url.Action("KT004_CashFlow", "KeToan")" id="aKT004">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Lưu chuyển dòng tiền
                                 </a>
@@ -581,7 +581,7 @@
                             </li>
 
                             <li class="">
-                                <a runat="server" href="~/KT005_General Accounting" id="aKT005">
+                                <a href="@Url.Action("KT005_General_Accounting", "KeToan")" id="aKT005">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     Kế toán tổng hợp
                                 </a>

@@ -17,8 +17,27 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
-
-
+        public ActionResult BC001_revenueReport()
+        {
+            return View();
+        }
+        public ActionResult BC002_ListBillCancel()
+        {
+            return View();
+        }
+        public ActionResult BC003_Debt()
+        {
+            return View();
+        }
+        public ActionResult BC004_RevenueFormSource()
+        {
+            return View();
+        }
+        public ActionResult BC005_StatisticalFormShiper()
+        {
+            return View();
+        }
+       
         [HttpPost]
         public JsonResult getvBaoCao01(String type, String data,String Ngay)
         {

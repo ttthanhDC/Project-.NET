@@ -120,7 +120,7 @@
     });
     // button search
     $('#btback').on('click', function (e) {
-        window.location = '/Configuration/S002_Route?paramId= 0';
+        window.location = '/Shipper/S002_Route?paramId= 0';
     });
     // button save
     $('#btSave').on('click', function (e) {
@@ -259,7 +259,7 @@
 
     window.codeReserEvents = {
         'click .next': function (e, value, row, index) {
-            window.location = '/Configuration/LT002_Demo3?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id + '&idLoTrinh=' + window.idParam;
+            window.location = '/Shipper/LT002_Demo3?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id + '&idLoTrinh=' + window.idParam;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };

@@ -17,6 +17,48 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
+        public ActionResult K001_ProductByDate()
+        {
+            return View();
+        }
+        public ActionResult K002_ToTalByDate()
+        {
+            return View();
+        }
+        public ActionResult K003_Detail()
+        {
+            return View();
+        }
+        public ActionResult K003_ExportHat()
+        {
+            return View();
+        }
+        public ActionResult K004_Detail()
+        {
+            return View();
+        }
+        public ActionResult K004_ImPortHat()
+        {
+            return View();
+        }
+        public ActionResult K005_Detail()
+        {
+            return View();
+        }
+        public ActionResult K005_ExpectedToBuy()
+        {
+            return View();
+        }
+        public ActionResult K006_Detail()
+        {
+            return View();
+        }
+        public ActionResult K006_Supplier()
+        {
+            return View();
+
+        }
+        
         [HttpPost]
         public JsonResult viewK001P1(String type, String data, String Ngay, String thu)
         {
