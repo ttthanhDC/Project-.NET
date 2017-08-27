@@ -114,7 +114,7 @@
 
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
-            window.location = '/C001_Detail.aspx?paramId=' + row.id;
+            window.location = '/Configuration/C001_Detail?paramId=' + row.id;
             //alert('You click like action, row: ' + JSON.stringify(row));
         },
         'click .remove': function (e, value, row, index) {
@@ -150,7 +150,7 @@
         }
     };
     $('#btnAdd').on('click', function (e) {
-        window.location = '/UserManger.aspx?';
+        window.location = '/Configuration/C001_Detail.aspx';
     });
 
 

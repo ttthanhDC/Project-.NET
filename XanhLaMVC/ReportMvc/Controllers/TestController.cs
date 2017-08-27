@@ -192,21 +192,7 @@ namespace ReportMvc.Controllers
             }
 
         }
-        [HttpPost]
-        public JsonResult getALLDataByMaLoTrinh(String type, String data, String MaLotrinh)
-        {
-            try
-            {
-                DataTable lst = Servies.HoaDonServices.getAllDataViewHoaDonByMaLoTrinh(MaLotrinh);
-                return Json(lst);
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-                return null;
-            }
-
-        }
+        
         
     }
 }

@@ -91,21 +91,7 @@ namespace ReportMvc.Controllers
             }
 
         }
-        [HttpPost]
-        public String UpdateFunctionPermision(String type, String data, String IsCreate, String IsEdit, String IsDelete, String IsView, String ID)
-        {
-            try
-            {
-                Servies.PermissionServices.UpdateFunctionPermision(Convert.ToInt16(IsCreate), Convert.ToInt16(IsEdit), Convert.ToInt16(IsDelete), Convert.ToInt16(IsView), Convert.ToInt16(ID));
-                return "1";
-            }
-            catch (Exception e)
-            {
-                e.ToString();
-                return "0";
-            }
-
-        }
+        
         [HttpPost]
         public String addFuntionToGroupReturnId(String type, String data)
         {
