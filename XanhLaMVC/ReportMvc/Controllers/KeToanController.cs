@@ -17,6 +17,38 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
+        public ActionResult KT001_ReceiveMoneyBank()
+        {
+            return View();
+        }
+        public ActionResult KT002_Detail()
+        {
+            return View();
+        }
+        public ActionResult KT002_ReceiveMoneyCash()
+        {
+            return View();
+        }
+        public ActionResult KT003_Detail()
+        {
+            return View();
+        }
+        public ActionResult KT003_TotalExpenditure()
+        {
+            return View();
+        }
+        public ActionResult KT004_CashFlow()
+        {
+            return View();
+        }
+        public ActionResult KT004_Detail()
+        {
+            return View();
+        }
+        public ActionResult KT005_General_Accounting()
+        {
+            return View();
+        }
         [HttpPost]
         public ContentResult viewManHinhThuCK(String type, String data, String Ngay)
         {

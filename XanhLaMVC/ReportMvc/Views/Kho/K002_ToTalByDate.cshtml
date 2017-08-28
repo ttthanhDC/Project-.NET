@@ -1,0 +1,128 @@
+﻿@{
+    ViewBag.Title = "K002_ToTalByDate";
+    Layout = "~/Views/Shared/_Main.cshtml";
+}
+
+    <div class="main-content-inner" style="margin-left:30px;margin-right:30px" id="div_LoTrinh">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_todate" placeholder="Từ ngày" />
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="title" id="txt_fromdate" placeholder="Đến ngày" />
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" id="btSearh">Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left:20px;margin-right:20px" id="div_Table1">
+        <table id="table1"></table>
+    </div>
+
+    <script>
+    // Bootstrap Table
+    $(function () {
+        var itemData = [];
+        getDataTable1(itemData);
+        //eventSearch1();
+    });
+
+    $('#btSearh').on('click', function (e) {
+        if ($('#txt_todate').val() === "") {
+            alert('Vui lòng nhập từ ngày.');
+        } else if ($('#txt_fromdate').val() === "") {
+            alert('Vui lòng nhập đến ngày.');
+        } else {
+            var data = [];
+            var formDatasearch = new FormData();
+            formDatasearch.append('type', 'viewK002');
+
+            formDatasearch.append('TuNgay', $('#txt_todate').val());
+            formDatasearch.append('DenNgay', $('#txt_fromdate').val());
+            $.ajax({
+                url: "/Kho/viewK002",
+                type: "POST",
+                data: formDatasearch,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    var jsonData = result;
+                    var arr = [];
+                    if (jsonData && jsonData.length > 0) {
+                        for (var i = 0; i < jsonData.length ; i++) {
+                            var objectData = jsonData[i];
+                            var obj = {};
+
+                            obj.stt = i + 1;
+                            obj.ngay = objectData.Ngay;
+                            obj.SoLuong1 = objectData.SoLuongChai325;
+                            obj.SoLuong2 = objectData.SoLuongChai550;
+                            obj.SoLuong3 = objectData.SoLuongChai1000;
+                            obj.theTich = (objectData.TheTich+ "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                            arr.push(obj);
+                        }
+                    }
+
+                    data = arr;
+                    var $table = $('#table1');
+                    $table.bootstrapTable('load', data);
+                },
+                error: function (err) {
+                }
+            });
+        }
+    });
+
+
+    // getdata table lộ trình
+    var getDataTable1 = function (itemData) {
+        $('#table1').bootstrapTable({
+            columns: [
+                {
+                    field: 'stt',
+                    title: 'STT',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'ngay',
+                    title: 'Ngày',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'SoLuong1',
+                    title: 'Số lượng (Chai 325 ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'SoLuong2',
+                    title: 'Số lượng (Chai 500 ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'SoLuong3',
+                    title: 'Số lượng (Chai 1000 ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }, {
+                    field: 'theTich',
+                    title: 'Thể tích (ml)',
+                    align: 'center',
+                    valign: 'middle',
+                }],
+
+            data: itemData
+        });
+    };
+
+
+    </script>
+
+
+
+
+

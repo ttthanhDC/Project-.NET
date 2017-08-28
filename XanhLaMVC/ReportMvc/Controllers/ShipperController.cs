@@ -17,6 +17,35 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
+        public ActionResult S001_ListShiper()
+        {
+            return View();
+        }
+        public ActionResult S002_Route()
+        {
+            return View();
+        }
+        public ActionResult S003_InputBill()
+        {
+            return View();
+        }
+        public ActionResult S004_ReportedOver()
+        {
+            return View();
+        }
+        public ActionResult S005_ReportedRoute()
+        {
+            return View();
+        }
+        public ActionResult S006_ListShiper()
+        {
+            return View();
+        }
+        public ActionResult S007_ManagerShiper()
+        {
+            return View();
+        }
+
         [HttpPost]
         public String  InsertLoTrinhShipperReturnId(String type, String data)
         {
