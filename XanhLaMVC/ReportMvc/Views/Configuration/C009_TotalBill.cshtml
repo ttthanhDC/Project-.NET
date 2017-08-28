@@ -1,5 +1,187 @@
 ﻿@{
     ViewBag.Title = "C009_TotalBill";
+    Layout = "~/Views/Shared/_Main.cshtml";
 }
 
-<h2>C009_TotalBill</h2>
+<table id="table"
+       data-pagination="true"
+       data-search="true"
+       data-show-refresh="true"
+       data-page-list="[10, 25, 50, 100, ALL]"></table>
+<div style="height:40px"></div>
+<div style="text-align:center;display: table;margin: 0 auto;">
+    <button type="button" class="btn btn-primary" id="btadd">Thêm</button>
+</div>
+
+<script>
+    $(function () {
+        function convertDate(Date_Start) {
+            var x = Date_Start.substr(0, 10);
+            var y = x.split("-");
+            var y1 = y[0];
+            var y2 = y[1];
+            var y3 = y[2];
+            a = y3 + "/" + y2 + "/" + y1;
+            return a;
+        }
+        var data = [];
+        var formDataListUser = new FormData();
+        formDataListUser.append('type', 'getData');
+        var json = { 'ID': 0 };
+        formDataListUser.append('data', JSON.stringify(json));
+        $.ajax({
+            url: "/SysPromotion/getData",
+            type: "POST",
+            data: formDataListUser,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.id = objectData.ID;
+                        obj.branch = objectData.ORG_ID;
+                        obj.billMin = objectData.Min;
+                        obj.billMax = objectData.Max;
+                        var Date_Start = objectData.Create_Date;
+                        var a = "";
+                        if (Date_Start) {
+                            a = convertDate(Date_Start);
+                        }
+                        obj.beginDate = a;
+                        var Date_End = objectData.Date_End;
+                        var b = "";
+                        if (Date_End) {
+                            b = convertDate(Date_End);
+                        }
+                        obj.endDate = b;
+                        obj.code = objectData.Code;
+                        obj.nameBill = objectData.Name;
+                        obj.percent = objectData.Promotion_Percent;
+                        obj.money = objectData.Amount_VND;
+                        obj.freeShip = objectData.Amount_FreeShip;
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+
+                $('#table').bootstrapTable({
+                    columns: [{
+                        field: 'branch',
+                        title: 'Cơ sở',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'billMin',
+                        title: 'Min',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'billMax',
+                        title: 'Max',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'beginDate',
+                        title: 'Ngày bắt đầu',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'endDate',
+                        title: 'Ngày tạo',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'code',
+                        title: 'Mã',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'nameBill',
+                        title: 'Tên',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'percent',
+                        title: '%',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'money',
+                        title: 'Vnđ',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'freeShip',
+                        title: 'Free ship',
+                        align: 'center',
+                        valign: 'middle',
+                    }, {
+                        field: 'operate',
+                        title: 'Thao tác',
+                        align: 'center',
+                        valign: 'middle',
+                        events: operateEvents,
+                        formatter: operateFormatter
+                    }],
+                    data: data
+                });
+            },
+            error: function (err) {
+
+            }
+        });
+    });
+    // function
+    $('#btadd').on('click', function (e) {
+        window.location = '/Configuration/C009_Detail';
+    });
+    function userFormatter(data) {
+        return data.length;
+    }
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="edit" href="javascript:void(0)" title="Sửa">',
+            '<i class="glyphicon glyphicon-pencil"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="Xoá">',
+            '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>',
+        ].join('');
+    }
+    window.operateEvents = {
+        'click .edit': function (e, value, row, index) {
+            window.location = '/Configuration/C009_Detail?paramId=' + row.id;
+        },
+        'click .remove': function (e, value, row, index) {
+            var formData = new FormData();
+            var id = parseInt(row.id + "");
+            //formData.append('data', "{Dept_Name:'abc',Dept_Description:'mieuta','Create_User':'thanhdc7'}");
+            var json = { 'ID': id };
+            jQuery.ajaxSetup({ async: true });
+            formData.append('type', 'delete');
+            formData.append('data', JSON.stringify(json));
+            $.ajax({
+                url: "/SysPromotion/delete",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    alert('Xóa thành công');
+                    $('#table').bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+                },
+                error: function (err) {
+                    alert('Xóa thất bại');
+                }
+            });
+        }
+    };
+</script>
+

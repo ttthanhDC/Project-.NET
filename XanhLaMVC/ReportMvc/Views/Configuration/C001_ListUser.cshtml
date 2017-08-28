@@ -12,13 +12,12 @@
     $(function () {
 
         function convertDate(Date_Start) {
-            var x = Date_Start.replace(new RegExp('/', 'g'), '').replace(new RegExp('Date', 'g'), '');
-            x = x.substring(1, x.length - 1);
-            x = new Date(parseInt(x));
-            var y1 = x.getDate() < 10 ? '0' + x.getDate() : x.getDate();
-            var y2 = (x.getMonth() + 1) < 10 ? '0' + (x.getMonth() + 1) : (x.getMonth() + 1);
-            var y3 = x.getFullYear();
-            var a = y1 + "/" + y2 + "/" + y3;
+            var x = Date_Start.substr(0, 10);
+            var y = x.split("-");
+            var y1 = y[0];
+            var y2 = y[1];
+            var y3 = y[2];
+            a = y3 + "/" + y2 + "/" + y1;
             return a;
         }
         var data = [];

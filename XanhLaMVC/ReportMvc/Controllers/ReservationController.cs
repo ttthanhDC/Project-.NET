@@ -15,6 +15,33 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
+        public ActionResult LT002_demo()
+        {
+            return View();
+        }
+        public ActionResult LT003_booking()
+        {
+            return View();
+        }
+
+        public ActionResult LT002_Demo2()
+        {
+            return View();
+        }
+
+        public ActionResult LT002_Demo3()
+        {
+            return View();
+        }
+        public ActionResult LT002_ThemGoi()
+        {
+            return View();
+        }
+
+        public ActionResult LT002_ThemNgay()
+        {
+            return View();
+        }
 
     }
 }

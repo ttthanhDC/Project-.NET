@@ -76,6 +76,11 @@ namespace ReportMvc.Controllers
             return View();
         }
 
+        public ActionResult TheRightForUser()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public String insert(String type, String data)

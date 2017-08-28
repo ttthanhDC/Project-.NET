@@ -43,7 +43,7 @@
         var json = { 'ID': 0 };
         formDataListUser.append('data', JSON.stringify(json));
         $.ajax({
-            url: "/Configuation/HandlerSysRole.ashx",
+            url: "/SysRole/getData",
             type: "POST",
             data: formDataListUser,
             contentType: false,
@@ -132,7 +132,7 @@
 
             formDataListUser.append('data', JSON.stringify(json));
             $.ajax({
-                url: "/Configuation/HandlerSysRole.ashx",
+                url: "/SysRole/insert",
                 type: "POST",
                 data: formDataListUser,
                 contentType: false,
@@ -170,7 +170,7 @@
 
     window.operateEvents = {
         'click .right': function (e, value, row, index) {
-            window.location = '/C002_GroupUser.aspx?id=' + row.id;
+            window.location = '/Configuration/C002_GroupUser?id=' + row.id;
         },
         'click .remove': function (e, value, row, index) {
             var data = [];
@@ -180,7 +180,7 @@
 
             formDataListUser.append('data', JSON.stringify(json));
             $.ajax({
-                url: "Configuation/HandlerSysRole.ashx",
+                url: "/SysRole/delete",
                 type: "POST",
                 data: formDataListUser,
                 contentType: false,
@@ -197,4 +197,6 @@
     };
 
 </script>
+
+
 
