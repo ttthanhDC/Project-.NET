@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Excel;
+using Newtonsoft.Json;
 
 namespace ReportMvc.Controllers
 {
@@ -146,12 +147,19 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getData(String type, String data, String MaHD, String TenKH, String TenSP)
+        public ContentResult getData(String type, String data, String MaHD, String TenKH, String TenSP)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getDataViewHoaDon(MaHD, TenKH, TenSP);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -161,12 +169,19 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getvHoaDonStep1(String type, String data, String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
+        public ContentResult getvHoaDonStep1(String type, String data, String MaHD, String tuNgay, String denNgay, String trangThai, String TenKH, String SoDT)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getvHoaDonStep1(MaHD, tuNgay, denNgay, trangThai, TenKH, SoDT);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -176,12 +191,19 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getvHoaDonStep2(String type, String data, String ID)
+        public ContentResult getvHoaDonStep2(String type, String data, String ID)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getvHoaDonStep2(ID);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -210,7 +232,7 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult updateStatusVHoaDonStep2(String type, String data, String ID)
+        public ContentResult updateStatusVHoaDonStep2(String type, String data, String ID)
         {
             try
             {
@@ -245,7 +267,14 @@ namespace ReportMvc.Controllers
                 }
                 String IDHD = Convert.ToString(idHoadon);
                 DataTable lst = Servies.HoaDonServices.getvHoaDonStep2(IDHD);
-                return Json(lst); 
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -255,12 +284,19 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getvHoaDonStep3(String type, String data, String ngayhdId)
+        public ContentResult getvHoaDonStep3(String type, String data, String ngayhdId)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getvHoaDonStep3(ngayhdId);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -356,12 +392,20 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getGoiHD(String type, String data)
+        public ContentResult getGoiHD(String type, String data)
         {
+            DataTable dt = new DataTable();
             try
             {
-                DataTable dt = Servies.HoaDonServices.getGoiHD();
-                return Json(dt);
+                dt = Servies.HoaDonServices.getGoiHD();
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -370,7 +414,7 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult uploadFile(String type, String data)
+        public ContentResult uploadFile(String type, String data)
         {
             try
             {
@@ -383,7 +427,14 @@ namespace ReportMvc.Controllers
                     excelReader.IsFirstRowAsColumnNames = true;
                     dt = result.Tables[0];                    
                 }
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -407,12 +458,19 @@ namespace ReportMvc.Controllers
         }
         
         [HttpPost]
-        public JsonResult getLv2HD(String type, String data, String idHD)
+        public ContentResult getLv2HD(String type, String data, String idHD)
         {
             try
             {
                 DataTable dt = Servies.HoaDonServices.getLv2HD(idHD);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -422,18 +480,32 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getLv3HD(String type, String data, String idCTHD)
+        public ContentResult getLv3HD(String type, String data, String idCTHD)
         {
             DataTable dt = new DataTable();
             try
             {
                 dt = Servies.HoaDonServices.getLv3HD(idCTHD);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
                 e.ToString();
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
         }
 
@@ -459,18 +531,32 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult loadInfoKHByHD(String type, String data, String idHD)
+        public ContentResult loadInfoKHByHD(String type, String data, String idHD)
         {
             DataTable dt = new DataTable();
             try
             {
                 dt = Servies.HoaDonServices.loadInfoKHByHD(idHD);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
                 e.ToString();
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
         }
         [HttpPost]

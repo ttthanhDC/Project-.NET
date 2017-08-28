@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -68,13 +69,20 @@ namespace XanhLaMVC.Controllers
 
         }
         [HttpPost]
-        public JsonResult getData(String type, String data)
+        public ContentResult getData(String type, String data)
         {
             try
             {
                 DataObject.SysSource obj = new JavaScriptSerializer().Deserialize<DataObject.SysSource>(data);
                 List<DataObject.SysSource> lst = GetData(obj.ID);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

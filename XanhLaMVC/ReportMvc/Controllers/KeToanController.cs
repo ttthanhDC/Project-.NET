@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -17,12 +18,19 @@ namespace ReportMvc.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult viewManHinhThuCK(String type, String data, String Ngay)
+        public ContentResult viewManHinhThuCK(String type, String data, String Ngay)
         {
             try
             {
                 DataTable dt = Servies.KeToanServices.viewManHinhThuCK(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -31,12 +39,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult viewManHinhThuTM(String type, String data, String Ngay)
+        public ContentResult viewManHinhThuTM(String type, String data, String Ngay)
         {
             try
             {
                 DataTable dt = Servies.KeToanServices.viewManHinhThuTM(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -45,12 +60,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult viewManHinhChi(String type, String data, String Ngay)
+        public ContentResult viewManHinhChi(String type, String data, String Ngay)
         {
             try
             {
                 DataTable dt = Servies.KeToanServices.viewManHinhChi(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -59,12 +81,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult viewManHinhLuuChuyenDongTien(String type, String data, String Ngay)
+        public ContentResult viewManHinhLuuChuyenDongTien(String type, String data, String Ngay)
         {
             try
             {
                 DataTable dt = Servies.KeToanServices.viewManHinhLuuChuyenDongTien(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -228,14 +257,21 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult viewKeToanTongHopKy(String type, String data, String flag)
+        public ContentResult viewKeToanTongHopKy(String type, String data, String flag)
         {
             try
             {
                 //Ngay,IdNgayHD,SoTien,MaNganHang,MaGiaoDich,TinhTrang,GhiChu,LoaiThu,NgayTao,NguoiTao,IdKeToan
 
                 List<DataObject.KeToanTongHop> viewKeToanTongHopKy = Servies.KeToanServices.viewKeToanTongHopKy(Convert.ToInt16(flag));
-                return Json(viewKeToanTongHopKy);
+                var list = JsonConvert.SerializeObject(viewKeToanTongHopKy,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

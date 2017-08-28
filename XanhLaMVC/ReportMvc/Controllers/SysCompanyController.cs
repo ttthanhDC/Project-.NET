@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -65,13 +66,20 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getData(String type, String data)
+        public ContentResult getData(String type, String data)
         {
             try
             {
                 DataObject.SysCompany obj = new JavaScriptSerializer().Deserialize<DataObject.SysCompany>(data);
                 List<DataObject.SysCompany> lst = GetData(obj.ID);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

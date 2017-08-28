@@ -17,7 +17,7 @@ namespace ReportMvc.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             return View();
         }
-        //public JsonResult
+        //public ContentResult
         [HttpPost]
         public String LoginUser(String userName,String Password)
         {

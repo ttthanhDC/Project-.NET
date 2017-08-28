@@ -256,6 +256,7 @@
     <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\QuanHuyenController.cs" />
     <Compile Include="Controllers\RandomPassword.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\SendEmailController.cs" />
     <Compile Include="Controllers\ShipController.cs" />
     <Compile Include="Controllers\ShipperController.cs" />
@@ -1493,6 +1494,9 @@
     <Content Include="Configuation\HandlerSysRole.ashx" />
     <Content Include="Configuation\HandlerSysSource.ashx" />
     <Content Include="Configuation\HandlerSysUser.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT001V2Demo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

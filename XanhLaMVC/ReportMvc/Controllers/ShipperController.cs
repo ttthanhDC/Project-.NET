@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -90,12 +91,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult ViewLoTrinhShipper(String type, String data, String NgayLotrinh, String MaLoTrinh, String ShipName, String ShipNumber, String TrangThai)
+        public ContentResult ViewLoTrinhShipper(String type, String data, String NgayLotrinh, String MaLoTrinh, String ShipName, String ShipNumber, String TrangThai)
         {
             try
             {
                 DataTable lst = Servies.ShipperServices.ViewLoTrinhShipper(NgayLotrinh, MaLoTrinh, ShipName, ShipNumber, TrangThai);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -148,7 +156,7 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getDataShipper(String type, String data, String NAME, String Shipe_ID)
+        public ContentResult getDataShipper(String type, String data, String NAME, String Shipe_ID)
         {
             try
             {
@@ -157,7 +165,14 @@ namespace ReportMvc.Controllers
                 s.NAME = NAME;
                 s.SHIPER_ID = Convert.ToInt16(Shipe_ID);
                 table = Servies.ShipperServices.getDataShipper(s);
-                return Json(table);
+                var list = JsonConvert.SerializeObject(table,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

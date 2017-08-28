@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -39,12 +40,19 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult ViewChotCa(String type, String data, String NguoiChot, String NgayChot)
+        public ContentResult ViewChotCa(String type, String data, String NguoiChot, String NgayChot)
         {
             try
             {
                 DataTable dt = Servies.ChotCaServices.ViewChotCa(NguoiChot, NgayChot);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

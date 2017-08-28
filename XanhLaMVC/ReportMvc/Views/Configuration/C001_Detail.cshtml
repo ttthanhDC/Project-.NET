@@ -6,31 +6,31 @@
 <div id="contactForm" class="form-horizontal">
     <div class="form-group">
         <label class="col-md-3 control-label">UserName</label>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <input type="text" class="form-control" name="userName" id="txtUserName" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Password</label>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <input type="password" class="form-control" name="passWord" id="txtPassword" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Email</label>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <input type="email" class="form-control" name="email" id="txtEmail" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Bộ phân</label>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <select class="form-control" id="deptID"></select>
         </div>
     </div>
     <div class="form-group">
         <label class="col-md-3 control-label">Cơ sở</label>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <select class="form-control" id="orgID"></select>
         </div>
     </div>
@@ -62,7 +62,7 @@
             var json = { 'ID': parseInt(idParam) };
             formDataListUser.append('data', JSON.stringify(json));
             $.ajax({
-                url: "Configuation/HandlerSysUser.ashx",
+                url: "/SysUser/getData",
                 type: "POST",
                 data: formDataListUser,
                 contentType: false,
@@ -82,7 +82,7 @@
 
 
                             $('#txtUserName').val(objectData.UserName);
-                            //$('#txtPassword').val(objectData.DeptId);
+                            $('#txtPassword').val(objectData.Password);
                             $('#txtEmail').val(objectData.Email);
                             $('#deptID').val(objectData.DeptId);
                             $('#orgID').val(objectData.OrgId);
@@ -115,7 +115,7 @@
         formDataOrg.append('type', 'getDataOrg');
         formDataOrg.append('data', '1');
         $.ajax({
-            url: "Configuation/HandlerSysUser.ashx",
+            url: "/SysUser/getDataDept",
             type: "POST",
             data: formDataDept,
             contentType: false,
@@ -147,7 +147,7 @@
         });
 
         $.ajax({
-            url: "Configuation/HandlerSysUser.ashx",
+            url: "/SysUser/getDataOrg",
             type: "POST",
             data: formDataOrg,
             contentType: false,
@@ -222,7 +222,7 @@
                 formData.append('type', 'update');
                 formData.append('data', JSON.stringify(json));
                 $.ajax({
-                    url: "Configuation/HandlerSysUser.ashx",
+                    url: "/SysUser/update",
                     type: "POST",
                     data: formData,
                     contentType: false,
@@ -250,7 +250,7 @@
                 formData.append('type', 'insert');
                 formData.append('data', JSON.stringify(json));
                 $.ajax({
-                    url: "Configuation/HandlerSysUser.ashx",
+                    url: "/SysUser/insert",
                     type: "POST",
                     data: formData,
                     contentType: false,
@@ -317,7 +317,7 @@
         });
     });
     $('#btnBack').on('click', function (e) {
-        window.location = '/C001_ListUser.aspx?paramId= 0';
+        window.location = '/Configuration/C001_ListUser';
     });
 </script>
 

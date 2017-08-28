@@ -76,7 +76,10 @@ namespace Servies
         public static DataTable CheckLogin(String UserName,String Password)
         {
             DataTable dt = new DataTable();
-            String Select = "Select *  from  SYS_USER Where UserName = @UserName And Password =@Password";
+            String Select = "Select su.*,so.Name as OrgName,sp.Dept_Name as DeptName  from  SYS_USER su ";
+            Select += " LEFT JOIN SYS_ORG so ON su.OrgId = so.ID ";
+            Select += " LEFT JOIN SYS_DEPT sp ON su.DeptId = sp.ID ";
+            Select += " Where UserName = @UserName And Password =@Password ";
             SqlConnection conn = Common.Connection.SqlConnect();
             SqlCommand cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;

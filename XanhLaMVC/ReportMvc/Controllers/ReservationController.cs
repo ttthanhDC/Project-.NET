@@ -11,7 +11,7 @@ namespace ReportMvc.Controllers
         //
         // GET: /Reservation/
 
-        public ActionResult Index()
+        public ActionResult LT001V2Demo()
         {
             return View();
         }

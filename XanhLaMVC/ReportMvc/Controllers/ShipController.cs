@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -133,13 +134,20 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public JsonResult getDataFilter(String type, String data, String MaReservation, String ngayHoaDon, String quan, String soShiper, String tenShiper, String trangThai)
+        public ContentResult getDataFilter(String type, String data, String MaReservation, String ngayHoaDon, String quan, String soShiper, String tenShiper, String trangThai)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getDataFilterViewHoaDon(MaReservation, ngayHoaDon, quan,
                          soShiper, tenShiper, trangThai);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -149,12 +157,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getALLData(String type, String data)
+        public ContentResult getALLData(String type, String data)
         {
             try
             {
                 DataTable lst = Servies.HoaDonServices.getAllDataViewHoaDon();
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

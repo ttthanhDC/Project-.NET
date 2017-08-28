@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -65,13 +66,20 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getData(String type, String data)
+        public ContentResult getData(String type, String data)
         {
             try
             {
                 DataObject.SysCustomer obj = new JavaScriptSerializer().Deserialize<DataObject.SysCustomer>(data);
                 List<DataObject.SysCustomer> lst = GetData(obj.ID);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                     Formatting.None,
+                     new JsonSerializerSettings()
+                     {
+                         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                     });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -81,13 +89,20 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getDataByPhoneNumber(String type, String data)
+        public ContentResult getDataByPhoneNumber(String type, String data)
         {
             try
             {
                 DataObject.SysCustomer obj = new JavaScriptSerializer().Deserialize<DataObject.SysCustomer>(data);
                 List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetDataByPhoneNumber(obj.PhoneNumber);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -97,13 +112,20 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getDataByEmail(String type, String data)
+        public ContentResult getDataByEmail(String type, String data)
         {
             try
             {
                 DataObject.SysCustomer obj = new JavaScriptSerializer().Deserialize<DataObject.SysCustomer>(data);
                 List<DataObject.SysCustomer> lst = Servies.SysCustomerServices.GetDataByEmail(obj.Email);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -113,12 +135,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getCustomerById(String type, String data, String makh)
+        public ContentResult getCustomerById(String type, String data, String makh)
         {
             try
             {
                 List<DataObject.SysCustomer> lst = GetData(Convert.ToInt32(makh));
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

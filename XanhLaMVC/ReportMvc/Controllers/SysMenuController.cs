@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -62,12 +63,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getData(String type, String data,String Code)
+        public ContentResult getData(String type, String data,String Code)
         {
             try
             {
                 DataTable lst = Servies.SysMenuServices.GetProductByIdCode(Convert.ToInt16(Code));
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -77,12 +85,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getALLMenu(String type, String data, String Code)
+        public ContentResult getALLMenu(String type, String data, String Code)
         {
             try
             {
                 DataTable lst = Servies.SysMenuServices.GetAllMenu();
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

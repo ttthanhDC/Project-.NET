@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -47,12 +48,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getUserInGroup(String type, String data, String roleId)
+        public ContentResult getUserInGroup(String type, String data, String roleId)
         {
             try
             {
                 DataTable lst = Servies.PermissionServices.getUserInGroup(Convert.ToInt16(roleId));
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -62,12 +70,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getAllFunction(String type, String data, String roleId)
+        public ContentResult getAllFunction(String type, String data, String roleId)
         {
             try
             {
                 DataTable lst = Servies.PermissionServices.getAllFunction(roleId);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -114,12 +129,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getFuntionByGroupId(String type, String data, String ROLE_ID)
+        public ContentResult getFuntionByGroupId(String type, String data, String ROLE_ID)
         {
             try
             {
                 DataTable dt = Servies.PermissionServices.getFuntionByGroupId(Convert.ToInt16(ROLE_ID));
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -129,12 +151,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getPermisionByScreen(String type, String data, String nameScreen, String userName)
+        public ContentResult getPermisionByScreen(String type, String data, String nameScreen, String userName)
         {
             try
             {
                 DataTable lst = Servies.PermissionServices.getPermisionByScreen(nameScreen, userName);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -159,12 +188,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getAllRole(String type, String data)
+        public ContentResult getAllRole(String type, String data)
         {
             try
             {
                 DataTable lst = Servies.PermissionServices.getAllRole();
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

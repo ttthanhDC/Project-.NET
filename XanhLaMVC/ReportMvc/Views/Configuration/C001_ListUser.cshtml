@@ -10,6 +10,17 @@
 
 <script>
     $(function () {
+
+        function convertDate(Date_Start) {
+            var x = Date_Start.replace(new RegExp('/', 'g'), '').replace(new RegExp('Date', 'g'), '');
+            x = x.substring(1, x.length - 1);
+            x = new Date(parseInt(x));
+            var y1 = x.getDate() < 10 ? '0' + x.getDate() : x.getDate();
+            var y2 = (x.getMonth() + 1) < 10 ? '0' + (x.getMonth() + 1) : (x.getMonth() + 1);
+            var y3 = x.getFullYear();
+            var a = y1 + "/" + y2 + "/" + y3;
+            return a;
+        }
         var data = [];
         var formDataListUser = new FormData();
         formDataListUser.append('type', 'getData');
@@ -30,17 +41,12 @@
                         var obj = {};
                         obj.id = objectData.ID;
                         obj.email = objectData.Email;
-                        obj.department = objectData.DeptId;
-                        obj.local = objectData.OrgId;
+                        obj.department = objectData.DeptName;
+                        obj.local = objectData.OrgName;
                         var Date_Start = objectData.Create_Date;
                         var a = "";
                         if (Date_Start) {
-                            var x = Date_Start.substr(0, 10);
-                            var y = x.split("-");
-                            var y1 = y[0];
-                            var y2 = y[1];
-                            var y3 = y[2];
-                            a = y3 + "/" + y2 + "/" + y1;
+                            a = convertDate(Date_Start);
                         }
                         obj.dateCreate = a;
                         obj.user = objectData.UserName;
@@ -104,10 +110,10 @@
     function operateFormatter(value, row, index) {
         return [
             '<a class="edit" href="javascript:void(0)" title="Sửa">',
-            'Sửa',
-            '</a>  ', '|',
+             '<i class="glyphicon glyphicon-pencil"></i>',
+            '</a>  ', ' ',
             '<a class="remove" href="javascript:void(0)" title="Xoá">',
-            'Xóa',
+            '<i class="glyphicon glyphicon-remove"></i>',
             '</a>',
         ].join('');
     }
@@ -150,7 +156,7 @@
         }
     };
     $('#btnAdd').on('click', function (e) {
-        window.location = '/Configuration/C001_Detail.aspx';
+        window.location = '/Configuration/C001_Detail';
     });
 
 

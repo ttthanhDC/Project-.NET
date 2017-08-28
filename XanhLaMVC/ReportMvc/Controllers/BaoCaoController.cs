@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -20,12 +21,19 @@ namespace ReportMvc.Controllers
 
 
         [HttpPost]
-        public JsonResult getvBaoCao01(String type, String data,String Ngay)
+        public ContentResult getvBaoCao01(String type, String data,String Ngay)
         {
             try
             {
                 DataTable dt = Servies.BaocaoServices.getvBaoCao01(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -34,12 +42,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult getvBaoCao02(String type, String data, String Ngay)
+        public ContentResult getvBaoCao02(String type, String data, String Ngay)
         {
             try
             {
                 DataTable dt = Servies.BaocaoServices.getvBaoCao02(Ngay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -48,7 +63,7 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult getvBaoCao03(String type, String data, String tuNgay, String denNgay, String LoaiDon)
+        public ContentResult getvBaoCao03(String type, String data, String tuNgay, String denNgay, String LoaiDon)
         {
             try
             {
@@ -58,7 +73,14 @@ namespace ReportMvc.Controllers
                     ld = Convert.ToInt16(ld);
                 }
                 List<DataObject.BaoCao03> dt = Servies.BaocaoServices.getvBaoCao03(tuNgay, denNgay, ld);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -67,12 +89,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult getvBaoCao04(String type, String data, String tuNgay, String denNgay)
+        public ContentResult getvBaoCao04(String type, String data, String tuNgay, String denNgay)
         {
             try
             {
                 List<DataObject.BaoCao04> dt = Servies.BaocaoServices.getvBaoCao04(tuNgay, denNgay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -81,12 +110,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult getvBaoCao05(String type, String data, String tuNgay, String denNgay)
+        public ContentResult getvBaoCao05(String type, String data, String tuNgay, String denNgay)
         {
             try
             {
                 List<DataObject.BaoCao04> dt = Servies.BaocaoServices.getvBaoCao04(tuNgay, denNgay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -95,12 +131,19 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public JsonResult getvBaoCaoChotCa(String type, String data, String tuNgay, String shipperName)
+        public ContentResult getvBaoCaoChotCa(String type, String data, String tuNgay, String shipperName)
         {
             try
             {
                 List<DataObject.BaoCao05> dt = Servies.BaocaoServices.getvBaoCaoChotCa(shipperName, tuNgay);
-                return Json(dt);
+                var list = JsonConvert.SerializeObject(dt,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {

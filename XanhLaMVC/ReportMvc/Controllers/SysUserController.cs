@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -55,15 +56,17 @@ namespace ReportMvc.Controllers
             try
             {
                 List<DataObject.SysUser> lstEmail = Servies.SysUserServies.GetDataEmail(obj.Email);
+                /*
                 if (lstEmail.Count > 0)
                 {
                     return "Cập nhật thông tin không thành công! Địa chỉ Email đã tồn tại trong hệ thống";
                 }
                 else
                 {
-                    Update(obj);
-                    return "Cập nhật thông tin người dùng thành công";
-                }
+                    
+                }*/
+                Update(obj);
+                return "Cập nhật thông tin người dùng thành công";
             }
             catch (Exception e)
             {
@@ -88,13 +91,20 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getData(String type, String data)
+        public ContentResult getData(String type, String data)
         {
             try
             {
                 DataObject.SysUser obj = new JavaScriptSerializer().Deserialize<DataObject.SysUser>(data);
                 List<DataObject.ViewSysUser> lst = Servies.SysUserServies.GetData(obj.ID);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -104,12 +114,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getDataDept(String type, String data)
+        public ContentResult getDataDept(String type, String data)
         {
             try
             {
                 List<DataObject.DeptObject> lst = Servies.DeptObjectServices.GetData(0);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
@@ -119,12 +136,19 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public JsonResult getDataOrg(String type, String data)
+        public ContentResult getDataOrg(String type, String data)
         {
             try
             {
                 List<DataObject.SysOrg> lst = Servies.SysOrgServies.GetData(0);
-                return Json(lst);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
             }
             catch (Exception e)
             {
