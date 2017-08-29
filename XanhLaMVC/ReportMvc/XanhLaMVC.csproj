@@ -272,6 +272,21 @@
     <Compile Include="Controllers\SysSourceController.cs" />
     <Compile Include="Controllers\SysUserController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSetHD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetHD.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DB_SYS_GREENDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB_SYS_GREENDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1376,6 +1391,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App_Data\GroupingAggregate.rdlc" />
+    <EmbeddedResource Include="App_Data\HoaDon.rdlc" />
+    <EmbeddedResource Include="App_Data\LoTrinh.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.eot" />
@@ -1518,6 +1535,44 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Reservation\LT002_ThemNgay.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Configuration\RDLCReport.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB_SYS_GREENDataSet.xsc">
+      <DependentUpon>DB_SYS_GREENDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSetHD.xsc">
+      <DependentUpon>DataSetHD.xsd</DependentUpon>
+    </Content>
+    <Content Include="DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSetHD.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetHD.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSetHD.xss">
+      <DependentUpon>DataSetHD.xsd</DependentUpon>
+    </Content>
+    <None Include="DB_SYS_GREENDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DB_SYS_GREENDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DB_SYS_GREENDataSet.xss">
+      <DependentUpon>DB_SYS_GREENDataSet.xsd</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

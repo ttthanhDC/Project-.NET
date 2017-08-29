@@ -27,16 +27,13 @@ namespace ReportMvc.WebAPI
 
         public void OnInitReportOptions(ReportViewerOptions reportOption)
         {
-            
+            //reportOption.ReportModel.DataSources.Clear();
+            //reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "Sales", Value = SalesDetails.GetData() });
         }
 
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
-            List<ReportParameter> parameters = new List<ReportParameter>();
-            parameters.Add(new ReportParameter() { Name = "InvoiceID", Labels = new List<string>() { "InvoiceID" }, Values = new List<string>() { "10250" } });
-            reportOption.ReportModel.Parameters = parameters;
-            reportOption.ReportModel.DataSources.Clear();
-            reportOption.ReportModel.DataSources.Add(new ReportDataSource { Name = "Sales", Value = SalesDetails.GetData() });
+            
         }
     }
 
