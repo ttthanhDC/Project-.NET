@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ReportDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SampleData />
+  <Engine>handlebars</Engine>
+  <Recipe>phantom-pdf</Recipe>
+  <Phantom>
+    <Margin />
+    <Header />
+    <HeaderHeight>30 px</HeaderHeight>
+    <Footer>xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá xanh lá </Footer>
+    <FooterHeight>50 px</FooterHeight>
+    <Orientation>landscape</Orientation>
+    <Format>A5</Format>
+    <Width />
+    <Height />
+  </Phantom>
+</ReportDefinition>
