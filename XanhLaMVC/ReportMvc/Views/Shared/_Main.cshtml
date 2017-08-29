@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/assets/css/ace.min.css" class="ace-main-stylesheet" />
     <script src="~/assets/js/ace-extra.min.js"></script>
     <script src="~/assets/js/jquery.2.1.1.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
     <link href="~/Content/Validator/bootstrapValidator.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
     <script src="~/assets/js/bootstrap-tag.min.js"></script>
@@ -36,7 +37,7 @@
     <script src="~/assets/js/bootstrap-datepicker.min.js"></script>
 
     <!-- Lib ACCE -->
-    <script src="~/assets/js/bootstrap.min.js"></script>
+    
     <script src="~/assets/js/ace-elements.min.js"></script>
     <script src="~/assets/js/ace.min.js"></script>
     <script src="~/Scripts/Validator/bootbox.min.js"></script>
@@ -279,7 +280,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/LT002_demo" id="aLT002">
+                                <a href="@Url.Action("LT002_Demo", "Reservation")" id="aLT002">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     LT002 DS reservation
                                 </a>
@@ -287,7 +288,7 @@
                                 <b class="arrow"></b>
                             </li>
                             <li class="">
-                                <a runat="server" href="~/LT003_booking" id="aLT003">
+                                <a href="@Url.Action("LT003_booking", "Reservation")" id="aLT003">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     LT003
                                 </a>

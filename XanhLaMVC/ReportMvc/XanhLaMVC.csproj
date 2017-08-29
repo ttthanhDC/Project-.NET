@@ -1498,6 +1498,27 @@
   <ItemGroup>
     <Content Include="Views\Reservation\LT001V2Demo.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Configuration\TheRightForUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT002_demo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT003_booking.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT002_Demo2.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT002_Demo3.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT002_ThemGoi.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reservation\LT002_ThemNgay.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

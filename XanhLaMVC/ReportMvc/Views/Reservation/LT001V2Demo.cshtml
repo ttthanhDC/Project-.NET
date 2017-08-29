@@ -1046,7 +1046,7 @@
         function operateFormatter(value, row, index) {
             return [
                  '<a class="remove" href="javascript:void(0)" title="Xoá">',
-                'Xóa',
+                '<i class="glyphicon glyphicon-remove"></i>',
                 '</a>',
             ].join('');
         }
@@ -1703,13 +1703,13 @@
             if (value == "1") {
                 return [
                  '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
-                'Thêm mới',
+                '<i class="glyphicon glyphicon-plus-sign"></i>',
                 '</a>',
                 ].join('');
             } else {
                 return [
-                  '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
-                 'Xóa',
+                  '<a class="remove" href="javascript:void(0)" title="delete">',
+                 '<i class="glyphicon glyphicon-remove"></i>',
                  '</a>',
                 ].join('');
             }
@@ -1986,8 +1986,8 @@
         }
         function operateFormatterPopupSingle(value, row, index) {
             return [
-                '<a class="remove" href="javascript:void(0)" title="Thêm mới">',
-               'Xóa',
+                '<a class="remove" href="javascript:void(0)" title="delete">',
+               '<i class="glyphicon glyphicon-remove"></i>',
                '</a>',
             ].join('');
         }
