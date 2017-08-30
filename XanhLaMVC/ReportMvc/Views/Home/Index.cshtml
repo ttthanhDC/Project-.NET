@@ -22,8 +22,12 @@
 <script src="~/Scripts/ej.unobtrusive.min.js"></script>
 <script>
     function openDialog() {
-        window.open('@Url.Action("RDLCReport", "Configuration", new { target = "_blank" })')
-        //$("#dialog").ejDialog("open");
+        window.open('@Url.Action("ReportVanChuyen", "Report", new { IdNgayHD = "223" })');
+        //$("#dialog").ejDialog("open"); 
+        /**
+        
+        
+        **/
     }
 </script>
 

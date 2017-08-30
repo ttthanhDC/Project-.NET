@@ -1,6 +1,7 @@
 ﻿@{
-    ViewBag.Title = "RDLCReport";
+    ViewBag.Title = "ReportVanChuyen";
 }
+
 @using Syncfusion.MVC.EJ
 @using Syncfusion.JavaScript.Models
 @using Syncfusion.JavaScript
@@ -22,9 +23,9 @@
 <div style="width:100%; height:100%; position:absolute;">
     @(Html.EJ().ReportViewer("reportsample")
                 .ProcessingMode(Syncfusion.JavaScript.ReportViewerEnums.ProcessingMode.Local)
-                .ReportPath("~/App_Data/GroupingAggregate.rdlc")
+                .ReportPath("~/App_Data/HoaDon.rdlc")
                 .ReportServiceUrl(VirtualPathUtility.ToAbsolute("~/api/ReportApi"))
-                        .DataSources(t => { t.Name("Sales").Value(ViewData["DataSource"]).Add();})
+                        .DataSources(t => { t.Name("DataSet1").Value(ViewData["DataSource"]).Add(); })
     )
     @(Html.EJ().ScriptManager())
 </div>

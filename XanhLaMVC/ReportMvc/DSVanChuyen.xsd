@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSVanChuyen" targetNamespace="http://tempuri.org/DSVanChuyen.xsd" xmlns:mstns="http://tempuri.org/DSVanChuyen.xsd" xmlns="http://tempuri.org/DSVanChuyen.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="SysXanhLa" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="SysXanhLa (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.SysXanhLa.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vRPVanChuyenTableAdapter" GeneratorDataComponentClassName="vRPVanChuyenTableAdapter" Name="vRPVanChuyen" UserDataComponentName="vRPVanChuyenTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="SysXanhLa (Web.config)" DbObjectName="DB_SYS_GREEN.dbo.vRPVanChuyen" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Ngay, MaReservation, KhachHang, SoDT, DiaChi, SoLuong, Product_Name, sugar, ĐonGia, GiamGia, GhiChu, ThanhTien, ID_NHD FROM dbo.vRPVanChuyen</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Ngay" DataSetColumn="Ngay" />
+              <Mapping SourceColumn="MaReservation" DataSetColumn="MaReservation" />
+              <Mapping SourceColumn="KhachHang" DataSetColumn="KhachHang" />
+              <Mapping SourceColumn="SoDT" DataSetColumn="SoDT" />
+              <Mapping SourceColumn="DiaChi" DataSetColumn="DiaChi" />
+              <Mapping SourceColumn="SoLuong" DataSetColumn="SoLuong" />
+              <Mapping SourceColumn="Product_Name" DataSetColumn="Product_Name" />
+              <Mapping SourceColumn="sugar" DataSetColumn="sugar" />
+              <Mapping SourceColumn="ĐonGia" DataSetColumn="ĐonGia" />
+              <Mapping SourceColumn="GiamGia" DataSetColumn="GiamGia" />
+              <Mapping SourceColumn="GhiChu" DataSetColumn="GhiChu" />
+              <Mapping SourceColumn="ThanhTien" DataSetColumn="ThanhTien" />
+              <Mapping SourceColumn="ID_NHD" DataSetColumn="ID_NHD" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSVanChuyen" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DSVanChuyen" msprop:Generator_UserDSName="DSVanChuyen">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vRPVanChuyen" msprop:Generator_TableClassName="vRPVanChuyenDataTable" msprop:Generator_TableVarName="tablevRPVanChuyen" msprop:Generator_TablePropName="vRPVanChuyen" msprop:Generator_RowDeletingName="vRPVanChuyenRowDeleting" msprop:Generator_RowChangingName="vRPVanChuyenRowChanging" msprop:Generator_RowEvHandlerName="vRPVanChuyenRowChangeEventHandler" msprop:Generator_RowDeletedName="vRPVanChuyenRowDeleted" msprop:Generator_UserTableName="vRPVanChuyen" msprop:Generator_RowChangedName="vRPVanChuyenRowChanged" msprop:Generator_RowEvArgName="vRPVanChuyenRowChangeEvent" msprop:Generator_RowClassName="vRPVanChuyenRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Ngay" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNgay" msprop:Generator_ColumnPropNameInRow="Ngay" msprop:Generator_ColumnPropNameInTable="NgayColumn" msprop:Generator_UserColumnName="Ngay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MaReservation" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMaReservation" msprop:Generator_ColumnPropNameInRow="MaReservation" msprop:Generator_ColumnPropNameInTable="MaReservationColumn" msprop:Generator_UserColumnName="MaReservation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="203" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="KhachHang" msprop:Generator_ColumnVarNameInTable="columnKhachHang" msprop:Generator_ColumnPropNameInRow="KhachHang" msprop:Generator_ColumnPropNameInTable="KhachHangColumn" msprop:Generator_UserColumnName="KhachHang" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SoDT" msprop:Generator_ColumnVarNameInTable="columnSoDT" msprop:Generator_ColumnPropNameInRow="SoDT" msprop:Generator_ColumnPropNameInTable="SoDTColumn" msprop:Generator_UserColumnName="SoDT" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DiaChi" msprop:Generator_ColumnVarNameInTable="columnDiaChi" msprop:Generator_ColumnPropNameInRow="DiaChi" msprop:Generator_ColumnPropNameInTable="DiaChiColumn" msprop:Generator_UserColumnName="DiaChi" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SoLuong" msprop:Generator_ColumnVarNameInTable="columnSoLuong" msprop:Generator_ColumnPropNameInRow="SoLuong" msprop:Generator_ColumnPropNameInTable="SoLuongColumn" msprop:Generator_UserColumnName="SoLuong" type="xs:int" minOccurs="0" />
+              <xs:element name="Product_Name" msprop:Generator_ColumnVarNameInTable="columnProduct_Name" msprop:Generator_ColumnPropNameInRow="Product_Name" msprop:Generator_ColumnPropNameInTable="Product_NameColumn" msprop:Generator_UserColumnName="Product_Name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="sugar" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnsugar" msprop:Generator_ColumnPropNameInRow="sugar" msprop:Generator_ColumnPropNameInTable="sugarColumn" msprop:Generator_UserColumnName="sugar" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="11" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ĐonGia" msprop:Generator_ColumnVarNameInTable="columnĐonGia" msprop:Generator_ColumnPropNameInRow="ĐonGia" msprop:Generator_ColumnPropNameInTable="ĐonGiaColumn" msprop:Generator_UserColumnName="ĐonGia" type="xs:decimal" minOccurs="0" />
+              <xs:element name="GiamGia" msprop:Generator_ColumnVarNameInTable="columnGiamGia" msprop:Generator_ColumnPropNameInRow="GiamGia" msprop:Generator_ColumnPropNameInTable="GiamGiaColumn" msprop:Generator_UserColumnName="GiamGia" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GhiChu" msprop:Generator_ColumnVarNameInTable="columnGhiChu" msprop:Generator_ColumnPropNameInRow="GhiChu" msprop:Generator_ColumnPropNameInTable="GhiChuColumn" msprop:Generator_UserColumnName="GhiChu" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="150" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ThanhTien" msprop:Generator_ColumnVarNameInTable="columnThanhTien" msprop:Generator_ColumnPropNameInRow="ThanhTien" msprop:Generator_ColumnPropNameInTable="ThanhTienColumn" msprop:Generator_UserColumnName="ThanhTien" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ID_NHD" msprop:Generator_ColumnVarNameInTable="columnID_NHD" msprop:Generator_ColumnPropNameInRow="ID_NHD" msprop:Generator_ColumnPropNameInTable="ID_NHDColumn" msprop:Generator_UserColumnName="ID_NHD" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

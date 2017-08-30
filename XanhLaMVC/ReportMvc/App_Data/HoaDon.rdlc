@@ -223,6 +223,10 @@
                 <Value>Ngày :</Value>
                 <Style />
               </TextRun>
+              <TextRun>
+                <Value>=Fields!Ngay.Value</Value>
+                <Style />
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
@@ -231,7 +235,7 @@
         <Top>0.68056in</Top>
         <Left>2.87028in</Left>
         <Height>0.25in</Height>
-        <Width>0.78125in</Width>
+        <Width>2.41667in</Width>
         <ZIndex>8</ZIndex>
         <Style>
           <Border>
@@ -253,6 +257,10 @@
                 <Value>Mã Số HĐ:</Value>
                 <Style />
               </TextRun>
+              <TextRun>
+                <Value>=Fields!MaReservation.Value</Value>
+                <Style />
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
@@ -261,7 +269,7 @@
         <Top>0.91542in</Top>
         <Left>2.87028in</Left>
         <Height>0.25in</Height>
-        <Width>0.78125in</Width>
+        <Width>2.41667in</Width>
         <ZIndex>9</ZIndex>
         <Style>
           <Border>
@@ -283,6 +291,10 @@
                 <Value>KH :</Value>
                 <Style />
               </TextRun>
+              <TextRun>
+                <Value>=Fields!KhachHang.Value</Value>
+                <Style />
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
@@ -291,7 +303,7 @@
         <Top>1.17931in</Top>
         <Left>2.87028in</Left>
         <Height>0.25in</Height>
-        <Width>0.78125in</Width>
+        <Width>2.41667in</Width>
         <ZIndex>10</ZIndex>
         <Style>
           <Border>
@@ -313,15 +325,19 @@
                 <Value>SĐT :</Value>
                 <Style />
               </TextRun>
+              <TextRun>
+                <Value>=Fields!SoDT.Value</Value>
+                <Style />
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>1.44319in</Top>
+        <Top>1.42931in</Top>
         <Left>2.87028in</Left>
         <Height>0.25in</Height>
-        <Width>0.78125in</Width>
+        <Width>2.41667in</Width>
         <ZIndex>11</ZIndex>
         <Style>
           <Border>
@@ -343,6 +359,10 @@
                 <Value>Địa chỉ :</Value>
                 <Style />
               </TextRun>
+              <TextRun>
+                <Value>=Fields!DiaChi.Value</Value>
+                <Style />
+              </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
@@ -351,7 +371,7 @@
         <Top>1.72097in</Top>
         <Left>2.87028in</Left>
         <Height>0.25in</Height>
-        <Width>0.78125in</Width>
+        <Width>5.11374in</Width>
         <ZIndex>12</ZIndex>
         <Style>
           <Border>
@@ -637,21 +657,21 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox19">
+                    <Textbox Name="SoLuong">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!SoLuong.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox19</rd:DefaultName>
+                      <rd:DefaultName>SoLuong</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -667,21 +687,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox21">
+                    <Textbox Name="Product_Name">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!Product_Name.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox21</rd:DefaultName>
+                      <rd:DefaultName>Product_Name</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -697,21 +717,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox23">
+                    <Textbox Name="sugar">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!sugar.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox23</rd:DefaultName>
+                      <rd:DefaultName>sugar</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -727,21 +747,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox25">
+                    <Textbox Name="ĐonGia">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!ĐonGia.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox25</rd:DefaultName>
+                      <rd:DefaultName>ĐonGia</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -757,21 +777,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox27">
+                    <Textbox Name="GiamGia">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!GiamGia.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox27</rd:DefaultName>
+                      <rd:DefaultName>GiamGia</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -787,21 +807,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox29">
+                    <Textbox Name="GhiChu">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!GhiChu.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox29</rd:DefaultName>
+                      <rd:DefaultName>GhiChu</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -817,21 +837,21 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox31">
+                    <Textbox Name="ThanhTien">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!ThanhTien.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox31</rd:DefaultName>
+                      <rd:DefaultName>ThanhTien</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -874,7 +894,7 @@
         <Top>2.14458in</Top>
         <Left>0.30208in</Left>
         <Height>0.5in</Height>
-        <Width>7.68194in</Width>
+        <Width>7.68195in</Width>
         <ZIndex>13</ZIndex>
         <Style>
           <Border>
@@ -902,7 +922,7 @@
         <Top>4.89111in</Top>
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
-        <Width>1.53125in</Width>
+        <Width>3.19792in</Width>
         <ZIndex>14</ZIndex>
         <Style>
           <Border>
@@ -934,7 +954,7 @@
         <Top>4.62722in</Top>
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
-        <Width>1.53125in</Width>
+        <Width>3.19792in</Width>
         <ZIndex>15</ZIndex>
         <Style>
           <Border>
@@ -966,7 +986,7 @@
         <Top>4.37722in</Top>
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
-        <Width>1.53125in</Width>
+        <Width>3.19792in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -995,12 +1015,83 @@
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DSVanChuyen">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>4c93b0c6-bddf-4e44-a8d1-77ae5a97d222</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName />
-        <CommandText />
+        <DataSourceName>DSVanChuyen</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
+      <Fields>
+        <Field Name="Ngay">
+          <DataField>Ngay</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="MaReservation">
+          <DataField>MaReservation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KhachHang">
+          <DataField>KhachHang</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SoDT">
+          <DataField>SoDT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DiaChi">
+          <DataField>DiaChi</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SoLuong">
+          <DataField>SoLuong</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Product_Name">
+          <DataField>Product_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="sugar">
+          <DataField>sugar</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ĐonGia">
+          <DataField>ĐonGia</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="GiamGia">
+          <DataField>GiamGia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GhiChu">
+          <DataField>GhiChu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ThanhTien">
+          <DataField>ThanhTien</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ID_NHD">
+          <DataField>ID_NHD</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DSVanChuyen</rd:DataSetName>
+        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSVanChuyen.xsd</rd:SchemaPath>
+        <rd:TableName>vRPVanChuyen</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>vRPVanChuyenTableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>

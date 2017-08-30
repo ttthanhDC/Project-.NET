@@ -83,6 +83,7 @@ namespace ReportMvc.Controllers
         }
         public ActionResult RDLCReport()
         {
+           /*
             List<Syncfusion.JavaScript.Models.ReportViewer.ReportDataSource> datasources = new List<Syncfusion.JavaScript.Models.ReportViewer.ReportDataSource>();
 
             Syncfusion.JavaScript.Models.ReportViewer.ReportDataSource reportDatasource = new Syncfusion.JavaScript.Models.ReportViewer.ReportDataSource();
@@ -90,7 +91,8 @@ namespace ReportMvc.Controllers
             reportDatasource.Value = SalesDetails.GetData();
             datasources.Add(reportDatasource);
             ViewData["DataSource"] = datasources;
-
+            */
+            ViewData["DataSource"] = SalesDetails.GetData();
             return View();
         }
 
@@ -257,10 +259,7 @@ namespace ReportMvc.Controllers
         {
             Servies.SysUserServies.DeleteData(Id);
         }
-        public class HoaDonDetails
-        {
-            public int quantity { }
-        }
+        
         public class SalesDetails
         {
             public string ProdCat { get; set; }

@@ -476,7 +476,7 @@
         <Top>1.04042in</Top>
         <Left>0.50917in</Left>
         <Height>0.5in</Height>
-        <Width>7.32292in</Width>
+        <Width>7.32291in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -529,12 +529,47 @@
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DB_SYS_GREENDataSet">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>2c9b2b58-4c4c-41cf-b01a-987fc62dfeb3</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName />
-        <CommandText />
+        <DataSourceName>DB_SYS_GREENDataSet</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
       </Query>
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RoleName">
+          <DataField>RoleName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Create_User">
+          <DataField>Create_User</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Create_Date">
+          <DataField>Create_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DB_SYS_GREENDataSet</rd:DataSetName>
+        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DB_SYS_GREENDataSet.xsd</rd:SchemaPath>
+        <rd:TableName>SYS_ROLE</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>SYS_ROLETableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
     </DataSet>
   </DataSets>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
