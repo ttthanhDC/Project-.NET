@@ -2,37 +2,6 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Textbox Name="Textbox1">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Liên hệ xanh lá ngay khi thấy sữa có hiện tượng khác thường để nhận được hỗ trợ (XL sẽ sử lý khiếu nại trong vòng 3 ngày kể từ ngày giao sữa)</Value>
-                <Style>
-                  <TextDecoration>Underline</TextDecoration>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>5.28in</Top>
-        <Left>0.30208in</Left>
-        <Height>0.40542in</Height>
-        <Width>7.69583in</Width>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Textbox2">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -52,11 +21,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>0.375in</Top>
-        <Left>0.30208in</Left>
+        <Top>0.02778in</Top>
+        <Left>0.32514in</Left>
         <Height>0.25in</Height>
         <Width>7.68194in</Width>
-        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -68,24 +36,11 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>0.65278in</Top>
-        <Left>0.31125in</Left>
+        <Top>0.30556in</Top>
+        <Left>0.32514in</Left>
         <Height>0in</Height>
         <Width>7.68667in</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-            <Width>2pt</Width>
-          </Border>
-        </Style>
-      </Line>
-      <Line Name="Line2">
-        <Top>5.22444in</Top>
-        <Left>0.30208in</Left>
-        <Height>0in</Height>
-        <Width>7.69583in</Width>
-        <ZIndex>3</ZIndex>
+        <ZIndex>1</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -108,11 +63,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>0.68056in</Top>
-        <Left>0.32514in</Left>
+        <Top>0.33334in</Top>
+        <Left>0.3482in</Left>
         <Height>0.23486in</Height>
         <Width>2.53125in</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -138,11 +93,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox4</rd:DefaultName>
-        <Top>0.92931in</Top>
-        <Left>0.32514in</Left>
+        <Top>0.58209in</Top>
+        <Left>0.3482in</Left>
         <Height>0.25in</Height>
         <Width>2.53125in</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -168,11 +123,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox5</rd:DefaultName>
-        <Top>1.17931in</Top>
-        <Left>0.32514in</Left>
+        <Top>0.83209in</Top>
+        <Left>0.3482in</Left>
         <Height>0.38542in</Height>
         <Width>2.53125in</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -198,11 +153,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox6</rd:DefaultName>
-        <Top>1.56472in</Top>
-        <Left>0.32514in</Left>
+        <Top>1.2175in</Top>
+        <Left>0.3482in</Left>
         <Height>0.25in</Height>
         <Width>2.53125in</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -225,18 +180,20 @@
               </TextRun>
               <TextRun>
                 <Value>=Fields!Ngay.Value</Value>
-                <Style />
+                <Style>
+                  <Format>d</Format>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Top>0.68056in</Top>
-        <Left>2.87028in</Left>
+        <Top>0.33334in</Top>
+        <Left>2.89334in</Left>
         <Height>0.25in</Height>
         <Width>2.41667in</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -266,11 +223,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox8</rd:DefaultName>
-        <Top>0.91542in</Top>
-        <Left>2.87028in</Left>
+        <Top>0.5682in</Top>
+        <Left>2.89334in</Left>
         <Height>0.25in</Height>
         <Width>2.41667in</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -300,11 +257,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox9</rd:DefaultName>
-        <Top>1.17931in</Top>
-        <Left>2.87028in</Left>
+        <Top>0.83209in</Top>
+        <Left>2.89334in</Left>
         <Height>0.25in</Height>
         <Width>2.41667in</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -334,11 +291,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>1.42931in</Top>
-        <Left>2.87028in</Left>
+        <Top>1.08209in</Top>
+        <Left>2.89334in</Left>
         <Height>0.25in</Height>
         <Width>2.41667in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -368,11 +325,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox11</rd:DefaultName>
-        <Top>1.72097in</Top>
-        <Left>2.87028in</Left>
-        <Height>0.25in</Height>
+        <Top>1.34598in</Top>
+        <Left>2.89334in</Left>
+        <Height>0.42361in</Height>
         <Width>5.11374in</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -402,10 +359,10 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.2244in</Width>
+              <Width>1.38065in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.88542in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -755,7 +712,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ĐonGia.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>n0</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -785,7 +744,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!GiamGia.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>n0</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -845,7 +806,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ThanhTien.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>n0</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -891,11 +854,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>2.14458in</Top>
-        <Left>0.30208in</Left>
+        <Top>1.82514in</Top>
+        <Left>0.28819in</Left>
         <Height>0.5in</Height>
-        <Width>7.68195in</Width>
-        <ZIndex>13</ZIndex>
+        <Width>7.72362in</Width>
+        <ZIndex>11</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -923,7 +886,7 @@
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
         <Width>3.19792in</Width>
-        <ZIndex>14</ZIndex>
+        <ZIndex>12</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -955,7 +918,7 @@
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
         <Width>3.19792in</Width>
-        <ZIndex>15</ZIndex>
+        <ZIndex>13</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -973,7 +936,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>TỔNG TIỀN HÀNG</Value>
+                <Value EvaluationMode="Constant">TỔNG TIỀN HÀNG</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -987,6 +950,70 @@
         <Left>1.09551in</Left>
         <Height>0.25in</Height>
         <Width>3.19792in</Width>
+        <ZIndex>14</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox12">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!ThanhTien.Value, "DataSet1")</Value>
+                <Style>
+                  <Format>n0</Format>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox12</rd:DefaultName>
+        <Top>4.37722in</Top>
+        <Left>6.98402in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+        <ZIndex>15</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox13">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!ThanhTien.Value, "DataSet1")</Value>
+                <Style>
+                  <Format>n0</Format>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox13</rd:DefaultName>
+        <Top>4.89111in</Top>
+        <Left>6.98402in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
         <ZIndex>16</ZIndex>
         <Style>
           <Border>
@@ -998,8 +1025,40 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox14">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>0</Value>
+                <Style>
+                  <Format>0.00;(0.00)</Format>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox14</rd:DefaultName>
+        <Top>4.62722in</Top>
+        <Left>7.81735in</Left>
+        <Height>0.25in</Height>
+        <Width>0.16667in</Width>
+        <ZIndex>17</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>5.8in</Height>
+    <Height>5.14111in</Height>
     <Style>
       <Border>
         <Style>None</Style>
@@ -1008,6 +1067,72 @@
   </Body>
   <Width>8.3in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.42708in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.57292in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Liên hệ xanh lá ngay khi thấy sữa có hiện tượng khác thường để nhận được hỗ trợ (XL sẽ sử lý khiếu nại trong vòng 3 ngày kể từ ngày giao sữa)</Value>
+                  <Style>
+                    <TextDecoration>Underline</TextDecoration>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.12541in</Top>
+          <Left>0.28819in</Left>
+          <Height>0.40542in</Height>
+          <Width>7.69583in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Line Name="Line2">
+          <Top>0.05597in</Top>
+          <Left>0.2882in</Left>
+          <Height>0in</Height>
+          <Width>7.69583in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>Solid</Style>
+              <Width>2pt</Width>
+            </Border>
+          </Style>
+        </Line>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>
@@ -1023,11 +1148,18 @@
       </ConnectionProperties>
       <rd:DataSourceID>4c93b0c6-bddf-4e44-a8d1-77ae5a97d222</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="DB_SYS_GREENDataSet">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>c8864f2b-35ee-4d37-847d-cf39441d48ab</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>DSVanChuyen</DataSourceName>
+        <DataSourceName>DB_SYS_GREENDataSet</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -1085,8 +1217,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DSVanChuyen</rd:DataSetName>
-        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSVanChuyen.xsd</rd:SchemaPath>
+        <rd:DataSetName>DB_SYS_GREENDataSet</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DB_SYS_GREENDataSet.xsd</rd:SchemaPath>
         <rd:TableName>vRPVanChuyen</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
