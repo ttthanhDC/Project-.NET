@@ -22,5 +22,11 @@ namespace ReportMvc.Controllers
             return View();
         }
 
+        public ActionResult ReportLoTrinh(String MaLoTrinh)
+        {
+            ViewData["DataSource"] = Servies.ReportServices.getRPLoTrinh(MaLoTrinh);
+            return View();
+        }
+
     }
 }

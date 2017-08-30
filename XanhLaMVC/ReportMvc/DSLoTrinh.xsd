@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSLoTrinh" targetNamespace="http://tempuri.org/DSLoTrinh.xsd" xmlns:mstns="http://tempuri.org/DSLoTrinh.xsd" xmlns="http://tempuri.org/DSLoTrinh.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="SysXanhLa" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="SysXanhLa (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.SysXanhLa.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="vRPLoTrinhTableAdapter" GeneratorDataComponentClassName="vRPLoTrinhTableAdapter" Name="vRPLoTrinh" UserDataComponentName="vRPLoTrinhTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="SysXanhLa (Web.config)" DbObjectName="DB_SYS_GREEN.dbo.vRPLoTrinh" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT shipName, Ngay, MaReservation, KhachHang, SoDT, SoTienPhaiThu, LoTrinh, GhiChu, MaLoTrinh FROM dbo.vRPLoTrinh</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="shipName" DataSetColumn="shipName" />
+              <Mapping SourceColumn="Ngay" DataSetColumn="Ngay" />
+              <Mapping SourceColumn="MaReservation" DataSetColumn="MaReservation" />
+              <Mapping SourceColumn="KhachHang" DataSetColumn="KhachHang" />
+              <Mapping SourceColumn="SoDT" DataSetColumn="SoDT" />
+              <Mapping SourceColumn="SoTienPhaiThu" DataSetColumn="SoTienPhaiThu" />
+              <Mapping SourceColumn="LoTrinh" DataSetColumn="LoTrinh" />
+              <Mapping SourceColumn="GhiChu" DataSetColumn="GhiChu" />
+              <Mapping SourceColumn="MaLoTrinh" DataSetColumn="MaLoTrinh" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSLoTrinh" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DSLoTrinh" msprop:Generator_UserDSName="DSLoTrinh">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="vRPLoTrinh" msprop:Generator_TableClassName="vRPLoTrinhDataTable" msprop:Generator_TableVarName="tablevRPLoTrinh" msprop:Generator_TablePropName="vRPLoTrinh" msprop:Generator_RowDeletingName="vRPLoTrinhRowDeleting" msprop:Generator_RowChangingName="vRPLoTrinhRowChanging" msprop:Generator_RowEvHandlerName="vRPLoTrinhRowChangeEventHandler" msprop:Generator_RowDeletedName="vRPLoTrinhRowDeleted" msprop:Generator_UserTableName="vRPLoTrinh" msprop:Generator_RowChangedName="vRPLoTrinhRowChanged" msprop:Generator_RowEvArgName="vRPLoTrinhRowChangeEvent" msprop:Generator_RowClassName="vRPLoTrinhRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="shipName" msprop:Generator_ColumnVarNameInTable="columnshipName" msprop:Generator_ColumnPropNameInRow="shipName" msprop:Generator_ColumnPropNameInTable="shipNameColumn" msprop:Generator_UserColumnName="shipName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ngay" msprop:Generator_ColumnVarNameInTable="columnNgay" msprop:Generator_ColumnPropNameInRow="Ngay" msprop:Generator_ColumnPropNameInTable="NgayColumn" msprop:Generator_UserColumnName="Ngay" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MaReservation" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMaReservation" msprop:Generator_ColumnPropNameInRow="MaReservation" msprop:Generator_ColumnPropNameInTable="MaReservationColumn" msprop:Generator_UserColumnName="MaReservation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="203" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="KhachHang" msprop:Generator_ColumnVarNameInTable="columnKhachHang" msprop:Generator_ColumnPropNameInRow="KhachHang" msprop:Generator_ColumnPropNameInTable="KhachHangColumn" msprop:Generator_UserColumnName="KhachHang" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SoDT" msprop:Generator_ColumnVarNameInTable="columnSoDT" msprop:Generator_ColumnPropNameInRow="SoDT" msprop:Generator_ColumnPropNameInTable="SoDTColumn" msprop:Generator_UserColumnName="SoDT" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SoTienPhaiThu" msprop:Generator_ColumnVarNameInTable="columnSoTienPhaiThu" msprop:Generator_ColumnPropNameInRow="SoTienPhaiThu" msprop:Generator_ColumnPropNameInTable="SoTienPhaiThuColumn" msprop:Generator_UserColumnName="SoTienPhaiThu" type="xs:decimal" minOccurs="0" />
+              <xs:element name="LoTrinh" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnLoTrinh" msprop:Generator_ColumnPropNameInRow="LoTrinh" msprop:Generator_ColumnPropNameInTable="LoTrinhColumn" msprop:Generator_UserColumnName="LoTrinh" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="513" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="GhiChu" msprop:Generator_ColumnVarNameInTable="columnGhiChu" msprop:Generator_ColumnPropNameInRow="GhiChu" msprop:Generator_ColumnPropNameInTable="GhiChuColumn" msprop:Generator_UserColumnName="GhiChu" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MaLoTrinh" msprop:Generator_ColumnVarNameInTable="columnMaLoTrinh" msprop:Generator_ColumnPropNameInRow="MaLoTrinh" msprop:Generator_ColumnPropNameInTable="MaLoTrinhColumn" msprop:Generator_UserColumnName="MaLoTrinh" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
