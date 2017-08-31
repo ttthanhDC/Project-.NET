@@ -204,6 +204,14 @@
             });
             chart.render();
         };
+        $('#btPrint').on('click', function (e) {
+            var tuNgay = $("#txt_beginDate").val();
+            var denNgay = $("#txt_EndDate").val();
+            var url = '@Url.Action("ReportBaoCao04", "Report")';
+            url += '?tuNgay=' + tuNgay;
+            url += '&denNgay=' + denNgay;
+            window.open(url);
+        });
     </script>
 
 

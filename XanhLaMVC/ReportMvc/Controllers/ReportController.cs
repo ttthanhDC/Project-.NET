@@ -28,5 +28,31 @@ namespace ReportMvc.Controllers
             return View();
         }
 
+        public ActionResult ReportBaoCao01(String NgayTao)
+        {
+            ViewData["DataSource"] = Servies.ReportServices.getRPBaoCao01(NgayTao);
+            return View();
+        }
+
+        public ActionResult ReportBaoCao02(String NgayTao)
+        {
+            ViewData["DataSource"] = Servies.ReportServices.getRPBaoCao02(NgayTao);
+            return View();
+        }
+
+        public ActionResult ReportBaoCao04(String tuNgay, String denNgay)
+        {
+            ViewData["DataSource"] = Servies.ReportServices.getvBaoCao04(tuNgay, denNgay);
+            return View();
+        }
+
+        public ActionResult ReportBaoCao05(String shipperName, String tuNgay, String denNgay)
+        {
+            ViewData["DataSource"] = Servies.ReportServices.getvBaoCao05(shipperName,tuNgay, denNgay);
+            return View();
+        }
+
+
+
     }
 }

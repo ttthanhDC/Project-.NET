@@ -266,7 +266,10 @@
         });
 
         $('#btPrint').on('click', function (e) {
-            alert("IN")
+            var NgayTao = $("#txt_date").val();
+            var url = '@Url.Action("ReportBaoCao01", "Report")';
+            url += '?NgayTao=' + NgayTao;
+            window.open(url);
         });
         // function
         function userFormatter(data) {

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "ReportBaoCao05";
+}
+
+@using Syncfusion.MVC.EJ
+@using Syncfusion.JavaScript.Models
+@using Syncfusion.JavaScript
+
+
+<title>Syncfusion RDL Sample</title>
+<!-- <link href="~/content/bootstrap.min.css" rel="stylesheet" /> -->
+<link href="~/content/ejthemes/ej.widgets.core.min.css" rel="stylesheet" />
+<link href="~/content/ejthemes/default-theme/ej.widgets.all.min.css" rel="stylesheet" />
+<!-- <link href="~/content/default.css" rel="stylesheet" />  .DataSources(ds => { ds.Name("Sales").Value(ViewData["DataSource"]).Add(); }) -->
+<link href="~/content/reportdefault.css" rel="stylesheet" />
+<script src="~/assets/js/jquery.2.1.1.min.js"></script>
+<!-- <script src="~/Scripts/jquery-1.11.3.min.js"></script>  .DataSources(ViewData["DataSource"] as List<Syncfusion.JavaScript.Models.ReportViewer.ReportDataSource>) -->
+<script src="~/scripts/jquery.easing.1.3.min.js"></script>
+
+<script src="~/scripts/ej.web.all.min.js"></script>
+<script src="~/Scripts/ej.unobtrusive.min.js"></script>
+
+<div style="width:100%; height:100%; position:absolute;">
+    @(Html.EJ().ReportViewer("reportsample")
+                .ProcessingMode(Syncfusion.JavaScript.ReportViewerEnums.ProcessingMode.Local)
+                .ReportPath("~/App_Data/BC005.rdlc")
+                .ReportServiceUrl(VirtualPathUtility.ToAbsolute("~/api/ReportApi"))
+                        .DataSources(t => { t.Name("DSBaoCao05").Value(ViewData["DataSource"]).Add(); })
+    )
+    @(Html.EJ().ScriptManager())
+</div>

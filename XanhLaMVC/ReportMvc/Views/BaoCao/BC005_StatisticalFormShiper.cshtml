@@ -246,6 +246,17 @@
             }
         };
 
+        $('#btPrint').on('click', function (e) {
+            var tuNgay = $('#txt_beginDate').val();
+            var denNgay = "";
+            var shipperName = $("#txt_NameShiper").val();
+            var url = '@Url.Action("ReportBaoCao05", "Report")';
+            url += '?tuNgay=' + tuNgay;
+            url += '&denNgay=' + denNgay;
+            url += '&shipperName=' + shipperName;
+            window.open(url);
+        });
+
     </script>
 
 

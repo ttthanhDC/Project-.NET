@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSBaoCao04" targetNamespace="http://tempuri.org/DSBaoCao04.xsd" xmlns:mstns="http://tempuri.org/DSBaoCao04.xsd" xmlns="http://tempuri.org/DSBaoCao04.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="SysXanhLa" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="SysXanhLa (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.SysXanhLa.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="fRPBaoCao04TableAdapter" GeneratorDataComponentClassName="fRPBaoCao04TableAdapter" Name="fRPBaoCao04" UserDataComponentName="fRPBaoCao04TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="SysXanhLa (Web.config)" DbObjectName="DB_SYS_GREEN.dbo.fRPBaoCao04" DbObjectType="Function" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT IdNguon, TenNguon, SoLuongDon, SoluongShip, DuKienThu FROM dbo.fRPBaoCao04()</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="IdNguon" DataSetColumn="IdNguon" />
+              <Mapping SourceColumn="TenNguon" DataSetColumn="TenNguon" />
+              <Mapping SourceColumn="SoLuongDon" DataSetColumn="SoLuongDon" />
+              <Mapping SourceColumn="SoluongShip" DataSetColumn="SoluongShip" />
+              <Mapping SourceColumn="DuKienThu" DataSetColumn="DuKienThu" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSBaoCao04" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DSBaoCao04" msprop:Generator_UserDSName="DSBaoCao04">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="fRPBaoCao04" msprop:Generator_TableClassName="fRPBaoCao04DataTable" msprop:Generator_TableVarName="tablefRPBaoCao04" msprop:Generator_TablePropName="fRPBaoCao04" msprop:Generator_RowDeletingName="fRPBaoCao04RowDeleting" msprop:Generator_RowChangingName="fRPBaoCao04RowChanging" msprop:Generator_RowEvHandlerName="fRPBaoCao04RowChangeEventHandler" msprop:Generator_RowDeletedName="fRPBaoCao04RowDeleted" msprop:Generator_UserTableName="fRPBaoCao04" msprop:Generator_RowChangedName="fRPBaoCao04RowChanged" msprop:Generator_RowEvArgName="fRPBaoCao04RowChangeEvent" msprop:Generator_RowClassName="fRPBaoCao04Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IdNguon" msprop:Generator_ColumnVarNameInTable="columnIdNguon" msprop:Generator_ColumnPropNameInRow="IdNguon" msprop:Generator_ColumnPropNameInTable="IdNguonColumn" msprop:Generator_UserColumnName="IdNguon" type="xs:int" minOccurs="0" />
+              <xs:element name="TenNguon" msprop:Generator_ColumnVarNameInTable="columnTenNguon" msprop:Generator_ColumnPropNameInRow="TenNguon" msprop:Generator_ColumnPropNameInTable="TenNguonColumn" msprop:Generator_UserColumnName="TenNguon" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SoLuongDon" msprop:Generator_ColumnVarNameInTable="columnSoLuongDon" msprop:Generator_ColumnPropNameInRow="SoLuongDon" msprop:Generator_ColumnPropNameInTable="SoLuongDonColumn" msprop:Generator_UserColumnName="SoLuongDon" type="xs:int" minOccurs="0" />
+              <xs:element name="SoluongShip" msprop:Generator_ColumnVarNameInTable="columnSoluongShip" msprop:Generator_ColumnPropNameInRow="SoluongShip" msprop:Generator_ColumnPropNameInTable="SoluongShipColumn" msprop:Generator_UserColumnName="SoluongShip" type="xs:int" minOccurs="0" />
+              <xs:element name="DuKienThu" msprop:Generator_ColumnVarNameInTable="columnDuKienThu" msprop:Generator_ColumnPropNameInRow="DuKienThu" msprop:Generator_ColumnPropNameInTable="DuKienThuColumn" msprop:Generator_UserColumnName="DuKienThu" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
