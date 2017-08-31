@@ -58,7 +58,7 @@ namespace ReportMvc.Controllers
                 obj.NgayTao = DateTime.Now;
                 obj.TrangThai = "Chưa xử lý";
                 int idLotrinh = Servies.ShipperServices.InsertLoTrinhShipperReturnId(obj);
-                return "1";
+                return idLotrinh + "," + MaLoTrinh;
             }
             catch (Exception e)
             {
