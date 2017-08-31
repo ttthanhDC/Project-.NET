@@ -3,9 +3,8 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 }
 <div id="contactForm" style="margin-left: 5px;">
-    <form class="well form-horizontal" action=" " method="post" id="contact_form">
-        <fieldset>
-            <legend>Nhập thông tin hóa đơn mới!</legend>
+    <div class="panel panel-default">
+        <div class="panel-body">
             <div class="form-horizontal">
                 <div class="form-group">
                     <label for="sel1" class="col-md-1 control-label">Nguồn</label>
@@ -25,7 +24,7 @@
                     <label for="sel1" class="col-md-2 control-label">Mã Reservation</label>
                     <div class="col-md-2 inputGroupContainer">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
                             <input type="text" class="form-control" name="title" id="txtMaHD" disabled="disabled" />
                         </div>
                     </div>
@@ -41,12 +40,15 @@
                     <div class="col-md-3 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" class="form-control" name="title" id="txtHoTen" />
+                            <input type="text" class="form-control" name="title" id="txtHoTen" placeholder="Họ tên khách hàng" />
                         </div>
                     </div>
-                    <label for="sel1" class="col-md-2">Số ngày còn lại</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="title" id="txtSoNgayConLai" disabled />
+                    <label for="sel1" class="col-md-2 control-label">Số ngày còn lại</label>
+                    <div class="col-md-2 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                            <input type="text" class="form-control" name="title" id="txtSoNgayConLai" disabled />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,9 +65,12 @@
                             <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgaySinh" />
                         </div>
                     </div>
-                    <label for="sel1" class="col-md-2">Tổng</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="title" id="txtTong" disabled />
+                    <label for="sel1" class="col-md-2 control-label">Tổng</label>
+                    <div class="col-md-2 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                            <input type="text" class="form-control" name="title" id="txtTong" disabled />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,9 +87,12 @@
                             <input type="text" class="form-control" name="title" id="txtSoDienThoai" placeholder="(845)555-1212" />
                         </div>
                     </div>
-                    <label for="sel1" class="col-md-2">Số tiền thu được</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="title" id="txtSoTienThuDuoc" value='0' disabled />
+                    <label for="sel1" class="col-md-2 control-label">Số tiền thu được</label>
+                    <div class="col-md-2 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                            <input type="text" class="form-control" name="title" id="txtSoTienThuDuoc" value='0' disabled />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,9 +109,12 @@
                             <input type="text" class="form-control" name="title" id="txtEmailCustomer" placeholder="E-Mail Address" />
                         </div>
                     </div>
-                    <label for="sel1" class="col-md-2">Chiết khấu</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="title" id="txtChietKhau" disabled />
+                    <label for="sel1" class="col-md-2 control-label">Chiết khấu</label>
+                    <div class="col-md-2 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                            <input type="text" class="form-control" name="title" id="txtChietKhau" disabled />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,9 +131,12 @@
                             <input type="text" class="form-control" name="title" id="txtDiaChiCustomer" placeholder="Address" />
                         </div>
                     </div>
-                    <label for="sel1" class="col-md-2">Còn Nợ</label>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control" name="title" id="txtNo" value='0' disabled />
+                    <label for="sel1" class="col-md-2 control-label">Còn Nợ</label>
+                    <div class="col-md-2 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
+                            <input type="text" class="form-control" name="title" id="txtNo" value='0' disabled />
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -149,9 +163,9 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
 </div>
-<hr style="color:blue;width:80%;text-align:center" />
 <script id="tabTemp" type="text/x-jquery-tmpl">
     <div class='tab-pane' id='tab${device}'>
         <div>
@@ -192,85 +206,116 @@
             </label>
         </div>
         <div class="form-group">
-            <label for="sel1" class="col-md-3">Loại hình đơn</label>
-            <div class="col-md-3">
-                <select class="form-control" id="cb_OrderType">
-                    <option value="-1"></option>
-                    <option value="1">Gói</option>
-                    <option value="2">Đơn lẻ</option>
-                </select>
-            </div>
-            <label for="sel1" class="col-md-3" id="lblMaKH">Mã khách hàng</label>
-            <div class="col-md-3" id="divMaKH">
-                <input type="text" class="form-control" name="title" id="txtMaKH1" disabled />
-            </div>
-        </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                <label for="sel1" class="col-md-3" id="lbLoaiGoi">Gói</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="cb_OrderType2">
+            <label for="sel1" class="col-md-3 control-label">Loại hình đơn</label>
+            <div class="col-md-3 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                    <select class="form-control" id="cb_OrderType">
                         <option value="-1"></option>
-                        <option value="8">A1 </option>
-                        <option value="12">A2 </option>
-                        <option value="12">A3 </option>
-                        <option value="12">B1</option>
-                        <option value="8">B2</option>
-                        <option value="12">B3</option>
-                        <option value="8">C1</option>
-                        <option value="12">C2</option>
-                        <option value="8">C3</option>
-                        <option value="12">C4</option>
-                        <option value="10">D</option>
+                        <option value="1">Gói</option>
+                        <option value="2">Đơn lẻ</option>
                     </select>
                 </div>
-                <label for="sel1" class="col-md-3" id="lblHoTen">Họ và tên</label>
-                <div class="col-md-3" id="divHoTen">
-                    <input type="text" class="form-control" name="title" id="txtHoTen1" />
+            </div>
+            <label for="sel1" class="col-md-3 control-label" id="lblMaKH">Mã khách hàng</label>
+            <div class="col-md-3 inputGroupContainer" id="divMaKH">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input type="text" class="form-control" name="title" id="txtMaKH1" disabled />
                 </div>
             </div>
         </div>
         <div class="form-horizontal">
             <div class="form-group">
-                <label for="sel1" class="col-md-3" id="lblPhiShip">Hình thức Ship</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="cb_hinhthucShip">
-                        <option value="-1"></option>
-                        <option value="Ship đi">Ship đi</option>
-                        <option value="Đến lấy">Đến lấy</option>
-                    </select>
+                <label for="sel1" class="col-md-3 control-label" id="lbLoaiGoi">Gói</label>
+                <div class="col-md-3 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select class="form-control" id="cb_OrderType2">
+                            <option value="-1"></option>
+                            <option value="8">A1 </option>
+                            <option value="12">A2 </option>
+                            <option value="12">A3 </option>
+                            <option value="12">B1</option>
+                            <option value="8">B2</option>
+                            <option value="12">B3</option>
+                            <option value="8">C1</option>
+                            <option value="12">C2</option>
+                            <option value="8">C3</option>
+                            <option value="12">C4</option>
+                            <option value="10">D</option>
+                        </select>
+                    </div>
                 </div>
-                <label for="sel1" class="col-md-3" id="lblNgaySinh">Ngày sinh</label>
-                <div class="col-md-3" id="divNgaySinh">
-                    <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgaySinh1" />
+                <label for="sel1" class="col-md-3 control-label" id="lblHoTen">Họ và tên</label>
+                <div class="col-md-3 inputGroupContainer" id="divHoTen">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" name="title" id="txtHoTen1" placeholder="Họ tên khách hàng" />
+                    </div>
                 </div>
             </div>
         </div>
         <div class="form-horizontal">
             <div class="form-group">
-                <label for="sel1" class="col-md-3">Thanh toán</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="cb_PayType">
-                        <option value="-1"></option>
-                        <option value="Tiền mặt">Tiền mặt</option>
-                        <option value="Chuyển khoản">Chuyển khoản</option>
-                    </select>
+                <label for="sel1" class="col-md-3 control-label" id="lblPhiShip">Hình thức Ship</label>
+                <div class="col-md-3 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select class="form-control" id="cb_hinhthucShip">
+                            <option value="-1"></option>
+                            <option value="Ship đi">Ship đi</option>
+                            <option value="Đến lấy">Đến lấy</option>
+                        </select>
+                    </div>
                 </div>
-                <label for="sel1" class="col-md-3" id="lblSoDT">Số điện thoại</label>
-                <div class="col-md-3" id="divSoDT">
-                    <input type="text" class="form-control" name="title" id="txtSoDienThoai1" />
+                <label for="sel1" class="col-md-3 control-label" id="lblNgaySinh">Ngày sinh</label>
+                <div class="col-md-3 inputGroupContainer" id="divNgaySinh">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' 
+                               class="form-control" name="title" id="txtNgaySinh1" />
+                    </div>
                 </div>
             </div>
         </div>
         <div class="form-horizontal">
             <div class="form-group">
-                <label for="sel1" class="col-md-3">Phí Ship</label>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" name="title" id="txt_PhiShip" />
+                <label for="sel1" class="col-md-3 control-label">Thanh toán</label>
+                <div class="col-md-3 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select class="form-control" id="cb_PayType">
+                            <option value="-1"></option>
+                            <option value="Tiền mặt">Tiền mặt</option>
+                            <option value="Chuyển khoản">Chuyển khoản</option>
+                        </select>
+                    </div>
                 </div>
-                <label for="sel1" class="col-md-3" id="lblEmail">Email</label>
-                <div class="col-md-3" id="divEmail">
-                    <input type="text" class="form-control" name="title" id="txtEmailCustomer1" />
+                <label for="sel1" class="col-md-3 control-label" id="lblSoDT">Số điện thoại</label>
+                <div class="col-md-3 inputGroupContainer" id="divSoDT">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                        <input type="text" class="form-control" name="title" id="txtSoDienThoai1" placeholder="(845)555-1212" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="sel1" class="col-md-3 control-label">Phí Ship</label>
+                <div class="col-md-3 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-road"></i></span>
+                        <input type="text" class="form-control" name="title" id="txt_PhiShip" />
+                    </div>
+                </div>
+                <label for="sel1" class="col-md-3 control-label" id="lblEmail">Email</label>
+                <div class="col-md-3 inputGroupContainer" id="divEmail">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" class="form-control" name="title" id="txtEmailCustomer1" placeholder="E-Mail Address" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -280,9 +325,12 @@
                 <div class="col-md-3">
 
                 </div>
-                <label for="sel1" class="col-md-3" id="lblDiaChi">Địa chỉ</label>
-                <div class="col-md-3" id="divDiaChi">
-                    <input type="text" class="form-control" name="title" id="txtDiaChiCustomer1" />
+                <label for="sel1" class="col-md-3 control-label" id="lblDiaChi ">Địa chỉ</label>
+                <div class="col-md-3 inputGroupContainer" id="divDiaChi">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" class="form-control" name="title" id="txtDiaChiCustomer1" placeholder="Address" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -292,12 +340,16 @@
                 <div class="col-md-3">
 
                 </div>
-                <label for="sel1" class="col-md-3">Quận</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="cb_quan1"></select>
+                <label for="sel1" class="col-md-3 control-label">Quận</label>
+                <div class="col-md-3 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                        <select class="form-control" id="cb_quan1"></select>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="row" style="margin-left : 30px; margin-right : 30px">
 

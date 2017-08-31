@@ -119,7 +119,7 @@ namespace ReportMvc.Controllers
                     for (int i = 0; i < listNgayHoaDonJson.Count; i++)
                     {
                         lstHD += (String)listNgayHoaDonJson[i] + ",";
-                        Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32(listNgayHoaDonJson[i]), Convert.ToInt32(shiperId), Convert.ToInt32(userId), Convert.ToInt32(IdLotrinh), NguoiTao);
+                        Servies.HoaDonServices.updateNgayHoaDonToShiper(Convert.ToInt32((String)listNgayHoaDonJson[i]), Convert.ToInt32(shiperId), Convert.ToInt32(userId), Convert.ToInt32(IdLotrinh), NguoiTao);
                     }
                 }
                 DataTable dt = null;
