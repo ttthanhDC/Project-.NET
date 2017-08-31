@@ -25,7 +25,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>0.27083in</Top>
+        <Top>0.06944in</Top>
         <Left>0.50917in</Left>
         <Height>0.25in</Height>
         <Width>4.4132in</Width>
@@ -43,16 +43,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.58681in</Width>
+              <Width>0.75348in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.97222in</Width>
+              <Width>1.40972in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.87847in</Width>
+              <Width>0.92014in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.08333in</Width>
+              <Width>0.76041in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>2.17708in</Width>
@@ -374,7 +374,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!SoTienPhaiThu.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>n0</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -480,9 +482,9 @@
         </TablixRowHierarchy>
         <DataSetName>DSLoTrinh</DataSetName>
         <Top>1.04042in</Top>
-        <Left>0.50917in</Left>
+        <Left>0.39459in</Left>
         <Height>0.5in</Height>
-        <Width>7.32291in</Width>
+        <Width>7.64583in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -506,6 +508,7 @@
                 <Value>=Fields!Ngay.Value</Value>
                 <Style>
                   <FontWeight>Bold</FontWeight>
+                  <Format>d</Format>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -513,7 +516,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>0.53472in</Top>
+        <Top>0.33333in</Top>
         <Left>0.50917in</Left>
         <Height>0.25in</Height>
         <Width>4.4132in</Width>
@@ -528,12 +531,101 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
+      <Textbox Name="Textbox3">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Mã lộ trình : </Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!MaLoTrinh.Value</Value>
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>0.61111in</Top>
+        <Left>0.50917in</Left>
+        <Height>0.25in</Height>
+        <Width>4.4132in</Width>
+        <ZIndex>3</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>11.7in</Height>
+    <Height>7.93958in</Height>
     <Style />
   </Body>
   <Width>8.3in</Width>
   <Page>
+    <PageHeader>
+      <Height>0.51042in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox5">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Xanh lá - Sữa tươi từ hạt</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox5</rd:DefaultName>
+          <Top>0.13417in</Top>
+          <Left>6.41541in</Left>
+          <Height>0.25in</Height>
+          <Width>1.88459in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.35417in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>
