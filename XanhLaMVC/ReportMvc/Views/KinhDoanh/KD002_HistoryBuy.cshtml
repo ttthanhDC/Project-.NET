@@ -9,48 +9,46 @@
             <div class="col-md-4">
                 <input type="text" class="form-control" name="tile" id="txt_maKH" />
             </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-primary" id="btnView">View</button>
-            </div>
+           
             <div class="col-md-1">
                 <button type="button" class="btn btn-primary" id="btnIn">In</button>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">Tên khách hàng</label>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <input type="text" class="form-control" name="tile" id="txt_nameKH" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">SĐT</label>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <input type="text" class="form-control" name="tile" id="txt_sdt" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">Địa chỉ</label>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <textarea class="form-control" id="txt_diaChi"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">Ngày</label>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <input type="text" class="form-control" name="tile" id="txt_ngay" />
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">User tạo</label>
-            <div class="col-md-9">
+            <div class="col-md-4">
                 <input type="text" class="form-control" name="tile" id="txt_user" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-3 control-label">Tổng tiêu</label>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="tile" id="txt_date" />
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="tile" id="txt_total" />
             </div>
         </div>
 
@@ -64,9 +62,14 @@
        $(function () {
            var itemData = [];
            getDataTable1(itemData);
-           eventSearch1();
+          // eventSearch1();
+           window.sdt = "";
+           window.DiaChi = "";
+           window.Quan = "";
+           window.name = "";
+           window.ThanhTien = "";
 
-           var idParam = getQueryVariable("paramId");
+           window.idParam = getQueryVariable("paramId");
            function getQueryVariable(variable) {
                var query = window.location.search.substring(1);
                var vars = query.split("&");
@@ -76,139 +79,102 @@
                        return pair[1];
                    }
                }
-               //alert('Query Variable ' + variable + ' not found');
            }
-           if (idParam === "ADD") {
+           window.ThanhTien = getQueryVariable("ThanhTien");
+           function getQueryVariable(variable) {
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i = 0; i < vars.length; i++) {
+                   var pair = vars[i].split("=");
+                   if (pair[0] == variable) {
+                       return pair[1];
+                   }
+               }
+           }
+           if (window.idParam === "ADD") {
 
            } else {
-               var formDataListUser = new FormData();
-               formDataListUser.append('type', 'getData');
-               var json = { 'ID': parseInt(idParam) };
-               formDataListUser.append('data', JSON.stringify(json));
+               var data = [];
+               var formDatasearch = new FormData();
+               formDatasearch.append('type', 'getvKD001');
+               var json = { 'ID': 0 };
+               formDatasearch.append('data', JSON.stringify(json));
+               formDatasearch.append('IdKH', window.idParam);
+
                $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
+                   url: "/KinhDoanh/getvDetailKD001",
                    type: "POST",
-                   data: formDataListUser,
+                   data: formDatasearch,
                    contentType: false,
                    processData: false,
                    success: function (result) {
+                       alert(result);
                        var jsonData = result;
-                       if (jsonData && jsonData.length > 0) {
-                           for (var i = 0; i < jsonData.length ; i++) {
-                               var objectData = jsonData[i];
-                               $('#txt_gia').val(objectData.Product_Amount);
-                               $('#txt_donVi').val(objectData.Product_Unit);
-                               $('#txt_productName').val(objectData.Product_Name);
-                               $('#txt_productCode').val(objectData.Product_Code);
-                               $('#orgId').val(objectData.ORG_ID);
+                       var arr = [];
+                       if (jsonData[0] && jsonData[0].length > 0) {
+                           for (var i = 0; i < jsonData[0].length ; i++) {
+                               var objectData = jsonData[0][i];
+                               $('#txt_maKH').val(objectData.MaKH);
+                               $('#txt_nameKH').val(objectData.CustomerName);
+                               $('#txt_diaChi').val(objectData.Address);
+                               $('#txt_sdt').val(objectData.PhoneNumber);
+                               if (objectData.BirthDay) {
+                                   $('#txt_ngay').val(convertDate(objectData.BirthDay));
+                               } else {
+                                   $('#txt_ngay').val("");
+                               }
+                               $('#txt_user').val("");// TODO
+                               $('#txt_total').val(window.ThanhTien);
+                               window.sdt = objectData.PhoneNumber;
+                               window.DiaChi = objectData.Address;
+                               window.Quan = objectData.TenQuan;
+                               window.name = objectData.CustomerName;
                            }
                        }
+                       if (jsonData[1] && jsonData[1].length > 0) {
+                           for (var i = 0; i < jsonData[1].length ; i++) {
+                               var objectData = jsonData[1][i];
+                               var obj = {};
+                               obj.stt = i + 1;
+                               //obj.id = objectData.ID;
+                               obj.maReser = objectData.MaHD || "";
+                               obj.goi = objectData.Name || "";
+                               obj.hoTen = window.name || "";
+                               obj.sdt = window.sdt || ""; // TODO
+                               obj.quan = window.Quan || "";// TODO
+                               obj.diaChi = window.DiaChi || "";// TODO
+                               obj.trangThai = objectData.TrangThai || "";
+                               arr.push(obj);
+                           }
+                       }
+                       data = arr;
+                       var $table1 = $('#table1');
+                       $table1.bootstrapTable('load', data);
                    },
                    error: function (err) {
-
-                   }
-               });
-           }
-
-
-
-       });
-
-       $('#btnView').on('click', function (e) {
-           window.location = '/LT002_demo2.aspx?paramId= 0';
-       });
-
-       $('#btnIn').on('click', function (e) {
-           window.location = '/K004_ImPortHat.aspx?paramId= 0';
-       });
-       $('#btnBack').on('click', function (e) {
-           window.location = '/K004_ImPortHat.aspx?paramId= 0';
-       });
-       // Event Thêm mới
-       $('#btnSave').on('click', function (e) {
-           var idParam = getQueryVariable("paramId");
-           // funtion get
-           if (idParam === "ADD") {
-               // update
-               var formData = new FormData();
-               var json = {
-                   'ID': parseInt(idParam + ""),
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
-               };
-               jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'update');
-               formData.append('data', JSON.stringify(json));
-               $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
-                   type: "POST",
-                   data: formData,
-                   contentType: false,
-                   processData: false,
-                   success: function (result) {
-                       alert(result);
-                   },
-                   error: function (err) {
-
-                   }
-               });
-           } else {
-               // insert
-               var formData = new FormData();
-               var json = {
-                   'Product_Amount': $('#txt_gia').val(),
-                   'Product_Unit': $('#txt_donVi').val(),
-                   'Product_Name': $('#txt_productName').val(),
-                   'Product_Code': $('#txt_productCode').val(),
-                   'ORG_ID': parseInt($('#orgId').val() + ""),
-                   'Create_User': parseInt($('#userid').val() + ""),
-               };
-               jQuery.ajaxSetup({ async: true });
-               formData.append('type', 'insert');
-               formData.append('data', JSON.stringify(json));
-               $.ajax({
-                   url: "Configuation/HandlerSysProduct.ashx",
-                   type: "POST",
-                   data: formData,
-                   contentType: false,
-                   processData: false,
-                   success: function (result) {
-                       alert(result);
-                   },
-                   error: function (err) {
-
                    }
                });
            }
        });
-       var eventSearch1 = function () {
-           var data = [{
-               stt: '1',
-               maReser: 'PX-20082018',
-               maDon: 'Trần ngọc duy',
-               hoTen: '20/08/2018',
-               sdt: 'Khách gói',
-               quan: '0989485398 ',
-               diaChi: 'duytn@123',
-               trangThai: 'Ba đình ',
-           }, {
-               stt: '2',
-               maReser: 'PX-20082018',
-               maDon: 'Trần ngọc duy',
-               hoTen: '20/08/2018',
-               sdt: 'Khách gói',
-               quan: '0989485398 ',
-               diaChi: 'duytn@123',
-               trangThai: 'Ba đình ',
-           }]
-           data = data;
-           var $table1 = $('#table1');
-           $table1.bootstrapTable('load', data);
+       var convertDate = function (Date_Start) {
+           var x = Date_Start.substr(0, 10);
+           var y = x.split("-");
+           var y1 = y[0];
+           var y2 = y[1];
+           var y3 = y[2];
+           a = y3 + "/" + y2 + "/" + y1;
+           return a;
        };
 
+
+       $('#btnIn').on('click', function (e) {
+           //window.location = '/KinhDoanh/K004_ImPortHat.aspx?paramId= 0';
+       });
+       $('#btnBack').on('click', function (e) {
+           window.location = '/KinhDoanh/KD001_ListCustomer?paramId=0';
+       });
+     
+       
        // getdata table lộ trình
        var getDataTable1 = function (itemData) {
            $('#table1').bootstrapTable({
@@ -221,11 +187,6 @@
                    }, {
                        field: 'maReser',
                        title: 'Mã reservation',
-                       align: 'center',
-                       valign: 'middle',
-                   }, {
-                       field: 'maDon',
-                       title: 'Mã đơn',
                        align: 'center',
                        valign: 'middle',
                    }, {

@@ -45,6 +45,56 @@
         eventSearch();
     });
     var eventSearch1 = function () {
+        var data = [];
+        var formDatasearch = new FormData();
+        formDatasearch.append('type', 'getvDetailKD003');
+        var json = { 'ID': 0 };
+        formDatasearch.append('data', JSON.stringify(json));
+
+        formDatasearch.append('Ngay', $('#txt_ngayMua').val());
+        //formDatasearch.append('HoTen', $('#txt_ngayKetThuc').val());
+        //formDatasearch.append('SoDT', $('#txt_promoCode').val());
+        //formDatasearch.append('Quan', $('#txt_promoProduct').val());
+
+        $.ajax({
+            url: "/KinhDoanh/getvDetailKD003",
+            type: "POST",
+            data: formDatasearch,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                //alert(result);
+                var jsonData = result;
+                var arr = [];
+                if (jsonData && jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length ; i++) {
+                        var objectData = jsonData[i];
+                        var obj = {};
+                        obj.stt = i + 1;
+                        obj.id = objectData.ID;
+                        obj.ma = objectData.MaKH || "";
+                        obj.name = objectData.CustomerName || "";
+                        obj.sdt = objectData.PhoneNumber || "";
+                        obj.email = objectData.Email || "";
+                        obj.quan = objectData.TenQuan || "";
+                        obj.loaiKhach = objectData.LoaiDichVu || "";
+                        obj.ghiChu = objectData.GhiChu || "";
+                        if (objectData.BirthDay) {
+                            obj.date = convertDate(objectData.BirthDay);
+                        } else {
+                            obj.date = "";
+                        }
+                        obj.tongTieu = objectData.ThanhTien || "";
+                        arr.push(obj);
+                    }
+                }
+                data = arr;
+                var $table1 = $('#table1');
+                $table1.bootstrapTable('load', data);
+            },
+            error: function (err) {
+            }
+        });
         var data = [{
             stt: '1',
             ma: 'PX-20082018',
