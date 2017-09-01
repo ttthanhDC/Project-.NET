@@ -17,6 +17,22 @@ namespace ReportMvc.Controllers
         {
             return View();
         }
+        public ActionResult KD001_ListCustomer()
+        {
+            return View();
+        }
+        public ActionResult KD002_HistoryBuy()
+        {
+            return View();
+        }
+        public ActionResult KD003_DiscountInvoice()
+        {
+            return View();
+        }
+        public ActionResult KD004_Produce()
+        {
+            return View();
+        }
         [HttpPost]
         public ContentResult getvKD001(String type, String data,String MaKH, String HoTen, String SoDT, String Quan, String Email)
         {
