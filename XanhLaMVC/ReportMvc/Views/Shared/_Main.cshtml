@@ -752,3 +752,217 @@
     </div>
 </body>
 </html>
+<script>
+    // Bootstrap Table
+    $(function () {
+        window.lv2 = ["Cấu hình", "Lễ tân", "Báo cáo", "Shipp", "Kinh Doanh", "Kho", "Kế Toán"];
+        window.lv3 = [["Danh sách tài khoản", "Nhóm quyền", "Bộ phận", "Phân quyền", "Thông tin công ty", "Cấu hình nguồn", "Cấu hình sản phẩm", "Cấu hình khuyến mại SP", "Cấu hình menu"],
+                      ["Nhập Reservation", "Danh sách Reservation"],
+                      ["Báo cáo doanh thu", "Danh sách Đơn bị hủy", "Công nợ", "Thống kê doanh thu theo nguồn", "Thống kê Shipper"],
+                      ["Lộ trình shipper", "Báo cáo hết ca", "Danh sách Shipper"], ["Danh sách khách hàng", "Lịch sử mua hàng", "Danh sách Bill giảm giá", "Sản xuất"],
+                      ["Sản phẩm xuất kho theo ngày", "Thống kê số lượng và thể tích bán sữa theo từng ngày", "Xuất kho(Dành cho hạt)", "Nhập kho (Dành cho hạt)", "Dự kiến mua", "Danh sách nhà cung cấp", "Định lượng sản phẩm", "Báo cáo nhập xuất tồn"],
+                      ["Kế toán nhận tiền từ các tài khoản ngân hàng", "Kế toán nhận tiền là tiền mặt", "Hiển thị tất các khoản chi", "Lưu chuyển dòng tiền", "Kế toán tổng hợp"]];
+        window.tempLV2 = "";
+        window.tempLV3 = "";
+        loadContentMain();
+        function loadContentMain() {
+            $('#lv2').text(sessionStorage.getItem('lvl2'));
+            $('#lv3').text(sessionStorage.getItem('lvl3'));
+            /*
+            var liDiv = sessionStorage.getItem('li');
+            if (liDiv) {
+                if (liDiv[0].parentElement.className == "nav nav-list") {
+                    liDiv.addClass('active open');
+                } else {
+                    liDiv.addClass('active');
+                    liDiv[0].parentElement.parentElement.classList.add("active open");
+                }
+            }*/
+            getLabelUserName();
+        };
+        function getLabelUserName() {
+            var formData = new FormData();
+            var obj = { 'id': 0 };
+            formData.append('type', 'getSessionUser');
+            formData.append('data', JSON.stringify(obj));
+            $.ajax({
+                url: "/SysMenu/getSessionUser",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    $('#lblUser').text(result);
+                },
+                error: function (err) {
+
+                }
+            });
+        }
+
+        function aC001() {
+
+        };
+        /*** a Click Menu *****/
+        $('#aC001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][0]);
+        });
+        $('#aC002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][1]);
+        });
+        $('#aC003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][2]);
+        });
+        $('#aC004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][3]);
+        });
+        $('#aC005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][4]);
+        });
+        $('#aC006').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][5]);
+        });
+        $('#aC007').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][6]);
+        });
+        $('#aC008').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][7]);
+        });
+        $('#aC009').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[0]);
+            sessionStorage.setItem('lvl3', window.lv3[0][8]);
+        });
+        $('#aLT001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[1]);
+            sessionStorage.setItem('lvl3', window.lv3[1][0]);
+        });
+        $('#aLT002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[1]);
+            sessionStorage.setItem('lvl3', window.lv3[1][1]);
+        });
+        $('#aBC001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][0]);
+        });
+        $('#aBC002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][1]);
+        });
+        $('#aBC003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][2]);
+        });
+        $('#aBC004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][3]);
+        });
+        $('#aBC005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[2]);
+            sessionStorage.setItem('lvl3', window.lv3[2][4]);
+        });
+        $('#aS001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][0]);
+        });
+        $('#aS002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][1]);
+        });
+        $('#aS003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[3]);
+            sessionStorage.setItem('lvl3', window.lv3[3][2]);
+        });
+        $('#aKD001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][0]);
+        });
+        $('#aKD002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][1]);
+        });
+        $('#aKD003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][2]);
+        });
+        $('#aKD004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[4]);
+            sessionStorage.setItem('lvl3', window.lv3[4][3]);
+        });
+        $('#aK001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][0]);
+        });
+        $('#aK002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][1]);
+        });
+        $('#aK003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][2]);
+        });
+        $('#aK004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][3]);
+        });
+        $('#aK005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][4]);
+        });
+        $('#aK006').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][5]);
+        });
+        $('#aK007').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][6]);
+        });
+        $('#aK008').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][7]);
+        });
+        $('#aK009').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[5]);
+            sessionStorage.setItem('lvl3', window.lv3[5][8]);
+        });
+        $('#aKT001').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][0]);
+        });
+        $('#aKT002').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][1]);
+        });
+        $('#aKT003').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][2]);
+        });
+        $('#aKT004').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][3]);
+        });
+        $('#aKT005').on("click", function () {
+            sessionStorage.setItem('lvl2', window.lv2[6]);
+            sessionStorage.setItem('lvl3', window.lv3[6][4]);
+        })
+        /** Active Li auto
+        $('.nav-list').on('click', 'li', function () {
+            $('.nav-list li.active').removeClass('active');
+            $('.nav-list li.open').removeClass('open');
+            if ($(this)[0].parentElement.className == "nav nav-list") {
+                $(this).addClass('active open');
+            } else {
+                $(this).addClass('active');
+                $(this)[0].parentElement.parentElement.classList.add("active open");
+            }
+            sessionStorage.setItem('li', $(this));
+        });**/
+    });
+</script>

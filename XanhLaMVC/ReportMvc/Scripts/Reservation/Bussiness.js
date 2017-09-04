@@ -656,6 +656,10 @@
                                 field: 'fSTT',
                                 values: [row.fSTT]
                             });
+                            var txtSoNgayConLai = $("#txtSoNgayConLai").val();
+                            var soNgayGoi = row.soNgayGoi;
+                            var total = Number(txtSoNgayConLai) - Number(soNgayGoi);
+                            $("#txtSoNgayConLai").val(total);
                         }
                     },
                     formatter: operateFormatter
@@ -851,10 +855,12 @@
             if ($('#cb_OrderType :selected').text() == 'Gói') {
                 var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0'
                 songayconlai = Number(songayconlai) + parseInt($('#cb_OrderType2').val());
+                obj.soNgayGoi = parseInt($('#cb_OrderType2').val());
                 $('#txtSoNgayConLai').val(songayconlai);
             } else {
                 var songayconlai = $('#txtSoNgayConLai').val() != "" ? $('#txtSoNgayConLai').val() : '0';
                 songayconlai = Number(songayconlai) + 1;
+                obj.soNgayGoi = 1;
                 $('#txtSoNgayConLai').val(songayconlai);
             }
             var infoKHPackage = {};
@@ -1415,7 +1421,7 @@
         objCustomer.ngaySinh = $("#txtNgaySinh1").val();
         objCustomer.soDienThoai = $("#txtSoDienThoai1").val();
         objCustomer.email = $("#txtEmailCustomer1").val();
-        objCustomer.diaChi = $("#txtDiaChiCustomer").val("");
+        objCustomer.diaChi = $("#txtDiaChiCustomer1").val();
         objCustomer.maquan = $('#cb_quan1').val();
         if (dataPopup.length > 0) {
             /*
@@ -1858,6 +1864,7 @@
             });
             return;
         }
+        
 
         var obj = {};
         obj.maKH = $('#txtMaKH').val();
@@ -1868,6 +1875,13 @@
         obj.email = document.getElementById('txtEmailCustomer').value;
         obj.diaChi = document.getElementById('txtDiaChiCustomer').value;
         obj.maquan = $('#cb_quan').val();
+        if ($('#txtSoDienThoai').val() == "" || document.getElementById('txtEmailCustomer').value == "" || document.getElementById('txtDiaChiCustomer').value == "" || $('#txtHoTen').val() == "") {
+            bootbox.alert({
+                message: "Vui lòng nhập đầy đủ thông tin khách hàng!",
+                size: 'small'
+            });
+            return;
+        }
         var bill = {};
         //bill.maReversion = $('#txtMaHD').val();
         bill.sourceName = $('#cb_SourceType :selected').text();
@@ -1880,11 +1894,18 @@
         bill.inFoCustomer = obj;
         bill.infoBill = window.dataGlobal;
         bill.isMasterTab = window.isMasterTab;
+        if (bill.infoBill == null || bill.infoBill.length == 0) {
+            bootbox.alert({
+                message: "Vui lòng nhập thông tin đơn hàng!",
+                size: 'small'
+            });
+            return;
+        }
         var formBill = new FormData();
         formBill.append('type', 'insert');
         formBill.append('data', JSON.stringify(bill));
         $.ajax({
-            url: "InsertBill/insert",
+            url: "/InsertBill/insert",
             type: "POST",
             data: formBill,
             contentType: false,

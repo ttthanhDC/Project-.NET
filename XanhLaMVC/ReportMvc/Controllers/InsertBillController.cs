@@ -253,7 +253,11 @@ namespace ReportMvc.Controllers
                 {
                     DataObject.NgayHoaDon ngayhoadon = new DataObject.NgayHoaDon();
                     //ngayhoadon.Ngay = Convert.ToDateTime((String)lsthoadon[i].date);
-                    ngayhoadon.Ngay = DateTime.ParseExact((String)lsthoadon[i].date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    if ((String)lsthoadon[i].date != "")
+                    {
+                        ngayhoadon.Ngay = DateTime.ParseExact((String)lsthoadon[i].date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    }
+                    
                     var ghichu = (String)lsthoadon[i].ghichu;
                     ngayhoadon.GhiChu = ghichu != null ? ghichu : "";
                     ngayhoadon.TrangThai = (String)lsthoadon[i].status;
@@ -774,7 +778,7 @@ namespace ReportMvc.Controllers
             String thanhtien = (String)data.fThanhTien;
             packageChiTietHD.ThanhTien = Convert.ToDecimal(thanhtien != "" ? thanhtien.Replace(".", "") : "0");
             packageChiTietHD.TrangThai = "Chưa xử lý";
-            packageChiTietHD.IDGoi = Convert.ToInt32(data.IDGoi);
+            packageChiTietHD.IDGoi = (int)(data.IDGoi);
             String hoten1 = data.infoKH.hoTen;
             String maKH1 = data.infoKH.maKH;
             String ngaySinh1 = data.infoKH.ngaySinh;
@@ -811,7 +815,11 @@ namespace ReportMvc.Controllers
             DataObject.NgayHoaDon ngayHoaDon = new DataObject.NgayHoaDon();
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
             //String createDate = String.Format("{0:dd/MM/yyyy}", ngayHD);
-            ngayHoaDon.Ngay = DateTime.ParseExact(ngayHD, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            if (ngayHD != "")
+            {
+                ngayHoaDon.Ngay = DateTime.ParseExact(ngayHD, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            
             ngayHoaDon.TrangThai = "Chưa xử lý";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
@@ -833,7 +841,11 @@ namespace ReportMvc.Controllers
             ngayHoaDon.IDPackageChitietHD = idPackageHD;
             //ngayHoaDonLe = ngayHoaDonLe.Split('/')[1] + "/" + ngayHoaDonLe.Split('/')[0] + "/" + ngayHoaDonLe.Split('/')[2];
             //ngayHoaDon.Ngay = Convert.ToDateTime(ngayHoaDonLe);
-            ngayHoaDon.Ngay = DateTime.ParseExact(ngayHoaDonLe, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            if (ngayHoaDonLe != "")
+            {
+                ngayHoaDon.Ngay = DateTime.ParseExact(ngayHoaDonLe, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            
             ngayHoaDon.TrangThai = "Chưa xử lý";
             ngayHoaDon.HinhThucThanhToan = hinhthucthanhtoan;
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
@@ -929,7 +941,7 @@ namespace ReportMvc.Controllers
             ngayHoaDon.sugar = data.sugar;
             ngayHoaDon.Error = data.Error;
             ngayHoaDon.quantity = data.quantity;
-            ngayHoaDon.ID = Convert.ToInt32(data.idhdSp);
+            ngayHoaDon.ID = (Int32)data.idhdSp;
             String price = (String)data.price;
             if (price == "")
             {
