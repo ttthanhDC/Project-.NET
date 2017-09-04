@@ -89,6 +89,30 @@ namespace ReportMvc.Controllers
             }
 
         }
+
+        [HttpPost]
+        public ContentResult getDataByPromotionCode(String type, String data)
+        {
+            try
+            {
+                DataObject.SysPromotion obj = new JavaScriptSerializer().Deserialize<DataObject.SysPromotion>(data);
+                List<DataObject.SysPromotion> lst = Servies.SysPromotionServices.GetDataByPromotionCode(obj.Code);
+                var list = JsonConvert.SerializeObject(lst,
+                    Formatting.None,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    });
+
+                return Content(list, "application/json");
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                return null;
+            }
+
+        }
         public void Insert(DataObject.SysPromotion obj)
         {
             Servies.SysPromotionServices.InsertData(obj);
