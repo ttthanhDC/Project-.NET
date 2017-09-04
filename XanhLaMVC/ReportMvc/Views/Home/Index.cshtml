@@ -21,27 +21,13 @@
 <script src="~/scripts/ej.web.all.min.js"></script>
 <script src="~/Scripts/ej.unobtrusive.min.js"></script>
 <script>
-    function openDialog() {
-        window.open('@Url.Action("ReportLoTrinh", "Report", new { MaLoTrinh = "180817PM094444" })');
-        //$("#dialog").ejDialog("open"); 
-        /**
-        
-        
-        **/
-    }
+  
 </script>
 
 <body>
-    @{
-        Html.EJ()
-            .Button("button")
-            .Text("Open Report")
-            .Type(ButtonType.Button)
-            .ClientSideEvents(evt => evt.Click("openDialog"))
-            .Render();
-    }
-
-          <!--.Parameters(param => { param.Name("InvoiceID").Labels(new List<string>() { "InvoiceID" }).Values(new List<string>() { "10250" }).Add();-->
+    <div style="text-align:center;margin-top:30px">
+        <img src="~/assets/images/avatars/logo.jpg" class="img-responsive" alt="Cinque Terre" width="1200" height="800">
+    </div>
 </body>
 
 <style type="text/css">
@@ -58,4 +44,8 @@
         height: 700px;
         position: absolute;
     }
-</style>*
+    .wrapper {
+         width: 100%;
+         height : 100%;
+    }
+</style>
