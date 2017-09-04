@@ -327,7 +327,11 @@
         formData.append('LoaiThu', "1");
         formData.append('GhiChu', row.note);
         formData.append('IdKeToan', "0");
-        formData.append('IdNgayHD', row.IdNgayHD ? row.IdNgayHD : row.MaCa);
+        if (row.MaCa) {
+            formData.append('IdNgayHD',row.MaCa);
+        } else {
+            formData.append('IdNgayHD', row.ID);
+        }
         var lst2 = $('#table select.select2 option:selected');
         formData.append('MaNganHang', '6');
         formData.append('TinhTrang', lst2[index].value);

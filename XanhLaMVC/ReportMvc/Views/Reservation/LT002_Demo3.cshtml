@@ -170,6 +170,8 @@
         window.idNgayHoaDonParam = 0;
         window.idHD = 0;
         window.lstIdDelete = [];
+        window.CheckBack = ""; 
+        window.idShip = 0;
         loadContent();
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
@@ -186,6 +188,8 @@
             window.idKHParam = getQueryVariable("idKHParam");
             window.idNgayHoaDonParam = getQueryVariable("idNgayHoaDonParam");
             window.idHD = getQueryVariable("idHD");
+            window.CheckBack = getQueryVariable("CheckBack");
+            window.idShip = getQueryVariable("idShip");
             LoadComboBoxQH();
             FormatDate();
             loadThongTinKH();
@@ -808,7 +812,12 @@
             processData: false,
             success: function (result) {
                 alert("Cập nhật thông tin đơn hàng thành công");
-                window.location = '/Reservation/LT002_Demo2?paramId=' + window.idHD;
+                if (window.CheckBack === 'SHIP') {
+                    window.location = '/Shipper/S003_InputBill?paramId=' + window.idShip;
+                } else {
+                    window.location = '/Reservation/LT002_Demo2?paramId=' + window.idHD;
+                }
+                
             }
         });
     });

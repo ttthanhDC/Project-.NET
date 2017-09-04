@@ -259,7 +259,7 @@
 
     window.codeReserEvents = {
         'click .next': function (e, value, row, index) {
-            window.location = '/Shipper/LT002_Demo3?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id + '&idLoTrinh=' + window.idParam;
+            window.location = '/Reservation/LT002_Demo3?idKHParam=' + row.idKH + '&idNgayHoaDonParam=' + row.id + '&idLoTrinh=' + window.idParam + '&CheckBack=SHIP' + '&idShip=' + window.idParam;
             //alert('You click like action, row: ' + JSON.stringify(row));
         }
     };
