@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,20 +80,40 @@ namespace Servies
 
         public static int InsertNgayHoaDonReturnId(DataObject.NgayHoaDon obj)
         {
-            String Insert = "INSERT INTO NgayHoaDon (IDPackageChitietHD,Ngay,TrangThai,HinhThucThanhToan) VALUES (@IDPackageChitietHD,@Ngay,@TrangThai,@HinhThucThanhToan);Select @@IDENTITY as newId";
-            SqlConnection conn = Common.Connection.SqlConnect();
-            SqlCommand cmd = new SqlCommand(Insert);
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@IDPackageChitietHD", obj.IDPackageChitietHD);
-            cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
-            cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
-            cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
-            conn.Open();
-            object insertedID = cmd.ExecuteScalar();
-            cmd.Connection.Close();
-            conn.Close();
-            return Convert.ToInt32(insertedID);
+            if (obj.Ngay != null && obj.Ngay.ToString() != "" && obj.Ngay.ToString() != "01/01/0001 12:00:00 SA")
+            {
+                String Insert = "INSERT INTO NgayHoaDon (IDPackageChitietHD,Ngay,TrangThai,HinhThucThanhToan) VALUES (@IDPackageChitietHD,@Ngay,@TrangThai,@HinhThucThanhToan);Select @@IDENTITY as newId";
+                SqlConnection conn = Common.Connection.SqlConnect();
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@IDPackageChitietHD", obj.IDPackageChitietHD);
+                cmd.Parameters.AddWithValue("@Ngay", obj.Ngay);
+                cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
+                conn.Open();
+                object insertedID = cmd.ExecuteScalar();
+                cmd.Connection.Close();
+                conn.Close();
+                return Convert.ToInt32(insertedID);
+            }
+            else
+            {
+                String Insert = "INSERT INTO NgayHoaDon (IDPackageChitietHD,TrangThai,HinhThucThanhToan) VALUES (@IDPackageChitietHD,@TrangThai,@HinhThucThanhToan);Select @@IDENTITY as newId";
+                SqlConnection conn = Common.Connection.SqlConnect();
+                SqlCommand cmd = new SqlCommand(Insert);
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@IDPackageChitietHD", obj.IDPackageChitietHD);
+                cmd.Parameters.AddWithValue("@TrangThai", obj.TrangThai);
+                cmd.Parameters.AddWithValue("@HinhThucThanhToan", obj.HinhThucThanhToan);
+                conn.Open();
+                object insertedID = cmd.ExecuteScalar();
+                cmd.Connection.Close();
+                conn.Close();
+                return Convert.ToInt32(insertedID);
+            }
+           
         }
 
 
@@ -271,12 +292,12 @@ namespace Servies
 
         public static DataTable getvHoaDonStep2(String ID)
         {
-            //vHoaDonStep1
+            //vHoaDonStep1 NgayHD asc
             DataTable table = new DataTable();
             SqlCommand cmd = null;
             SqlConnection conn = Common.Connection.SqlConnect();
             String Select = "Select * from vHoaDonStep2 where ID = " + ID + " AND ";
-            Select += " 1=1 ORDER BY IsMaster desc ,IdPCTHD asc, NgayHD asc";
+            Select += " 1=1 ORDER BY IsMaster desc ,IdPCTHD asc ";
             cmd = new SqlCommand(Select);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
@@ -616,7 +637,7 @@ namespace Servies
             return result;
         }
         // Update KH Step V3
-        public static int updateGóiStepV3(String ID, String ghichu, String tienTangGiam)
+        public static int updateGóiStepV3(String ID, String ghichu, String tienTangGiam,String ngayHD)
         {
             DataTable table = new DataTable();
             SqlCommand cmd = null;
@@ -644,15 +665,32 @@ namespace Servies
             conn.Open();
             cmd1.ExecuteNonQuery();
             conn.Close();
-            String Select2 = "Update NgayHoaDon set GhiChu = @GhiChu where ID =@ID";
-            cmd2 = new SqlCommand(Select2);
-            cmd2.CommandType = CommandType.Text;
-            cmd2.Connection = conn;
-            cmd2.Parameters.AddWithValue("@GhiChu", ghichu);
-            cmd2.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
-            conn.Open();
-            cmd2.ExecuteNonQuery();
-            conn.Close();
+            if (ngayHD != "")
+            {
+                String Select2 = "Update NgayHoaDon set GhiChu = @GhiChu , Ngay = @Ngay where ID =@ID";
+                cmd2 = new SqlCommand(Select2);
+                cmd2.CommandType = CommandType.Text;
+                cmd2.Connection = conn;
+                cmd2.Parameters.AddWithValue("@GhiChu", ghichu);
+                cmd2.Parameters.AddWithValue("@Ngay", DateTime.ParseExact(ngayHD, "dd/MM/yyyy", CultureInfo.InvariantCulture));
+                cmd2.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
+                conn.Open();
+                cmd2.ExecuteNonQuery();
+                conn.Close();
+            }
+            else
+            {
+                String Select2 = "Update NgayHoaDon set GhiChu = @GhiChu  where ID =@ID";
+                cmd2 = new SqlCommand(Select2);
+                cmd2.CommandType = CommandType.Text;
+                cmd2.Connection = conn;
+                cmd2.Parameters.AddWithValue("@GhiChu", ghichu);
+                cmd2.Parameters.AddWithValue("@ID", Convert.ToInt32(ID));
+                conn.Open();
+                cmd2.ExecuteNonQuery();
+                conn.Close();
+            }
+            
             return 1;
         }
 
@@ -935,7 +973,7 @@ namespace Servies
             object ThanhTien = cmd2.ExecuteScalar();
             conn.Close();
             Decimal tong = Convert.ToDecimal(TongTien) + Convert.ToDecimal(ThanhTien);
-            String UpdateTienHD = "Update  HoaDon set TongTien = " + tong + " where ID = " + Convert.ToInt32(IdHoaDon);
+            String UpdateTienHD = "Update  HoaDon set TongTien = " + (Int32)tong + " where ID = " + Convert.ToInt32(IdHoaDon);
             cmd3 = new SqlCommand(UpdateTienHD);
             cmd3.CommandType = CommandType.Text;
             cmd3.Connection = conn;

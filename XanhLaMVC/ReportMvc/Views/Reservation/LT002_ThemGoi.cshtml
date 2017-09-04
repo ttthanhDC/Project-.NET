@@ -162,7 +162,7 @@
                 <div class="form-group">
                     <label for="sel1" class="col-md-3" id="lblNgayGiaoHangLe">Ngày giao hàng</label>
                     <div class="col-md-3">
-                        <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="title" id="txtNgayGiaoHangLe" />
+                        <input type="text" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' class="form-control" name="txtNgayGiaoHangLe" id="txtNgayGiaoHangLe" />
                     </div>
                     <label for="sel1" class="col-md-3" id="lblThuGiaoHangLe"> Thứ </label>
                     <div class="col-md-3" id="divThuGiaoHangLe">
@@ -176,7 +176,7 @@
                     <div class="col-md-3">
                         <input type="text" class="form-control" name="title" id="txtTongTienLe" disabled="disabled" />
                     </div>
-                    <label for="sel1" class="col-md-3" id="lblxx"> Thứ </label>
+                    <label for="sel1" class="col-md-3" id="lblxx">  </label>
                     <div class="col-md-3" id="divxx">
 
                     </div>
@@ -201,6 +201,10 @@
         window.idHD = 0;
         window.infoKH = null;
         window.totalTienGoi = 0;
+        window.hidden = false;
+        window.hiddenSingle = false;
+        window.tenGoi = "";
+        window.tienGoi = 0;
         loadContent();
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
@@ -252,7 +256,9 @@
             $('#txtNgaySinh').datepicker({
                 dateFormat: 'dd/mm/yyyy'
             });
-
+            $('#txtNgayGiaoHangLe').datepicker({
+                dateFormat: 'dd/mm/yyyy'
+            });
         };
 
         // format Money
@@ -328,6 +334,8 @@
                 for (var k = 0; k < window.dataGoi.length ; k++) {
                     if (window.dataGoi[k].Name.trim() == loaigoi.trim()) {
                         $("#txtTotalTienGoi").val(window.dataGoi[k].Tien.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                        window.tenGoi = window.dataGoi[k].Name;
+                        window.tienGoi = window.dataGoi[k].Tien.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                         break;
                     }
                 }
@@ -602,7 +610,8 @@
                         obj.parentId = -1;
                         obj.deliveryDate = '';
                         obj.product = '';
-                        obj.sugar = 1;
+                        obj.productName = '';
+                        obj.sugar = true;
                         obj.quantity = '';
                         obj.price = '';
                         obj.money = '';
@@ -717,10 +726,9 @@
                 },
                 {
                     field: 'productName',
-                    title: 'Tên Sản phẩm',
+                    title: ' Tên Sản phẩm',
                     align: 'center',
-                    valign: 'middle',
-                    editable: true
+                    valign: 'middle'
                 },
                 {
                     field: 'quantity',
@@ -737,21 +745,10 @@
                 },
                 {
                     field: 'sugar',
-                    title: 'Sugar',
+                    title: 'Đường',
                     align: 'center',
                     valign: 'middle',
-                    formatter: function (value, row, index) {
-                        if (row.operate == "1") {
-                            return "<label></label>";
-                        } else {
-                            if (row.sugar == "1") {
-                                return '<input type="checkbox" class="surgarP"  checked="checked" />';
-                            } else {
-                                return '<input type="checkbox"  />';
-                            }
-
-                        }
-                    }
+                    checkbox: true
                 },
                 {
                     field: 'money',
@@ -799,7 +796,16 @@
 
                     } else if (deliveryDate.split('/').length == 2) {
                         var x = new Date();
-                        deliveryDate = deliveryDate + "/" + x.getFullYear();
+                        var day = deliveryDate.split('/')[0] < 10 ? '0' + (deliveryDate.split('/')[0]) : deliveryDate.split('/')[0];
+                        var month = deliveryDate.split('/')[1] < 10 ? '0' + (deliveryDate.split('/')[1]) : deliveryDate.split('/')[1];
+                        deliveryDate = day + "/" + month + "/" + x.getFullYear();
+                        row.thugiaohang = convertDateToDay(deliveryDate);
+                        row.deliveryDate = deliveryDate;
+                    } else {
+                        var day = deliveryDate.split('/')[0] < 10 ? '0' + (deliveryDate.split('/')[0]) : deliveryDate.split('/')[0];
+                        var month = deliveryDate.split('/')[1] < 10 ? '0' + (deliveryDate.split('/')[1]) : deliveryDate.split('/')[1];
+                        var year = deliveryDate.split('/')[2];
+                        deliveryDate = day + "/" + month + "/" + year;
                         row.thugiaohang = convertDateToDay(deliveryDate);
                         row.deliveryDate = deliveryDate;
                     }
@@ -875,10 +881,10 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var percent = Number(objectData.Promotion_Percent) / 100;
+                                var percent = Number(objectData.Amount_VND);
                                 var total = row.total.toString().split('.').join('');
                                 total = total == "" ? Number('0') : Number(total);
-                                row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                row.total = (total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                                 disableEditableTable();
                             }
@@ -892,42 +898,54 @@
             });
         };
         $('#txtPromotionCode').on('change', function () {
-            var formpromotionCode = new FormData();
-            var json = { 'Code': $('#txtPromotionCode').val() };
-            formpromotionCode.append('type', 'getDataByPromotionCode');
-            formpromotionCode.append('data', JSON.stringify(json));
-            $.ajax({
-                url: "/SysPromotion/getDataByPromotionCode",
-                type: "POST",
-                data: formpromotionCode,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    var jsonData = result;
-                    var arr = [];
-                    if (jsonData && jsonData.length > 0) {
-                        var objectData = jsonData[0];
-                        var percent = Number(objectData.Promotion_Percent) / 100;
-                        var total = $('#txtTotalTienGoi').val().toString().split('.').join('');
-                        total = total == "" ? Number('0') : Number(total);
-                        $('#txtTotalTienGoi').val((total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
-                    }
-                },
-                error: function (err) {
+            if ($('#txtPromotionCode').val() != "") {
+                var formpromotionCode = new FormData();
+                var json = { 'Code': $('#txtPromotionCode').val() };
+                formpromotionCode.append('type', 'getDataByPromotionCode');
+                formpromotionCode.append('data', JSON.stringify(json));
+                $.ajax({
+                    url: "/SysPromotion/getDataByPromotionCode",
+                    type: "POST",
+                    data: formpromotionCode,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        var jsonData = result;
+                        var arr = [];
+                        if (jsonData && jsonData.length > 0) {
+                            var objectData = jsonData[0];
+                            var percent = Number(objectData.Amount_VND);
+                            var total = $('#txtTotalTienGoi').val().toString().split('.').join('');
+                            total = total == "" ? Number('0') : Number(total);
+                            $('#txtTotalTienGoi').val((total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                        } else {
+                            $('#txtTotalTienGoi').val(window.tienGoi.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+                        }
+                    },
+                    error: function (err) {
 
-                }
-            });
+                    }
+                });
+            } else {
+                $('#txtTotalTienGoi').val(window.tienGoi.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+            }
+            
         });
         function disableEditableTable() {
             var $table = $('#tablePopup');
             $tableRows = $table.find('tbody tr');
             tableData = $table.bootstrapTable('getData', true);
+            var x = $('#tablePopup input[type=checkbox]');
+            if (!window.hidden) {
+                x[0].style.display = 'none';
+                x[0].parentElement.innerText = "Đường";
+                window.hidden = true;
+            }
             $.each(tableData, function (i, row) {
-                //that.$body.find('a[data-name="' + column.field + '"]').editable(column.editable)
                 if (row.operate == "1") {
+                    x[i+1].style.display = 'none';
                     $tableRows.eq(i).find('a[data-name="' + 'product' + '"]').editable('toggleDisabled');
                     $tableRows.eq(i).find('a[data-name="' + 'quantity' + '"]').editable('toggleDisabled');
-                    //$tableRows.eq(i).find('a[data-name="' + 'promotionCode' + '"]').editable('toggleDisabled');
                     $tableRows.eq(i).find('a[data-name="' + 'note' + '"]').editable('toggleDisabled');
                 } else {
                     $tableRows.eq(i).find('a[data-name="' + 'deliveryDate' + '"]').editable('toggleDisabled');
@@ -952,8 +970,8 @@
                     }
                 }
                 var obj = {};
-                obj.id = -1; obj.parent = false; obj.deliveryDate = ''; obj.product = '';
-                obj.sugar = 1; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
+                obj.id = -1; obj.parent = false; obj.deliveryDate = ''; obj.product = ''; obj.productName = '';
+                obj.sugar = false; obj.quantity = ''; obj.price = ''; obj.money = ''; obj.promotionCode = '';
                 obj.total = ''; obj.test = ''; obj.operate = '0';
                 obj.parentBillId = parentBillId; obj.parentId = parendId + 1;
                 obj.thugiaohang = ''; obj.note = '';
@@ -1061,6 +1079,12 @@
                     editable: true
                 },
                 {
+                    field: 'productName',
+                    title: ' Tên Sản phẩm',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
                     field: 'quantity',
                     title: 'Số lượng',
                     align: 'center',
@@ -1075,17 +1099,10 @@
                 },
                 {
                     field: 'sugar',
-                    title: 'Sugar',
+                    title: 'Đường',
                     align: 'center',
                     valign: 'middle',
-                    formatter: function (value, row, index) {
-                        if (value) {
-                            return '<input type="checkbox" class="surgarP" value="" checked></label>';
-                        } else {
-                            return '<input type="checkbox" class="surgarP" value=""></label>';
-                        }
-
-                    }
+                    checkbox: true
                 },
                 {
                     field: 'money',
@@ -1131,7 +1148,12 @@
                 data: []
             });
 
-
+            var x = $('#tablePopupSingle input[type=checkbox]');
+            if (!window.hiddenSingle) {
+                x[0].style.display = 'none';
+                x[0].parentElement.innerText = "Đường";
+                window.hiddenSingle = true;
+            }
 
             $table.on('editable-save.bs.table', function (e, field, row, old, $el) {
                 var $els = $table.find('.editable');
@@ -1153,8 +1175,9 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var quantity = Number(objectData.Product_Unit);
+                                var quantity = 1;
                                 row.quantity = quantity;
+                                row.productName = objectData.Product_Name;
                                 var price = objectData.Product_Amount.toString().split('.').join('');
                                 row.price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                                 row.money = (quantity * price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1165,6 +1188,7 @@
                                 row.price = "";
                                 row.money = "";
                                 row.total = "0";
+                                row.productName = "";
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             }
                             var total = 0;
@@ -1207,10 +1231,10 @@
                             var arr = [];
                             if (jsonData && jsonData.length > 0) {
                                 var objectData = jsonData[0];
-                                var percent = Number(objectData.Promotion_Percent) / 100;
+                                var percent = Number(objectData.Amount_VND);
                                 var total = row.total.toString().split('.').join('');
                                 total = total == "" ? Number('0') : Number(total);
-                                row.total = (total - (total * percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+                                row.total = (total - (percent)).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
                                 $table.bootstrapTable('updateRow', { index: row.id - 1, row: row });
                             }
@@ -1230,14 +1254,27 @@
         };
         $('#txtNgayGiaoHangLe').on('change', function () {
             var dateNgaygiaoHangLe = this.value;
-            $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
+            if (dateNgaygiaoHangLe != "") {
+                var x = new Date();
+                if (dateNgaygiaoHangLe.split('/').length == 1) {
+
+                } else if (dateNgaygiaoHangLe.split('/').length == 2) {
+                    dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
+                    $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txtNgayGiaoHangLe").val(dateNgaygiaoHangLe);
+                } else {
+                    $("#txtThuGiaoHangLe").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txtNgayGiaoHangLe").val(dateNgaygiaoHangLe);
+                }
+
+            } else {
+                $("#txtNgayGiaoHangLe").val("");
+            }
         });
         function convertDateToDay(num) {
             var x = num;
             x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
             var date = new Date(x);
-            // var x = parseStringToDate(num);
-            //var date = new Date(x);
             var day = date.getDay();
             var strDay = "";
             switch (day) {
@@ -1286,8 +1323,9 @@
             obj.parentBillId = -1;
             obj.parentId = -1;
             obj.deliveryDate = '';
+            obj.productName = '';
             obj.product = '';
-            obj.sugar = 1;
+            obj.sugar = false;
             obj.quantity = '';
             obj.price = '';
             obj.money = '';
@@ -1308,7 +1346,7 @@
             objCustomer.ngaySinh = $("#txtNgaySinh1").val();
             objCustomer.soDienThoai = $("#txtSoDienThoai1").val();
             objCustomer.email = $("#txtEmailCustomer1").val();
-            objCustomer.diaChi = $("#txtDiaChiCustomer").val("");
+            objCustomer.diaChi = $("#txtDiaChiCustomer1").val();
             objCustomer.maquan = $('#cb_quan1').val();
             if (dataPopup.length > 0) {
                 var totalMoneyPopup = 0;
@@ -1364,6 +1402,13 @@
             };
             var file = document.getElementById("txtFile");
             var files = file.files;
+            if (files.length > 0 && window.tenGoi != files[0].name.split('.')[0]) {
+                bootbox.alert({
+                    message: "File Import không đúng gói " + window.tenGoi + " !",
+                    size: 'small'
+                });
+                return;
+            }
             var obj = {};
             var formBill = new FormData();
             formBill.append('type', 'uploadFile');
@@ -1390,7 +1435,8 @@
                             obj.deliveryDate = formatDateTime(result[i].Column1);
                             obj.thugiaohang = convertDateToDay(result[i].Column1);
                             obj.product = '';
-                            obj.sugar = 0;
+                            obj.productName = '';
+                            obj.sugar = false;
                             obj.quantity = '';
                             obj.price = '';
                             obj.money = '';
@@ -1406,8 +1452,9 @@
                             obj.parentId = index;
                             obj.deliveryDate = "";
                             obj.thugiaohang = "";
+                            obj.productName = '';
                             obj.product = result[i].Column3;
-                            obj.sugar = result[i].Column6 ? result[i].Column6 : 0;
+                            obj.sugar = result[i].Column6 ? true : false;
                             obj.quantity = result[i].Column4;
                             obj.price = '0';
                             obj.money = '0';
@@ -1475,7 +1522,7 @@
                     obj.fPromotionCode = $("#txtPromotionCode").val();
                     obj.NgayHD = "";
                     data = $('#tablePopup').bootstrapTable('getData');
-                    var lstSurgar = $('#tablePopup').find('input[type="checkbox"]');
+                    //var lstSurgar = $('#tablePopup').find('input[type="checkbox"]');
                     /*
                     for (var i = 0; i < data.length ; i++) {
                         data[i].sugar = lstSurgar[i].checked ? 1 : 0;
@@ -1495,7 +1542,7 @@
                     obj.fPromotionCode = "0";
                     obj.NgayHD = $('#txtNgayGiaoHangLe').val();
                     data = $('#tablePopupSingle').bootstrapTable('getData');
-                    var lstSurgar = $('#tablePopupSingle').find('input[type="checkbox"]');
+                    //var lstSurgar = $('#tablePopupSingle').find('input[type="checkbox"]');
                     /*
                     for (var i = 0; i < data.length ; i++) {
                         data[i].sugar = lstSurgar[i].checked ? 1 : 0;

@@ -48,7 +48,7 @@
             </div>
             <label for="sel1" class="col-md-2">Ngày giao</label>
             <div class="col-md-4">
-                <input type="text" class="form-control" name="title" id="txtNgayGiao" disabled="disabled" />
+                <input type="text" class="form-control" name="txtNgayGiao" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' id="txtNgayGiao" />
             </div>
         </div>
     </div>
@@ -239,7 +239,66 @@
             $('#txtNgaySinh').datepicker({
                 dateFormat: 'dd/mm/yyyy'
             });
+            $('#txtNgayGiao').datepicker({
+                dateFormat: 'dd/mm/yyyy'
+            });
         };
+
+        $('#txtNgayGiao').on('change', function () {
+            var dateNgaygiaoHangLe = this.value;
+            var convertDateToDay = function (num) {
+                var x = num;
+                x = x.split('/')[1] + "/" + x.split('/')[0] + "/" + x.split('/')[2];
+                var date = new Date(x);
+                var day = date.getDay();
+                var strDay = "";
+                switch (day) {
+                    case 0:
+                        strDay = "Chủ Nhật";
+                        break;
+                    case 1:
+                        strDay = "Thứ hai";
+                        break;
+                    case 2:
+                        strDay = "Thứ ba";
+                        break;
+                    case 3:
+                        strDay = "Thứ tư";
+                        break;
+                    case 4:
+                        strDay = "Thứ năm";
+                        break;
+                    case 5:
+                        strDay = "Thứ sáu";
+                        break;
+                    case 6:
+                        strDay = "Thứ bảy";
+                        break;
+                    case 7:
+                        strDay = "Chủ Nhật";
+                        break;
+                    default:
+                        break;
+                }
+                return strDay
+            };
+            if (dateNgaygiaoHangLe != "") {
+                var x = new Date();
+                if (dateNgaygiaoHangLe.split('/').length == 1) {
+
+                } else if (dateNgaygiaoHangLe.split('/').length == 2) {
+                    dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
+                    $("#txtThuGiaoHang").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txtNgayGiao").val(dateNgaygiaoHangLe);
+                } else {
+                    $("#txtThuGiaoHang").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txtNgayGiao").val(dateNgaygiaoHangLe);
+                }
+
+            } else {
+                $("#txtNgayGiao").val("");
+            }
+        });
         // eventKhachHang
         function eventKhachHang() {
             var formatDateTime = function (value) {
@@ -796,6 +855,7 @@
             'infoKH': obj,
             'infoGoi': objGoi,
             'infoSP': data,
+            'NgayGiaoHang':$('#txtNgayGiao').val(),
             'infoDeleteIdSP': window.lstIdDelete
         };
         formSource.append('type', 'updateStatusVHoaDonStep3');

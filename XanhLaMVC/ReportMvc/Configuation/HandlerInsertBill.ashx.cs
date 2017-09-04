@@ -370,6 +370,7 @@ namespace XanhLaMVC.Configuation
                     dynamic infoGoi = data.infoGoi;
                     dynamic infoSP = data.infoSP;
                     dynamic infoIdDelete = data.infoDeleteIdSP;
+                    String ngayHD = (String)data.NgayGiaoHang;
                     /*** Update Khách hàng *****/
                     DataObject.SysCustomer sysCustomer = new DataObject.SysCustomer();
                     sysCustomer.Address = (String)infoKH.diaChi;
@@ -384,7 +385,7 @@ namespace XanhLaMVC.Configuation
                     sysCustomer.MaQuan = (String)infoKH.maquan;
                     Servies.SysCustomerServices.UpdateDataTableKH(sysCustomer);
                     /*** Update Gói *****/
-                    Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam);
+                    Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam,ngayHD);
                     /** Update, Delete , Insert Sản phẩm ******/
                     if(infoIdDelete.Count > 0){
                         for(int i = 0; i < infoIdDelete.Count ; i++){

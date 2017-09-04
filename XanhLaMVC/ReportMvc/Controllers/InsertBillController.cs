@@ -114,10 +114,17 @@ namespace ReportMvc.Controllers
                                 }
                                 else
                                 {
-                                    InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHD);
+                                    if ((Boolean)detailMaster[j].parent)
+                                    {
+                                        idNgayHD = InsertNgayHoaDonReturnId(detailMaster[j], idPackageHD, hinhthucthanhtoan);
+                                        InsertKhachHangNgay(idNgayHD, dataHD[k]);
+                                    }
+                                    else
+                                    {
+                                        InsertHoaDonSanPhamReturnId(detailMaster[j], idNgayHD);
+                                    }
+                                    
                                 }
-
-
                             }
                             else
                             {
@@ -351,6 +358,7 @@ namespace ReportMvc.Controllers
                 dynamic infoGoi = dataDynamic.infoGoi;
                 dynamic infoSP = dataDynamic.infoSP;
                 dynamic infoIdDelete = dataDynamic.infoDeleteIdSP;
+                String ngayGiao = (String)dataDynamic.NgayGiaoHang;
                 /*** Update Khách hàng *****/
                 DataObject.SysCustomer sysCustomer = new DataObject.SysCustomer();
                 sysCustomer.Address = (String)infoKH.diaChi;
@@ -365,7 +373,7 @@ namespace ReportMvc.Controllers
                 sysCustomer.MaQuan = (String)infoKH.maquan;
                 Servies.SysCustomerServices.UpdateDataTableKH(sysCustomer);
                 /*** Update Gói *****/
-                Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam);
+                Servies.HoaDonServices.updateGóiStepV3((String)infoGoi.idngayHD, (String)infoGoi.GhiChu, (String)infoGoi.tienTangGiam, ngayGiao);
                 /** Update, Delete , Insert Sản phẩm ******/
                 if (infoIdDelete.Count > 0)
                 {
@@ -606,12 +614,12 @@ namespace ReportMvc.Controllers
                 * Insert Chi tiết hóa đơn , hoa đơn package , hóa đơn ngày , sản phẩm
                 * 
                 * *******************************/
-                int idPackageHD = InsertPackageChiTietHoaDonReturnId(data, Convert.ToInt32(IdChiTietHoaHD));
+                int idPackageHD = InsertPackageChiTietHoaDonReturnId(dataDynamic, Convert.ToInt32(IdChiTietHoaHD));
                 Servies.HoaDonServices.updateTienHD(IdChiTietHoaHD, idPackageHD);
                 if ((String)dataDynamic.NgayHD != "")
                 {
-                    int idNgayHDLe = InsertNgayHoaDonLeReturnId(data, idPackageHD, (String)dataDynamic.NgayHD, (String)dataDynamic.fLoaiThanhToanId);
-                    InsertKhachHangNgay(idNgayHDLe, data);
+                    int idNgayHDLe = InsertNgayHoaDonLeReturnId(dataDynamic, idPackageHD, (String)dataDynamic.NgayHD, (String)dataDynamic.fLoaiThanhToanId);
+                    InsertKhachHangNgay(idNgayHDLe, dataDynamic);
                     for (int j = 0; j < dataHD.Count; j++)
                     {
                         InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHDLe);
@@ -629,7 +637,16 @@ namespace ReportMvc.Controllers
                         }
                         else
                         {
-                            InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHD);
+                            if ((Boolean)dataHD[j].parent)
+                            {
+                                idNgayHD = InsertNgayHoaDonReturnId(dataHD[j], idPackageHD, (String)dataDynamic.fLoaiThanhToanId);
+                                InsertKhachHangNgay(idNgayHD, dataDynamic);
+                            }
+                            else
+                            {
+                                InsertHoaDonSanPhamReturnId(dataHD[j], idNgayHD);
+                            }
+                            
                         }
                     }
                 }
@@ -778,7 +795,8 @@ namespace ReportMvc.Controllers
             String thanhtien = (String)data.fThanhTien;
             packageChiTietHD.ThanhTien = Convert.ToDecimal(thanhtien != "" ? thanhtien.Replace(".", "") : "0");
             packageChiTietHD.TrangThai = "Chưa xử lý";
-            packageChiTietHD.IDGoi = (int)(data.IDGoi);
+            
+            packageChiTietHD.IDGoi = data.IDGoi != null ? (int)data.IDGoi : 0;
             String hoten1 = data.infoKH.hoTen;
             String maKH1 = data.infoKH.maKH;
             String ngaySinh1 = data.infoKH.ngaySinh;
@@ -803,7 +821,7 @@ namespace ReportMvc.Controllers
             }
             else
             {
-                ngayHoaDon.Ngay = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+               // ngayHoaDon.Ngay = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
             ngayHoaDon.TrangThai = "Chưa xử lý";
             ngayHoaDon.HinhThucThanhToan = hinhthucthanhtoan;
@@ -821,6 +839,7 @@ namespace ReportMvc.Controllers
             }
             
             ngayHoaDon.TrangThai = "Chưa xử lý";
+            ngayHoaDon.HinhThucThanhToan = "";
             int IdChiTietHoaHD = Servies.HoaDonServices.InsertNgayHoaDonReturnId(ngayHoaDon);
             return IdChiTietHoaHD;
         }
@@ -864,7 +883,7 @@ namespace ReportMvc.Controllers
             ngayHoaDon.money = Convert.ToDecimal(money.Replace(".", ""));
             ngayHoaDon.product = data.product;
             ngayHoaDon.sugar = (Boolean)data.sugar ? 1 : 0;
-            ngayHoaDon.quantity = data.quantity;
+            ngayHoaDon.quantity = (String)data.quantity != "" ? (int)data.quantity : 0;
             String price = (String)data.price;
             if (price == "")
             {

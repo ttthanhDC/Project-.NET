@@ -10,7 +10,7 @@
             <label for="sel1" class="col-md-3"></label>
             <label for="sel1" class="col-md-2">Ngày</label>
             <div class="col-md-2">
-                <input type="text" class="form-control" name="title" id="txt_Ngay" />
+                <input type="text" class="form-control" name="txt_Ngay" id="txt_Ngay" placeholder="dd/mm/yyyy" data-date-format='dd/mm/yyyy' />
             </div>
         </div>
     </div>
@@ -85,13 +85,21 @@
 
         $('#txt_Ngay').on('change', function () {
             var dateNgaygiaoHangLe = this.value;
-            var x = new Date();
-            if (dateNgaygiaoHangLe.split('/').length == 1) {
+            if (dateNgaygiaoHangLe != "") {
+                var x = new Date();
+                if (dateNgaygiaoHangLe.split('/').length == 1) {
 
-            } else if (dateNgaygiaoHangLe.split('/').length == 2) {
-                dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
-                $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
-                $("#txt_Ngay").val(dateNgaygiaoHangLe);
+                } else if (dateNgaygiaoHangLe.split('/').length == 2) {
+                    dateNgaygiaoHangLe = dateNgaygiaoHangLe + "/" + x.getFullYear();
+                    $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txt_Ngay").val(dateNgaygiaoHangLe);
+                } else {
+                    $("#txt_Thu").val(convertDateToDay(dateNgaygiaoHangLe));
+                    $("#txt_Ngay").val(dateNgaygiaoHangLe);
+                }
+
+            } else {
+                $("#txt_Ngay").val("");
             }
         });
         function convertDateToDay(num) {
@@ -202,6 +210,10 @@
             $('#txtNgaySinh').datepicker({
                 dateFormat: 'dd/mm/yyyy'
             });
+            $('#txt_Ngay').datepicker({
+                dateFormat: 'dd/mm/yyyy'
+            });
+            
         };
 
         $("#cb_DonDoc").on('change', function () {
@@ -432,7 +444,6 @@
                             title: 'Tên Sản phẩm',
                             align: 'center',
                             valign: 'middle',
-                            editable: true
                         },
                         {
                             field: 'quantity',
@@ -468,6 +479,7 @@
                             title: 'Mã Khuyến mại',
                             align: 'center',
                             valign: 'middle',
+                            editable: true,
                         }, {
                             field: 'total',
                             title: 'Total',
@@ -510,7 +522,7 @@
                                     var arr = [];
                                     if (jsonData && jsonData.length > 0) {
                                         var objectData = jsonData[0];
-                                        var quantity = Number(objectData.Product_Unit);
+                                        var quantity = 1;
                                         row.productName = objectData.Product_Name;
                                         row.quantity = quantity;
                                         var price = objectData.Product_Amount.toString().split('.').join('');
@@ -703,6 +715,7 @@
         var obj = {};
         obj.stt = data.length + 1;;
         obj.product = '';
+        obj.productName = '';
         obj.quantity = '';
         obj.price = '';
         obj.sugar = '';
@@ -739,7 +752,7 @@
         formSource.append('type', 'insertNgayDonHang');
         formSource.append('data', JSON.stringify(data));
         formSource.append('idGoi', $('#cb_Don').val());
-        formSource.append('ngayDH', formatDateTime($('#txt_Ngay').val()));
+        formSource.append('ngayDH', $('#txt_Ngay').val());
         $.ajax({
             url: "/InsertBill/insertNgayDonHang",
             type: "POST",
