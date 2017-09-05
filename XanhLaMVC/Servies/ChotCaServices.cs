@@ -10,11 +10,11 @@ namespace Servies
 {
     public class ChotCaServices
     {
-        public static int InsertChotCaReturnId(DataObject.ChotCa obj,String ngayChot)
+        public static int InsertChotCaReturnId(DataObject.ChotCa obj,String ngayChot, String nguoiChot)
         {
             int check = 0;
             SqlConnection conn = Common.Connection.SqlConnect();
-            String strCheck = "Select Top 1 ID FROM ChotCa where  convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
+            String strCheck = "Select Top 1 ID FROM ChotCa where  convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103) AND NguoiChot = N'" + nguoiChot + "'";
             SqlCommand cmdCheck = new SqlCommand(strCheck);
             cmdCheck.CommandType = CommandType.Text;
             cmdCheck.Connection = conn;
@@ -44,20 +44,20 @@ namespace Servies
             }
             else
             {
-                UpdateChotCa(obj,ngayChot);
+                UpdateChotCa(obj, ngayChot, nguoiChot);
                 return 0;
             }
 
             
         }
-        public static void UpdateChotCa(DataObject.ChotCa obj,String ngayChot)
+        public static void UpdateChotCa(DataObject.ChotCa obj, String ngayChot, String nguoiChot)
         {
             // 1 : Lưu thành công
             // 2 : Lưu thông tin không thành công trạng thái đang xử lý
             // 3 : Lưu thông tin không thành công trạng thái hoàn thành
             // 4  : Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý 
             SqlConnection conn = Common.Connection.SqlConnect();
-            String Insert = "Update  ChotCa set  TienThuDuoc = " + obj.TienThuDuoc + " ,NguoiChot = N'" + obj.NguoiChot + "' ,GioChot ='" + obj.GioChot + "' where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103)";
+            String Insert = "Update  ChotCa set  TienThuDuoc = " + obj.TienThuDuoc + " ,NguoiChot = N'" + obj.NguoiChot + "' ,GioChot ='" + obj.GioChot + "' where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103) AND NguoiChot = N'" + nguoiChot + "'";
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conn;
