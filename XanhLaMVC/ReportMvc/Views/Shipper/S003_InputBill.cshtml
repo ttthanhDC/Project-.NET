@@ -80,6 +80,11 @@
                         obj.district = objectData.TenQuan || "";
                         obj.address = objectData.DiaChi || "";
                         obj.money = objectData.TongTien;
+                        if(objectData.TongTien){
+                            obj.money = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            obj.money = "";
+                        }
                         // obj.money = objectData.Create_User || "";// chua có
 
                         if (jsonData[i].TrangThaiNHD == "Chưa xử lý") {
@@ -103,7 +108,12 @@
 
                         //obj.httt = objectData.HinhThucThanhToan;
                         obj.note = objectData.GhiChu;
-                        obj.moneyPay = objectData.SoTienThu || "";
+                       // obj.moneyPay = objectData.SoTienThu || "";
+                        if(objectData.SoTienThu){
+                            obj.moneyPay = (objectData.SoTienThu + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }else{
+                            obj.moneyPay ="";
+                        }
 
                         // userName
                         arr.push(obj);

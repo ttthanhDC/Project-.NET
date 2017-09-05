@@ -235,10 +235,10 @@
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
                         if (objectData.TongTienConNo) {
-                            obj.money = objectData.TongTienConNo;
+                            obj.money = (objectData.TongTienConNo + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                         } else {
                             if (objectData.TongTien) {
-                                obj.money = objectData.TongTien;
+                                obj.money = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                             }
                         }
                         //obj.money = objectData.Create_User || "";// chua có
@@ -333,10 +333,10 @@
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
                         if (objectData.TongTienConNo) {
-                            obj.money = objectData.TongTienConNo;
+                            obj.money = (objectData.TongTienConNo + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                         } else {
                             if (objectData.TongTien) {
-                                obj.money = objectData.TongTien;
+                                obj.money = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                             }
                         }
                         //obj.money = objectData.Create_User;// chua có
@@ -465,10 +465,10 @@
                         obj.sdt = objectData.SoDienThoai || "";
                         obj.addres = objectData.DiaChi || "";
                         if (objectData.TongTienConNo) {
-                            obj.money = objectData.TongTienConNo;
+                            obj.money = (objectData.TongTienConNo + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                         } else {
                             if (objectData.TongTien) {
-                                obj.money = objectData.TongTien;
+                                obj.money = (objectData.TongTien + "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
                             }
                         }
                         //obj.money = objectData.Create_User || "";// chua có
@@ -495,7 +495,7 @@
                     $('#btSua')[0].disabled = true;
                     $('#btChuyen')[0].disabled = false;
                     $('#div_checkAll')[0].style.display = "none";
-                    $('#div_UnAll')[0].style.display = "inline-block";
+                    $('#div_UnAll')[0].style.display = "none";
                 }
                 data = arr;
                 var $tableSearch = $('#table');
