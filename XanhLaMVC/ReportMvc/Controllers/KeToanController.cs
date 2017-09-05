@@ -184,7 +184,7 @@ namespace ReportMvc.Controllers
 
         }
         [HttpPost]
-        public String InsertChiTietThuTMReturnId(String type, String data, String Ngay, String IdNgayHD,String ID ,String SoTien, String MaNganHang, String MaGiaoDich, String TinhTrang, String LoaiThu, String GhiChu, String IdKeToan)
+        public String InsertChiTietThuTMReturnId(String type, String data, String Ngay, String IdNgayHD,String ID ,String SoTien, String MaNganHang, String MaGiaoDich, String TinhTrang, String LoaiThu, String GhiChu, String IdKeToan,String MaCa)
         {
             try
             {
@@ -192,7 +192,14 @@ namespace ReportMvc.Controllers
 
                 DataObject.ChiTietThu ctt = new DataObject.ChiTietThu();
                 ctt.Ngay = Convert.ToDateTime(Ngay != "" ? Ngay : DateTime.Now.ToShortDateString());
-                ctt.IdNgayHD = Convert.ToInt32(IdNgayHD);
+                if (IdNgayHD != null)
+                {
+                    ctt.IdNgayHD = Convert.ToInt32(IdNgayHD);
+                }
+                else
+                {
+                    ctt.IdNgayHD = Convert.ToInt32(MaCa);
+                }
                 ctt.ID = Convert.ToInt32(ID);
                 if (SoTien != null && SoTien != "")
                 {
