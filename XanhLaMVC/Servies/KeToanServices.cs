@@ -359,7 +359,7 @@ namespace Servies
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),x.NgayChot , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
             }*/
-            String Select = "select * FROM vKeToanThuTM WHERE";
+            String Select = "select * FROM vKeToanThuTM WHERE ";
             if (Ngay != null && Ngay != "")
             {
                 Select += "convert(date,CONVERT(VARCHAR(10),NgayChot , 103),103) = convert(date,CONVERT(VARCHAR(10),'" + Ngay + "' , 103),103) AND ";
