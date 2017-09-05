@@ -56,7 +56,13 @@ namespace ReportMvc.Controllers
         {
             dynamic dataDynamic = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
             dynamic lstId = dataDynamic.lstId;
-            String Ids = String.Join(",", (List<string>)lstId);
+            String Ids = "";
+            List<string> Client = new List<string>();
+            for (int i = 0; i < lstId.Count; i++)
+            {
+                Client.Add((String)lstId[i]);
+            }
+            Ids = string.Join(",", Client);
             ViewData["DataSource"] = Servies.ReportServices.getRPGopDon(Ids);
             return View();
         }
