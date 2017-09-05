@@ -52,6 +52,15 @@ namespace ReportMvc.Controllers
             return View();
         }
 
+        public ActionResult ReportGopDon(String data)
+        {
+            dynamic dataDynamic = Newtonsoft.Json.JsonConvert.DeserializeObject(data);
+            dynamic lstId = dataDynamic.lstId;
+            String Ids = String.Join(",", (List<string>)lstId);
+            ViewData["DataSource"] = Servies.ReportServices.getRPGopDon(Ids);
+            return View();
+        }
+
 
 
     }

@@ -186,5 +186,26 @@ namespace Servies
             conn.Close();
             return lstDeptObject;
         }
+        public static DataTable getRPGopDon(String IdNgayHD)
+        {
+            //vHoaDonStep1
+            DataTable table = new DataTable();
+            SqlCommand cmd = null;
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Select = "Select * from vRPVanChuyen where ";
+            if (IdNgayHD != null && IdNgayHD != "")
+            {
+                Select += "ID_NHD IN (" + IdNgayHD + ") AND ";
+            }
+
+            Select += " 1=1";
+            cmd = new SqlCommand(Select);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            table.Load(cmd.ExecuteReader());
+            conn.Close();
+            return table;
+        }
     }
 }
