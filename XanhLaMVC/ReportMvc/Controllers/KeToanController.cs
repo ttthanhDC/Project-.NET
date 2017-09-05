@@ -192,7 +192,7 @@ namespace ReportMvc.Controllers
 
                 DataObject.ChiTietThu ctt = new DataObject.ChiTietThu();
                 ctt.Ngay = Convert.ToDateTime(Ngay != "" ? Ngay : DateTime.Now.ToShortDateString());
-                if (IdNgayHD != null)
+                if (IdNgayHD != "null")
                 {
                     ctt.IdNgayHD = Convert.ToInt32(IdNgayHD);
                 }
