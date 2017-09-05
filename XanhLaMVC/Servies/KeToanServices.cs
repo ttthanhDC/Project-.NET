@@ -75,6 +75,7 @@ namespace Servies
                 object insertedID = cmd.ExecuteScalar();
                 cmd.Connection.Close();
                 conn.Close();
+                Servies.ChotCaServices.UpdateChotCaByFlag(obj.IdNgayHD.ToString());
                 return Convert.ToInt32(insertedID);
             }
             else
@@ -94,6 +95,7 @@ namespace Servies
                 cmd.ExecuteNonQuery();
                 cmd.Connection.Close();
                 conn.Close();
+                Servies.ChotCaServices.UpdateChotCaByFlag(obj.IdNgayHD.ToString());
                 return obj.ID;
             }
 

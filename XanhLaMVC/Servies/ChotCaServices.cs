@@ -66,6 +66,18 @@ namespace Servies
             cmd.Connection.Close();
             conn.Close();
         }
+        public static void UpdateChotCaByFlag(String ID)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect();
+            String Insert = "Update  ChotCa set  Flag = 1 where ID = " + ID + "";
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
+        }
         
         public static DataTable ViewChotCa(String NguoiChot, String NgayChot)
         {
