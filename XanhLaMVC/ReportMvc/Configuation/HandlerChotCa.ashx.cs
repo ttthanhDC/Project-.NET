@@ -33,7 +33,7 @@ namespace XanhLaMVC.Configuation
                     chotca.NgayChot = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yyyy"), "dd/MM/yyyy", CultureInfo.InvariantCulture);
                     chotca.NguoiChot = HttpContext.Current.Session["UserName"].ToString();
                     chotca.GioChot = DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
-                    int result = Servies.ChotCaServices.InsertChotCaReturnId(chotca,DateTime.Now.ToString("dd/MM/yyyy"));
+                    int result = Servies.ChotCaServices.InsertChotCaReturnId(chotca, DateTime.Now.ToString("dd/MM/yyyy"), chotca.NguoiChot);
                     context.Response.ContentType = "text/plain";
                     context.Response.Write("insert data success");
                 }
