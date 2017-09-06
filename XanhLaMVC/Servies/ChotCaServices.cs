@@ -116,5 +116,18 @@ namespace Servies
             return table;
         }
 
+        public static void UpdateLoTrinhShipperByFlag(String ID)
+        {
+            SqlConnection conn = Common.Connection.SqlConnect(); 
+            String Insert = "Update  LoTrinhShipper set  FlagChotCa = 1 where ID IN (" + ID + ")";
+            SqlCommand cmd = new SqlCommand(Insert);
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+            conn.Close();
+        }
+
     }
 }

@@ -20,7 +20,7 @@ namespace ReportMvc.Controllers
         }
 
         [HttpPost]
-        public String InsertChotCaReturnId(String type, String data, String TienThuDuoc)
+        public String InsertChotCaReturnId(String type, String data, String TienThuDuoc,String lstId)
         {
             try
             {
@@ -30,6 +30,7 @@ namespace ReportMvc.Controllers
                 chotca.NguoiChot = this.Session["UserName"].ToString();
                 chotca.GioChot = DateTime.Now.Hour + ":" + DateTime.Now.Minute + ":" + DateTime.Now.Second;
                 int result = Servies.ChotCaServices.InsertChotCaReturnId(chotca, DateTime.Now.ToString("dd/MM/yyyy"), chotca.NguoiChot);
+                Servies.ChotCaServices.UpdateLoTrinhShipperByFlag(lstId);
                 return result.ToString();
             }
             catch (Exception e)
