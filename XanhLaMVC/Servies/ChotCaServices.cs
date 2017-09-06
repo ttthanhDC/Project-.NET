@@ -57,6 +57,15 @@ namespace Servies
             // 3 : Lưu thông tin không thành công trạng thái hoàn thành
             // 4  : Lưu thông tin không thành công trạng thái Đang xử lý về Chưa xử lý 
             SqlConnection conn = Common.Connection.SqlConnect();
+            String strCheck = "Select * FROM ChotCa where  convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103) AND NguoiChot = N'" + nguoiChot + "'";
+            SqlCommand cmdCheck = new SqlCommand(strCheck);
+            cmdCheck.CommandType = CommandType.Text;
+            cmdCheck.Connection = conn;
+            conn.Open();
+            object money = cmdCheck.ExecuteScalar();
+            conn.Close();
+            Decimal m = (Decimal)money;
+            obj.TienThuDuoc = obj.TienThuDuoc + m;
             String Insert = "Update  ChotCa set  TienThuDuoc = " + obj.TienThuDuoc + " ,NguoiChot = N'" + obj.NguoiChot + "' ,GioChot ='" + obj.GioChot + "' where convert(date,CONVERT(VARCHAR(10),NgayChot, 103),103) = convert(date,CONVERT(VARCHAR(10),'" + ngayChot + "' , 103),103) AND NguoiChot = N'" + nguoiChot + "'";
             SqlCommand cmd = new SqlCommand(Insert);
             cmd.CommandType = CommandType.Text;
