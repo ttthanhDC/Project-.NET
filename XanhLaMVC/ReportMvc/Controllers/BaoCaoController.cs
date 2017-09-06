@@ -129,11 +129,11 @@ namespace ReportMvc.Controllers
             }
         }
         [HttpPost]
-        public ContentResult getvBaoCao05(String type, String data, String tuNgay, String denNgay)
+        public ContentResult getvBaoCao05(String type, String data, String tuNgay, String denNgay, String shipperName)
         {
             try
             {
-                List<DataObject.BaoCao04> dt = Servies.BaocaoServices.getvBaoCao04(tuNgay, denNgay);
+                List<DataObject.BaoCao05> dt = Servies.BaocaoServices.getvBaoCao05(shipperName, tuNgay, denNgay);
                 var list = JsonConvert.SerializeObject(dt,
                     Formatting.None,
                     new JsonSerializerSettings()
