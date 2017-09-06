@@ -139,7 +139,7 @@
             return item;
         };
     });
-    //  function in ,
+    //  function in ,btGopDon
     $('#btIn').on('click', function (e) {
         var datatable = $('#table').bootstrapTable('getData');
         var lstCheck = $('#table').find('input.check[type="checkbox"]');
@@ -172,6 +172,31 @@
         var url = '@Url.Action("ReportLoTrinh", "Report")';
         url += '?MaLoTrinh=' + data;
         window.open(url);
+
+    });
+    $('#btGopDon').on('click', function (e) {
+        var datatable = $('#table').bootstrapTable('getData');
+        var lstCheck = $('#table').find('input.check[type="checkbox"]');
+        var listID = [];
+
+        if (datatable) {
+            for (var i = 0; i < datatable.length; i++) {
+
+                if (lstCheck[i].checked && datatable[i].id) {
+                    listID.push(datatable[i].id);
+                }
+            }
+        }
+        if (listID.length > 0) {
+            
+            var data = {lstId: listID};
+            var json = JSON.stringify(data)
+                var url = '@Url.Action("ReportGopDon", "Report")';
+                url += '?data=' + json;
+                window.open(url);
+        } else {
+            alert("Chưa có Mã đơn nòa được chọn. Vui lòng chọn Mã đơn.");
+        }
 
     });
 
