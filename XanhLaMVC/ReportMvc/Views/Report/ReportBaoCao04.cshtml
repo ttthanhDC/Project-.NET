@@ -23,7 +23,7 @@
 <div style="width:100%; height:100%; position:absolute;">
     @(Html.EJ().ReportViewer("reportsample")
                 .ProcessingMode(Syncfusion.JavaScript.ReportViewerEnums.ProcessingMode.Local)
-                .ReportPath("~/App_Data/BC004.rdlc")
+                .ReportPath("~/bin/BC004.rdlc")
                 .ReportServiceUrl(VirtualPathUtility.ToAbsolute("~/api/ReportApi"))
                         .DataSources(t => { t.Name("DSBaoCao04").Value(ViewData["DataSource"]).Add(); })
     )

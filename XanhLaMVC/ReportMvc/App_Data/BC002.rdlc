@@ -569,7 +569,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>26081080-42f0-4dc2-bf45-a2eeaa96348b</rd:DataSourceID>
+      <rd:DataSourceID>edbd9b36-daf6-4372-b479-976742ed80fb</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -610,7 +610,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DSBaoCao02</rd:DataSetName>
-        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSBaoCao02.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DSBaoCao02.xsd</rd:SchemaPath>
         <rd:TableName>vRPBaoCao02</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

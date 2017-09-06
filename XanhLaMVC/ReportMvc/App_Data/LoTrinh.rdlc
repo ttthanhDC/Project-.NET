@@ -639,7 +639,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>87a1ef7b-7baf-4cd6-86c8-70a746ba64af</rd:DataSourceID>
+      <rd:DataSourceID>68f9f286-7872-4dde-abae-33f518ff56b7</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -688,7 +688,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DSLoTrinh</rd:DataSetName>
-        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSLoTrinh.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DSLoTrinh.xsd</rd:SchemaPath>
         <rd:TableName>vRPLoTrinh</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

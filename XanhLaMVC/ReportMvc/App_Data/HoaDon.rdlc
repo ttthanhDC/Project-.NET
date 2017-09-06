@@ -1146,20 +1146,13 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>4c93b0c6-bddf-4e44-a8d1-77ae5a97d222</rd:DataSourceID>
-    </DataSource>
-    <DataSource Name="DB_SYS_GREENDataSet">
-      <ConnectionProperties>
-        <DataProvider>System.Data.DataSet</DataProvider>
-        <ConnectString>/* Local Connection */</ConnectString>
-      </ConnectionProperties>
-      <rd:DataSourceID>c8864f2b-35ee-4d37-847d-cf39441d48ab</rd:DataSourceID>
+      <rd:DataSourceID>c920299c-7036-4005-9715-f6c63d8966e6</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>DB_SYS_GREENDataSet</DataSourceName>
+        <DataSourceName>DSVanChuyen</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
@@ -1217,8 +1210,8 @@
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>DB_SYS_GREENDataSet</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DB_SYS_GREENDataSet.xsd</rd:SchemaPath>
+        <rd:DataSetName>DSVanChuyen</rd:DataSetName>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DSVanChuyen.xsd</rd:SchemaPath>
         <rd:TableName>vRPVanChuyen</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

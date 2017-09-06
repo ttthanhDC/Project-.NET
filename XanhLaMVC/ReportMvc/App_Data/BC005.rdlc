@@ -35,7 +35,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
+              <Width>1.42834in</Width>
+            </TablixColumn>
+            <TablixColumn>
               <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1.27083in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -47,13 +53,7 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>1.78125in</Width>
+              <Width>1.08208in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -569,7 +569,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>d575eea1-7a89-4c12-bf5b-a2aef11fb3c3</rd:DataSourceID>
+      <rd:DataSourceID>5c254c3e-5c12-443a-94d1-e458032ccd7e</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -614,7 +614,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DSBaoCao05</rd:DataSetName>
-        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSBaoCao05.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DSBaoCao05.xsd</rd:SchemaPath>
         <rd:TableName>fRPBaoCao05</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

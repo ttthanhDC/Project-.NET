@@ -511,7 +511,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -570,7 +569,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>7ca44273-63d6-4b6b-96ff-559cae36e588</rd:DataSourceID>
+      <rd:DataSourceID>478ffdb8-72a7-4411-a79f-f8ebe65f9eec</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -611,7 +610,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>DSBaoCao01</rd:DataSetName>
-        <rd:SchemaPath>F:\SysLaProject\Git\XanhLaMVC\ReportMvc\DSBaoCao01.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\win\Desktop\SysLa\GitHub\XanhLaMVC\ReportMvc\DSBaoCao01.xsd</rd:SchemaPath>
         <rd:TableName>vRPBaoCao01</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>

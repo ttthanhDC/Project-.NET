@@ -23,7 +23,7 @@
 <div style="width:100%; height:100%; position:absolute;">
     @(Html.EJ().ReportViewer("reportsample")
                 .ProcessingMode(Syncfusion.JavaScript.ReportViewerEnums.ProcessingMode.Local)
-                .ReportPath("~/App_Data/LoTrinh.rdlc")
+                .ReportPath("~/bin/LoTrinh.rdlc")
                 .ReportServiceUrl(VirtualPathUtility.ToAbsolute("~/api/ReportApi"))
                         .DataSources(t => { t.Name("DSLoTrinh").Value(ViewData["DataSource"]).Add(); })
     )
