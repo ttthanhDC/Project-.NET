@@ -328,15 +328,15 @@
         formData.append('GhiChu', row.note);
         formData.append('IdKeToan', "0");
         if (row.MaCa) {
-            formData.append('IdNgayHD',row.MaCa);
+            formData.append('IdNgayHD', row.MaChotCa);
         } else {
             formData.append('IdNgayHD', row.ID);
         }
         var lst2 = $('#table select.select2 option:selected');
         formData.append('MaNganHang', '6');
         formData.append('TinhTrang', lst2[index].value);
-        formData.append('ID', row.ID);
-
+        formData.append('ID', row.ID || 0);
+        formData.append('MaCa', row.MaChotCa);
         $.ajax({
             url: "/KeToan/InsertChiTietThuTMReturnId",
             type: "POST",
