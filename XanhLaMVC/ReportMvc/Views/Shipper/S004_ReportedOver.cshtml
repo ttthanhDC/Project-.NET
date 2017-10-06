@@ -282,20 +282,30 @@
             var json = { 'ID': 0 };
             formDataListUser.append('data', JSON.stringify(json));
             formDataListUser.append('TienThuDuoc', window.TongTien);
-
-            $.ajax({
-                url: "/ChotCa/InsertChotCaReturnId",
-                type: "POST",
-                data: formDataListUser,
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    alert(result);
-                },
-                error: function (err) {
-
+            var datatable = $('#table').bootstrapTable('getData');
+            var listID = [];
+            if (datatable.length) {
+                for (var i = 0; i < datatable.length - 1; i++) {
+                    listID.push(datatable[i].id);
                 }
-            });
+                formDataListUser.append('lstId', listID);
+                $.ajax({
+                    url: "/ChotCa/InsertChotCaReturnId",
+                    type: "POST",
+                    data: formDataListUser,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        alert("Chốt ca thành công.");
+                    },
+                    error: function (err) {
+
+                    }
+                });
+            } else {
+                alert("Không có lộ trình để chốt ca.");
+            }
+           
         });
         // function
         function userFormatter(data) {
